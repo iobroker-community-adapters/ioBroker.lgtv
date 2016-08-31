@@ -1,0 +1,30 @@
+{
+    "common": {
+        "name":                     "lgtv",
+        "version":                  "0.0.1",
+        "title":                    "LG WebOS SmartTV Adapter",
+        "desc":                     {
+ 			             "en": "Controls WebOS-based LG SmartTVs",
+ 			             "de": "Steuert auf WebOS basierte LG SmartTVs",
+ 			             "ru": "Controls WebOS-based LG SmartTVs"
+	},
+	    "license": "MIT",
+        "platform":                 "Javascript/Node.js",
+        "mode":                     "daemon",
+        "icon":                     "lgtv.png",
+        "enabled":                  true,
+	"extIcon":                  "https://raw.githubusercontent.com/SMundt/iobroker.lgtv/master/lgtv.png",
+	"keywords":                 ["lgtv", "WebOS", "Smart", "TV", "LG"],
+        "readme":                   "https://github.com/SMundt/iobroker.lgtv/blob/master/README.md",
+	"loglevel":                 "info",
+        "type":                     "media"
+    },
+    "native": {
+        "IP": "192.168.178.60",
+		"Reconnect": "5000",
+		"Timeout": "15000"
+    },
+    "objects": [
+
+    ]
+}

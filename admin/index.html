@@ -1,0 +1,142 @@
+﻿<html>
+
+<!-- these 4 files always have to be included -->
+<link rel="stylesheet" type="text/css" href="../../lib/css/themes/jquery-ui/redmond/jquery-ui.min.css"/>
+<script type="text/javascript" src="../../lib/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="../../socket.io/socket.io.js"></script>
+<script type="text/javascript" src="../../lib/js/jquery-ui-1.10.3.full.min.js"></script>
+
+
+<!-- optional: use jqGrid
+<link rel="stylesheet" type="text/css" href="../../lib/css/jqGrid/ui.jqgrid-4.5.4.css"/>
+<script type="text/javascript" src="../../lib/js/jqGrid/jquery.jqGrid-4.5.4.min.js"></script>
+<script type="text/javascript" src="../../lib/js/jqGrid/i18n/grid.locale-all.js"></script>
+-->
+
+<!-- optional: use multiselect
+<link rel="stylesheet" type="text/css" href="../../lib/css/jquery.multiselect-1.13.css"/>
+<script type="text/javascript" src="../../lib/js/jquery.multiselect-1.13.min.js"></script>
+-->
+
+<!-- these two file always have to be included -->
+<link rel="stylesheet" type="text/css" href="../../css/adapter.css"/>
+<script type="text/javascript" src="../../js/translate.js"></script>
+<script type="text/javascript" src="../../js/adapter-settings.js"></script>
+
+
+<script type="text/javascript">
+    systemDictionary = {
+        "Title": {"de": "LG WebOS SmartTV Adapter Konfiguration", "en": "LG WebOS SmartTV Adapter Configuration", "ru": "LG WebOS SmartTV Adapter Configuration"},
+        "IP":                    {
+            "de": "IP",
+            "en": "IP",
+            "ru": "IP"
+        },
+        "Info": {
+            "de": "Hinweis",
+            "en": "Info",
+			"ru": "Info"
+        },
+		"Timeout": {
+            "de": "Timeout in ms",
+            "en": "Timeout in ms",
+			"ru": "Timeout in ms"
+        },
+		"Reconnect": {
+            "de": "Erneut verbinden ins ms",
+            "en": "Reconnect in ms",
+			"ru": "Reconnect in ms"
+        },
+        "Settings": {
+            "de": "Einstellungen",
+            "en": "Settings",
+			"ru": "Settings",
+        },
+        "RestartMessage": {
+            "de": "Beim Speichern der Einstellungen wird der Adapter automatisch neu gestartet.",
+			"en": "On saving, adapter restarts with new config immediately.",
+            "ru": "Сразу после сохранения настроек драйвер перезапуститься с новыми значениями.",
+        }
+    };
+    function load(settings, onChange) {
+        for (var key in settings) {
+            if ($('#' + key + '.value').attr('type') == 'checkbox') {
+                $('#' + key + '.value').prop('checked', settings[key]).change(function () {
+                    onChange();
+                });
+            } else {
+                $('#' + key + '.value').val(settings[key]).change(function () {
+                    onChange();
+                }).keyup(function () {
+                    $(this).trigger('change');
+                });
+            }
+        }
+        onChange(false);
+    }
+    function save(callback) {
+        var obj = {};
+        $('.value').each(function () {
+            var $this = $(this);
+            var id = $this.attr('id');
+            if ($this.attr('type') == 'checkbox') {
+                obj[$this.attr('id')] = $this.prop('checked');
+            } else {
+                obj[$this.attr('id')] = $this.val();
+            }
+        });
+        callback(obj);
+    }
+</script>
+
+<style>
+    td {
+        font-size: 13px;
+        padding-left:1px;
+        padding-right: 4px;
+        padding-top: 3px;
+        padding-bottom: 3px;
+    }
+    input {
+        font-size: 13px;
+    }
+    h1 {
+        font-size: 11px;
+        color: #505050;
+        font-weight: bold;
+        width: 100%;
+        padding-left:6px;
+        padding-right: 5px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        background-color: #e0e0e0;
+        /*background-image: linear-gradient(to right, #e0e0e0, rgba(224,224,224,0.0));*/
+        /*background-image: linear-gradient(to right, #e0e0e0, #e8e8e8 50%, #e0e0e0);*/
+    }
+</style>
+
+
+<div id="adapter-container" style="padding-left: 6px; padding-right: 0px; width: 97%;">
+
+    <table>
+        <td><img src="lgtv.png" /></td>
+        <td style="padding-top: 20px;padding-left: 10px"><h3 class="translate">Title</h3></td>
+    </table>
+
+    <h1 class="translate">Settings</h1>
+
+    <table>
+        <tr><td class="translate">IP</td><td><input class="value" id="ip" type="input" size="15" /></td></tr>
+        <tr><td class="translate">Timeout</td><td><input class="value" id="timeout" type="input" size="15" /></td></tr>
+        <tr><td class="translate">Reconnect</td><td><input class="value" id="reconnect" type="input" size="15" /></td></tr>
+    </table>
+
+    <div style="padding: 10px"></div>
+    <h1 class="translate">Info</h1>
+
+    <table>
+</div>
+    </table>
+        <h3 class="translate">RestartMessage</h3>
+
+</html>

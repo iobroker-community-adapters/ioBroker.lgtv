@@ -1,0 +1,46 @@
+{
+  "name": "iobroker.lgtv",
+  "version": "0.0.1",
+  "description": "ioBroker LG WebOS SmartTV Adapter",
+  "author": {
+    "name": "Sebastian Mundt",
+    "email": "mail@sebastian-mundt.com"
+  },
+  "contributors": [
+    {
+      "name": "Sebastian Mundt",
+      "email": "mail@sebastian-mundt.com"
+    }
+  ],
+  "homepage": "https://github.com/SMundt/iobroker.lgtv",
+  "license": "MIT",
+  "keywords": [
+    "ioBroker",
+    "lgtv",
+    "Smart Home",
+    "home automation"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SMundt/iobroker.lgtv"
+  },
+  "dependencies": {
+    "lgtv2": "^1.2.0",
+    "websocket": "^1.0.23"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-replace": "^0.9.3",
+    "grunt-contrib-jshint": "^0.11.2",
+    "grunt-jscs": "^2.0.0",
+    "grunt-http": "^1.6.0",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-compress": "^0.13.0",
+    "grunt-contrib-copy": "^0.8.0",
+    "grunt-exec": "^0.4.6"
+  },
+  "bugs": {
+    "url": "https://github.com/SMundt/iobroker.lgtv/issues"
+  },
+  "readmeFilename": "README.md"
+}
