@@ -1,6 +1,6 @@
 {
     "common": {
-        "name":                     "iobroker.lgtv",
+        "name":                     "lgtv",
         "version":                  "0.0.1",
         "title":                    "LG WebOS SmartTV Adapter",
         "desc":                     {
