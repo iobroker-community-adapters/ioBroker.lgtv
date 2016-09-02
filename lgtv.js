@@ -1,6 +1,50 @@
+/*
+DEV NOTES:
+
+lgtvobj.request('ssap://system/turnOff');	// TV ausschalten
+lgtvobj.request('ssap://system.launcher/open', {target: "http://www.google.de"});	// Browser öffnen
+lgtvobj.request('ssap://audio/setMute', {mute: true});		// Lautlos ein
+lgtvobj.request('ssap://audio/setMute', {mute: false});		// Lautlos aus
+lgtvobj.request('ssap://audio/volumeUp');		// Lautstärke höher
+lgtvobj.request('ssap://audio/volumeDown');		// Lautstärke niedriger
+lgtvobj.request('ssap://com.webos.service.tv.display/set3DOn');	// 3D Modus einschalten
+lgtvobj.request('ssap://com.webos.service.tv.display/set3DOff');	// 3D Modus ausschalten
+lgtvobj.request('ssap://tv/openChannel', {channelNumber: 1});	// Sender wechseln, hier Kanal 1
+lgtvobj.request('ssap://tv/switchInput', {inputId: "SCART_1"});	// Eingang umschalten: AV_1, SCART_1 (Scart), COMP_1 (Component) , HDMI_1 (HDMI 1), HDMI_2 (HDMI 2), HDMI_3 (HDMI 3)
+lgtvobj.request('ssap://system.launcher/launch', {id: "com.webos.app.livetv"});	// Auf Live TV umschalten
+lgtvobj.request('ssap://system.launcher/launch', {id: "com.webos.app.smartshare"});	// Smartshare App öffnen
+lgtvobj.request('ssap://system.launcher/launch', {id: "com.webos.app.tvuserguide"});	// TV Bedienungsanleitungs App öffnen
+lgtvobj.request('ssap://system.launcher/launch', {id: "netflix"});	// Netflix öffnen
+lgtvobj.request('ssap://system.launcher/launch', {id: "youtube.leanback.v4"});	// Youtube öffnen
+lgtvobj.request('ssap://tv/getCurrentChannel', function (Error, Response)	// Aktueller Sender (Response nach "channelNumber" filtern!!!!)
+*/
+
 "use strict";
+var fs = require('fs'); // for storing client key
+var WebSocketClient = require('websocket').client; // for communication with TV
+var EventEmitter = require('events').EventEmitter;
 var utils = require(__dirname + '/lib/utils');
 var adapter = utils.adapter('lgtv');
+
+/* IS THAT HERE CORRECT???
+var SpecializedSocket = function (ws) {
+    SpecializedSocket.send = function(type, payload) {
+        payload = payload || {};
+        var message =
+            Object.keys(payload)
+                .reduce(function(acc, k) {
+                    return acc.concat([k + ':' + payload[k]]);
+                }, ['type:' + type])
+                .join('\n') + '\n\n';
+
+        ws.send(message);
+    };
+
+    SpecializedSocket.close = function() {
+        ws.close();
+    };
+};
+*/
 
 adapter.on('unload', function (callback) 
 {
@@ -15,43 +59,63 @@ adapter.on('unload', function (callback)
     }
 });
 
-// is called if a subscribed object changes
-adapter.on('objectChange', function (id, obj) 
+adapter.on('stateChange', function (id, state)
 {
-    // Warning, obj can be null if it was deleted
-    adapter.log.info('objectChange ' + id + ' ' + JSON.stringify(obj));
-});
-
-// is called if a subscribed state changes
-adapter.on('stateChange', function (id, state) {
-    if (state) 
+    if (state && id) 
 	{
-		adapter.log.info('Connecting to: ' + adapter.config.IP);
 		var lgtvobj = require("lgtv2")({url: 'ws://' + adapter.config.IP + ':3000', timeout: adapter.config.timeout, reconnect: adapter.config.reconnect});
-		lgtvobj.on('connect', function () 
+		lgtvobj.on('connecting', function (Error, Response) 
+		{
+			adapter.log.info('Connecting to WebOS TV: ' + adapter.config.IP);
+			if (Error)
+			{
+				adapter.log.error('Error on connecting to WebOS TV');
+			}
+		});
+	
+		lgtvobj.on('prompt', function () 
+		{
+			adapter.log.info('Waiting for pairing confirmation on WebOS TV ' + adapter.config.IP);
+		});
+	
+		lgtvobj.on('error', function () 
+		{
+			adapter.log.error('Error on connecting or sending command to WebOS TV');
+		});
+	
+		lgtvobj.on('connect', function (Error, Response) 
 		{
 			switch(id)
 			{
 				case adapter.namespace + ".popup":
-					adapter.log.info('Connected to: ' + adapter.config.IP + ' for popup message "' + state.val + '"');
-					lgtvobj.request('ssap://system.notifications/createToast', {message: state.val});
+					adapter.log.info('Sending popup message "' + state.val + '" to WebOS TV: '  +adapter.config.IP);
+					lgtvobj.request('ssap://system.notifications/createToast', {message: state.val}, function (Error, Response) 
+					{
+						if (!Error && JSON.stringify(Response).match('"returnValue":true'))
+						{
+							adapter.log.info('Sent popup message "' + state.val + '" to WebOS TV: ' + adapter.config.IP);
+						}
+						else
+						{
+							adapter.log.error('ERROR! Response from TV: ' + JSON.stringify(Response));
+							lgtvobj.disconnect();
+						}
+						lgtvobj.disconnect();
+					});
 				break;
-				lgtvobj.disconnect();
+		
 				default:
+					lgtvobj.disconnect();
 				break;
 			}
+			if (Error)
+				lgtvobj.disconnect();
 		});
 	}
-    // you can use the ack flag to detect if it is status (true) or command (false)
-    if (state && !state.ack) {
-        // ??? adapter.log.info('ack is not set!');
-    }
 });
 
-// is called when databases are connected and adapter received configuration.
-// start here!
 adapter.on('ready', function () {
-    adapter.log.info('creating state "popup"');
+    adapter.log.info('Creating state "popup"');
     adapter.setObject('popup', {
         type: 'state',
         common: {
@@ -61,23 +125,12 @@ adapter.on('ready', function () {
         },
         native: {}
     });
+
     main();
 });
 
-function main() {
-    adapter.log.info('ready. configured WebOS TV IP: ' + adapter.config.IP);
+function main() 
+{
+	adapter.log.info('Ready. Configured WebOS TV IP: ' + adapter.config.IP);
     adapter.subscribeStates('*');
-	
-
-
-
-
-    // the variable testVariable is set to true as command (ack=false)
-    //adapter.setState('popup', "test");
-    // same thing, but the value is flagged "ack"
-    // ack should be always set to true if the value is received from or acknowledged from the target system
-    //adapter.setState('testVariable', {val: true, ack: true});
-    // same thing, but the state is deleted after 30s (getState will return null afterwards)
-
-    // TEST: adapter.setState('popup', {val: 'test2', ack: true, expire: 30});
 }
