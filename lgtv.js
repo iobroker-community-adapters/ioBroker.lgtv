@@ -2,29 +2,33 @@
 DEV NOTES:
 
 lgtvobj.request('ssap://system/turnOff');	// TV ausschalten
-lgtvobj.request('ssap://system.launcher/open', {target: "http://www.google.de"});	// Browser öffnen
 lgtvobj.request('ssap://audio/setMute', {mute: true});		// Lautlos ein
 lgtvobj.request('ssap://audio/setMute', {mute: false});		// Lautlos aus
-lgtvobj.request('ssap://audio/volumeUp');		// Lautstärke höher
-lgtvobj.request('ssap://audio/volumeDown');		// Lautstärke niedriger
+lgtvobj.request('ssap://audio/volumeUp');		// Lautstarke hoher
+lgtvobj.request('ssap://audio/volumeDown');		// Lautstarke niedriger
 lgtvobj.request('ssap://com.webos.service.tv.display/set3DOn');	// 3D Modus einschalten
 lgtvobj.request('ssap://com.webos.service.tv.display/set3DOff');	// 3D Modus ausschalten
 lgtvobj.request('ssap://tv/openChannel', {channelNumber: 1});	// Sender wechseln, hier Kanal 1
 lgtvobj.request('ssap://tv/switchInput', {inputId: "SCART_1"});	// Eingang umschalten: AV_1, SCART_1 (Scart), COMP_1 (Component) , HDMI_1 (HDMI 1), HDMI_2 (HDMI 2), HDMI_3 (HDMI 3)
+lgtvobj.request('ssap://system.launcher/open', {target: "http://www.google.de"});	// Browser offnen
 lgtvobj.request('ssap://system.launcher/launch', {id: "com.webos.app.livetv"});	// Auf Live TV umschalten
-lgtvobj.request('ssap://system.launcher/launch', {id: "com.webos.app.smartshare"});	// Smartshare App öffnen
-lgtvobj.request('ssap://system.launcher/launch', {id: "com.webos.app.tvuserguide"});	// TV Bedienungsanleitungs App öffnen
-lgtvobj.request('ssap://system.launcher/launch', {id: "netflix"});	// Netflix öffnen
-lgtvobj.request('ssap://system.launcher/launch', {id: "youtube.leanback.v4"});	// Youtube öffnen
+lgtvobj.request('ssap://system.launcher/launch', {id: "com.webos.app.smartshare"});	// Smartshare App offnen
+lgtvobj.request('ssap://system.launcher/launch', {id: "com.webos.app.tvuserguide"});	// TV Bedienungsanleitungs App offnen
+lgtvobj.request('ssap://system.launcher/launch', {id: "netflix"});	// Netflix offnen
+lgtvobj.request('ssap://system.launcher/launch', {id: "youtube.leanback.v4"});	// Youtube offnen
 lgtvobj.request('ssap://tv/getCurrentChannel', function (Error, Response)	// Aktueller Sender (Response nach "channelNumber" filtern!!!!)
 */
 
-"use strict";
-var fs = require('fs'); // for storing client key
-var WebSocketClient = require('websocket').client; // for communication with TV
-var EventEmitter = require('events').EventEmitter;
-var utils = require(__dirname + '/lib/utils');
-var adapter = utils.adapter('lgtv');
+'use strict';
+var fs 				= require('fs'); // for storing client key
+//var WebSocketClient = require('websocket').client; // for communication with TV
+//var EventEmitter 	= require('events').EventEmitter;
+var utils 			= require(__dirname + '/lib/utils');
+var adapter 		= utils.adapter('lgtv');
+var LGTV            = require('lgtv2');
+var pollTimer       = null;
+
+// BF: Looks OK. Why?
 
 /* IS THAT HERE CORRECT???
 var SpecializedSocket = function (ws) {
@@ -46,91 +50,109 @@ var SpecializedSocket = function (ws) {
 };
 */
 
-adapter.on('unload', function (callback) 
-{
-    try 
+// BF: Is it not better to open the connection and hold it ON? So will always know if TV is ON or OFF? And we do not need time to establish the connection.
+function sendCommand(cmd, options, cb) {
+	var lgtvobj = new LGTV({
+		url: 		'ws://' + adapter.config.IP + ':3000',
+		timeout: 	adapter.config.timeout,
+		reconnect: 	adapter.config.reconnect
+	});
+	lgtvobj.on('connecting', function (error, response)
 	{
-        adapter.log.info('cleaned everything up...');
-        callback();
-    } 
-	catch (e) 
+		adapter.log.debug('Connecting to WebOS TV: ' + adapter.config.IP);
+		if (error)
+		{
+			adapter.log.error('Error on connecting to WebOS TV: ' + error);
+			lgtvobj.disconnect();
+			cb && cb(error);
+		}
+	});
+
+	lgtvobj.on('prompt', function ()
 	{
-        callback();
-    }
-});
+		adapter.log.debug('Waiting for pairing confirmation on WebOS TV ' + adapter.config.IP);
+	});
+
+	lgtvobj.on('error', function (error)
+	{
+		adapter.log.error('Error on connecting or sending command to WebOS TV: ' + error);
+		lgtvobj.disconnect();
+		cb && cb(error);
+	});
+
+	lgtvobj.on('connect', function (error, response)
+	{
+		lgtvobj.request(cmd, options, function (_error, response)
+		{
+			if (!_error && JSON.stringify(response).indexOf('"returnValue":true') !== -1)
+			{
+				adapter.log.debug('Sent popup message "' + state.val + '" to WebOS TV: ' + adapter.config.IP);
+			}
+			else
+			{
+				adapter.log.error('ERROR! Response from TV: ' + (response ? JSON.stringify(response) : _error));
+			}
+			lgtvobj.disconnect();
+			cb && cb(_error, response);
+		});
+	});
+}
+
+function pollChannel() {
+	sendCommand('ssap://tv/getCurrentChannel', null, function (err, channel) {
+		var ch;
+		if (channel) ch = channel.match(/"channelNumber":(\d+)/);
+		if (!err && ch) {
+			adapter.setState('channel', ch[1], true);
+			adapter.setState('on', true, true);
+		} else {
+			adapter.setState('on', false, true);
+		}
+	});
+}
 
 adapter.on('stateChange', function (id, state)
 {
-    if (state && id) 
+    if (id && state && !state.ack)
 	{
-		var lgtvobj = require("lgtv2")({url: 'ws://' + adapter.config.IP + ':3000', timeout: adapter.config.timeout, reconnect: adapter.config.reconnect});
-		lgtvobj.on('connecting', function (Error, Response) 
+		id = id.substring(adapter.namespace.length + 1);
+		switch (id)
 		{
-			adapter.log.info('Connecting to WebOS TV: ' + adapter.config.IP);
-			if (Error)
-			{
-				adapter.log.error('Error on connecting to WebOS TV');
-			}
-		});
-	
-		lgtvobj.on('prompt', function () 
-		{
-			adapter.log.info('Waiting for pairing confirmation on WebOS TV ' + adapter.config.IP);
-		});
-	
-		lgtvobj.on('error', function () 
-		{
-			adapter.log.error('Error on connecting or sending command to WebOS TV');
-		});
-	
-		lgtvobj.on('connect', function (Error, Response) 
-		{
-			switch(id)
-			{
-				case adapter.namespace + ".popup":
-					adapter.log.info('Sending popup message "' + state.val + '" to WebOS TV: '  +adapter.config.IP);
-					lgtvobj.request('ssap://system.notifications/createToast', {message: state.val}, function (Error, Response) 
-					{
-						if (!Error && JSON.stringify(Response).match('"returnValue":true'))
-						{
-							adapter.log.info('Sent popup message "' + state.val + '" to WebOS TV: ' + adapter.config.IP);
-						}
-						else
-						{
-							adapter.log.error('ERROR! Response from TV: ' + JSON.stringify(Response));
-							lgtvobj.disconnect();
-						}
-						lgtvobj.disconnect();
-					});
+			case 'popup':
+				adapter.log.debug('Sending popup message "' + state.val + '" to WebOS TV: ' + adapter.config.IP);
+				sendCommand('ssap://system.notifications/createToast', {message: state.val}, function (err, val) {
+					if (!err) adapter.setState('popup', state.val, true);
+				});
 				break;
-		
-				default:
-					lgtvobj.disconnect();
+
+			case 'turnOff':
+				adapter.log.debug('Sending turn OFF command to WebOS TV: ' + adapter.config.IP);
+				sendCommand('ssap://system/turnOff', {message: state.val}, function (err, val) {
+					if (!err) adapter.setState('popup', state.val, true);
+				});
 				break;
-			}
-			if (Error)
-				lgtvobj.disconnect();
-		});
+
+			case 'mute':
+				adapter.log.debug('Sending mute ' + state.val + ' command to WebOS TV: ' + adapter.config.IP);
+				sendCommand('ssap://audio/setMute', {mute: !!state.val}, function (err, val) {
+					if (!err) adapter.setState('mute', !!state.val, true);
+				});
+				break;
+
+			//...
+			default:
+				break;
+		}
 	}
 });
 
-adapter.on('ready', function () {
-    adapter.log.info('Creating state "popup"');
-    adapter.setObject('popup', {
-        type: 'state',
-        common: {
-            name: 'popup',
-            type: 'string',
-            role: 'indicator'
-        },
-        native: {}
-    });
-
-    main();
-});
+adapter.on('ready', main);
 
 function main() 
 {
 	adapter.log.info('Ready. Configured WebOS TV IP: ' + adapter.config.IP);
     adapter.subscribeStates('*');
+	if (parseInt(adapter.config.interval, 10)) {
+		pollTimer = setInterval(pollChannel, parseInt(adapter.config.interval, 10));
+	}
 }

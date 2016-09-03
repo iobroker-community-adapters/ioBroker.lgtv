@@ -7,23 +7,161 @@
  			             "en": "Controls WebOS-based LG SmartTVs",
  			             "de": "Steuert auf WebOS basierte LG SmartTVs",
  			             "ru": "Controls WebOS-based LG SmartTVs"
-	},
-	    "license": "MIT",
+	    },
+	    "license":                "MIT",
         "platform":                 "Javascript/Node.js",
         "mode":                     "daemon",
         "icon":                     "lgtv.png",
         "enabled":                  true,
-	"extIcon":                  "https://raw.githubusercontent.com/SMundt/ioBroker.lgtv/master/admin/lgtv.png",
-	"keywords":                 ["lgtv", "WebOS", "Smart", "TV", "LG"],
+	    "extIcon":                  "https://raw.githubusercontent.com/SMundt/ioBroker.lgtv/master/admin/lgtv.png",
+	    "keywords":                 ["lgtv", "WebOS", "Smart", "TV", "LG"],
         "readme":                   "https://github.com/SMundt/iobroker.lgtv/blob/master/README.md",
-	"loglevel":                 "info",
+	    "loglevel":                 "info",
         "type":                     "media"
     },
     "native": {
-        "IP": "192.168.178.60",
-		"Timeout": "15000"
+        "IP":       "192.168.178.60",
+		"timeout":  "15000",
+        "interval": "60000"
     },
     "objects": [
 
+    ],
+    "instanceObjects": [
+      {
+        "_id":  "on",
+        "type": "state",
+        "common": {
+          "name": "Is TV is ON",
+          "role": "indicator.online",
+          "type": "string",
+          "read": true,
+          "write": false
+        },
+        "native": {}
+      },
+      {
+        "_id":  "popup",
+        "type": "state",
+        "common": {
+          "name": "Show popup text on TV",
+          "role": "state",
+          "type": "string",
+          "read": false,
+          "write": true
+        },
+        "native": {}
+      },
+      {
+        "_id":  "turnOff",
+        "type": "state",
+        "common": {
+          "name": "Switch TV OFF",
+          "role": "button",
+          "type": "boolean",
+          "read": false,
+          "write": true
+        },
+        "native": {}
+      },
+      {
+        "_id":  "mute",
+        "type": "state",
+        "common": {
+          "name": "Mute ON/OFF",
+          "role": "switch",
+          "type": "boolean",
+          "read": false,
+          "write": true
+        },
+        "native": {}
+      },
+      {
+        "_id":  "volumeUp",
+        "type": "state",
+        "common": {
+          "name": "Volume UP",
+          "role": "button",
+          "type": "boolean",
+          "read": false,
+          "write": true
+        },
+        "native": {}
+      },
+      {
+        "_id":  "volumeDown",
+        "type": "state",
+        "common": {
+          "name": "Volume DOWN",
+          "role": "button",
+          "type": "boolean",
+          "read": false,
+          "write": true
+        },
+        "native": {}
+      },
+      {
+        "_id":  "3Dmode",
+        "type": "state",
+        "common": {
+          "name": "3D mode ON/OFF",
+          "role": "switch",
+          "type": "boolean",
+          "read": false,
+          "write": true
+        },
+        "native": {}
+      },
+      {
+        "_id":    "channel",
+        "type":   "state",
+        "common": {
+          "name":   "Select channel",
+          "role":   "state",
+          "type":   "number",
+          "read":   true,
+          "write":  true
+        },
+        "native": {}
+      },
+      {
+        "_id":  "input",
+        "type": "state",
+        "common": {
+          "name": "Select input source",
+          "role": "state",
+          "type": "number",
+          "states": {
+            "AV_1": "AV",
+            "SCART_1": "Scart",
+            "COMP_1": "Component",
+            "HDMI_1": "HDMI 1",
+            "HDMI_2": "HDMI 2",
+            "HDMI_3": "HDMI 3"
+          },
+          "read": false,
+          "write": true
+        },
+        "native": {}
+      },
+      {
+        "_id":  "launch",
+        "type": "state",
+        "common": {
+          "name": "Launch app",
+          "role": "state",
+          "type": "number",
+          "states": {
+            "com.webos.app.livetv": "LiveTV",
+            "com.webos.app.smartshare": "Smart share",
+            "com.webos.app.tvuserguide": "TV User Guide",
+            "netflix": "Netflix",
+            "youtube.leanback.v4": "You tube"
+          },
+          "read": false,
+          "write": true
+        },
+        "native": {}
+      }
     ]
 }

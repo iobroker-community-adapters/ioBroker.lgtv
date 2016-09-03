@@ -1,24 +1,11 @@
 ﻿<html>
 
-<!-- these 4 files always have to be included -->
 <link rel="stylesheet" type="text/css" href="../../lib/css/themes/jquery-ui/redmond/jquery-ui.min.css"/>
 <script type="text/javascript" src="../../lib/js/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="../../socket.io/socket.io.js"></script>
 <script type="text/javascript" src="../../lib/js/jquery-ui-1.10.3.full.min.js"></script>
 
 
-<!-- optional: use jqGrid
-<link rel="stylesheet" type="text/css" href="../../lib/css/jqGrid/ui.jqgrid-4.5.4.css"/>
-<script type="text/javascript" src="../../lib/js/jqGrid/jquery.jqGrid-4.5.4.min.js"></script>
-<script type="text/javascript" src="../../lib/js/jqGrid/i18n/grid.locale-all.js"></script>
--->
-
-<!-- optional: use multiselect
-<link rel="stylesheet" type="text/css" href="../../lib/css/jquery.multiselect-1.13.css"/>
-<script type="text/javascript" src="../../lib/js/jquery.multiselect-1.13.min.js"></script>
--->
-
-<!-- these two file always have to be included -->
 <link rel="stylesheet" type="text/css" href="../../css/adapter.css"/>
 <script type="text/javascript" src="../../js/translate.js"></script>
 <script type="text/javascript" src="../../js/adapter-settings.js"></script>
@@ -28,9 +15,9 @@
     systemDictionary = {
         "Title": {"de": "LG WebOS SmartTV Adapter Konfiguration", "en": "LG WebOS SmartTV Adapter Configuration", "ru": "LG WebOS SmartTV Adapter Configuration"},
         "IP":                    {
-            "de": "IP Adresse des LG WebOS SmartTV",
-            "en": "IP address of the LG WebOS SmartTV",
-            "ru": "IP address of the LG WebOS SmartTV"
+            "de": "IP Adresse des LG WebOS SmartTV:",
+            "en": "IP address of the LG WebOS SmartTV:",
+            "ru": "IP address of the LG WebOS SmartTV:"
         },
         "Info": {
             "de": "Hinweis",
@@ -38,19 +25,24 @@
 			"ru": "Note"
         },
 		"Timeout": {
-            "de": "Timeout Intervall in ms",
-            "en": "Timeout interval in ms",
-			"ru": "Timeout interval in ms"
+            "de": "Timeout Intervall in ms:",
+            "en": "Timeout interval in ms:",
+			"ru": "Таймаут команды в мс:"
+        },
+        "Channel poll interval": {
+            "de": "Abfrage-Intervall für Kanal in ms:",
+            "en": "Channel poll interval in ms:",
+            "ru": "Интервал опроса канала в мс:"
         },
         "Settings": {
             "de": "Einstellungen",
             "en": "Settings",
-			"ru": "Settings",
+			"ru": "Настройки"
         },
         "RestartMessage": {
             "de": "Beim Speichern der Einstellungen wird der Adapter automatisch neu gestartet.",
 			"en": "On saving, adapter restarts with new config immediately.",
-            "ru": "On saving, adapter restarts with new config immediately.",
+            "ru": "On saving, adapter restarts with new config immediately."
         }
     };
     function load(settings, onChange) {
@@ -123,6 +115,7 @@
     <table>
         <tr><td class="translate">IP</td><td><input class="value" id="ip" type="input" size="15" /></td></tr>
         <tr><td class="translate">Timeout</td><td><input class="value" id="timeout" type="input" size="15" /></td></tr>
+        <tr><td class="translate">Channel poll interval</td><td><input class="value" id="interval" type="input" size="15" /></td></tr>
     </table>
 
     <div style="padding: 10px"></div>
