@@ -95,7 +95,7 @@ function sendCommand(cmd, options, cb) {
 function pollChannel() {
 	sendCommand('ssap://tv/getCurrentChannel', null, function (err, channel) {
 		var ch;
-		if (channel) ch = channel.match(/"channelNumber":(\d+)/);
+		if (channel) ch = channel.match(/"channelNumber":"(\d+)"/m);
 		if (!err && ch) {
 			adapter.setState('channel', ch[1], true);
 			adapter.setState('on', true, true);
