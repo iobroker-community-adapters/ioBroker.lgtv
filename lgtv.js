@@ -60,12 +60,6 @@ function sendCommand(cmd, options, cb) {
 	lgtvobj.on('connecting', function (host)
 	{
 		adapter.log.debug('Connecting to WebOS TV: ' + host);
-		if (error)
-		{
-			adapter.log.error('Error on connecting to WebOS TV: ' + error);
-			lgtvobj.disconnect();
-			cb && cb(error);
-		}
 	});
 
 	lgtvobj.on('prompt', function ()
