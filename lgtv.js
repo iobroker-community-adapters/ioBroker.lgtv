@@ -57,9 +57,9 @@ function sendCommand(cmd, options, cb) {
 		timeout: 	adapter.config.timeout,
 		reconnect: 	adapter.config.reconnect
 	});
-	lgtvobj.on('connecting', function (error, response)
+	lgtvobj.on('connecting', function (host)
 	{
-		adapter.log.debug('Connecting to WebOS TV: ' + adapter.config.IP);
+		adapter.log.debug('Connecting to WebOS TV: ' + host);
 		if (error)
 		{
 			adapter.log.error('Error on connecting to WebOS TV: ' + error);
