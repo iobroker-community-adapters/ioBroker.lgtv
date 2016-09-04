@@ -55,7 +55,7 @@ function sendCommand(cmd, options, cb) {
 	var lgtvobj = new LGTV({
 		url: 		'ws://' + adapter.config.IP + ':3000',
 		timeout: 	adapter.config.timeout,
-		reconnect: 	adapter.config.reconnect
+		reconnect: 	false
 	});
 	lgtvobj.on('connecting', function (host)
 	{
