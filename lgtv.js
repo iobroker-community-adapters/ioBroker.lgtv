@@ -70,7 +70,6 @@ function sendCommand(cmd, options, cb) {
 	lgtvobj.on('error', function (error)
 	{
 		adapter.log.error('Error on connecting or sending command to WebOS TV: ' + error);
-		lgtvobj.disconnect();
 		cb && cb(error);
 	});
 
