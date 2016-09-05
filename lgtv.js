@@ -81,7 +81,7 @@ adapter.on('stateChange', function (id, state)
 			case 'turnOff':
 				adapter.log.debug('Sending turn OFF command to WebOS TV: ' + adapter.config.IP);
 				sendCommand('ssap://system/turnOff', {message: state.val}, function (err, val) {
-					if (!err) adapter.setState('popup', state.val, true);
+					if (!err) adapter.setState('turnOff', state.val, true);
 				});
 				break;
 
@@ -170,7 +170,7 @@ adapter.on('stateChange', function (id, state)
 			case 'channel':
 				adapter.log.debug('Sending switch to channel ' + state.val + ' command to WebOS TV: ' + adapter.config.IP);
 				sendCommand('ssap://tv/openChannel', {channelNumber: state.val}, function (err, val) {
-					if (!err) adapter.setState('volumeDown', !!state.val, true);
+					if (!err) adapter.setState('channel', !!state.val, true);
 				});
 				break;
 				//...
