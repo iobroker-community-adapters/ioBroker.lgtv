@@ -8,11 +8,99 @@
 [![NPM](https://nodei.co/npm/iobroker.lgtv.png?downloads=true)](https://nodei.co/npm/iobroker.lgtv/)
 
 
-LG WebOS SmartTV adapter for ioBroker
+#LG WebOS SmartTV adapter for ioBroker
 
+Remote controlling an LG WebOS SmartTV (2013 models and higher) from [ioBroker](https://www.iobroker.net).
+
+
+---
+
+
+
+
+## Some examples:
+```setState('lgtv.0.popup', 'Some text!');```
+
+This will show a popup with the text "Some text!" on the TV.
+You can use HTML linebreaks (<br>) in the text.
+
+
+```setState('lgtv.0.turnOff', true);```
+
+Switching off the TV.
+
+
+```setState('lgtv.0.mute', true);```
+
+Mute the TV.
+
+```setState('lgtv.0.mute', false);```
+
+Unmute the TV.
+
+
+```setState('lgtv.0.volumeUp', true);```
+
+This will increase the volume of the TV.
+
+```setState('lgtv.0.volumeDown', true);```
+
+Decreasing the volume of the TV.
+
+
+```setState('lgtv.0.3Dmode', true);```
+
+Activates the 3D mode on the TV
+
+```setState('lgtv.0.3Dmode', false);```
+
+Deactivates the 3D mode on the TV.
+
+
+```setState('lgtv.0.channel', '7');```
+```setState('lgtv.0.channel', 7);```
+
+Switching the live TV to channel number 7.
+
+
+```setState('lgtv.0.launch', 'livetv');```
+
+Switching to Live TV mode.
+
+```setState('lgtv.0.launch', 'smartshare');```
+
+Opening the SmartShare App on the TV.
+
+```setState('lgtv.0.launch', 'tvuserguide');```
+
+Runs the TV User Guide App on the TV.
+
+```setState('lgtv.0.launch', 'netflix');```
+
+Opening the Netflix App on the TV.
+
+```setState('lgtv.0.launch', 'youtube');```
+
+Opens the Youtube App on the TV.
+
+```setState('lgtv.0.launch', 'http://www.iobroker.net');```
+
+Opens the Webbrowser on the TV and navigates to www.iobroker.net.
+
+
+---
 
 
 ## Changelog
+
+### 0.0.3 (2016-09-05)
+* (SMundt) added volumeUp true|false
+* (SMundt) added volumeDown true|false
+* (SMundt) added 3Dmode true|false
+* (SMundt) added launch livetv|smartshare|tvuserguide|netflix|youtube|<URL>
+* (SMundt) added channel <channelNumber>
+* (SMundt) some code cleaned
+
 ### 0.0.2 (2016-09-02)
 * (SMundt) removed reconnect function, not used
 * (SMundt) improved error handling and logging
@@ -21,7 +109,7 @@ LG WebOS SmartTV adapter for ioBroker
 * (SMundt) initial commit
 
 
-
+---
 
 
 ## License
