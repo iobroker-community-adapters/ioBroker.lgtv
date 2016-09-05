@@ -1,56 +1,16 @@
 /*
 DEV NOTES:
-
-lgtvobj.request('ssap://system/turnOff');	// TV ausschalten
-lgtvobj.request('ssap://audio/setMute', {mute: true});		// Lautlos ein
-lgtvobj.request('ssap://audio/setMute', {mute: false});		// Lautlos aus
-lgtvobj.request('ssap://audio/volumeUp');		// Lautstarke hoher
-lgtvobj.request('ssap://audio/volumeDown');		// Lautstarke niedriger
-lgtvobj.request('ssap://com.webos.service.tv.display/set3DOn');	// 3D Modus einschalten
-lgtvobj.request('ssap://com.webos.service.tv.display/set3DOff');	// 3D Modus ausschalten
-lgtvobj.request('ssap://tv/openChannel', {channelNumber: 1});	// Sender wechseln, hier Kanal 1
 lgtvobj.request('ssap://tv/switchInput', {inputId: "SCART_1"});	// Eingang umschalten: AV_1, SCART_1 (Scart), COMP_1 (Component) , HDMI_1 (HDMI 1), HDMI_2 (HDMI 2), HDMI_3 (HDMI 3)
-lgtvobj.request('ssap://system.launcher/open', {target: "http://www.google.de"});	// Browser offnen
-lgtvobj.request('ssap://system.launcher/launch', {id: "com.webos.app.livetv"});	// Auf Live TV umschalten
-lgtvobj.request('ssap://system.launcher/launch', {id: "com.webos.app.smartshare"});	// Smartshare App offnen
-lgtvobj.request('ssap://system.launcher/launch', {id: "com.webos.app.tvuserguide"});	// TV Bedienungsanleitungs App offnen
-lgtvobj.request('ssap://system.launcher/launch', {id: "netflix"});	// Netflix offnen
-lgtvobj.request('ssap://system.launcher/launch', {id: "youtube.leanback.v4"});	// Youtube offnen
 lgtvobj.request('ssap://tv/getCurrentChannel', function (Error, Response)	// Aktueller Sender (Response nach "channelNumber" filtern!!!!)
 */
 
 'use strict';
 var fs 				= require('fs'); // for storing client key
-//var WebSocketClient = require('websocket').client; // for communication with TV
-//var EventEmitter 	= require('events').EventEmitter;
 var utils 			= require(__dirname + '/lib/utils');
 var adapter 		= utils.adapter('lgtv');
 var LGTV            = require('lgtv2');
 var pollTimer       = null;
 
-// BF: Looks OK. Why?
-
-/* IS THAT HERE CORRECT???
-var SpecializedSocket = function (ws) {
-    SpecializedSocket.send = function(type, payload) {
-        payload = payload || {};
-        var message =
-            Object.keys(payload)
-                .reduce(function(acc, k) {
-                    return acc.concat([k + ':' + payload[k]]);
-                }, ['type:' + type])
-                .join('\n') + '\n\n';
-
-        ws.send(message);
-    };
-
-    SpecializedSocket.close = function() {
-        ws.close();
-    };
-};
-*/
-
-// BF: Is it not better to open the connection and hold it ON? So will always know if TV is ON or OFF? And we do not need time to establish the connection.
 function sendCommand(cmd, options, cb) {
 	var lgtvobj = new LGTV({
 		url: 		'ws://' + adapter.config.IP + ':3000',
@@ -132,7 +92,88 @@ adapter.on('stateChange', function (id, state)
 				});
 				break;
 
-			//...
+			case 'volumeUp':
+				adapter.log.debug('Sending volumeUp ' + state.val + ' command to WebOS TV: ' + adapter.config.IP);
+				sendCommand('ssap://audio/volumeUp', null, function (err, val) {
+					if (!err) adapter.setState('volumeUp', !!state.val, true);
+				});
+				break;
+
+			case 'volumeDown':
+				adapter.log.debug('Sending volumeDown ' + state.val + ' command to WebOS TV: ' + adapter.config.IP);
+				sendCommand('ssap://audio/volumeDown', null, function (err, val) {
+					if (!err) adapter.setState('volumeDown', !!state.val, true);
+				});
+				break;
+
+			case '3Dmode':
+				adapter.log.debug('Sending 3Dmode ' + state.val + ' command to WebOS TV: ' + adapter.config.IP);
+				switch (state.val)
+				{
+					case true:
+						sendCommand('ssap://com.webos.service.tv.display/set3DOn', null, function (err, val) {
+							if (!err) adapter.setState('3Dmode', !!state.val, true);
+						});
+					break;
+					
+					case false:
+						sendCommand('ssap://com.webos.service.tv.display/set3DOff', null, function (err, val) {
+							if (!err) adapter.setState('3Dmode', !!state.val, true);
+						});
+					break;
+				}
+				break;
+
+			case 'launch':
+				adapter.log.debug('Sending launch command ' + state.val + ' to WebOS TV: ' + adapter.config.IP);
+				switch (state.val)
+				{
+					case 'livetv':
+						adapter.log.debug('Switching to LiveTV on WebOS TV: ' + adapter.config.IP);
+						sendCommand('ssap://system.launcher/launch', {id: "com.webos.app.livetv"}), function (err, val) {
+							if (!err) adapter.setState('launch', state.val, true);
+						}
+					break;
+					case 'smartshare':
+						adapter.log.debug('Switching to SmartShare App on WebOS TV: ' + adapter.config.IP);
+						sendCommand('ssap://system.launcher/launch', {id: "com.webos.app.smartshare"}), function (err, val) {
+							if (!err) adapter.setState('launch', state.val, true);
+						}
+					break;		
+					case 'tvuserguide':
+						adapter.log.debug('Switching to TV Userguide App on WebOS TV: ' + adapter.config.IP);
+						sendCommand('ssap://system.launcher/launch', {id: "com.webos.app.tvuserguide"}), function (err, val) {
+							if (!err) adapter.setState('launch', state.val, true);
+						}
+					break;	
+					case 'netflix':
+						adapter.log.debug('Switching to Netflix App on WebOS TV: ' + adapter.config.IP);
+						sendCommand('ssap://system.launcher/launch', {id: "netflix"}), function (err, val) {
+							if (!err) adapter.setState('launch', state.val, true);
+						}
+					break;		
+					case 'youtube':
+						adapter.log.debug('Switching to Youtube App on WebOS TV: ' + adapter.config.IP);
+						sendCommand('ssap://system.launcher/launch', {id: "youtube.leanback.v4"}), function (err, val) {
+							if (!err) adapter.setState('launch', state.val, true);
+						}
+					break;			
+					default:
+						adapter.log.debug(state.val + 'is not a launching app. Opening in Browser on WebOS TV: ' + adapter.config.IP);
+						sendCommand('ssap://system.launcher/open', {target: state.val}), function (err, val) {
+							if (!err) adapter.setState('launch', state.val, true);
+						}
+					break;
+				}
+				break;
+
+			case 'channel':
+				adapter.log.debug('Sending switch to channel ' + state.val + ' command to WebOS TV: ' + adapter.config.IP);
+				sendCommand('ssap://tv/openChannel', {channelNumber: state.val}, function (err, val) {
+					if (!err) adapter.setState('volumeDown', !!state.val, true);
+				});
+				break;
+				//...
 			default:
 				break;
 		}
