@@ -22,7 +22,7 @@ Remote controlling an LG WebOS SmartTV (2013 models and higher) from [ioBroker](
 ```setState('lgtv.0.popup', 'Some text!');```
 
 This will show a popup with the text "Some text!" on the TV.
-You can use HTML linebreaks (<br>) in the text.
+You can use HTML linebreaks (br) in the text.
 
 
 ```setState('lgtv.0.turnOff', true);```
