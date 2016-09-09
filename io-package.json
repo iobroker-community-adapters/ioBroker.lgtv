@@ -152,11 +152,11 @@
           "role": "state",
           "type": "number",
           "states": {
-            "com.webos.app.livetv": "LiveTV",
-            "com.webos.app.smartshare": "Smart share",
-            "com.webos.app.tvuserguide": "TV User Guide",
+            "livetv": "LiveTV",
+            "smartshare": "Smart share",
+            "tvuserguide": "TV User Guide",
             "netflix": "Netflix",
-            "youtube.leanback.v4": "You tube"
+            "youtube": "You tube"
           },
           "read": false,
           "write": true
