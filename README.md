@@ -93,6 +93,9 @@ Opens the Webbrowser on the TV and navigates to www.iobroker.net.
 
 ## Changelog
 
+### 0.0.4 (2016-09-12)
+* (SMundt) solved saving IP address within adapter configuration
+
 ### 0.0.3 (2016-09-05)
 * (SMundt) added volumeUp true|false
 * (SMundt) added volumeDown true|false

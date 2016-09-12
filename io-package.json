@@ -1,7 +1,7 @@
 {
     "common": {
         "name":                     "lgtv",
-        "version":                  "0.0.3",
+        "version":                  "0.0.4",
         "title":                    "LG WebOS SmartTV Adapter",
         "desc":                     {
  			             "en": "Controls WebOS-based LG SmartTVs",
@@ -20,7 +20,7 @@
         "type":                     "media"
     },
     "native": {
-        "IP":       "192.168.178.60",
+        "ip":       "",
 		"timeout":  "15000",
         "interval": "60000"
     },

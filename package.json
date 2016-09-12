@@ -1,6 +1,6 @@
 {
   "name": "iobroker.lgtv",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "ioBroker LG WebOS SmartTV Adapter",
   "author": {
     "name": "Sebastian Mundt",
@@ -44,7 +44,7 @@
   },
   "readmeFilename": "README.md",
   "readme": "![Logo](admin/lgtv.png)\n# ioBroker.lgtv\n=================\n\nLG WebOS SmartTV adapter for ioBroker\n",
-  "_id": "iobroker.lgtv@0.0.1",
+  "_id": "iobroker.lgtv@0.0.3",
   "_shasum": "0d34da12949bcfdf026717b85f263dbb2f658e0b",
   "_resolved": "https://github.com/SMundt/iobroker.lgtv/tarball/master",
   "_from": "https://github.com/SMundt/iobroker.lgtv/tarball/master"
