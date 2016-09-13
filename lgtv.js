@@ -29,7 +29,7 @@ function sendCommand(cmd, options, cb) {
 
 	lgtvobj.on('error', function (error)
 	{
-		adapter.log.error('Error on connecting or sending command to WebOS TV: ' + error);
+		adapter.log.debug('Error on connecting or sending command to WebOS TV: ' + error);
 		cb && cb(error);
 	});
 
@@ -43,7 +43,7 @@ function sendCommand(cmd, options, cb) {
 			}
 			else
 			{
-				adapter.log.error('ERROR! Response from TV: ' + (response ? JSON.stringify(response) : _error));
+				adapter.log.debug('ERROR! Response from TV: ' + (response ? JSON.stringify(response) : _error));
 			}
 			lgtvobj.disconnect();
 			cb && cb(_error, response);
