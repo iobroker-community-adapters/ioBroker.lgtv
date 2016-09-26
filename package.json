@@ -1,6 +1,6 @@
 {
   "name": "iobroker.lgtv",
-  "version": "0.0.4",
+  "version": "1.0.0",
   "description": "ioBroker LG WebOS SmartTV Adapter",
   "author": {
     "name": "Sebastian Mundt",
@@ -42,10 +42,30 @@
   "bugs": {
     "url": "https://github.com/SMundt/iobroker.lgtv/issues"
   },
-  "readmeFilename": "README.md",
-  "readme": "![Logo](admin/lgtv.png)\n# ioBroker.lgtv\n=================\n\nLG WebOS SmartTV adapter for ioBroker\n",
-  "_id": "iobroker.lgtv@0.0.3",
-  "_shasum": "0d34da12949bcfdf026717b85f263dbb2f658e0b",
-  "_resolved": "https://github.com/SMundt/iobroker.lgtv/tarball/master",
-  "_from": "https://github.com/SMundt/iobroker.lgtv/tarball/master"
+  "_id": "iobroker.lgtv@0.0.4",
+  "_shasum": "52d9bfcc96e56fbd4b7023c5722ec4b5f0c40871",
+  "_resolved": "https://registry.npmjs.org/iobroker.lgtv/-/iobroker.lgtv-0.0.4.tgz",
+  "_from": "iobroker.lgtv@latest",
+  "scripts": {},
+  "_npmVersion": "2.15.9",
+  "_nodeVersion": "4.5.0",
+  "_npmUser": {
+    "name": "smundt",
+    "email": "mail@sebastian-mundt.com"
+  },
+  "dist": {
+    "shasum": "52d9bfcc96e56fbd4b7023c5722ec4b5f0c40871",
+    "tarball": "https://registry.npmjs.org/iobroker.lgtv/-/iobroker.lgtv-0.0.4.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "smundt",
+      "email": "mail@sebastian-mundt.com"
+    }
+  ],
+  "_npmOperationalInternal": {
+    "host": "packages-16-east.internal.npmjs.com",
+    "tmp": "tmp/iobroker.lgtv-0.0.4.tgz_1473878627042_0.5250728745013475"
+  },
+  "directories": {}
 }

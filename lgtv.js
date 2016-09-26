@@ -1,9 +1,3 @@
-/*
-DEV NOTES:
-lgtvobj.request('ssap://tv/switchInput', {inputId: "SCART_1"});	// Eingang umschalten: AV_1, SCART_1 (Scart), COMP_1 (Component) , HDMI_1 (HDMI 1), HDMI_2 (HDMI 2), HDMI_3 (HDMI 3)
-lgtvobj.request('ssap://tv/getCurrentChannel', function (Error, Response)	// Aktueller Sender (Response nach "channelNumber" filtern!!!!)
-*/
-
 'use strict';
 var fs 				= require('fs'); // for storing client key
 var utils 			= require(__dirname + '/lib/utils');
@@ -37,14 +31,8 @@ function sendCommand(cmd, options, cb) {
 	{
 		lgtvobj.request(cmd, options, function (_error, response)
 		{
-			if (!_error && JSON.stringify(response).indexOf('"returnValue":true') !== -1)
-			{
-				adapter.log.debug('Sent popup message "' + state.val + '" to WebOS TV: ' + adapter.config.ip);
-			}
-			else
-			{
+			if (_error)
 				adapter.log.debug('ERROR! Response from TV: ' + (response ? JSON.stringify(response) : _error));
-			}
 			lgtvobj.disconnect();
 			cb && cb(_error, response);
 		});
@@ -52,13 +40,20 @@ function sendCommand(cmd, options, cb) {
 }
 
 function pollChannel() {
-	sendCommand('ssap://tv/getCurrentChannel', null, function (err, channel) {
-		var ch;
-		if (channel) ch = channel.match(/"channelNumber":"(\d+)"/m);
-		if (!err && ch) {
+	adapter.log.debug('Polling channel');
+	sendCommand('ssap://tv/getCurrentChannel', null, function (err, channel) 
+	{
+		var JSONChannel, ch;
+		JSONChannel = JSON.stringify(channel);
+		if (JSONChannel) ch = JSONChannel.match(/"channelNumber":"(\d+)"/m);
+		if (!err && ch) 
+		{
 			adapter.setState('channel', ch[1], true);
 			adapter.setState('on', true, true);
-		} else {
+		} 
+		else 
+		{
+			adapter.setState('channel', '', true);
 			adapter.setState('on', false, true);
 		}
 	});
@@ -170,10 +165,18 @@ adapter.on('stateChange', function (id, state)
 			case 'channel':
 				adapter.log.debug('Sending switch to channel ' + state.val + ' command to WebOS TV: ' + adapter.config.ip);
 				sendCommand('ssap://tv/openChannel', {channelNumber: state.val}, function (err, val) {
-					if (!err) adapter.setState('channel', !!state.val, true);
+					adapter.setState('channel', state.val, true);
 				});
 				break;
-				//...
+
+			case 'input':
+				adapter.log.debug('Sending switch to input "' + state.val + '" command to WebOS TV: ' + adapter.config.ip);
+				sendCommand('ssap://tv/switchInput', {inputId: state.val}, function (err, val) {
+					if (!err) adapter.setState('input', state.val, true);
+				});
+			
+				break;
+				
 			default:
 				break;
 		}
