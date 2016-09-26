@@ -87,11 +87,46 @@ Opens the Youtube App on the TV.
 
 Opens the Webbrowser on the TV and navigates to www.iobroker.net.
 
+```setState('lgtv.0.input', 'AV_1');```
+
+Switches the iput oh the TV to AV1.
+
+```setState('lgtv.0.input', 'SCART_1');```
+
+Switches the iput oh the TV to Scart.
+
+```setState('lgtv.0.input', 'COMP_1');```
+
+Switches the iput oh the TV to Component.
+
+```setState('lgtv.0.input', 'HDMI_1');```
+
+Switches the iput oh the TV to HDMI 1.
+
+```setState('lgtv.0.input', 'HDMI_2');```
+
+Switches the iput oh the TV to HDMI 2.
+
+```setState('lgtv.0.input', 'HDMI_3');```
+
+Switches the iput oh the TV to HDMI 3.
+
+
+---
+
+## States
+
+channel - holds the current chanel
+on - is true when TV is on and false if TV is off
 
 ---
 
 
 ## Changelog
+
+### 1.0.0 (2016-09-26)
+* (SMundt) added channel polling
+* (SMundt) added switching input
 
 ### 0.0.4 (2016-09-12)
 * (SMundt) solved saving IP address within adapter configuration
