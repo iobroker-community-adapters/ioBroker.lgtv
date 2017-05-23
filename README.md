@@ -128,7 +128,7 @@ on - is true when TV is on and false if TV is off
 
 ## Changelog
 
-### 1.0.1 (2017-05-23)
+### 1.0.2 (2017-05-23)
 * (SMundt) added support for launching Amazon Prime app
 ### 1.0.0 (2016-09-26)
 * (SMundt) added channel polling
