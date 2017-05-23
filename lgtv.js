@@ -152,7 +152,13 @@ adapter.on('stateChange', function (id, state)
 						sendCommand('ssap://system.launcher/launch', {id: "youtube.leanback.v4"}), function (err, val) {
 							if (!err) adapter.setState('launch', state.val, true);
 						}
-					break;			
+					break;	
+					case 'prime':
+						adapter.log.debug('Switching to Amazon Prime App on WebOS TV: ' + adapter.config.ip);
+						sendCommand('ssap://system.launcher/launch', {id: "lovefilm.de"}), function (err, val) {
+							if (!err) adapter.setState('launch', state.val, true);
+						}
+					break;	
 					default:
 						adapter.log.debug(state.val + 'is not a launching app. Opening in Browser on WebOS TV: ' + adapter.config.ip);
 						sendCommand('ssap://system.launcher/open', {target: state.val}), function (err, val) {
