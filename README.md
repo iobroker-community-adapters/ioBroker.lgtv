@@ -83,6 +83,10 @@ Opening the Netflix App on the TV.
 
 Opens the Youtube App on the TV.
 
+```setState('lgtv.0.launch', 'prime');```
+
+Opens the Amazon Prime App on the TV.
+
 ```setState('lgtv.0.launch', 'http://www.iobroker.net');```
 
 Opens the Webbrowser on the TV and navigates to www.iobroker.net.
