@@ -3,7 +3,8 @@ var fs 				= require('fs'); // for storing client key
 var utils 			= require(__dirname + '/lib/utils');
 var adapter 		= utils.adapter('lgtv');
 var LGTV            = require('lgtv2');
-var pollTimer       = null;
+var pollTimerChannel       = null;
+var pollTimerOnlineStatus       = null;
 
 function sendCommand(cmd, options, cb) {
 	var lgtvobj = new LGTV({
@@ -49,11 +50,24 @@ function pollChannel() {
 		if (!err && ch) 
 		{
 			adapter.setState('channel', ch[1], true);
-			adapter.setState('on', true, true);
 		} 
 		else 
 		{
 			adapter.setState('channel', '', true);
+		}
+	});
+}
+
+function pollOnlineStatus() {
+	adapter.log.debug('Polling OnlineStatus');
+	sendCommand('ssap://audio/getVolume', null, function (err, OnlineStatus) 
+	{
+		if (!err) 
+		{
+			adapter.setState('on', true, true);
+		} 
+		else 
+		{
 			adapter.setState('on', false, true);
 		}
 	});
@@ -196,6 +210,7 @@ function main()
 	adapter.log.info('Ready. Configured WebOS TV IP: ' + adapter.config.ip);
     adapter.subscribeStates('*');
 	if (parseInt(adapter.config.interval, 10)) {
-		pollTimer = setInterval(pollChannel, parseInt(adapter.config.interval, 10));
+		pollTimerChannel = setInterval(pollChannel, parseInt(adapter.config.interval, 10));
+		pollTimerOnlineStatus = setInterval(pollOnlineStatus, parseInt(adapter.config.interval, 10));
 	}
 }
