@@ -5,6 +5,7 @@ var adapter 		= utils.adapter('lgtv');
 var LGTV            = require('lgtv2');
 var pollTimerChannel       = null;
 var pollTimerOnlineStatus       = null;
+var pollTimerInput       = null;
 
 function sendCommand(cmd, options, cb) {
 	var lgtvobj = new LGTV({
@@ -69,6 +70,51 @@ function pollOnlineStatus() {
 		else 
 		{
 			adapter.setState('on', false, true);
+		}
+	});
+}
+
+function pollInput() {
+	adapter.log.debug('Polling Input');
+	sendCommand('ssap://com.webos.applicationManager/getForegroundAppInfo', null, function (err, Input)
+	{
+		if (!err && Input) 
+		{
+			var JSONInput, CurrentInput;
+			JSONInput = JSON.stringify(Input);
+			if (JSONInput)
+			{
+				CurrentInput = JSONInput.match(/.*"appId":"(.*?)"/m);
+				switch(CurrentInput[1])
+				{
+					case "com.webos.app.hdmi1":
+						adapter.setState('input', 'HDMI_1', true);
+					break;
+
+					case "com.webos.app.hdmi2":
+						adapter.setState('input', 'HDMI_2', true);
+					break;
+
+					case "com.webos.app.hdmi3":
+						adapter.setState('input', 'HDMI_3', true);
+					break;
+
+					case "com.webos.app.externalinput.scart":
+						adapter.setState('input', 'SCART_1', true);
+					break;
+	
+					case "com.webos.app.externalinput.component":
+						adapter.setState('input', 'COMP_1', true);
+					break;	
+					
+					default:
+					break;
+				}
+			}
+		} 
+		else 
+		{
+			adapter.log.debug('ERROR on polling input');
 		}
 	});
 }
@@ -212,5 +258,6 @@ function main()
 	if (parseInt(adapter.config.interval, 10)) {
 		pollTimerChannel = setInterval(pollChannel, parseInt(adapter.config.interval, 10));
 		pollTimerOnlineStatus = setInterval(pollOnlineStatus, parseInt(adapter.config.interval, 10));
+		pollTimerInput = setInterval(pollInput, parseInt(adapter.config.interval, 10));
 	}
 }
