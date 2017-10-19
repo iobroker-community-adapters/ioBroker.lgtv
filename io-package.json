@@ -27,6 +27,11 @@
     "objects": [
 
     ],
+    "authors": [
+	    "SebastianSchultz <mail@sebastian-schultz.de>",
+	    "bluefox <dogafox@gmail.com>",
+            "hobbyquaker <hq@ccu.io>"
+    ],
     "instanceObjects": [
       {
         "_id":  "on",
