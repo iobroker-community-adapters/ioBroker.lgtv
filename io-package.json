@@ -17,7 +17,7 @@
 	    "keywords":                 ["lgtv", "WebOS", "Smart", "TV", "LG"],
         "readme":                   "https://github.com/SMundt/iobroker.lgtv/blob/master/README.md",
 	    "loglevel":                 "info",
-        "type":                     "media"
+        "type":                     "multimedia"
     },
     "native": {
         "ip":       "",
