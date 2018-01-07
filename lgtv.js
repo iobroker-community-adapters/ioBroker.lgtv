@@ -61,9 +61,10 @@ function pollChannel() {
 
 function pollOnlineStatus() {
 	adapter.log.debug('Polling OnlineStatus');
-	sendCommand('ssap://audio/getVolume', null, function (err, OnlineStatus) 
+	//sendCommand('ssap://audio/getVolume', null, function (err, OnlineStatus) 
+	sendCommand('com.webos.applicationManager/getForegroundAppInfo', null, function (err, OnlineStatus) 
 	{
-		if (!err) 
+		if (!err && OnlineStatus)
 		{
 			adapter.setState('on', true, true);
 		} 
