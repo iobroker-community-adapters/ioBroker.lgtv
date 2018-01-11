@@ -1,7 +1,7 @@
 {
     "common": {
         "name":                     "lgtv",
-        "version":                  "1.0.2",
+        "version":                  "1.0.3",
         "title":                    "LG WebOS SmartTV Adapter",
         "desc":                     {
  			             "en": "Controls WebOS-based LG SmartTVs",
@@ -13,9 +13,9 @@
         "mode":                     "daemon",
         "icon":                     "lgtv.png",
         "enabled":                  true,
-	    "extIcon":                  "https://raw.githubusercontent.com/SMundt/ioBroker.lgtv/master/admin/lgtv.png",
+	    "extIcon":                  "https://raw.githubusercontent.com/SebastianSchultz/ioBroker.lgtv/master/admin/lgtv.png",
 	    "keywords":                 ["lgtv", "WebOS", "Smart", "TV", "LG"],
-        "readme":                   "https://github.com/SMundt/iobroker.lgtv/blob/master/README.md",
+        "readme":                   "https://github.com/SebastianSchultz/iobroker.lgtv/blob/master/README.md",
 	    "loglevel":                 "info",
         "type":                     "multimedia"
     },
@@ -135,7 +135,7 @@
         "common": {
           "name": "Select input source",
           "role": "state",
-          "type": "number",
+          "type": "string",
           "states": {
             "AV_1": "AV_1",
             "SCART_1": "Scart",
@@ -155,15 +155,15 @@
         "common": {
           "name": "Launch app",
           "role": "state",
-          "type": "number",
+          "type": "string",
           "states": {
             "livetv": "LiveTV",
             "smartshare": "Smart share",
             "tvuserguide": "TV User Guide",
             "netflix": "Netflix",
             "youtube": "You tube",
-	    "prime": "Amazon Prime",
-	    "amazon": "Amazon Prime Video"
+			"prime": "Amazon Prime",
+			"amazon": "Amazon Prime Video"
           },
           "read": false,
           "write": true

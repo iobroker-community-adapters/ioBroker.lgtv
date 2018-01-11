@@ -87,6 +87,10 @@ Opens the Youtube App on the TV.
 
 Opens the Amazon Prime App on the TV.
 
+```setState('lgtv.0.launch', 'amazon');```
+
+On some TVs this command opens the Amazon Prime App.
+
 ```setState('lgtv.0.launch', 'http://www.iobroker.net');```
 
 Opens the Webbrowser on the TV and navigates to www.iobroker.net.
@@ -128,29 +132,34 @@ on - is true when TV is on and false if TV is off
 
 ## Changelog
 
+### 1.0.3 (2018-01-11)
+* (SebastianSchultz) added support for launching Amazon Prime app via "amazon" (used on some TV's instead of "prime")
+* (SebastianSchultz) fixed issue that state "on" was not set when in an app on TV
+
 ### 1.0.2 (2017-05-23)
-* (SMundt) added support for launching Amazon Prime app
+* (SebastianSchultz) added support for launching Amazon Prime app
+
 ### 1.0.0 (2016-09-26)
-* (SMundt) added channel polling
-* (SMundt) added switching input
+* (SebastianSchultz) added channel polling
+* (SebastianSchultz) added switching input
 
 ### 0.0.4 (2016-09-12)
-* (SMundt) solved saving IP address within adapter configuration
+* (SebastianSchultz) solved saving IP address within adapter configuration
 
 ### 0.0.3 (2016-09-05)
-* (SMundt) added volumeUp true|false
-* (SMundt) added volumeDown true|false
-* (SMundt) added 3Dmode true|false
-* (SMundt) added launch livetv|smartshare|tvuserguide|netflix|youtube|<URL>
-* (SMundt) added channel <channelNumber>
-* (SMundt) some code cleaned
+* (SebastianSchultz) added volumeUp true|false
+* (SebastianSchultz) added volumeDown true|false
+* (SebastianSchultz) added 3Dmode true|false
+* (SebastianSchultz) added launch livetv|smartshare|tvuserguide|netflix|youtube|<URL>
+* (SebastianSchultz) added channel <channelNumber>
+* (SebastianSchultz) some code cleaned
 
 ### 0.0.2 (2016-09-02)
-* (SMundt) removed reconnect function, not used
-* (SMundt) improved error handling and logging
+* (SebastianSchultz) removed reconnect function, not used
+* (SebastianSchultz) improved error handling and logging
 
 ### 0.0.1 (2016-08-31)
-* (SMundt) initial commit
+* (SebastianSchultz) initial commit
 
 
 ---
@@ -160,7 +169,7 @@ on - is true when TV is on and false if TV is off
 
 The MIT License (MIT)
 
-Copyright (c) 2016 SMundt
+Copyright (c) 2016 Sebastian Schultz.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

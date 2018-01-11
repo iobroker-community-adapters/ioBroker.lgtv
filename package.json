@@ -1,71 +1,106 @@
 {
-  "name": "iobroker.lgtv",
-  "version": "1.0.2",
-  "description": "ioBroker LG WebOS SmartTV Adapter",
+  "_args": [
+    [
+      {
+        "raw": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/master",
+        "scope": null,
+        "escapedName": null,
+        "name": null,
+        "rawSpec": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/master",
+        "spec": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/master",
+        "type": "remote"
+      },
+      "C:\\ioBroker\\node_modules\\iobroker"
+    ]
+  ],
+  "_from": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/master",
+  "_id": "iobroker.lgtv@1.0.3",
+  "_inCache": true,
+  "_location": "/iobroker.lgtv",
+  "_nodeVersion": "4.5.0",
+  "_npmOperationalInternal": {
+    "host": "packages-16-east.internal.npmjs.com",
+    "tmp": "tmp/iobroker.lgtv-0.0.4.tgz_1473878627042_0.5250728745013475"
+  },
+  "_npmUser": {
+    "name": "sebastianschultz",
+    "email": "mail@sebastian-schultz.de"
+  },
+  "_npmVersion": "2.15.9",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/master",
+    "scope": null,
+    "escapedName": null,
+    "name": null,
+    "rawSpec": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/master",
+    "spec": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/master",
+    "type": "remote"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/master",
+  "_shasum": "52d9bfcc96e56fbd4b7023c5722ec4b5f0c40871",
+  "_shrinkwrap": null,
+  "_spec": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/master",
+  "_where": "C:\\ioBroker\\node_modules\\iobroker",
   "author": {
-    "name": "Sebastian Mundt",
-    "email": "mail@sebastian-mundt.com"
+    "name": "Sebastian Schultz",
+    "email": "mail@sebastian-schultz.de"
+  },
+  "bugs": {
+    "url": "https://github.com/SebastianSchultz/iobroker.lgtv/issues"
   },
   "contributors": [
     {
-      "name": "Sebastian Mundt",
-      "email": "mail@sebastian-mundt.com"
+      "name": "Sebastian Schultz",
+      "email": "mail@sebastian-schultz.de"
     }
   ],
-  "homepage": "https://github.com/SMundt/iobroker.lgtv",
-  "license": "MIT",
+  "dependencies": {
+    "lgtv2": "^1.2.0",
+    "websocket": "^1.0.23"
+  },
+  "description": "ioBroker LG WebOS SmartTV Adapter",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-compress": "^0.13.0",
+    "grunt-contrib-copy": "^0.8.0",
+    "grunt-contrib-jshint": "^0.11.2",
+    "grunt-exec": "^0.4.6",
+    "grunt-http": "^1.6.0",
+    "grunt-jscs": "^2.0.0",
+    "grunt-replace": "^0.9.3"
+  },
+  "directories": {},
+  "dist": {
+    "shasum": "52d9bfcc96e56fbd4b7023c5722ec4b5f0c40871",
+    "tarball": "https://registry.npmjs.org/iobroker.lgtv/-/iobroker.lgtv-0.0.4.tgz"
+  },
+  "homepage": "https://github.com/SebastianSchultz/iobroker.lgtv",
   "keywords": [
     "ioBroker",
     "lgtv",
     "Smart Home",
     "home automation"
   ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/SMundt/iobroker.lgtv.git"
-  },
-  "dependencies": {
-    "lgtv2": "^1.2.0",
-    "websocket": "^1.0.23"
-  },
-  "devDependencies": {
-    "grunt": "^0.4.5",
-    "grunt-replace": "^0.9.3",
-    "grunt-contrib-jshint": "^0.11.2",
-    "grunt-jscs": "^2.0.0",
-    "grunt-http": "^1.6.0",
-    "grunt-contrib-clean": "^0.6.0",
-    "grunt-contrib-compress": "^0.13.0",
-    "grunt-contrib-copy": "^0.8.0",
-    "grunt-exec": "^0.4.6"
-  },
-  "bugs": {
-    "url": "https://github.com/SMundt/iobroker.lgtv/issues"
-  },
-  "_id": "iobroker.lgtv@0.0.4",
-  "_shasum": "52d9bfcc96e56fbd4b7023c5722ec4b5f0c40871",
-  "_resolved": "https://registry.npmjs.org/iobroker.lgtv/-/iobroker.lgtv-0.0.4.tgz",
-  "_from": "iobroker.lgtv@latest",
-  "scripts": {},
-  "_npmVersion": "2.15.9",
-  "_nodeVersion": "4.5.0",
-  "_npmUser": {
-    "name": "smundt",
-    "email": "mail@sebastian-mundt.com"
-  },
-  "dist": {
-    "shasum": "52d9bfcc96e56fbd4b7023c5722ec4b5f0c40871",
-    "tarball": "https://registry.npmjs.org/iobroker.lgtv/-/iobroker.lgtv-0.0.4.tgz"
-  },
+  "license": "MIT",
   "maintainers": [
     {
-      "name": "smundt",
-      "email": "mail@sebastian-mundt.com"
+      "name": "sebastianschultz",
+      "email": "mail@sebastian-schultz.de"
     }
   ],
-  "_npmOperationalInternal": {
-    "host": "packages-16-east.internal.npmjs.com",
-    "tmp": "tmp/iobroker.lgtv-0.0.4.tgz_1473878627042_0.5250728745013475"
+  "name": "iobroker.lgtv",
+  "optionalDependencies": {},
+  "readme": "![Logo](admin/lgtv.png)\n# ioBroker.lgtv\n=================\n\n[![NPM version](http://img.shields.io/npm/v/iobroker.lgtv.svg)](https://www.npmjs.com/package/iobroker.lgtv)\n[![Downloads](https://img.shields.io/npm/dm/iobroker.lgtv.svg)](https://www.npmjs.com/package/iobroker.lgtv)\n\n[![NPM](https://nodei.co/npm/iobroker.lgtv.png?downloads=true)](https://nodei.co/npm/iobroker.lgtv/)\n\n\n#LG WebOS SmartTV adapter for ioBroker\n\nRemote controlling an LG WebOS SmartTV (2013 models and higher) from [ioBroker](https://www.iobroker.net).\n\n\n---\n\n\n\n\n## Some examples:\n```setState('lgtv.0.popup', 'Some text!');```\n\nThis will show a popup with the text \"Some text!\" on the TV.\nYou can use HTML linebreaks (br) in the text.\n\n\n```setState('lgtv.0.turnOff', true);```\n\nSwitching off the TV.\n\n\n```setState('lgtv.0.mute', true);```\n\nMute the TV.\n\n```setState('lgtv.0.mute', false);```\n\nUnmute the TV.\n\n\n```setState('lgtv.0.volumeUp', true);```\n\nThis will increase the volume of the TV.\n\n```setState('lgtv.0.volumeDown', true);```\n\nDecreasing the volume of the TV.\n\n\n```setState('lgtv.0.3Dmode', true);```\n\nActivates the 3D mode on the TV\n\n```setState('lgtv.0.3Dmode', false);```\n\nDeactivates the 3D mode on the TV.\n\n\n```setState('lgtv.0.channel', '7');```\n```setState('lgtv.0.channel', 7);```\n\nSwitching the live TV to channel number 7.\n\n\n```setState('lgtv.0.launch', 'livetv');```\n\nSwitching to Live TV mode.\n\n```setState('lgtv.0.launch', 'smartshare');```\n\nOpening the SmartShare App on the TV.\n\n```setState('lgtv.0.launch', 'tvuserguide');```\n\nRuns the TV User Guide App on the TV.\n\n```setState('lgtv.0.launch', 'netflix');```\n\nOpening the Netflix App on the TV.\n\n```setState('lgtv.0.launch', 'youtube');```\n\nOpens the Youtube App on the TV.\n\n```setState('lgtv.0.launch', 'prime');```\n\nOpens the Amazon Prime App on the TV.\n\n```setState('lgtv.0.launch', 'http://www.iobroker.net');```\n\nOpens the Webbrowser on the TV and navigates to www.iobroker.net.\n\n```setState('lgtv.0.input', 'AV_1');```\n\nSwitches the iput oh the TV to AV1.\n\n```setState('lgtv.0.input', 'SCART_1');```\n\nSwitches the iput oh the TV to Scart.\n\n```setState('lgtv.0.input', 'COMP_1');```\n\nSwitches the iput oh the TV to Component.\n\n```setState('lgtv.0.input', 'HDMI_1');```\n\nSwitches the iput oh the TV to HDMI 1.\n\n```setState('lgtv.0.input', 'HDMI_2');```\n\nSwitches the iput oh the TV to HDMI 2.\n\n```setState('lgtv.0.input', 'HDMI_3');```\n\nSwitches the iput oh the TV to HDMI 3.\n\n\n---\n\n## States\n\nchannel - holds the current chanel\non - is true when TV is on and false if TV is off\n\n---\n\n\n## Changelog\n\n### 1.0.2 (2017-05-23)\n* (SMundt) added support for launching Amazon Prime app\n### 1.0.0 (2016-09-26)\n* (SMundt) added channel polling\n* (SMundt) added switching input\n\n### 0.0.4 (2016-09-12)\n* (SMundt) solved saving IP address within adapter configuration\n\n### 0.0.3 (2016-09-05)\n* (SMundt) added volumeUp true|false\n* (SMundt) added volumeDown true|false\n* (SMundt) added 3Dmode true|false\n* (SMundt) added launch livetv|smartshare|tvuserguide|netflix|youtube|<URL>\n* (SMundt) added channel <channelNumber>\n* (SMundt) some code cleaned\n\n### 0.0.2 (2016-09-02)\n* (SMundt) removed reconnect function, not used\n* (SMundt) improved error handling and logging\n\n### 0.0.1 (2016-08-31)\n* (SMundt) initial commit\n\n\n---\n\n\n## License\n\nThe MIT License (MIT)\n\nCopyright (c) 2016 SMundt\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in\nall copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN\nTHE SOFTWARE.\n",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SebastianSchultz/iobroker.lgtv.git"
   },
-  "directories": {}
+  "scripts": {},
+  "version": "1.0.3"
 }
