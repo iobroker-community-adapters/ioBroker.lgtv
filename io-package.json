@@ -163,7 +163,7 @@
             "netflix": "Netflix",
             "youtube": "You tube",
 	    "prime": "Amazon Prime",
-	    "amazon": "Prime"
+	    "amazon": "Amazon Prime Video"
           },
           "read": false,
           "write": true
