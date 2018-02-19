@@ -47,6 +47,7 @@ function pollChannel() {
 	{
 		var JSONChannel, ch;
 		JSONChannel = JSON.stringify(channel);
+		adapter.log.debug('DEBUGGING CHANNEL POLLING PROBLEM: ' + JSONChannel);
 		if (JSONChannel) ch = JSONChannel.match(/"channelNumber":"(\d+)"/m);
 		if (!err && ch) 
 		{
@@ -61,17 +62,11 @@ function pollChannel() {
 
 function pollOnlineStatus() {
 	adapter.log.debug('Polling OnlineStatus');
-	//sendCommand('ssap://audio/getVolume', null, function (err, OnlineStatus) 
 	sendCommand('com.webos.applicationManager/getForegroundAppInfo', null, function (err, OnlineStatus) 
 	{
 		if (!err && OnlineStatus)
 		{
 			adapter.setState('on', true, true);
-			var CurrApp;
-			CurrApp = JSON.stringify(OnlineStatus.appId);
-			//adapter.setState('currentApp', CurrApp);
-			adapter.log.debug('LG TV, CURRENT APP NO JSON: ' + OnlineStatus.appId);
-			adapter.log.debug('LG TV, CURRENT APP JSON: ' + CurrApp);
 		} 
 		else 
 		{
@@ -80,47 +75,53 @@ function pollOnlineStatus() {
 	});
 }
 
-function pollInput() {
-	adapter.log.debug('Polling Input');
+function pollInputAndCurrentApp() {
+	adapter.log.debug('Polling Input and current App');
 	sendCommand('ssap://com.webos.applicationManager/getForegroundAppInfo', null, function (err, Input)
 	{
 		if (!err && Input) 
 		{
-			var JSONInput, CurrentInput;
+			var JSONInput, CurrentInputAndApp;
 			JSONInput = JSON.stringify(Input);
 			if (JSONInput)
 			{
-				CurrentInput = JSONInput.match(/.*"appId":"(.*?)"/m);
-				switch(CurrentInput[1])
+				CurrentInputAndApp = JSONInput.match(/.*"appId":"(.*?)"/m);
+				if (CurrentInputAndApp)
 				{
-					case "com.webos.app.hdmi1":
-						adapter.setState('input', 'HDMI_1', true);
-					break;
+					adapter.log.debug('Current Input and/or App: ' + CurrentInputAndApp[1]);
+					adapter.setState('currentApp', CurrentInputAndApp[1], true);
+				
+					switch(CurrentInputAndApp[1])
+					{
+						case "com.webos.app.hdmi1":
+							adapter.setState('input', 'HDMI_1', true);
+						break;
 
-					case "com.webos.app.hdmi2":
-						adapter.setState('input', 'HDMI_2', true);
-					break;
+						case "com.webos.app.hdmi2":
+							adapter.setState('input', 'HDMI_2', true);
+						break;
 
-					case "com.webos.app.hdmi3":
-						adapter.setState('input', 'HDMI_3', true);
-					break;
+						case "com.webos.app.hdmi3":
+							adapter.setState('input', 'HDMI_3', true);
+						break;
 
-					case "com.webos.app.externalinput.scart":
-						adapter.setState('input', 'SCART_1', true);
-					break;
+						case "com.webos.app.externalinput.scart":
+							adapter.setState('input', 'SCART_1', true);
+						break;
 	
-					case "com.webos.app.externalinput.component":
-						adapter.setState('input', 'COMP_1', true);
-					break;	
+						case "com.webos.app.externalinput.component":
+							adapter.setState('input', 'COMP_1', true);
+						break;	
 					
-					default:
-					break;
+						default:
+						break;
+					}
 				}
 			}
 		} 
 		else 
 		{
-			adapter.log.debug('ERROR on polling input');
+			adapter.log.debug('ERROR on polling input and app: ' + err);
 		}
 	});
 }
@@ -270,6 +271,6 @@ function main()
 	if (parseInt(adapter.config.interval, 10)) {
 		pollTimerChannel = setInterval(pollChannel, parseInt(adapter.config.interval, 10));
 		pollTimerOnlineStatus = setInterval(pollOnlineStatus, parseInt(adapter.config.interval, 10));
-		pollTimerInput = setInterval(pollInput, parseInt(adapter.config.interval, 10));
+		pollTimerInput = setInterval(pollInputAndCurrentApp, parseInt(adapter.config.interval, 10));
 	}
 }

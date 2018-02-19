@@ -150,6 +150,18 @@
         "native": {}
       },
       {
+        "_id":    "currentApp",
+        "type":   "state",
+        "common": {
+          "name":   "current app",
+          "role":   "state",
+          "type":   "string",
+          "read":   true,
+          "write":  true
+        },
+        "native": {}
+      },	  
+      {
         "_id":  "launch",
         "type": "state",
         "common": {
