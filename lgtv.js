@@ -68,9 +68,9 @@ function pollOnlineStatus() {
 		{
 			adapter.setState('on', true, true);
 			var CurrApp;
-			CurrApp = JSON.stringify(OnlineStatus);
+			CurrApp = JSON.stringify(OnlineStatus.appId);
 			//adapter.setState('currentApp', CurrApp);
-			adapter.log.debug('LG TV, CURRENT APP NO JSON: ' + OnlineStatus);
+			adapter.log.debug('LG TV, CURRENT APP NO JSON: ' + OnlineStatus.appId);
 			adapter.log.debug('LG TV, CURRENT APP JSON: ' + CurrApp);
 		} 
 		else 
