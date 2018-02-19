@@ -244,7 +244,10 @@ adapter.on('stateChange', function (id, state)
 			case 'channel':
 				adapter.log.debug('Sending switch to channel ' + state.val + ' command to WebOS TV: ' + adapter.config.ip);
 				sendCommand('ssap://tv/openChannel', {channelNumber: state.val}, function (err, val) {
-					adapter.setState('channel', state.val, true);
+					if (!err) 
+						adapter.setState('channel', state.val, true)
+					else 
+						adapter.log.debug('Error in switching to channel: ' + err);
 				});
 				break;
 
