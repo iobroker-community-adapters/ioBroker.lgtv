@@ -233,13 +233,13 @@ adapter.on('stateChange', function (id, state)
 						}
 					break;
 					default:
-						state.val = '"' + state.val + '"';
+						//state.val = '"' + state.val + '"';
 						adapter.log.debug('Opening app ' + state.val + ' on WebOS TV: ' + adapter.config.ip);
-						
-						sendCommand('ssap://system.launcher/launch', {id: state.val}), function (err, val) {
-							if (!err) adapter.setState('launch', state.val, true)
-								else adapter.log.debug('Error opening app ' + state.val + ' on WebOS TV: ' + adapter.config.ip);
-
+						sendCommand('ssap://system.launcher/launch', {id: state.val}), function (err, val) 
+						{
+							if (!err) 
+								adapter.setState('launch', state.val, true)
+							else adapter.log.debug('Error opening app ' + state.val + ' on WebOS TV: ' + adapter.config.ip);
 						}
 
 					break;
