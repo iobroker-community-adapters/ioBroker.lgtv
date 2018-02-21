@@ -233,8 +233,8 @@ adapter.on('stateChange', function (id, state)
 						}
 					break;
 					default:
-						adapter.log.debug(state.val + 'is not a launching app. Opening in Browser on WebOS TV: ' + adapter.config.ip);
-						sendCommand('ssap://system.launcher/open', {target: state.val}), function (err, val) {
+						adapter.log.debug('Opening app ' state.val + ' on WebOS TV: ' + adapter.config.ip);
+						sendCommand('ssap://system.launcher/launch', {id: state.val}), function (err, val) {
 							if (!err) adapter.setState('launch', state.val, true);
 						}
 					break;
