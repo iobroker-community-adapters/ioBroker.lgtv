@@ -1,11 +1,12 @@
 'use strict';
-var fs 				= require('fs'); // for storing client key
-var utils 			= require(__dirname + '/lib/utils');
-var adapter 		= utils.adapter('lgtv');
-var LGTV            = require('lgtv2');
-var pollTimerChannel       = null;
-var pollTimerOnlineStatus       = null;
-var pollTimerInput       = null;
+var fs = require('fs'); // for storing client key
+var utils = require(__dirname + '/lib/utils');
+var adapter = utils.adapter('lgtv');
+var LGTV = require('lgtv2');
+var pollTimerChannel		= null;
+var pollTimerVolumeLevel	= null;
+var pollTimerOnlineStatus	= null;
+var pollTimerInput			= null;
 
 function sendCommand(cmd, options, cb) {
 	var lgtvobj = new LGTV({
@@ -56,6 +57,25 @@ function pollChannel() {
 		else 
 		{
 			adapter.setState('channel', '', true);
+		}
+	});
+}
+
+function pollVolumeLevel() {
+	adapter.log.debug('Polling volume level');
+	sendCommand('ssap://audio/getVolume', null, function (err, channel) 
+	{
+		var JSONChannel, ch;
+		JSONChannel = JSON.stringify(channel);
+		adapter.log.debug('pollVolumeLevel: ' + JSONChannel);
+		if (JSONChannel) ch = JSONChannel.match(/"volume":(\d+)/m);
+		if (!err && ch) 
+		{
+			adapter.setState('volume', ch[1], true);
+		} 
+		else 
+		{
+			adapter.setState('volume', '0', true);
 		}
 	});
 }
@@ -154,6 +174,14 @@ adapter.on('stateChange', function (id, state)
 				});
 				break;
 
+			case 'volume':
+				adapter.log.debug('Sending volume change ' + state.val + ' command to WebOS TV: ' + adapter.config.ip);
+				sendCommand('ssap://audio/setVolume', {volume: parseInt(state.val)}, function (err, val) {
+					if (!err) 
+						pollVolumeLevel();
+				});
+				break;
+			
 			case 'volumeUp':
 				adapter.log.debug('Sending volumeUp ' + state.val + ' command to WebOS TV: ' + adapter.config.ip);
 				sendCommand('ssap://audio/volumeUp', null, function (err, val) {
@@ -278,6 +306,7 @@ function main()
     adapter.subscribeStates('*');
 	if (parseInt(adapter.config.interval, 10)) {
 		pollTimerChannel = setInterval(pollChannel, parseInt(adapter.config.interval, 10));
+		pollTimerVolumeLevel = setInterval(pollVolumeLevel, parseInt(adapter.config.interval, 10));
 		pollTimerOnlineStatus = setInterval(pollOnlineStatus, parseInt(adapter.config.interval, 10));
 		pollTimerInput = setInterval(pollInputAndCurrentApp, parseInt(adapter.config.interval, 10));
 	}

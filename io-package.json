@@ -123,7 +123,19 @@
         "common": {
           "name":   "Select channel",
           "role":   "state",
-          "type":   "number",
+          "type":   "string",
+          "read":   true,
+          "write":  true
+        },
+        "native": {}
+      },
+      {
+        "_id":    "volume",
+        "type":   "state",
+        "common": {
+          "name":   "Current volume",
+          "role":   "state",
+          "type":   "string",
           "read":   true,
           "write":  true
         },
