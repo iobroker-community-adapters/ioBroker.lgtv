@@ -130,6 +130,30 @@
         "native": {}
       },
       {
+        "_id":  "channelUp",
+        "type": "state",
+        "common": {
+          "name": "Channel UP",
+          "role": "button",
+          "type": "boolean",
+          "read": false,
+          "write": true
+        },
+        "native": {}
+      },
+      {
+        "_id":  "channelDown",
+        "type": "state",
+        "common": {
+          "name": "Channel DOWN",
+          "role": "button",
+          "type": "boolean",
+          "read": false,
+          "write": true
+        },
+        "native": {}
+      },
+      {
         "_id":    "volume",
         "type":   "state",
         "common": {

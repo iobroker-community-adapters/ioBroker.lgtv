@@ -196,6 +196,20 @@ adapter.on('stateChange', function (id, state)
 				});
 				break;
 
+			case 'channelUp':
+				adapter.log.debug('Sending channelUp ' + state.val + ' command to WebOS TV: ' + adapter.config.ip);
+				sendCommand('ssap://tv/channelUp', null, function (err, val) {
+					if (!err) adapter.setState('channelUp', !!state.val, true);
+				});
+				break;
+
+			case 'channelDown':
+				adapter.log.debug('Sending channelDown ' + state.val + ' command to WebOS TV: ' + adapter.config.ip);
+				sendCommand('ssap://tv/channelDown', null, function (err, val) {
+					if (!err) adapter.setState('channelDown', !!state.val, true);
+				});
+				break;
+				
 			case '3Dmode':
 				adapter.log.debug('Sending 3Dmode ' + state.val + ' command to WebOS TV: ' + adapter.config.ip);
 				switch (state.val)
