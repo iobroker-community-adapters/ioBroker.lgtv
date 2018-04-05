@@ -196,6 +196,16 @@ adapter.on('stateChange', function (id, state)
 				});
 				break;
 
+			case 'channel':
+				adapter.log.debug('Sending switch to channel ' + state.val + ' command to WebOS TV: ' + adapter.config.ip);
+				sendCommand('ssap://tv/openChannel', {channelNumber: parseInt(state.val)}, function (err, val) {
+					if (!err) 
+						adapter.setState('channel', state.val, true)
+					else 
+						adapter.log.debug('Error in switching to channel: ' + err);
+				});
+				break;
+			
 			case 'channelUp':
 				adapter.log.debug('Sending channelUp ' + state.val + ' command to WebOS TV: ' + adapter.config.ip);
 				sendCommand('ssap://tv/channelUp', null, function (err, val) {
@@ -286,16 +296,6 @@ adapter.on('stateChange', function (id, state)
 
 					break;
 				}
-				break;
-
-			case 'channel':
-				adapter.log.debug('Sending switch to channel ' + state.val + ' command to WebOS TV: ' + adapter.config.ip);
-				sendCommand('ssap://tv/openChannel', {channelNumber: state.val}, function (err, val) {
-					if (!err) 
-						adapter.setState('channel', state.val, true)
-					else 
-						adapter.log.debug('Error in switching to channel: ' + err);
-				});
 				break;
 
 			case 'input':
