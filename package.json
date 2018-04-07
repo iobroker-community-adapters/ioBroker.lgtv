@@ -11,10 +11,22 @@
         "type": "remote"
       },
       "C:\\ioBroker\\node_modules\\iobroker"
+    ],
+    [
+      {
+        "raw": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/master",
+        "scope": null,
+        "escapedName": null,
+        "name": null,
+        "rawSpec": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/master",
+        "spec": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/master",
+        "type": "remote"
+      },
+      "C:\\ioBroker\\node_modules\\iobroker"
     ]
   ],
   "_from": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/master",
-  "_id": "iobroker.lgtv@1.0.3",
+  "_id": "iobroker.lgtv@1.0.4",
   "_inCache": true,
   "_location": "/iobroker.lgtv",
   "_nodeVersion": "4.5.0",
@@ -102,5 +114,5 @@
     "url": "git+https://github.com/SebastianSchultz/iobroker.lgtv.git"
   },
   "scripts": {},
-  "version": "1.0.3"
+  "version": "1.0.4"
 }
