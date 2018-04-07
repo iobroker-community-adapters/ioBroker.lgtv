@@ -34,6 +34,7 @@ Switching off the TV.
 
 Mute the TV.
 
+
 ```setState('lgtv.0.mute', false);```
 
 Unmute the TV.
@@ -43,21 +44,32 @@ Unmute the TV.
 
 This will increase the volume of the TV.
 
+
 ```setState('lgtv.0.volumeDown', true);```
 
 Decreasing the volume of the TV.
+
+
+```setState('lgtv.0.channelUp', true);```
+
+Increasing the current TV channel.
+
+
+```setState('lgtv.0.channelDown', true);```
+
+Decreasing the current TV channel.
 
 
 ```setState('lgtv.0.3Dmode', true);```
 
 Activates the 3D mode on the TV
 
+
 ```setState('lgtv.0.3Dmode', false);```
 
 Deactivates the 3D mode on the TV.
 
 
-```setState('lgtv.0.channel', '7');```
 ```setState('lgtv.0.channel', 7);```
 
 Switching the live TV to channel number 7.
@@ -67,53 +79,66 @@ Switching the live TV to channel number 7.
 
 Switching to Live TV mode.
 
+
 ```setState('lgtv.0.launch', 'smartshare');```
 
 Opening the SmartShare App on the TV.
+
 
 ```setState('lgtv.0.launch', 'tvuserguide');```
 
 Runs the TV User Guide App on the TV.
 
+
 ```setState('lgtv.0.launch', 'netflix');```
 
 Opening the Netflix App on the TV.
+
 
 ```setState('lgtv.0.launch', 'youtube');```
 
 Opens the Youtube App on the TV.
 
+
 ```setState('lgtv.0.launch', 'prime');```
 
 Opens the Amazon Prime App on the TV.
+
 
 ```setState('lgtv.0.launch', 'amazon');```
 
 On some TVs this command opens the Amazon Prime App.
 
+
 ```setState('lgtv.0.launch', 'http://www.iobroker.net');```
 
 Opens the Webbrowser on the TV and navigates to www.iobroker.net.
+
 
 ```setState('lgtv.0.input', 'AV_1');```
 
 Switches the iput oh the TV to AV1.
 
+
 ```setState('lgtv.0.input', 'SCART_1');```
 
 Switches the iput oh the TV to Scart.
+
 
 ```setState('lgtv.0.input', 'COMP_1');```
 
 Switches the iput oh the TV to Component.
 
+
 ```setState('lgtv.0.input', 'HDMI_1');```
 
 Switches the iput oh the TV to HDMI 1.
 
+
 ```setState('lgtv.0.input', 'HDMI_2');```
 
 Switches the iput oh the TV to HDMI 2.
+
 
 ```setState('lgtv.0.input', 'HDMI_3');```
 
@@ -125,12 +150,17 @@ Switches the iput oh the TV to HDMI 3.
 ## States
 
 channel - holds the current chanel
+volume - holds the current volume level and can change the volume
 on - is true when TV is on and false if TV is off
 
 ---
 
 
 ## Changelog
+
+### 1.0.4 (2018-04-07)
+* (SebastianSchultz) added support for increasing (channelUp) or decreasing (channelDown) the current TV channelDown
+* (SebastianSchultz) added the state "volume" which holds the current volume level
 
 ### 1.0.3 (2018-01-11)
 * (SebastianSchultz) added support for launching Amazon Prime app via "amazon" (used on some TV's instead of "prime")
