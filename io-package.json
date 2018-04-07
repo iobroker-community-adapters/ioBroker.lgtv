@@ -13,6 +13,7 @@
         "mode":                     "daemon",
         "icon":                     "lgtv.png",
         "enabled":                  true,
+        "materialize": 				true,
 	    "extIcon":                  "https://raw.githubusercontent.com/SebastianSchultz/ioBroker.lgtv/master/admin/lgtv.png",
 	    "keywords":                 ["lgtv", "WebOS", "Smart", "TV", "LG"],
         "readme":                   "https://github.com/SebastianSchultz/iobroker.lgtv/blob/master/README.md",
