@@ -59,7 +59,7 @@ function pollChannel() {
 			adapter.setState('channel', '', true);
 		}
 		
-		if (JSONChannel) ch = JSONChannel.match(/"channelId":(.*)/g);
+		if (JSONChannel) ch = JSONChannel.match(/.*"channelId":"(.*?)"/m);
 		if (!err && ch) 
 		{
 			adapter.setState('channelId', ch[1], true);
@@ -210,7 +210,7 @@ adapter.on('stateChange', function (id, state)
 
 			case 'channel':
 				adapter.log.debug('Sending switch to channel ' + state.val + ' command to WebOS TV: ' + adapter.config.ip);
-				sendCommand('ssap://tv/openChannel', {channelNumber: parseInt(state.val)}, function (err, val) {
+				sendCommand('ssap://tv/openChannel', {channelNumber: state.val}, function (err, val) {
 					if (!err) 
 						adapter.setState('channel', state.val, true)
 					else 
