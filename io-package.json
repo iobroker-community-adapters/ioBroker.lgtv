@@ -131,6 +131,18 @@
         "native": {}
       },
       {
+        "_id":    "channelId",
+        "type":   "state",
+        "common": {
+          "name":   "Current channel  id",
+          "role":   "state",
+          "type":   "string",
+          "read":   true,
+          "write":  true
+        },
+        "native": {}
+      },
+      {
         "_id":  "channelUp",
         "type": "state",
         "common": {

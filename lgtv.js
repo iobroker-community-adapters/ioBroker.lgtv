@@ -58,6 +58,18 @@ function pollChannel() {
 		{
 			adapter.setState('channel', '', true);
 		}
+		
+		if (JSONChannel) ch = JSONChannel.match(/"channelId":(.*)/g);
+		if (!err && ch) 
+		{
+			adapter.setState('channelId', ch[1], true);
+		} 
+		else 
+		{
+			adapter.setState('channelId', '', true);
+		}
+		
+		
 	});
 }
 
