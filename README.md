@@ -149,9 +149,19 @@ Switches the iput oh the TV to HDMI 3.
 
 ## States
 
-channel - holds the current chanel
-volume - holds the current volume level and can change the volume
-on - is true when TV is on and false if TV is off
+'''channel'''
+
+holds the current channel
+
+
+'''volume'''
+
+holds the current volume level and can change the volume
+
+
+'''on'''
+
+is true when TV is on and false if TV is off
 
 ---
 
