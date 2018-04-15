@@ -7,6 +7,9 @@
 
 [![NPM](https://nodei.co/npm/iobroker.lgtv.png?downloads=true)](https://nodei.co/npm/iobroker.lgtv/)
 
+[![Build status](https://ci.appveyor.com/api/projects/status/xx55hgsuff4fas47/branch/master?svg=true)](https://ci.appveyor.com/project/SebastianSchultz/iobroker-lgtv/branch/master)
+
+
 
 LG WebOS SmartTV adapter for ioBroker
 
@@ -173,6 +176,9 @@ is true when TV is on and false if TV is off
 
 
 ## Changelog
+
+### 1.0.5 (2018-04-15)
+* (SebastianSchultz) added Travis-CI and AppVeyor tests
 
 ### 1.0.4 (2018-04-07)
 * (SebastianSchultz) added support for increasing (channelUp) or decreasing (channelDown) the current TV channelDown
