@@ -8,7 +8,7 @@
 [![NPM](https://nodei.co/npm/iobroker.lgtv.png?downloads=true)](https://nodei.co/npm/iobroker.lgtv/)
 
 
-#LG WebOS SmartTV adapter for ioBroker
+LG WebOS SmartTV adapter for ioBroker
 
 Remote controlling an LG WebOS SmartTV (2013 models and higher) from [ioBroker](https://www.iobroker.net).
 
