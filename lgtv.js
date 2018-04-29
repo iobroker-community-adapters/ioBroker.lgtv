@@ -1,7 +1,7 @@
 'use strict';
 var fs = require('fs'); // for storing client key
 var utils = require(__dirname + '/lib/utils');
-var adapter = utils.adapter('lgtv');
+var adapter = utils.Adapter('lgtv');
 var LGTV = require('lgtv2');
 var pollTimerChannel		= null;
 var pollTimerVolumeLevel	= null;
