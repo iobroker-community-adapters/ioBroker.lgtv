@@ -233,6 +233,42 @@ adapter.on('stateChange', function (id, state)
 				});
 				break;
 				
+			
+			case 'mediaPlay':
+				adapter.log.debug('Sending mediaPlay ' + state.val + ' command to WebOS TV: ' + adapter.config.ip);
+				sendCommand('ssap://media.controls/play', null, function (err, val) {
+					if (!err) adapter.setState('mediaPlay', !!state.val, true);
+				});
+				break;
+				
+			case 'mediaPause':
+				adapter.log.debug('Sending mediaPause ' + state.val + ' command to WebOS TV: ' + adapter.config.ip);
+				sendCommand('ssap://media.controls/pause', null, function (err, val) {
+					if (!err) adapter.setState('mediaPause', !!state.val, true);
+				});
+				break;
+				
+			case 'mediaStop':
+				adapter.log.debug('Sending mediaStop ' + state.val + ' command to WebOS TV: ' + adapter.config.ip);
+				sendCommand('ssap://media.controls/stop', null, function (err, val) {
+					if (!err) adapter.setState('mediaStop', !!state.val, true);
+				});
+				break;
+				
+			case 'mediaFastForward':
+				adapter.log.debug('Sending mediaFastForward ' + state.val + ' command to WebOS TV: ' + adapter.config.ip);
+				sendCommand('ssap://media.controls/fastForward', null, function (err, val) {
+					if (!err) adapter.setState('mediaFastForward', !!state.val, true);
+				});
+				break;
+				
+			case 'mediaRewind':
+				adapter.log.debug('Sending mediaRewind ' + state.val + ' command to WebOS TV: ' + adapter.config.ip);
+				sendCommand('ssap://media.controls/rewind', null, function (err, val) {
+					if (!err) adapter.setState('mediaRewind', !!state.val, true);
+				});
+				break;
+				
 			case '3Dmode':
 				adapter.log.debug('Sending 3Dmode ' + state.val + ' command to WebOS TV: ' + adapter.config.ip);
 				switch (state.val)

@@ -163,6 +163,66 @@
         },
         "native": {}
       },
+	  {
+        "_id":  "mediaPlay",
+        "type": "state",
+        "common": {
+          "name": "Media Play",
+          "role": "button",
+          "type": "boolean",
+          "read": false,
+          "write": true
+        },
+        "native": {}
+      },
+	  {
+        "_id":  "mediaPause",
+        "type": "state",
+        "common": {
+          "name": "Media Pause",
+          "role": "button",
+          "type": "boolean",
+          "read": false,
+          "write": true
+        },
+        "native": {}
+      },
+	  {
+        "_id":  "mediaStop",
+        "type": "state",
+        "common": {
+          "name": "Media Stop",
+          "role": "button",
+          "type": "boolean",
+          "read": false,
+          "write": true
+        },
+        "native": {}
+      },
+	  {
+        "_id":  "mediaFastForward",
+        "type": "state",
+        "common": {
+          "name": "Media Fast Forward",
+          "role": "button",
+          "type": "boolean",
+          "read": false,
+          "write": true
+        },
+        "native": {}
+      },
+	  {
+        "_id":  "mediaRewind",
+        "type": "state",
+        "common": {
+          "name": "Media Rewind",
+          "role": "button",
+          "type": "boolean",
+          "read": false,
+          "write": true
+        },
+        "native": {}
+      },
       {
         "_id":    "volume",
         "type":   "state",
