@@ -287,6 +287,18 @@
           "write": true
         },
         "native": {}
+      },  
+      {
+        "_id":  "openURL",
+        "type": "state",
+        "common": {
+          "name": "Open URL",
+          "role": "state",
+          "type": "string",
+          "read": false,
+          "write": true
+        },
+        "native": {}
       }
     ]
 }

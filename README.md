@@ -122,9 +122,10 @@ Opens the Amazon Prime App on the TV.
 On some TVs this command opens the Amazon Prime App.
 
 
-```setState('lgtv.0.launch', 'http://www.iobroker.net');```
+```setState('lgtv.0.openURL', 'http://www.iobroker.net');```
 
 Opens the Webbrowser on the TV and navigates to www.iobroker.net.
+Can also be used to open images or videos (in the browser).
 
 
 ```setState('lgtv.0.input', 'AV_1');```
