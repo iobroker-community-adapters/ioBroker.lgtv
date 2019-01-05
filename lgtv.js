@@ -248,6 +248,13 @@ adapter.on('stateChange', function (id, state)
 				});
 				break;
 				
+			case 'openURL':
+				adapter.log.debug('Sending open ' + state.val + ' command to WebOS TV: ' + adapter.config.ip);
+				sendCommand('ssap://system.launcher/open', {target: state.val}, function (err, val) {
+					if (!err) adapter.setState('openURL', state.val, true);
+				});
+				break;
+				
 			case 'mediaStop':
 				adapter.log.debug('Sending mediaStop ' + state.val + ' command to WebOS TV: ' + adapter.config.ip);
 				sendCommand('ssap://media.controls/stop', null, function (err, val) {
