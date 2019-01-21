@@ -19,7 +19,7 @@ var pollTimerInput			= null;
 function startAdapter(options) {
     options = options || {};
     Object.assign(options,{
-        name:  "ical",
+        name:  "lgtv",
         stateChange:  function (id, state) {
             if (id && state && !state.ack)
 			{
