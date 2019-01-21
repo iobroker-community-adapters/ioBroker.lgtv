@@ -1,7 +1,7 @@
 {
     "common": {
         "name":                     "lgtv",
-        "version":                  "1.0.5",
+        "version":                  "1.0.6",
         "title":                    "LG WebOS SmartTV Adapter",
         "desc":                     {
  			             "en": "Controls WebOS-based LG SmartTVs",

@@ -181,6 +181,9 @@ is true when TV is on and false if TV is off
 
 ## Changelog
 
+### 1.0.6 (2019-01-21)
+* (SebastianSchultz) added compact mode
+
 ### 1.0.5 (2018-04-15)
 * (SebastianSchultz) added Travis-CI and AppVeyor tests
 
@@ -225,7 +228,7 @@ is true when TV is on and false if TV is off
 
 The MIT License (MIT)
 
-Copyright (c) 2016 Sebastian Schultz.
+Copyright (c) 2019 Sebastian Schultz.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
