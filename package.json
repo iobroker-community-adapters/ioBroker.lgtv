@@ -96,7 +96,8 @@
   ],
   "dependencies": {
     "lgtv2": "^1.2.0",
-    "websocket": "^1.0.23"
+    "websocket": "^1.0.23",
+    "@iobroker/adapter-core": "^1.0.2"
   },
   "description": "ioBroker LG WebOS SmartTV Adapter",
   "devDependencies": {
