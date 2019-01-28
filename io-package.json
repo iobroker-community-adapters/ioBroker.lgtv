@@ -1,7 +1,7 @@
 {
     "common": {
         "name":                     "lgtv",
-        "version":                  "1.0.6",
+        "version":                  "1.0.7",
         "title":                    "LG WebOS SmartTV Adapter",
         "desc":                     {
  			             "en": "Controls WebOS-based LG SmartTVs",
@@ -33,7 +33,16 @@
     ],
     "instanceObjects": [
       {
-        "_id":  "on",
+        "_id":  "states",
+        "type": "device",
+        "common": {
+          "name": "states"
+        },
+        "native": {}
+      },
+	  {
+	  
+        "_id":  "states.on",
         "type": "state",
         "common": {
           "name": "Is TV is ON",
@@ -45,7 +54,7 @@
         "native": {}
       },
       {
-        "_id":  "popup",
+        "_id":  "states.popup",
         "type": "state",
         "common": {
           "name": "Show popup text on TV",
@@ -57,7 +66,7 @@
         "native": {}
       },
       {
-        "_id":  "turnOff",
+        "_id":  "states.turnOff",
         "type": "state",
         "common": {
           "name": "Switch TV OFF",
@@ -69,7 +78,7 @@
         "native": {}
       },
       {
-        "_id":  "mute",
+        "_id":  "states.mute",
         "type": "state",
         "common": {
           "name": "Mute ON/OFF",
@@ -81,7 +90,7 @@
         "native": {}
       },
       {
-        "_id":  "volumeUp",
+        "_id":  "states.volumeUp",
         "type": "state",
         "common": {
           "name": "Volume UP",
@@ -93,7 +102,7 @@
         "native": {}
       },
       {
-        "_id":  "volumeDown",
+        "_id":  "states.volumeDown",
         "type": "state",
         "common": {
           "name": "Volume DOWN",
@@ -105,7 +114,7 @@
         "native": {}
       },
       {
-        "_id":  "3Dmode",
+        "_id":  "states.3Dmode",
         "type": "state",
         "common": {
           "name": "3D mode ON/OFF",
@@ -117,7 +126,7 @@
         "native": {}
       },
       {
-        "_id":    "channel",
+        "_id":    "states.channel",
         "type":   "state",
         "common": {
           "name":   "Select channel",
@@ -129,7 +138,7 @@
         "native": {}
       },
       {
-        "_id":    "channelId",
+        "_id":    "states.channelId",
         "type":   "state",
         "common": {
           "name":   "Current channel  id",
@@ -141,7 +150,7 @@
         "native": {}
       },
       {
-        "_id":  "channelUp",
+        "_id":  "states.channelUp",
         "type": "state",
         "common": {
           "name": "Channel UP",
@@ -153,7 +162,7 @@
         "native": {}
       },
       {
-        "_id":  "channelDown",
+        "_id":  "states.channelDown",
         "type": "state",
         "common": {
           "name": "Channel DOWN",
@@ -165,7 +174,7 @@
         "native": {}
       },
 	  {
-        "_id":  "mediaPlay",
+        "_id":  "states.mediaPlay",
         "type": "state",
         "common": {
           "name": "Media Play",
@@ -177,7 +186,7 @@
         "native": {}
       },
 	  {
-        "_id":  "mediaPause",
+        "_id":  "states.mediaPause",
         "type": "state",
         "common": {
           "name": "Media Pause",
@@ -189,7 +198,7 @@
         "native": {}
       },
 	  {
-        "_id":  "mediaStop",
+        "_id":  "states.mediaStop",
         "type": "state",
         "common": {
           "name": "Media Stop",
@@ -201,7 +210,7 @@
         "native": {}
       },
 	  {
-        "_id":  "mediaFastForward",
+        "_id":  "states.mediaFastForward",
         "type": "state",
         "common": {
           "name": "Media Fast Forward",
@@ -213,7 +222,7 @@
         "native": {}
       },
 	  {
-        "_id":  "mediaRewind",
+        "_id":  "states.mediaRewind",
         "type": "state",
         "common": {
           "name": "Media Rewind",
@@ -225,7 +234,7 @@
         "native": {}
       },
       {
-        "_id":    "volume",
+        "_id":    "states.volume",
         "type":   "state",
         "common": {
           "name":   "Current volume",
@@ -237,7 +246,7 @@
         "native": {}
       },
       {
-        "_id":  "input",
+        "_id":  "states.input",
         "type": "state",
         "common": {
           "name": "Select input source",
@@ -257,7 +266,7 @@
         "native": {}
       },
       {
-        "_id":    "currentApp",
+        "_id":    "states.currentApp",
         "type":   "state",
         "common": {
           "name":   "current app",
@@ -269,7 +278,7 @@
         "native": {}
       },	  
       {
-        "_id":  "launch",
+        "_id":  "states.launch",
         "type": "state",
         "common": {
           "name": "Launch app",
@@ -290,7 +299,7 @@
         "native": {}
       },  
       {
-        "_id":  "openURL",
+        "_id":  "states.openURL",
         "type": "state",
         "common": {
           "name": "Open URL",

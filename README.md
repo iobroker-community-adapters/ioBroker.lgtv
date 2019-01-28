@@ -31,129 +31,129 @@ At first connection you will receive a pairing prompt on your TV screen where yo
 
 
 ## Some examples:
-```setState('lgtv.0.popup', 'Some text!');```
+```setState('lgtv.0.states.popup', 'Some text!');```
 
 This will show a popup with the text "Some text!" on the TV.
 You can use HTML linebreaks (br) in the text.
 
 
-```setState('lgtv.0.turnOff', true);```
+```setState('lgtv.0.states.turnOff', true);```
 
 Switching off the TV.
 
 
-```setState('lgtv.0.mute', true);```
+```setState('lgtv.0.states.mute', true);```
 
 Mute the TV.
 
 
-```setState('lgtv.0.mute', false);```
+```setState('lgtv.0.states.mute', false);```
 
 Unmute the TV.
 
 
-```setState('lgtv.0.volumeUp', true);```
+```setState('lgtv.0.states.volumeUp', true);```
 
 This will increase the volume of the TV.
 
 
-```setState('lgtv.0.volumeDown', true);```
+```setState('lgtv.0.states.volumeDown', true);```
 
 Decreasing the volume of the TV.
 
 
-```setState('lgtv.0.channelUp', true);```
+```setState('lgtv.0.states.channelUp', true);```
 
 Increasing the current TV channel.
 
 
-```setState('lgtv.0.channelDown', true);```
+```setState('lgtv.0.states.channelDown', true);```
 
 Decreasing the current TV channel.
 
 
-```setState('lgtv.0.3Dmode', true);```
+```setState('lgtv.0.states.3Dmode', true);```
 
 Activates the 3D mode on the TV
 
 
-```setState('lgtv.0.3Dmode', false);```
+```setState('lgtv.0.states.3Dmode', false);```
 
 Deactivates the 3D mode on the TV.
 
 
-```setState('lgtv.0.channel', 7);```
+```setState('lgtv.0.states.channel', 7);```
 
 Switching the live TV to channel number 7.
 
 
-```setState('lgtv.0.launch', 'livetv');```
+```setState('lgtv.0.states.launch', 'livetv');```
 
 Switching to Live TV mode.
 
 
-```setState('lgtv.0.launch', 'smartshare');```
+```setState('lgtv.0.states.launch', 'smartshare');```
 
 Opening the SmartShare App on the TV.
 
 
-```setState('lgtv.0.launch', 'tvuserguide');```
+```setState('lgtv.0.states.launch', 'tvuserguide');```
 
 Runs the TV User Guide App on the TV.
 
 
-```setState('lgtv.0.launch', 'netflix');```
+```setState('lgtv.0.states.launch', 'netflix');```
 
 Opening the Netflix App on the TV.
 
 
-```setState('lgtv.0.launch', 'youtube');```
+```setState('lgtv.0.states.launch', 'youtube');```
 
 Opens the Youtube App on the TV.
 
 
-```setState('lgtv.0.launch', 'prime');```
+```setState('lgtv.0.states.launch', 'prime');```
 
 Opens the Amazon Prime App on the TV.
 
 
-```setState('lgtv.0.launch', 'amazon');```
+```setState('lgtv.0.states.launch', 'amazon');```
 
 On some TVs this command opens the Amazon Prime App.
 
 
-```setState('lgtv.0.openURL', 'http://www.iobroker.net');```
+```setState('lgtv.0.states.openURL', 'http://www.iobroker.net');```
 
 Opens the Webbrowser on the TV and navigates to www.iobroker.net.
 Can also be used to open images or videos (in the browser).
 
 
-```setState('lgtv.0.input', 'AV_1');```
+```setState('lgtv.0.states.input', 'AV_1');```
 
 Switches the iput oh the TV to AV1.
 
 
-```setState('lgtv.0.input', 'SCART_1');```
+```setState('lgtv.0.states.input', 'SCART_1');```
 
 Switches the iput oh the TV to Scart.
 
 
-```setState('lgtv.0.input', 'COMP_1');```
+```setState('lgtv.0.states.input', 'COMP_1');```
 
 Switches the iput oh the TV to Component.
 
 
-```setState('lgtv.0.input', 'HDMI_1');```
+```setState('lgtv.0.states.input', 'HDMI_1');```
 
 Switches the iput oh the TV to HDMI 1.
 
 
-```setState('lgtv.0.input', 'HDMI_2');```
+```setState('lgtv.0.states.input', 'HDMI_2');```
 
 Switches the iput oh the TV to HDMI 2.
 
 
-```setState('lgtv.0.input', 'HDMI_3');```
+```setState('lgtv.0.states.input', 'HDMI_3');```
 
 Switches the iput oh the TV to HDMI 3.
 
@@ -180,6 +180,9 @@ is true when TV is on and false if TV is off
 
 
 ## Changelog
+
+### 1.0.7 (2019-01-28)
+* (SebastianSchultz) grouping of all states/objects under a device
 
 ### 1.0.6 (2019-01-21)
 * (SebastianSchultz) added compact mode
