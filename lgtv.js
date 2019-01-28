@@ -23,30 +23,31 @@ function startAdapter(options) {
             if (id && state && !state.ack)
 			{
 				id = id.substring(adapter.namespace.length + 1);
+				adapter.log.debug('State change "' + id + '" - VALUE: ' + state.val);
 				switch (id)
 				{
-					case 'popup':
+					case 'states.popup':
 						adapter.log.debug('Sending popup message "' + state.val + '" to WebOS TV: ' + adapter.config.ip);
 						sendCommand('ssap://system.notifications/createToast', {message: state.val}, function (err, val) {
 							if (!err) adapter.setState('states.popup', state.val, true);
 						});
 						break;
 
-					case 'turnOff':
+					case 'states.turnOff':
 						adapter.log.debug('Sending turn OFF command to WebOS TV: ' + adapter.config.ip);
 						sendCommand('ssap://system/turnOff', {message: state.val}, function (err, val) {
 							if (!err) adapter.setState('states.turnOff', state.val, true);
 						});
 						break;
 
-					case 'mute':
+					case 'states.mute':
 						adapter.log.debug('Sending mute ' + state.val + ' command to WebOS TV: ' + adapter.config.ip);
 						sendCommand('ssap://audio/setMute', {mute: !!state.val}, function (err, val) {
 							if (!err) adapter.setState('states.mute', !!state.val, true);
 						});
 						break;
 
-					case 'volume':
+					case 'states.volume':
 						adapter.log.debug('Sending volume change ' + state.val + ' command to WebOS TV: ' + adapter.config.ip);
 						sendCommand('ssap://audio/setVolume', {volume: parseInt(state.val)}, function (err, val) {
 							if (!err) 
@@ -54,21 +55,21 @@ function startAdapter(options) {
 						});
 						break;
 					
-					case 'volumeUp':
+					case 'states.volumeUp':
 						adapter.log.debug('Sending volumeUp ' + state.val + ' command to WebOS TV: ' + adapter.config.ip);
 						sendCommand('ssap://audio/volumeUp', null, function (err, val) {
 							if (!err) adapter.setState('states.volumeUp', !!state.val, true);
 						});
 						break;
 
-					case 'volumeDown':
+					case 'states.volumeDown':
 						adapter.log.debug('Sending volumeDown ' + state.val + ' command to WebOS TV: ' + adapter.config.ip);
 						sendCommand('ssap://audio/volumeDown', null, function (err, val) {
 							if (!err) adapter.setState('states.volumeDown', !!state.val, true);
 						});
 						break;
 
-					/*case 'channel':
+					/*case 'states.channel':
 						adapter.log.debug('Sending switch to channel ' + state.val + ' command to WebOS TV: ' + adapter.config.ip);
 						sendCommand('ssap://tv/openChannel', {channelNumber: state.val}, function (err, val) {
 							if (!err) 
@@ -79,14 +80,14 @@ function startAdapter(options) {
 						break;
 					*/
 					
-					case 'channelUp':
+					case 'states.channelUp':
 						adapter.log.debug('Sending channelUp ' + state.val + ' command to WebOS TV: ' + adapter.config.ip);
 						sendCommand('ssap://tv/channelUp', null, function (err, val) {
 							if (!err) adapter.setState('states.channelUp', !!state.val, true);
 						});
 						break;
 
-					case 'channelDown':
+					case 'states.channelDown':
 						adapter.log.debug('Sending channelDown ' + state.val + ' command to WebOS TV: ' + adapter.config.ip);
 						sendCommand('ssap://tv/channelDown', null, function (err, val) {
 							if (!err) adapter.setState('states.channelDown', !!state.val, true);
@@ -94,49 +95,49 @@ function startAdapter(options) {
 						break;
 						
 					
-					case 'mediaPlay':
+					case 'states.mediaPlay':
 						adapter.log.debug('Sending mediaPlay ' + state.val + ' command to WebOS TV: ' + adapter.config.ip);
 						sendCommand('ssap://media.controls/play', null, function (err, val) {
 							if (!err) adapter.setState('states.mediaPlay', !!state.val, true);
 						});
 						break;
 						
-					case 'mediaPause':
+					case 'states.mediaPause':
 						adapter.log.debug('Sending mediaPause ' + state.val + ' command to WebOS TV: ' + adapter.config.ip);
 						sendCommand('ssap://media.controls/pause', null, function (err, val) {
 							if (!err) adapter.setState('states.mediaPause', !!state.val, true);
 						});
 						break;
 						
-					case 'openURL':
+					case 'states.openURL':
 						adapter.log.debug('Sending open ' + state.val + ' command to WebOS TV: ' + adapter.config.ip);
 						sendCommand('ssap://system.launcher/open', {target: state.val}, function (err, val) {
 							if (!err) adapter.setState('states.openURL', state.val, true);
 						});
 						break;
 						
-					case 'mediaStop':
+					case 'states.mediaStop':
 						adapter.log.debug('Sending mediaStop ' + state.val + ' command to WebOS TV: ' + adapter.config.ip);
 						sendCommand('ssap://media.controls/stop', null, function (err, val) {
 							if (!err) adapter.setState('states.mediaStop', !!state.val, true);
 						});
 						break;
 						
-					case 'mediaFastForward':
+					case 'states.mediaFastForward':
 						adapter.log.debug('Sending mediaFastForward ' + state.val + ' command to WebOS TV: ' + adapter.config.ip);
 						sendCommand('ssap://media.controls/fastForward', null, function (err, val) {
 							if (!err) adapter.setState('states.mediaFastForward', !!state.val, true);
 						});
 						break;
 						
-					case 'mediaRewind':
+					case 'states.mediaRewind':
 						adapter.log.debug('Sending mediaRewind ' + state.val + ' command to WebOS TV: ' + adapter.config.ip);
 						sendCommand('ssap://media.controls/rewind', null, function (err, val) {
 							if (!err) adapter.setState('states.mediaRewind', !!state.val, true);
 						});
 						break;
 						
-					case '3Dmode':
+					case 'states.3Dmode':
 						adapter.log.debug('Sending 3Dmode ' + state.val + ' command to WebOS TV: ' + adapter.config.ip);
 						switch (state.val)
 						{
@@ -154,7 +155,7 @@ function startAdapter(options) {
 						}
 						break;
 
-					case 'launch':
+					case 'states.launch':
 						adapter.log.debug('Sending launch command ' + state.val + ' to WebOS TV: ' + adapter.config.ip);
 						switch (state.val)
 						{
@@ -214,7 +215,7 @@ function startAdapter(options) {
 						}
 						break;
 
-					case 'input':
+					case 'states.input':
 						adapter.log.debug('Sending switch to input "' + state.val + '" command to WebOS TV: ' + adapter.config.ip);
 						sendCommand('ssap://tv/switchInput', {inputId: state.val}, function (err, val) {
 							if (!err) adapter.setState('states.input', state.val, true);
