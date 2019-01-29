@@ -34,7 +34,7 @@
   "directories": {},
   "dist": {
     "shasum": "52d9bfcc96e56fbd4b7023c5722ec4b5f0c40871",
-    "tarball": "https://registry.npmjs.org/iobroker.lgtv/-/iobroker.lgtv-1.0.6.tgz"
+    "tarball": "https://registry.npmjs.org/iobroker.lgtv/-/iobroker.lgtv-1.0.7.tgz"
   },
   "homepage": "https://github.com/SebastianSchultz/iobroker.lgtv",
   "keywords": [
@@ -55,8 +55,8 @@
   "optionalDependencies": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SebastianSchultz/iobroker.lgtv.git"
+    "url": "git+https://github.com/SebastianSchultz/ioBroker.lgtv.git"
   },
   "scripts": {},
-  "version": "1.0.6"
+  "version": "1.0.7"
 }
