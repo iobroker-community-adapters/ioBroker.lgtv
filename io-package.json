@@ -2,7 +2,7 @@
     "common": {
         "name":                     "lgtv",
         "version":                  "1.0.7",
-        "title":                    "LG WebOS SmartTV Adapter",
+        "title":                    "LG WebOS SmartTV",
         "desc":                     {
  			             "en": "Controls WebOS-based LG SmartTVs",
  			             "de": "Steuert auf WebOS basierte LG SmartTVs",
@@ -26,11 +26,9 @@
 		"timeout":  "15000",
         "interval": "60000"
     },
-    "authors": [
-	    "SebastianSchultz <mail@sebastian-schultz.de>",
-	    "bluefox <dogafox@gmail.com>",
-        "hobbyquaker <hq@ccu.io>"
-    ],
+     "authors": [
+            "SebastianSchultz <info@sebastian-schultz.de>"
+],
     "instanceObjects": [
       {
         "_id":  "states",
