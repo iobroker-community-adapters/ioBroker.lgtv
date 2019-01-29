@@ -22,7 +22,7 @@
         "type":                     "multimedia",
 		"authors": [
             "SebastianSchultz <info@sebastian-schultz.de>"
-		],
+		]
     },
     "native": {
         "ip":       "",
