@@ -19,16 +19,16 @@
 	    "keywords":                 ["lgtv", "WebOS", "Smart", "TV", "LG"],
         "readme":                   "https://github.com/SebastianSchultz/iobroker.lgtv/blob/master/README.md",
 	    "loglevel":                 "info",
-        "type":                     "multimedia"
+        "type":                     "multimedia",
+		"authors": [
+            "SebastianSchultz <info@sebastian-schultz.de>"
+		],
     },
     "native": {
         "ip":       "",
 		"timeout":  "15000",
         "interval": "60000"
     },
-     "authors": [
-            "SebastianSchultz <info@sebastian-schultz.de>"
-],
     "instanceObjects": [
       {
         "_id":  "states",
