@@ -14,7 +14,7 @@
     }
   ],
   "dependencies": {
-    "@iobroker/adapter-core": "^1.0.2",
+    "@iobroker/adapter-core": "^1.0.3",
     "lgtv2": "^1.2.0",
     "websocket": "^1.0.23"
   },
@@ -31,8 +31,7 @@
     "grunt-jscs": "^3.0.1",
     "grunt-replace": "^1.0.1",
     "mocha": "^6.0.2",
-    "chai": "^4.2.0",
-    "@iobroker/adapter-core": "^1.0.3"
+    "chai": "^4.2.0"
   },
   "directories": {},
   "dist": {
