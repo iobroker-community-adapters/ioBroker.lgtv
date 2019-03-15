@@ -181,6 +181,9 @@ is true when TV is on and false if TV is off
 
 ## Changelog
 
+### 1.0.8 (2019-03-15)
+* (SebastianSchultz) general NPM update
+
 ### 1.0.7 (2019-01-28)
 * (SebastianSchultz) grouping of all states/objects under a device
 

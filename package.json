@@ -1,4 +1,25 @@
 {
+  "_from": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/master",
+  "_id": "iobroker.lgtv@1.0.8",
+  "_inBundle": false,
+  "_integrity": "sha512-HFdB31Mg9us6hUGdEaSHmKHaoszWSNKmbRj52/5Yzc8ug6KGSb2L2uQ+069zBWCNh3okjB5hMgoMkhsMzQ5Cnw==",
+  "_location": "/iobroker.lgtv",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "remote",
+    "raw": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/master",
+    "rawSpec": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/master",
+    "saveSpec": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/master",
+    "fetchSpec": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/master"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/master",
+  "_shasum": "d6befe1c6ea39f8c90cc11bb88e168b703daaa2c",
+  "_spec": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/master",
+  "_where": "C:\\ioBroker\\node_modules\\iobroker",
   "author": {
     "name": "Sebastian Schultz",
     "email": "mail@sebastian-schultz.de"
@@ -21,6 +42,8 @@
   "deprecated": false,
   "description": "ioBroker LG WebOS SmartTV Adapter",
   "devDependencies": {
+    "@iobroker/testing": "^1.1.10",
+    "chai": "^4.2.0",
     "grunt": "^1.0.1",
     "grunt-contrib-clean": "^1.1.0",
     "grunt-contrib-compress": "^1.4.3",
@@ -30,14 +53,12 @@
     "grunt-http": "^2.2.0",
     "grunt-jscs": "^3.0.1",
     "grunt-replace": "^1.0.1",
-    "mocha": "^6.0.2",
-    "chai": "^4.2.0",
-    "@iobroker/testing": "^1.1.10"
+    "mocha": "^6.0.2"
   },
   "directories": {},
   "dist": {
     "shasum": "52d9bfcc96e56fbd4b7023c5722ec4b5f0c40871",
-    "tarball": "https://registry.npmjs.org/iobroker.lgtv/-/iobroker.lgtv-1.0.7.tgz"
+    "tarball": "https://registry.npmjs.org/iobroker.lgtv/-/iobroker.lgtv-1.0.8.tgz"
   },
   "homepage": "https://github.com/SebastianSchultz/iobroker.lgtv",
   "keywords": [
@@ -62,9 +83,9 @@
   },
   "scripts": {
     "test": "npm run test:package && npm run test:unit",
+    "test:integration": "mocha test/integration --exit",
     "test:package": "mocha test/package --exit",
-    "test:unit": "mocha test/unit --exit",
-    "test:integration": "mocha test/integration --exit"
+    "test:unit": "mocha test/unit --exit"
   },
-  "version": "1.0.7"
+  "version": "1.0.8"
 }
