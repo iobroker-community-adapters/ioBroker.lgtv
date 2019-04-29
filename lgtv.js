@@ -69,7 +69,7 @@ function startAdapter(options) {
 						});
 						break;
 
-					/*case 'states.channel':
+					case 'states.channel':
 						adapter.log.debug('Sending switch to channel ' + state.val + ' command to WebOS TV: ' + adapter.config.ip);
 						sendCommand('ssap://tv/openChannel', {channelNumber: state.val}, function (err, val) {
 							if (!err) 
@@ -78,8 +78,7 @@ function startAdapter(options) {
 								adapter.log.debug('Error in switching to channel: ' + err);
 						});
 						break;
-					*/
-					
+										
 					case 'states.channelUp':
 						adapter.log.debug('Sending channelUp ' + state.val + ' command to WebOS TV: ' + adapter.config.ip);
 						sendCommand('ssap://tv/channelUp', null, function (err, val) {
@@ -245,7 +244,8 @@ function sendCommand(cmd, options, cb) {
 	var lgtvobj = new LGTV({
 		url: 		'ws://' + adapter.config.ip + ':3000',
 		timeout: 	adapter.config.timeout,
-		reconnect: 	false
+		reconnect: 	false,
+		keyfile: 	'lgtvkeyfile'
 	});
 	lgtvobj.on('connecting', function (host)
 	{
