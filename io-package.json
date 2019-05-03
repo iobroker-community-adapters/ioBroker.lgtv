@@ -24,6 +24,19 @@
             "SebastianSchultz <info@sebastian-schultz.de>"
 		]
     },
+	"news": {
+      "1.0.8": {
+        "en": "General NPM update",
+        "de": "General NPM update",
+        "ru": "General NPM update",
+        "pt": "General NPM update",
+        "nl": "General NPM update",
+        "fr": "General NPM update",
+        "it": "General NPM update",
+        "es": "General NPM update",
+        "pl": "General NPM update",
+        "zh-cn": "General NPM update"
+	}, 	
     "native": {
         "ip":       "",
 		"timeout":  "15000",
