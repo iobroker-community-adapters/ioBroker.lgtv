@@ -2,6 +2,20 @@
     "common": {
         "name":                     "lgtv",
         "version":                  "1.0.8",
+	"news": {
+      "1.0.8": {
+        "en": "General NPM update",
+        "de": "General NPM update",
+        "ru": "General NPM update",
+        "pt": "General NPM update",
+        "nl": "General NPM update",
+        "fr": "General NPM update",
+        "it": "General NPM update",
+        "es": "General NPM update",
+        "pl": "General NPM update",
+        "zh-cn": "General NPM update"
+      }
+	}, 	
         "title":                    "LG WebOS SmartTV",
         "desc":                     {
  			             "en": "Controls WebOS-based LG SmartTVs",
@@ -24,20 +38,6 @@
             "SebastianSchultz <info@sebastian-schultz.de>"
 		]
     },
-	"news": {
-      "1.0.8": {
-        "en": "General NPM update",
-        "de": "General NPM update",
-        "ru": "General NPM update",
-        "pt": "General NPM update",
-        "nl": "General NPM update",
-        "fr": "General NPM update",
-        "it": "General NPM update",
-        "es": "General NPM update",
-        "pl": "General NPM update",
-        "zh-cn": "General NPM update"
-      }
-	}, 	
     "native": {
         "ip":       "",
 		"timeout":  "15000",
@@ -59,7 +59,7 @@
         "common": {
           "name": "Is TV is ON",
           "role": "indicator.online",
-          "type": "boolean",
+          "type": "string",
           "read": true,
           "write": false
         },
@@ -251,7 +251,7 @@
         "common": {
           "name":   "Current volume",
           "role":   "state",
-          "type":   "number",
+          "type":   "string",
           "read":   true,
           "write":  true
         },
