@@ -59,7 +59,7 @@
         "common": {
           "name": "Is TV is ON",
           "role": "indicator.online",
-          "type": "string",
+          "type": "boolean",
           "read": true,
           "write": false
         },
@@ -251,7 +251,7 @@
         "common": {
           "name":   "Current volume",
           "role":   "state",
-          "type":   "string",
+          "type":   "number",
           "read":   true,
           "write":  true
         },
