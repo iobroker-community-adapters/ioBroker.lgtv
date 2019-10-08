@@ -49,7 +49,7 @@ function startAdapter(options) {
 
 					case 'states.volume':
 						adapter.log.debug('Sending volume change ' + state.val + ' command to WebOS TV: ' + adapter.config.ip);
-						sendCommand('ssap://audio/setVolume', {volume: parseInt(state.val)}, function (err, val) {
+						sendCommand('ssap://audio/setVolume', {volume: state.val}, function (err, val) {
 							if (!err) 
 								pollVolumeLevel();
 						});
@@ -316,11 +316,11 @@ function pollVolumeLevel() {
 		if (JSONChannel) ch = JSONChannel.match(/"volume":(\d+)/m);
 		if (!err && ch) 
 		{
-			adapter.setState('states.volume', ch[1], true);
+			adapter.setState('states.volume', parseInt(ch[1]), true);
 		} 
 		else 
 		{
-			adapter.setState('states.volume', '0', true);
+			adapter.setState('states.volume', 0, true);
 		}
 	});
 }
