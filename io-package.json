@@ -16,19 +16,19 @@
         "zh-cn": "General NPM update"
       }
 	}, 	
-        "title":                    "LG WebOS SmartTV",
-        "desc":                     {
+        "title":	"LG WebOS SmartTV",
+        "desc": 	{
  			             "en": "Controls WebOS-based LG SmartTVs",
  			             "de": "Steuert auf WebOS basierte LG SmartTVs",
  			             "ru": "Controls WebOS-based LG SmartTVs"
-	    },
-	    "license":                "MIT",
+	    			},
+	    "license":                	"MIT",
         "platform":                 "Javascript/Node.js",
         "mode":                     "daemon",
         "icon":                     "lgtv.png",
         "enabled":                  false,
         "materialize": 				true,
-        "compact": true,
+        "compact": 					true,
 	    "extIcon":                  "https://raw.githubusercontent.com/SebastianSchultz/ioBroker.lgtv/master/admin/lgtv.png",
 	    "keywords":                 ["lgtv", "WebOS", "Smart", "TV", "LG"],
         "readme":                   "https://github.com/SebastianSchultz/iobroker.lgtv/blob/master/README.md",
@@ -43,7 +43,7 @@
 		"timeout":  "15000",
         "interval": "60000"
     },
-    "instanceObjects": [
+	"instanceObjects": [
       {
         "_id":  "states",
         "type": "device",
@@ -53,13 +53,12 @@
         "native": {}
       },
 	  {
-	  
         "_id":  "states.on",
         "type": "state",
         "common": {
           "name": "Is TV is ON",
           "role": "indicator.online",
-          "type": "string",
+          "type": "boolean",
           "read": true,
           "write": false
         },
@@ -251,7 +250,7 @@
         "common": {
           "name":   "Current volume",
           "role":   "state",
-          "type":   "string",
+          "type":   "number",
           "read":   true,
           "write":  true
         },
@@ -317,6 +316,388 @@
           "name": "Open URL",
           "role": "state",
           "type": "string",
+          "read": false,
+          "write": true
+        },
+        "native": {}
+      },
+	  {
+        "_id":  "states.youtube",
+        "type": "state",
+        "common": {
+          "name": "Open YouTube video",
+          "role": "state",
+          "type": "string",
+          "read": false,
+          "write": true
+        },
+        "native": {}
+      },
+	  {
+        "_id":  "states.drag",
+        "type": "state",
+        "common": {
+          "name": "Move/Drag",
+          "role": "state",
+          "type": "string",
+          "read": false,
+          "write": true
+        },
+        "native": {}
+      },
+	  {
+        "_id":  "states.scroll",
+        "type": "state",
+        "common": {
+          "name": "Scroll",
+          "role": "state",
+          "type": "string",
+          "read": false,
+          "write": true
+        },
+        "native": {}
+      },
+	  {
+        "_id":  "states.click",
+        "type": "state",
+        "common": {
+          "name": "Click",
+          "role": "button",
+          "type": "boolean",
+          "read": false,
+          "write": true
+        },
+        "native": {}
+      }, 
+	  {
+        "_id":  "states.soundOutput",
+        "type": "state",
+        "common": {
+          "name": "Switch audio output",
+          "role": "state",
+          "type": "string",
+		  "states": {
+            "tv_speaker": "TV Speaker",
+            "external_optical": "External Optical",
+            "external_arc": "External ARC",
+            "lineout": "LineOut",
+            "headphone": "Headphone",
+			"tv_external_speaker": "TV + External Speaker",
+			"tv_speaker_headphone": "TV + Speaker Headphone",
+			"bt_soundbar": "Bluetooth"
+          },
+          "read": true,
+          "write": true
+        },
+        "native": {}
+      },
+	  {
+        "_id":  "states.raw",
+        "type": "state",
+        "common": {
+          "name": "Send API cmd {url: URL, cmd: CMD}",
+          "role": "state",
+          "type": "object",
+          "read": false,
+          "write": true
+        },
+        "native": {}
+      },
+	  {
+        "_id":  "remote.red",
+        "type": "state",
+        "common": {
+          "name": "Remote key red",
+          "role": "button",
+          "type": "boolean",
+          "read": false,
+          "write": true
+        },
+        "native": {}
+      },
+	  {
+        "_id":  "remote.green",
+        "type": "state",
+        "common": {
+          "name": "Remote key green",
+          "role": "button",
+          "type": "boolean",
+          "read": false,
+          "write": true
+        },
+        "native": {}
+      },
+	  {
+        "_id":  "remote.yellow",
+        "type": "state",
+        "common": {
+          "name": "Remote key yellow",
+          "role": "button",
+          "type": "boolean",
+          "read": false,
+          "write": true
+        },
+        "native": {}
+      },
+	  {
+        "_id":  "remote.blue",
+        "type": "state",
+        "common": {
+          "name": "Remote key blue",
+          "role": "button",
+          "type": "boolean",
+          "read": false,
+          "write": true
+        },
+        "native": {}
+      },
+	  {
+        "_id":  "remote.home",
+        "type": "state",
+        "common": {
+          "name": "Remote key home",
+          "role": "button",
+          "type": "boolean",
+          "read": false,
+          "write": true
+        },
+        "native": {}
+      },
+	  {
+        "_id":  "remote.menu",
+        "type": "state",
+        "common": {
+          "name": "Remote key menu",
+          "role": "button",
+          "type": "boolean",
+          "read": false,
+          "write": true
+        },
+        "native": {}
+      },
+	  {
+        "_id":  "remote.cc",
+        "type": "state",
+        "common": {
+          "name": "Remote key cc",
+          "role": "button",
+          "type": "boolean",
+          "read": false,
+          "write": true
+        },
+        "native": {}
+      },
+	  {
+        "_id":  "remote.back",
+        "type": "state",
+        "common": {
+          "name": "Remote key back",
+          "role": "button",
+          "type": "boolean",
+          "read": false,
+          "write": true
+        },
+        "native": {}
+      },
+	  {
+        "_id":  "remote.up",
+        "type": "state",
+        "common": {
+          "name": "Remote key up",
+          "role": "button",
+          "type": "boolean",
+          "read": false,
+          "write": true
+        },
+        "native": {}
+      },
+	  {
+        "_id":  "remote.down",
+        "type": "state",
+        "common": {
+          "name": "Remote key down",
+          "role": "button",
+          "type": "boolean",
+          "read": false,
+          "write": true
+        },
+        "native": {}
+      },
+	  {
+        "_id":  "remote.left",
+        "type": "state",
+        "common": {
+          "name": "Remote key left",
+          "role": "button",
+          "type": "boolean",
+          "read": false,
+          "write": true
+        },
+        "native": {}
+      },
+	  {
+        "_id":  "remote.right",
+        "type": "state",
+        "common": {
+          "name": "Remote key right",
+          "role": "button",
+          "type": "boolean",
+          "read": false,
+          "write": true
+        },
+        "native": {}
+      },
+	  {
+        "_id":  "remote.enter",
+        "type": "state",
+        "common": {
+          "name": "Remote key enter",
+          "role": "button",
+          "type": "boolean",
+          "read": false,
+          "write": true
+        },
+        "native": {}
+      },
+	  {
+        "_id":  "remote.dash",
+        "type": "state",
+        "common": {
+          "name": "Remote key dash",
+          "role": "button",
+          "type": "boolean",
+          "read": false,
+          "write": true
+        },
+        "native": {}
+      },
+	  {
+        "_id":  "remote.exit",
+        "type": "state",
+        "common": {
+          "name": "Remote key exit",
+          "role": "button",
+          "type": "boolean",
+          "read": false,
+          "write": true
+        },
+        "native": {}
+      },
+	  {
+        "_id":  "remote.0",
+        "type": "state",
+        "common": {
+          "name": "Remote key 0",
+          "role": "button",
+          "type": "boolean",
+          "read": false,
+          "write": true
+        },
+        "native": {}
+      },
+	  {
+        "_id":  "remote.1",
+        "type": "state",
+        "common": {
+          "name": "Remote key 1",
+          "role": "button",
+          "type": "boolean",
+          "read": false,
+          "write": true
+        },
+        "native": {}
+      },
+	  {
+        "_id":  "remote.2",
+        "type": "state",
+        "common": {
+          "name": "Remote key 2",
+          "role": "button",
+          "type": "boolean",
+          "read": false,
+          "write": true
+        },
+        "native": {}
+      },
+	  {
+        "_id":  "remote.3",
+        "type": "state",
+        "common": {
+          "name": "Remote key 3",
+          "role": "button",
+          "type": "boolean",
+          "read": false,
+          "write": true
+        },
+        "native": {}
+      },
+	  {
+        "_id":  "remote.4",
+        "type": "state",
+        "common": {
+          "name": "Remote key 4",
+          "role": "button",
+          "type": "boolean",
+          "read": false,
+          "write": true
+        },
+        "native": {}
+      },
+	  {
+        "_id":  "remote.5",
+        "type": "state",
+        "common": {
+          "name": "Remote key 5",
+          "role": "button",
+          "type": "boolean",
+          "read": false,
+          "write": true
+        },
+        "native": {}
+      },
+	  {
+        "_id":  "remote.6",
+        "type": "state",
+        "common": {
+          "name": "Remote key 6",
+          "role": "button",
+          "type": "boolean",
+          "read": false,
+          "write": true
+        },
+        "native": {}
+      },
+	  {
+        "_id":  "remote.7",
+        "type": "state",
+        "common": {
+          "name": "Remote key 7",
+          "role": "button",
+          "type": "boolean",
+          "read": false,
+          "write": true
+        },
+        "native": {}
+      },
+	  {
+        "_id":  "remote.8",
+        "type": "state",
+        "common": {
+          "name": "Remote key 8",
+          "role": "button",
+          "type": "boolean",
+          "read": false,
+          "write": true
+        },
+        "native": {}
+      },
+	  {
+        "_id":  "remote.9",
+        "type": "state",
+        "common": {
+          "name": "Remote key 9",
+          "role": "button",
+          "type": "boolean",
           "read": false,
           "write": true
         },
