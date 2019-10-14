@@ -106,7 +106,7 @@
       "type": "state",
       "common": {
         "name": "Switch TV OFF",
-        "role": "button",
+        "role": "switch",
         "type": "boolean",
         "read": false,
         "write": true
@@ -142,7 +142,7 @@
       "type": "state",
       "common": {
         "name": "Volume UP",
-        "role": "button",
+        "role": "switch",
         "type": "boolean",
         "read": false,
         "write": true
@@ -154,7 +154,7 @@
       "type": "state",
       "common": {
         "name": "Volume DOWN",
-        "role": "button",
+        "role": "switch",
         "type": "boolean",
         "read": false,
         "write": true
@@ -202,7 +202,7 @@
       "type": "state",
       "common": {
         "name": "Channel UP",
-        "role": "button",
+        "role": "switch",
         "type": "boolean",
         "read": false,
         "write": true
@@ -214,7 +214,7 @@
       "type": "state",
       "common": {
         "name": "Channel DOWN",
-        "role": "button",
+        "role": "switch",
         "type": "boolean",
         "read": false,
         "write": true
@@ -226,7 +226,7 @@
       "type": "state",
       "common": {
         "name": "Media Play",
-        "role": "button",
+        "role": "switch",
         "type": "boolean",
         "read": false,
         "write": true
@@ -238,7 +238,7 @@
       "type": "state",
       "common": {
         "name": "Media Pause",
-        "role": "button",
+        "role": "switch",
         "type": "boolean",
         "read": false,
         "write": true
@@ -250,7 +250,7 @@
       "type": "state",
       "common": {
         "name": "Media Stop",
-        "role": "button",
+        "role": "switch",
         "type": "boolean",
         "read": false,
         "write": true
@@ -262,7 +262,7 @@
       "type": "state",
       "common": {
         "name": "Media Fast Forward",
-        "role": "button",
+        "role": "switch",
         "type": "boolean",
         "read": false,
         "write": true
@@ -274,7 +274,7 @@
       "type": "state",
       "common": {
         "name": "Media Rewind",
-        "role": "button",
+        "role": "switch",
         "type": "boolean",
         "read": false,
         "write": true
@@ -399,7 +399,7 @@
       "type": "state",
       "common": {
         "name": "Click",
-        "role": "button",
+        "role": "switch",
         "type": "boolean",
         "read": false,
         "write": true
@@ -445,7 +445,7 @@
       "type": "state",
       "common": {
         "name": "Remote key red",
-        "role": "button",
+        "role": "switch",
         "type": "boolean",
         "read": false,
         "write": true
@@ -457,7 +457,7 @@
       "type": "state",
       "common": {
         "name": "Remote key green",
-        "role": "button",
+        "role": "switch",
         "type": "boolean",
         "read": false,
         "write": true
@@ -469,7 +469,7 @@
       "type": "state",
       "common": {
         "name": "Remote key yellow",
-        "role": "button",
+        "role": "switch",
         "type": "boolean",
         "read": false,
         "write": true
@@ -481,7 +481,7 @@
       "type": "state",
       "common": {
         "name": "Remote key blue",
-        "role": "button",
+        "role": "switch",
         "type": "boolean",
         "read": false,
         "write": true
@@ -493,7 +493,7 @@
       "type": "state",
       "common": {
         "name": "Remote key home",
-        "role": "button",
+        "role": "switch",
         "type": "boolean",
         "read": false,
         "write": true
@@ -505,7 +505,7 @@
       "type": "state",
       "common": {
         "name": "Remote key menu",
-        "role": "button",
+        "role": "switch",
         "type": "boolean",
         "read": false,
         "write": true
@@ -517,7 +517,7 @@
       "type": "state",
       "common": {
         "name": "Remote key cc",
-        "role": "button",
+        "role": "switch",
         "type": "boolean",
         "read": false,
         "write": true
@@ -529,7 +529,7 @@
       "type": "state",
       "common": {
         "name": "Remote key back",
-        "role": "button",
+        "role": "switch",
         "type": "boolean",
         "read": false,
         "write": true
@@ -541,7 +541,7 @@
       "type": "state",
       "common": {
         "name": "Remote key up",
-        "role": "button",
+        "role": "switch",
         "type": "boolean",
         "read": false,
         "write": true
@@ -553,7 +553,7 @@
       "type": "state",
       "common": {
         "name": "Remote key down",
-        "role": "button",
+        "role": "switch",
         "type": "boolean",
         "read": false,
         "write": true
@@ -565,7 +565,7 @@
       "type": "state",
       "common": {
         "name": "Remote key left",
-        "role": "button",
+        "role": "switch",
         "type": "boolean",
         "read": false,
         "write": true
@@ -577,7 +577,7 @@
       "type": "state",
       "common": {
         "name": "Remote key right",
-        "role": "button",
+        "role": "switch",
         "type": "boolean",
         "read": false,
         "write": true
@@ -589,7 +589,7 @@
       "type": "state",
       "common": {
         "name": "Remote key enter",
-        "role": "button",
+        "role": "switch",
         "type": "boolean",
         "read": false,
         "write": true
@@ -601,7 +601,7 @@
       "type": "state",
       "common": {
         "name": "Remote key dash",
-        "role": "button",
+        "role": "switch",
         "type": "boolean",
         "read": false,
         "write": true
@@ -613,7 +613,7 @@
       "type": "state",
       "common": {
         "name": "Remote key exit",
-        "role": "button",
+        "role": "switch",
         "type": "boolean",
         "read": false,
         "write": true
@@ -625,7 +625,7 @@
       "type": "state",
       "common": {
         "name": "Remote key 0",
-        "role": "button",
+        "role": "switch",
         "type": "boolean",
         "read": false,
         "write": true
@@ -637,7 +637,7 @@
       "type": "state",
       "common": {
         "name": "Remote key 1",
-        "role": "button",
+        "role": "switch",
         "type": "boolean",
         "read": false,
         "write": true
@@ -649,7 +649,7 @@
       "type": "state",
       "common": {
         "name": "Remote key 2",
-        "role": "button",
+        "role": "switch",
         "type": "boolean",
         "read": false,
         "write": true
@@ -661,7 +661,7 @@
       "type": "state",
       "common": {
         "name": "Remote key 3",
-        "role": "button",
+        "role": "switch",
         "type": "boolean",
         "read": false,
         "write": true
@@ -673,7 +673,7 @@
       "type": "state",
       "common": {
         "name": "Remote key 4",
-        "role": "button",
+        "role": "switch",
         "type": "boolean",
         "read": false,
         "write": true
@@ -685,7 +685,7 @@
       "type": "state",
       "common": {
         "name": "Remote key 5",
-        "role": "button",
+        "role": "switch",
         "type": "boolean",
         "read": false,
         "write": true
@@ -697,7 +697,7 @@
       "type": "state",
       "common": {
         "name": "Remote key 6",
-        "role": "button",
+        "role": "switch",
         "type": "boolean",
         "read": false,
         "write": true
@@ -709,7 +709,7 @@
       "type": "state",
       "common": {
         "name": "Remote key 7",
-        "role": "button",
+        "role": "switch",
         "type": "boolean",
         "read": false,
         "write": true
@@ -721,7 +721,7 @@
       "type": "state",
       "common": {
         "name": "Remote key 8",
-        "role": "button",
+        "role": "switch",
         "type": "boolean",
         "read": false,
         "write": true
@@ -733,7 +733,7 @@
       "type": "state",
       "common": {
         "name": "Remote key 9",
-        "role": "button",
+        "role": "switch",
         "type": "boolean",
         "read": false,
         "write": true
