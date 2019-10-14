@@ -456,6 +456,9 @@ function pollGetSoundOutput() {
 	});
 }
 
+function pollVolumeLevel() {
+}
+
 function main() {
 	adapter.log.info('Ready. Configured WebOS TV IP: ' + adapter.config.ip);
 	adapter.subscribeStates('*');
