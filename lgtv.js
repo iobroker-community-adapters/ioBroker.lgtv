@@ -72,6 +72,8 @@ function startAdapter(options) {
 						adapter.log.debug('Sending volume change ' + state.val + ' command to WebOS TV: ' + adapter.config.ip);
 						sendCommand('ssap://audio/setVolume', {volume: state.val}, function (err, val) {
 							if (!err)
+							{
+							}
 						});
 						break;
 
