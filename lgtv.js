@@ -50,9 +50,13 @@ function startAdapter(options) {
 						} else {
 							adapter.getState(adapter.namespace + '.states.mac', function (err, state){
 								adapter.log.debug('GetState mac: ' + JSON.stringify(state));
-								wol.wake(state.val, function(err, res){
-									if (!err) adapter.log.debug('Send WOL to MAC: {' + state.val + '} OK');
-								});
+								if(state){
+									wol.wake(state.val, function (err, res){
+										if (!err) adapter.log.debug('Send WOL to MAC: {' + state.val + '} OK');
+									});
+								} else {
+									adapter.log.error('Error get MAC address TV. Please turn on the TV manually first!');
+								}
 							});
 						}
 						break;
@@ -454,9 +458,6 @@ function pollGetSoundOutput() {
 			adapter.log.debug('ERROR on Polling get current sound output: ' + err);
 		}
 	});
-}
-
-function pollVolumeLevel() {
 }
 
 function main() {
