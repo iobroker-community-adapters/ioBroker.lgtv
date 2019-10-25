@@ -13,7 +13,7 @@ var LGTV = require('lgtv2');
 var wol = require('wol');
 var pollTimerChannel		= null;
 var pollTimerOnlineStatus	= null;
-var pollTimerInput			= null;
+var pollTimerInput		= null;
 var pollTimerGetSoundOutput	= null;
 var isConnect = false;
 var lgtvobj;
@@ -29,7 +29,6 @@ function startAdapter(options) {
 				switch (id)	{
 					case 'states.popup':
 						adapter.log.debug('Sending popup message "' + state.val + '" to WebOS TV: ' + adapter.config.ip);
-						//"iconData", "iconExtension",
 						sendCommand('ssap://system.notifications/createToast', {message: state.val}, function (err, val) {
 							if (!err) adapter.setState('states.popup', state.val, true);
 						});
@@ -71,9 +70,7 @@ function startAdapter(options) {
 					case 'states.volume':
 						adapter.log.debug('Sending volume change ' + state.val + ' command to WebOS TV: ' + adapter.config.ip);
 						sendCommand('ssap://audio/setVolume', {volume: state.val}, function (err, val) {
-							if (!err)
-							{
-							}
+							if (!err){}
 						});
 						break;
 
@@ -242,6 +239,7 @@ function startAdapter(options) {
 
 						break;
 
+
 					case 'states.raw':
 						adapter.log.debug('Sending raw command api "' + state.val + '" to WebOS TV: ' + adapter.config.ip);
 						sendCommand(state.val[url], state.val[cmd], function (err, val) {
@@ -304,6 +302,7 @@ function startAdapter(options) {
 			}
 		},
 		unload: function (callback) {
+			lgtvobj.disconnect();
 			callback();
 		},
 		ready: function () {
@@ -316,12 +315,6 @@ function startAdapter(options) {
 	return adapter;
 }
 
-function sendCommand(cmd, options, cb) {
-	if(isConnect){
-		sendPacket(cmd, options, cb);
-	}
-}
-
 function connect(cb){
 	lgtvobj = new LGTV({
 		url:       'ws://' + adapter.config.ip + ':3000',
@@ -332,6 +325,7 @@ function connect(cb){
 	lgtvobj.on('connecting', function (host){
 		adapter.log.debug('Connecting to WebOS TV: ' + host);
 		adapter.setState('info.connection', false, true);
+		clearIntervals();
 	});
 
 	lgtvobj.on('close', function (e){
@@ -349,19 +343,50 @@ function connect(cb){
 	});
 
 	lgtvobj.on('connect', function (error, response){
+		adapter.log.debug('WebOS TV Connected');
 		isConnect = true;
+		clearIntervals();
 		adapter.setState('info.connection', true, true);
 		lgtvobj.subscribe('ssap://audio/getVolume', function(err, res){
 			adapter.log.debug('audio/getVolume: ' + JSON.stringify(res));
-			if (res.changed.indexOf('volume') !== -1) {
+			if (~res.changed.indexOf('volume')) {
 				adapter.setState('states.volume', parseInt(res.volume), true);
 			}
-			if (res.changed.indexOf('muted') !== -1) {
+			if (~res.changed.indexOf('muted')) {
 				adapter.setState('states.mute', res.muted, true);
 			}
 		});
+			if (parseInt(adapter.config.interval, 10)) {
+				pollTimerChannel = setInterval(pollChannel, parseInt(adapter.config.interval, 10));
+				pollTimerOnlineStatus = setInterval(pollOnlineStatus, parseInt(adapter.config.interval, 10));
+				pollTimerInput = setInterval(pollInputAndCurrentApp, parseInt(adapter.config.interval, 10));
+				pollTimerGetSoundOutput = setInterval(pollGetSoundOutput, parseInt(adapter.config.interval, 10));
+			}
+			sendCommand('ssap://api/getServiceList', null, function (err, val) {
+				if (!err) adapter.log.debug('Service list: ' + JSON.stringify(val));
+			});
+			sendCommand('ssap://com.webos.service.update/getCurrentSWInformation', null, function (err, val) {
+				if (!err) {
+					adapter.log.debug('getCurrentSWInformation: ' + JSON.stringify(val));
+					adapter.setState('states.mac', val.device_id, true);
+				}
+			});
+			sendCommand('ssap://system/getSystemInfo', null, function (err, val) {
+				if (!err) {
+					adapter.log.debug('getSystemInfo: ' + JSON.stringify(val));
+					adapter.setState('states.model', val.modelName, true);
+				}
+			});
 		cb && cb();
 	});
+}
+
+function sendCommand(cmd, options, cb) {
+	if(isConnect){
+		sendPacket(cmd, options, function(_error, response){
+			cb && cb(_error, response);
+		});
+	}
 }
 
 function sendPacket(cmd, options, cb){
@@ -460,33 +485,26 @@ function pollGetSoundOutput() {
 		}
 	});
 }
+function clearIntervals(){
+	clearInterval(pollTimerChannel);
+	clearInterval(pollTimerOnlineStatus);
+	clearInterval(pollTimerInput);
+	clearInterval(pollTimerGetSoundOutput);
+}
 
 function main() {
 	adapter.log.info('Ready. Configured WebOS TV IP: ' + adapter.config.ip);
 	adapter.subscribeStates('*');
-	connect(function (){
-		if (parseInt(adapter.config.interval, 10)) {
-			pollTimerChannel = setInterval(pollChannel, parseInt(adapter.config.interval, 10));
-			pollTimerOnlineStatus = setInterval(pollOnlineStatus, parseInt(adapter.config.interval, 10));
-			pollTimerInput = setInterval(pollInputAndCurrentApp, parseInt(adapter.config.interval, 10));
-			pollTimerGetSoundOutput = setInterval(pollGetSoundOutput, parseInt(adapter.config.interval, 10));
-		}
-		sendCommand('ssap://api/getServiceList', null, function (err, val) {
-			if (!err) adapter.log.debug('Service list: ' + JSON.stringify(val));
-		});
-		sendCommand('ssap://com.webos.service.update/getCurrentSWInformation', null, function (err, val) {
-			if (!err) {
-				adapter.log.debug('getCurrentSWInformation: ' + JSON.stringify(val));
-				adapter.setState('states.mac', val.device_id, true);
-			}
-		});
-		sendCommand('ssap://system/getSystemInfo', null, function (err, val) {
-			if (!err) {
-				adapter.log.debug('getSystemInfo: ' + JSON.stringify(val));
-				adapter.setState('states.model', val.modelName, true);
-			}
-		});
-	});
+	connect(function (){});
+}
+
+// If started as allInOne/compact mode => return function to create instance
+if (module && module.parent) {
+	module.exports = startAdapter;
+} else {
+	// or start the instance directly
+	startAdapter();
+	startAdapter();
 }
 
 // If started as allInOne/compact mode => return function to create instance
