@@ -13,10 +13,10 @@ var LGTV = require('lgtv2');
 var wol = require('wol');
 var pollTimerChannel		= null;
 var pollTimerOnlineStatus	= null;
-var pollTimerInput		= null;
+var pollTimerInput			= null;
 var pollTimerGetSoundOutput	= null;
 var isConnect = false;
-var lgtvobj;
+var lgtvobj, volume, oldvolume;
 
 function startAdapter(options) {
 	options = options || {};
@@ -35,21 +35,33 @@ function startAdapter(options) {
 						break;
 					case 'states.turnOff':
 						adapter.log.debug('Sending turn OFF command to WebOS TV: ' + adapter.config.ip);
-						sendCommand('ssap://system/turnOff', {message: state.val}, function (err, val) {
-							if (!err) adapter.setState('states.turnOff', state.val, true);
-						});
+						if(adapter.config.power){
+							sendCommand('button', { name: 'power' }, function (err, val) {
+								if (!err) adapter.setState('states.turnOff', state.val, true);
+							});
+						} else {
+							sendCommand('ssap://system/turnOff', {message: state.val}, function (err, val) {
+								if (!err) adapter.setState('states.turnOff', state.val, true);
+							});	
+						}
 						break;
 						
 					case 'states.power':
 						adapter.log.debug('Sending turn OFF command to WebOS TV: ' + adapter.config.ip);
 						if(!state.val){
-							sendCommand('ssap://system/turnOff', {message: state.val}, function (err, val){
-								if (!err) adapter.setState('states.power', state.val, true);
-							});
+							if(adapter.config.power){
+								sendCommand('button', { name: 'power' }, function (err, val) {
+									if (!err) adapter.setState('states.power', state.val, true);
+								});
+							} else {
+								sendCommand('ssap://system/turnOff', {message: state.val}, function (err, val){
+									if (!err) adapter.setState('states.power', state.val, true);
+								});
+							}
 						} else {
 							adapter.getState(adapter.namespace + '.states.mac', function (err, state){
 								adapter.log.debug('GetState mac: ' + JSON.stringify(state));
-								if(state){
+								if (state){
 									wol.wake(state.val, function (err, res){
 										if (!err) adapter.log.debug('Send WOL to MAC: {' + state.val + '} OK');
 									});
@@ -69,9 +81,8 @@ function startAdapter(options) {
 
 					case 'states.volume':
 						adapter.log.debug('Sending volume change ' + state.val + ' command to WebOS TV: ' + adapter.config.ip);
-						sendCommand('ssap://audio/setVolume', {volume: state.val}, function (err, val) {
-							if (!err){}
-						});
+						oldvolume = volume;
+						SetVolume(state.val);
 						break;
 
 					case 'states.volumeUp':
@@ -238,13 +249,20 @@ function startAdapter(options) {
 						});
 
 						break;
-
-
+						
 					case 'states.raw':
-						adapter.log.debug('Sending raw command api "' + state.val + '" to WebOS TV: ' + adapter.config.ip);
-						sendCommand(state.val[url], state.val[cmd], function (err, val) {
-							if (!err) adapter.setState('states.raw', state.val, true);
-						});
+						adapter.log.debug('Sending RAW command api "' + state.val + '" to WebOS TV: ' + adapter.config.ip);
+						try {
+							var obj = JSON.parse(state.val);
+							sendCommand(obj.url, obj.cmd, function (err, val) {
+								if (!err){
+									adapter.log.debug('Response RAW  command api ' + JSON.stringify(val));
+									adapter.setState('states.raw', JSON.stringify(val), true);
+								}
+							});	
+						} catch (e) {
+							adapter.log.error('Parse error RAW command api - ' + e);
+						}
 						break;
 
 					case 'states.youtube':
@@ -302,7 +320,7 @@ function startAdapter(options) {
 			}
 		},
 		unload: function (callback) {
-			lgtvobj.disconnect();
+			//lgtvobj.disconnect();
 			callback();
 		},
 		ready: function () {
@@ -350,33 +368,34 @@ function connect(cb){
 		lgtvobj.subscribe('ssap://audio/getVolume', function(err, res){
 			adapter.log.debug('audio/getVolume: ' + JSON.stringify(res));
 			if (~res.changed.indexOf('volume')) {
-				adapter.setState('states.volume', parseInt(res.volume), true);
+				volume = parseInt(res.volume);
+				adapter.setState('states.volume', volume, true);
 			}
 			if (~res.changed.indexOf('muted')) {
 				adapter.setState('states.mute', res.muted, true);
 			}
 		});
-			if (parseInt(adapter.config.interval, 10)) {
-				pollTimerChannel = setInterval(pollChannel, parseInt(adapter.config.interval, 10));
-				pollTimerOnlineStatus = setInterval(pollOnlineStatus, parseInt(adapter.config.interval, 10));
-				pollTimerInput = setInterval(pollInputAndCurrentApp, parseInt(adapter.config.interval, 10));
-				pollTimerGetSoundOutput = setInterval(pollGetSoundOutput, parseInt(adapter.config.interval, 10));
+		if (parseInt(adapter.config.interval, 10)) {
+			pollTimerChannel = setInterval(pollChannel, parseInt(adapter.config.interval, 10));
+			pollTimerOnlineStatus = setInterval(pollOnlineStatus, parseInt(adapter.config.interval, 10));
+			pollTimerInput = setInterval(pollInputAndCurrentApp, parseInt(adapter.config.interval, 10));
+			pollTimerGetSoundOutput = setInterval(pollGetSoundOutput, parseInt(adapter.config.interval, 10));
+		}
+		sendCommand('ssap://api/getServiceList', null, function (err, val) {
+			if (!err) adapter.log.debug('Service list: ' + JSON.stringify(val));
+		});
+		sendCommand('ssap://com.webos.service.update/getCurrentSWInformation', null, function (err, val) {
+			if (!err) {
+				adapter.log.debug('getCurrentSWInformation: ' + JSON.stringify(val));
+					adapter.setState('states.mac', adapter.config.mac ? adapter.config.mac : val.device_id, true);
 			}
-			sendCommand('ssap://api/getServiceList', null, function (err, val) {
-				if (!err) adapter.log.debug('Service list: ' + JSON.stringify(val));
-			});
-			sendCommand('ssap://com.webos.service.update/getCurrentSWInformation', null, function (err, val) {
-				if (!err) {
-					adapter.log.debug('getCurrentSWInformation: ' + JSON.stringify(val));
-					adapter.setState('states.mac', val.device_id, true);
-				}
-			});
-			sendCommand('ssap://system/getSystemInfo', null, function (err, val) {
-				if (!err) {
-					adapter.log.debug('getSystemInfo: ' + JSON.stringify(val));
-					adapter.setState('states.model', val.modelName, true);
-				}
-			});
+		});
+		sendCommand('ssap://system/getSystemInfo', null, function (err, val) {
+			if (!err) {
+				adapter.log.debug('getSystemInfo: ' + JSON.stringify(val));
+				adapter.setState('states.model', val.modelName, true);
+			}
+		});
 		cb && cb();
 	});
 }
@@ -402,6 +421,26 @@ function sendPacket(cmd, options, cb){
 			if(!err){
 				sock.send(cmd, options);
 			}
+		});
+	}
+}
+
+function SetVolume(val){
+	if (val >= volume + 5) {
+		var vol = oldvolume;
+		var interval = setInterval(function() {
+			vol = vol + 2;
+			if (vol >= val){
+				vol = val;
+				clearInterval(interval);
+			}
+			sendCommand('ssap://audio/setVolume', {volume: vol}, function (err, resp) {
+				if (!err){}
+			});
+		}, 500);
+	} else {
+		sendCommand('ssap://audio/setVolume', {volume: val}, function (err, resp) {
+			if (!err){}
 		});
 	}
 }
@@ -493,9 +532,14 @@ function clearIntervals(){
 }
 
 function main() {
-	adapter.log.info('Ready. Configured WebOS TV IP: ' + adapter.config.ip);
-	adapter.subscribeStates('*');
-	connect(function (){});
+	if(adapter.config.ip !== undefined){
+		adapter.log.info('Ready. Configured WebOS TV IP: ' + adapter.config.ip);
+		adapter.subscribeStates('*');
+		connect(function (){
+		});
+	} else {
+		adapter.log.error('No configure IP address');
+	}
 }
 
 // If started as allInOne/compact mode => return function to create instance
