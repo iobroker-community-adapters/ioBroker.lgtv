@@ -1,20 +1,8 @@
 {
     "common": {
         "name":               "lgtv",
-        "version":            "1.1.1",
+        "version":            "1.1.0",
         "news": {
-                  "1.1.1": {
-                    "en": "fix error reconect\nfix raw object\nadd mac address to admin settings",
-                    "de": "fix error reconect\nfix raw object\nadd mac address to admin settings",
-                    "ru": "fix error reconect\nfix raw object\nadd mac address to admin settings",
-                    "pt": "fix error reconect\nfix raw object\nadd mac address to admin settings",
-                    "nl": "fix error reconect\nfix raw object\nadd mac address to admin settings",
-                    "fr": "fix error reconect\nfix raw object\nadd mac address to admin settings",
-                    "it": "fix error reconect\nfix raw object\nadd mac address to admin settings",
-                    "es": "fix error reconect\nfix raw object\nadd mac address to admin settings",
-                    "pl": "fix error reconect\nfix raw object\nadd mac address to admin settings",
-                    "zh-cn": "fix error reconect\nfix raw object\nadd mac address to admin settings"
-                  },
                   "1.1.0": {
                     "en": "adding object remote.KEY\nfix connect to TV\nadd subscribe volume and mute state\ntranslate admin to RUS\nadd Turn On, using WOL\nadding new different objects",
                     "de": "adding object remote.KEY\nfix connect to TV\nadd subscribe volume and mute state\ntranslate admin to RUS\nadd Turn On, using WOL\nadding new different objects",
@@ -64,10 +52,8 @@
     },
     "native": {
         "ip":       "",
-        "mac":      "",
 		"timeout":  "15000",
-        "interval": "60000",
-        "power": false
+        "interval": "60000"
     },
   "instanceObjects": [
     {
@@ -446,21 +432,9 @@
       "_id":  "states.raw",
       "type": "state",
       "common": {
-        "name": "Send and response API cmd {url: URL, cmd: CMD}",
+        "name": "Send API cmd {url: URL, cmd: CMD}",
         "role": "state",
         "type": "object",
-        "read": true,
-        "write": true
-      },
-      "native": {}
-    },
-    {
-      "_id":  "remote.power",
-      "type": "state",
-      "common": {
-        "name": "Remote key power",
-        "role": "switch",
-        "type": "boolean",
         "read": false,
         "write": true
       },
