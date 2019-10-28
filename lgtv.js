@@ -532,11 +532,10 @@ function clearIntervals(){
 }
 
 function main() {
-	if(adapter.config.ip !== undefined){
+	if(adapter.config.ip){
 		adapter.log.info('Ready. Configured WebOS TV IP: ' + adapter.config.ip);
 		adapter.subscribeStates('*');
-		connect(function (){
-		});
+		connect();
 	} else {
 		adapter.log.error('No configure IP address');
 	}
