@@ -312,7 +312,7 @@ function startAdapter(options){
 
                     default:
                         if (~id.indexOf('remote')){
-                            adapter.log.error('State change "' + id + '" - VALUE: ' + JSON.stringify(state));
+                            adapter.log.debug('State change "' + id + '" - VALUE: ' + JSON.stringify(state));
                             var ids = id.split(".");
                             var key = ids[ids.length - 1].toString().toUpperCase();
                             sendCommand('button', {name: key}, function (err, val){
