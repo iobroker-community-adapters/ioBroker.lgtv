@@ -563,8 +563,8 @@ function main(){
                     if (err) adapter.log.error('writeFile ERROR = ' + JSON.stringify(err));
                 });
             }
+            connect();
         });
-        connect();
     } else {
         adapter.log.error('No configure IP address');
     }
