@@ -65,7 +65,7 @@
     "native": {
         "ip":       "",
         "mac":      "",
-		"timeout":  "15000",
+		"timeout":  "5000",
         "interval": "60000",
         "power": false
     },
