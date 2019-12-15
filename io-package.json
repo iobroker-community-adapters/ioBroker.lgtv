@@ -1,7 +1,7 @@
 {
     "common": {
         "name":               "lgtv",
-        "version":            "1.1.1",
+        "version":            "1.1.3",
         "news": {
                   "1.1.1": {
                     "en": "fix error reconect\nfix raw object\nadd mac address to admin settings",
@@ -65,7 +65,7 @@
     "native": {
         "ip":       "",
         "mac":      "",
-		"timeout":  "15000",
+		"timeout":  "5000",
         "interval": "60000",
         "power": false
     },
