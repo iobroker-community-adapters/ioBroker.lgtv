@@ -260,7 +260,7 @@ function startAdapter(options){
                     case 'states.raw':
                         adapter.log.debug('Sending RAW command api "' + state.val + '" to WebOS TV: ' + adapter.config.ip);
                         try {
-                            var obj = JSON.parse(state.val);
+                            const obj = JSON.parse(state.val);
                             sendCommand(obj.url, obj.cmd, (err, val) => {
                                 if (!err){
                                     adapter.log.debug('Response RAW  command api ' + JSON.stringify(val));
@@ -273,7 +273,7 @@ function startAdapter(options){
                         break;
 
                     case 'states.youtube':
-                        var uri = state.val;
+                        let uri = state.val;
                         if (!~uri.indexOf('http')){
                             uri = 'https://www.youtube.com/watch?v=' + uri;
                         }
@@ -314,8 +314,8 @@ function startAdapter(options){
                     default:
                         if (~id.indexOf('remote')){
                             adapter.log.debug('State change "' + id + '" - VALUE: ' + JSON.stringify(state));
-                            var ids = id.split(".");
-                            var key = ids[ids.length - 1].toString().toUpperCase();
+                            const ids = id.split(".");
+                            const key = ids[ids.length - 1].toString().toUpperCase();
                             sendCommand('button', {name: key}, (err, val) => {
                                 if (!err) adapter.setState(id, state.val, true); // ?
                             });

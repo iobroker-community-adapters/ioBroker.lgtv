@@ -1,74 +1,92 @@
 {
-    "common": {
-        "name":               "lgtv",
-        "version":            "1.1.2",
-        "news": {
-                  "1.1.1": {
-                    "en": "fix error reconect\nfix raw object\nadd mac address to admin settings",
-                    "de": "fix error reconect\nfix raw object\nadd mac address to admin settings",
-                    "ru": "fix error reconect\nfix raw object\nadd mac address to admin settings",
-                    "pt": "fix error reconect\nfix raw object\nadd mac address to admin settings",
-                    "nl": "fix error reconect\nfix raw object\nadd mac address to admin settings",
-                    "fr": "fix error reconect\nfix raw object\nadd mac address to admin settings",
-                    "it": "fix error reconect\nfix raw object\nadd mac address to admin settings",
-                    "es": "fix error reconect\nfix raw object\nadd mac address to admin settings",
-                    "pl": "fix error reconect\nfix raw object\nadd mac address to admin settings",
-                    "zh-cn": "fix error reconect\nfix raw object\nadd mac address to admin settings"
-                  },
-                  "1.1.0": {
-                    "en": "adding object remote.KEY\nfix connect to TV\nadd subscribe volume and mute state\ntranslate admin to RUS\nadd Turn On, using WOL\nadding new different objects",
-                    "de": "adding object remote.KEY\nfix connect to TV\nadd subscribe volume and mute state\ntranslate admin to RUS\nadd Turn On, using WOL\nadding new different objects",
-                    "ru": "adding object remote.KEY\nfix connect to TV\nadd subscribe volume and mute state\ntranslate admin to RUS\nadd Turn On, using WOL\nadding new different objects",
-                    "pt": "adding object remote.KEY\nfix connect to TV\nadd subscribe volume and mute state\ntranslate admin to RUS\nadd Turn On, using WOL\nadding new different objects",
-                    "nl": "adding object remote.KEY\nfix connect to TV\nadd subscribe volume and mute state\ntranslate admin to RUS\nadd Turn On, using WOL\nadding new different objects",
-                    "fr": "adding object remote.KEY\nfix connect to TV\nadd subscribe volume and mute state\ntranslate admin to RUS\nadd Turn On, using WOL\nadding new different objects",
-                    "it": "adding object remote.KEY\nfix connect to TV\nadd subscribe volume and mute state\ntranslate admin to RUS\nadd Turn On, using WOL\nadding new different objects",
-                    "es": "adding object remote.KEY\nfix connect to TV\nadd subscribe volume and mute state\ntranslate admin to RUS\nadd Turn On, using WOL\nadding new different objects",
-                    "pl": "adding object remote.KEY\nfix connect to TV\nadd subscribe volume and mute state\ntranslate admin to RUS\nadd Turn On, using WOL\nadding new different objects",
-                    "zh-cn": "adding object remote.KEY\nfix connect to TV\nadd subscribe volume and mute state\ntranslate admin to RUS\nadd Turn On, using WOL\nadding new different objects"
-                  },
-                  "1.0.8": {
-                    "en": "General NPM update",
-                    "de": "General NPM update",
-                    "ru": "General NPM update",
-                    "pt": "General NPM update",
-                    "nl": "General NPM update",
-                    "fr": "General NPM update",
-                    "it": "General NPM update",
-                    "es": "General NPM update",
-                    "pl": "General NPM update",
-                    "zh-cn": "General NPM update"
-                  }
-        },
-        "title":              "LG WebOS SmartTV",
-        "desc":               {
- 			             "en": "Controls WebOS-based LG SmartTVs",
- 			             "de": "Steuert auf WebOS basierte LG SmartTVs",
- 			             "ru": "Controls WebOS-based LG SmartTVs"
-	    },
-	    "license":            "MIT",
-        "platform":           "Javascript/Node.js",
-        "mode":               "daemon",
-        "icon":               "lgtv.png",
-        "enabled":            false,
-        "materialize":        true,
-        "compact":            true,
-	    "extIcon":            "https://raw.githubusercontent.com/SebastianSchultz/ioBroker.lgtv/master/admin/lgtv.png",
-	    "keywords":           ["lgtv", "WebOS", "Smart", "TV", "LG"],
-        "readme":             "https://github.com/SebastianSchultz/iobroker.lgtv/blob/master/README.md",
-	    "loglevel":           "info",
-        "type":               "multimedia",
-		"authors": [
-            "SebastianSchultz <info@sebastian-schultz.de>"
-		]
+  "common": {
+    "name": "lgtv",
+    "version": "1.1.3",
+    "news": {
+      "1.1.3": {
+        "en": "fixed connect() [Pull requests #62]\nfixed [issues #64]\nchange error log to debug [issues #59]",
+        "de": "fixed connect() [Pull requests #62]\nfixed [issues #64]\nchange error log to debug [issues #59]",
+        "ru": "fixed connect() [Pull requests #62]\nfixed [issues #64]\nchange error log to debug [issues #59]",
+        "pt": "fixed connect() [Pull requests #62]\nfixed [issues #64]\nchange error log to debug [issues #59]",
+        "nl": "fixed connect() [Pull requests #62]\nfixed [issues #64]\nchange error log to debug [issues #59]",
+        "fr": "fixed connect() [Pull requests #62]\nfixed [issues #64]\nchange error log to debug [issues #59]",
+        "it": "fixed connect() [Pull requests #62]\nfixed [issues #64]\nchange error log to debug [issues #59]",
+        "es": "fixed connect() [Pull requests #62]\nfixed [issues #64]\nchange error log to debug [issues #59]",
+        "pl": "fixed connect() [Pull requests #62]\nfixed [issues #64]\nchange error log to debug [issues #59]",
+        "zh-cn": "fixed connect() [Pull requests #62]\nfixed [issues #64]\nchange error log to debug [issues #59]"
+      },
+      "1.1.1": {
+        "en": "fix error reconect\nfix raw object\nadd mac address to admin settings",
+        "de": "fix error reconect\nfix raw object\nadd mac address to admin settings",
+        "ru": "fix error reconect\nfix raw object\nadd mac address to admin settings",
+        "pt": "fix error reconect\nfix raw object\nadd mac address to admin settings",
+        "nl": "fix error reconect\nfix raw object\nadd mac address to admin settings",
+        "fr": "fix error reconect\nfix raw object\nadd mac address to admin settings",
+        "it": "fix error reconect\nfix raw object\nadd mac address to admin settings",
+        "es": "fix error reconect\nfix raw object\nadd mac address to admin settings",
+        "pl": "fix error reconect\nfix raw object\nadd mac address to admin settings",
+        "zh-cn": "fix error reconect\nfix raw object\nadd mac address to admin settings"
+      },
+      "1.1.0": {
+        "en": "adding object remote.KEY\nfix connect to TV\nadd subscribe volume and mute state\ntranslate admin to RUS\nadd Turn On, using WOL\nadding new different objects",
+        "de": "adding object remote.KEY\nfix connect to TV\nadd subscribe volume and mute state\ntranslate admin to RUS\nadd Turn On, using WOL\nadding new different objects",
+        "ru": "adding object remote.KEY\nfix connect to TV\nadd subscribe volume and mute state\ntranslate admin to RUS\nadd Turn On, using WOL\nadding new different objects",
+        "pt": "adding object remote.KEY\nfix connect to TV\nadd subscribe volume and mute state\ntranslate admin to RUS\nadd Turn On, using WOL\nadding new different objects",
+        "nl": "adding object remote.KEY\nfix connect to TV\nadd subscribe volume and mute state\ntranslate admin to RUS\nadd Turn On, using WOL\nadding new different objects",
+        "fr": "adding object remote.KEY\nfix connect to TV\nadd subscribe volume and mute state\ntranslate admin to RUS\nadd Turn On, using WOL\nadding new different objects",
+        "it": "adding object remote.KEY\nfix connect to TV\nadd subscribe volume and mute state\ntranslate admin to RUS\nadd Turn On, using WOL\nadding new different objects",
+        "es": "adding object remote.KEY\nfix connect to TV\nadd subscribe volume and mute state\ntranslate admin to RUS\nadd Turn On, using WOL\nadding new different objects",
+        "pl": "adding object remote.KEY\nfix connect to TV\nadd subscribe volume and mute state\ntranslate admin to RUS\nadd Turn On, using WOL\nadding new different objects",
+        "zh-cn": "adding object remote.KEY\nfix connect to TV\nadd subscribe volume and mute state\ntranslate admin to RUS\nadd Turn On, using WOL\nadding new different objects"
+      },
+      "1.0.8": {
+        "en": "General NPM update",
+        "de": "General NPM update",
+        "ru": "General NPM update",
+        "pt": "General NPM update",
+        "nl": "General NPM update",
+        "fr": "General NPM update",
+        "it": "General NPM update",
+        "es": "General NPM update",
+        "pl": "General NPM update",
+        "zh-cn": "General NPM update"
+      }
     },
-    "native": {
-        "ip":       "",
-        "mac":      "",
-		"timeout":  "5000",
-        "interval": "60000",
-        "power": false
+    "title": "LG WebOS SmartTV",
+    "desc": {
+      "en": "Controls WebOS-based LG SmartTVs",
+      "de": "Steuert auf WebOS basierte LG SmartTVs",
+      "ru": "Controls WebOS-based LG SmartTVs"
     },
+    "license": "MIT",
+    "platform": "Javascript/Node.js",
+    "mode": "daemon",
+    "icon": "lgtv.png",
+    "enabled": false,
+    "materialize": true,
+    "compact": true,
+    "extIcon": "https://raw.githubusercontent.com/SebastianSchultz/ioBroker.lgtv/master/admin/lgtv.png",
+    "keywords": [
+      "lgtv",
+      "WebOS",
+      "Smart",
+      "TV",
+      "LG"
+    ],
+    "readme": "https://github.com/SebastianSchultz/iobroker.lgtv/blob/master/README.md",
+    "loglevel": "info",
+    "type": "multimedia",
+    "authors": [
+      "SebastianSchultz <info@sebastian-schultz.de>"
+    ]
+  },
+  "native": {
+    "ip": "",
+    "mac": "",
+    "timeout": "5000",
+    "interval": "60000",
+    "power": false
+  },
   "instanceObjects": [
     {
       "_id": "info.connection",
@@ -84,7 +102,7 @@
       "native": {}
     },
     {
-      "_id":  "states",
+      "_id": "states",
       "type": "device",
       "common": {
         "name": "states"
@@ -92,7 +110,7 @@
       "native": {}
     },
     {
-      "_id":  "states.on",
+      "_id": "states.on",
       "type": "state",
       "common": {
         "name": "Is TV is ON",
@@ -104,7 +122,7 @@
       "native": {}
     },
     {
-      "_id":  "states.popup",
+      "_id": "states.popup",
       "type": "state",
       "common": {
         "name": "Show popup text on TV",
@@ -116,7 +134,7 @@
       "native": {}
     },
     {
-      "_id":  "states.turnOff",
+      "_id": "states.turnOff",
       "type": "state",
       "common": {
         "name": "Switch TV OFF",
@@ -128,7 +146,7 @@
       "native": {}
     },
     {
-      "_id":  "states.power",
+      "_id": "states.power",
       "type": "state",
       "common": {
         "name": "Switch TV power",
@@ -140,7 +158,7 @@
       "native": {}
     },
     {
-      "_id":  "states.mute",
+      "_id": "states.mute",
       "type": "state",
       "common": {
         "name": "Mute ON/OFF",
@@ -152,7 +170,7 @@
       "native": {}
     },
     {
-      "_id":  "states.volumeUp",
+      "_id": "states.volumeUp",
       "type": "state",
       "common": {
         "name": "Volume UP",
@@ -164,7 +182,7 @@
       "native": {}
     },
     {
-      "_id":  "states.volumeDown",
+      "_id": "states.volumeDown",
       "type": "state",
       "common": {
         "name": "Volume DOWN",
@@ -176,7 +194,7 @@
       "native": {}
     },
     {
-      "_id":  "states.3Dmode",
+      "_id": "states.3Dmode",
       "type": "state",
       "common": {
         "name": "3D mode ON/OFF",
@@ -188,31 +206,31 @@
       "native": {}
     },
     {
-      "_id":    "states.channel",
-      "type":   "state",
+      "_id": "states.channel",
+      "type": "state",
       "common": {
-        "name":   "Select channel",
-        "role":   "state",
-        "type":   "string",
-        "read":   true,
-        "write":  true
+        "name": "Select channel",
+        "role": "state",
+        "type": "string",
+        "read": true,
+        "write": true
       },
       "native": {}
     },
     {
-      "_id":    "states.channelId",
-      "type":   "state",
+      "_id": "states.channelId",
+      "type": "state",
       "common": {
-        "name":   "Current channel  id",
-        "role":   "state",
-        "type":   "string",
-        "read":   true,
-        "write":  true
+        "name": "Current channel  id",
+        "role": "state",
+        "type": "string",
+        "read": true,
+        "write": true
       },
       "native": {}
     },
     {
-      "_id":  "states.channelUp",
+      "_id": "states.channelUp",
       "type": "state",
       "common": {
         "name": "Channel UP",
@@ -224,7 +242,7 @@
       "native": {}
     },
     {
-      "_id":  "states.channelDown",
+      "_id": "states.channelDown",
       "type": "state",
       "common": {
         "name": "Channel DOWN",
@@ -236,7 +254,7 @@
       "native": {}
     },
     {
-      "_id":  "states.mediaPlay",
+      "_id": "states.mediaPlay",
       "type": "state",
       "common": {
         "name": "Media Play",
@@ -248,7 +266,7 @@
       "native": {}
     },
     {
-      "_id":  "states.mediaPause",
+      "_id": "states.mediaPause",
       "type": "state",
       "common": {
         "name": "Media Pause",
@@ -260,7 +278,7 @@
       "native": {}
     },
     {
-      "_id":  "states.mediaStop",
+      "_id": "states.mediaStop",
       "type": "state",
       "common": {
         "name": "Media Stop",
@@ -272,7 +290,7 @@
       "native": {}
     },
     {
-      "_id":  "states.mediaFastForward",
+      "_id": "states.mediaFastForward",
       "type": "state",
       "common": {
         "name": "Media Fast Forward",
@@ -284,7 +302,7 @@
       "native": {}
     },
     {
-      "_id":  "states.mediaRewind",
+      "_id": "states.mediaRewind",
       "type": "state",
       "common": {
         "name": "Media Rewind",
@@ -296,19 +314,19 @@
       "native": {}
     },
     {
-      "_id":    "states.volume",
-      "type":   "state",
+      "_id": "states.volume",
+      "type": "state",
       "common": {
-        "name":   "Current volume",
-        "role":   "state",
-        "type":   "number",
-        "read":   true,
-        "write":  true
+        "name": "Current volume",
+        "role": "state",
+        "type": "number",
+        "read": true,
+        "write": true
       },
       "native": {}
     },
     {
-      "_id":  "states.input",
+      "_id": "states.input",
       "type": "state",
       "common": {
         "name": "Select input source",
@@ -328,19 +346,19 @@
       "native": {}
     },
     {
-      "_id":    "states.currentApp",
-      "type":   "state",
+      "_id": "states.currentApp",
+      "type": "state",
       "common": {
-        "name":   "current app",
-        "role":   "state",
-        "type":   "string",
-        "read":   true,
-        "write":  true
+        "name": "current app",
+        "role": "state",
+        "type": "string",
+        "read": true,
+        "write": true
       },
       "native": {}
     },
     {
-      "_id":  "states.launch",
+      "_id": "states.launch",
       "type": "state",
       "common": {
         "name": "Launch app",
@@ -361,7 +379,7 @@
       "native": {}
     },
     {
-      "_id":  "states.openURL",
+      "_id": "states.openURL",
       "type": "state",
       "common": {
         "name": "Open URL",
@@ -373,7 +391,7 @@
       "native": {}
     },
     {
-      "_id":  "states.youtube",
+      "_id": "states.youtube",
       "type": "state",
       "common": {
         "name": "Open YouTube video",
@@ -385,7 +403,7 @@
       "native": {}
     },
     {
-      "_id":  "states.drag",
+      "_id": "states.drag",
       "type": "state",
       "common": {
         "name": "Move/Drag",
@@ -397,7 +415,7 @@
       "native": {}
     },
     {
-      "_id":  "states.scroll",
+      "_id": "states.scroll",
       "type": "state",
       "common": {
         "name": "Scroll",
@@ -409,7 +427,7 @@
       "native": {}
     },
     {
-      "_id":  "states.click",
+      "_id": "states.click",
       "type": "state",
       "common": {
         "name": "Click",
@@ -421,7 +439,7 @@
       "native": {}
     },
     {
-      "_id":  "states.soundOutput",
+      "_id": "states.soundOutput",
       "type": "state",
       "common": {
         "name": "Switch audio output",
@@ -443,7 +461,7 @@
       "native": {}
     },
     {
-      "_id":  "states.raw",
+      "_id": "states.raw",
       "type": "state",
       "common": {
         "name": "Send and response API cmd {url: URL, cmd: CMD}",
@@ -455,7 +473,7 @@
       "native": {}
     },
     {
-      "_id":  "remote.power",
+      "_id": "remote.power",
       "type": "state",
       "common": {
         "name": "Remote key power",
@@ -467,7 +485,7 @@
       "native": {}
     },
     {
-      "_id":  "remote.red",
+      "_id": "remote.red",
       "type": "state",
       "common": {
         "name": "Remote key red",
@@ -479,7 +497,7 @@
       "native": {}
     },
     {
-      "_id":  "remote.green",
+      "_id": "remote.green",
       "type": "state",
       "common": {
         "name": "Remote key green",
@@ -491,7 +509,7 @@
       "native": {}
     },
     {
-      "_id":  "remote.yellow",
+      "_id": "remote.yellow",
       "type": "state",
       "common": {
         "name": "Remote key yellow",
@@ -503,7 +521,7 @@
       "native": {}
     },
     {
-      "_id":  "remote.blue",
+      "_id": "remote.blue",
       "type": "state",
       "common": {
         "name": "Remote key blue",
@@ -515,7 +533,7 @@
       "native": {}
     },
     {
-      "_id":  "remote.home",
+      "_id": "remote.home",
       "type": "state",
       "common": {
         "name": "Remote key home",
@@ -527,7 +545,7 @@
       "native": {}
     },
     {
-      "_id":  "remote.menu",
+      "_id": "remote.menu",
       "type": "state",
       "common": {
         "name": "Remote key menu",
@@ -539,7 +557,7 @@
       "native": {}
     },
     {
-      "_id":  "remote.cc",
+      "_id": "remote.cc",
       "type": "state",
       "common": {
         "name": "Remote key cc",
@@ -551,7 +569,7 @@
       "native": {}
     },
     {
-      "_id":  "remote.back",
+      "_id": "remote.back",
       "type": "state",
       "common": {
         "name": "Remote key back",
@@ -563,7 +581,7 @@
       "native": {}
     },
     {
-      "_id":  "remote.up",
+      "_id": "remote.up",
       "type": "state",
       "common": {
         "name": "Remote key up",
@@ -575,7 +593,7 @@
       "native": {}
     },
     {
-      "_id":  "remote.down",
+      "_id": "remote.down",
       "type": "state",
       "common": {
         "name": "Remote key down",
@@ -587,7 +605,7 @@
       "native": {}
     },
     {
-      "_id":  "remote.left",
+      "_id": "remote.left",
       "type": "state",
       "common": {
         "name": "Remote key left",
@@ -599,7 +617,7 @@
       "native": {}
     },
     {
-      "_id":  "remote.right",
+      "_id": "remote.right",
       "type": "state",
       "common": {
         "name": "Remote key right",
@@ -611,7 +629,7 @@
       "native": {}
     },
     {
-      "_id":  "remote.enter",
+      "_id": "remote.enter",
       "type": "state",
       "common": {
         "name": "Remote key enter",
@@ -623,7 +641,7 @@
       "native": {}
     },
     {
-      "_id":  "remote.dash",
+      "_id": "remote.dash",
       "type": "state",
       "common": {
         "name": "Remote key dash",
@@ -635,7 +653,7 @@
       "native": {}
     },
     {
-      "_id":  "remote.exit",
+      "_id": "remote.exit",
       "type": "state",
       "common": {
         "name": "Remote key exit",
@@ -647,7 +665,7 @@
       "native": {}
     },
     {
-      "_id":  "remote.0",
+      "_id": "remote.0",
       "type": "state",
       "common": {
         "name": "Remote key 0",
@@ -659,7 +677,7 @@
       "native": {}
     },
     {
-      "_id":  "remote.1",
+      "_id": "remote.1",
       "type": "state",
       "common": {
         "name": "Remote key 1",
@@ -671,7 +689,7 @@
       "native": {}
     },
     {
-      "_id":  "remote.2",
+      "_id": "remote.2",
       "type": "state",
       "common": {
         "name": "Remote key 2",
@@ -683,7 +701,7 @@
       "native": {}
     },
     {
-      "_id":  "remote.3",
+      "_id": "remote.3",
       "type": "state",
       "common": {
         "name": "Remote key 3",
@@ -695,7 +713,7 @@
       "native": {}
     },
     {
-      "_id":  "remote.4",
+      "_id": "remote.4",
       "type": "state",
       "common": {
         "name": "Remote key 4",
@@ -707,7 +725,7 @@
       "native": {}
     },
     {
-      "_id":  "remote.5",
+      "_id": "remote.5",
       "type": "state",
       "common": {
         "name": "Remote key 5",
@@ -719,7 +737,7 @@
       "native": {}
     },
     {
-      "_id":  "remote.6",
+      "_id": "remote.6",
       "type": "state",
       "common": {
         "name": "Remote key 6",
@@ -731,7 +749,7 @@
       "native": {}
     },
     {
-      "_id":  "remote.7",
+      "_id": "remote.7",
       "type": "state",
       "common": {
         "name": "Remote key 7",
@@ -743,7 +761,7 @@
       "native": {}
     },
     {
-      "_id":  "remote.8",
+      "_id": "remote.8",
       "type": "state",
       "common": {
         "name": "Remote key 8",
@@ -755,7 +773,7 @@
       "native": {}
     },
     {
-      "_id":  "remote.9",
+      "_id": "remote.9",
       "type": "state",
       "common": {
         "name": "Remote key 9",
@@ -767,7 +785,7 @@
       "native": {}
     },
     {
-      "_id":  "states.mac",
+      "_id": "states.mac",
       "type": "state",
       "common": {
         "name": "mac address",
@@ -779,7 +797,7 @@
       "native": {}
     },
     {
-      "_id":  "states.model",
+      "_id": "states.model",
       "type": "state",
       "common": {
         "name": "TV model",
