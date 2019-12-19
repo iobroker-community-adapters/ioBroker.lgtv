@@ -252,7 +252,7 @@ function startAdapter(options){
                     case 'states.input':
                         adapter.log.debug('Sending switch to input "' + state.val + '" command to WebOS TV: ' + adapter.config.ip);
                         sendCommand('ssap://tv/switchInput', {inputId: state.val}, (err, val) => {
-                            if (!err) adapter.setState('states.input', state.val, true);
+                            if (!err && val.returnValue) adapter.setState('states.input', state.val, true);
                         });
 
                         break;
@@ -388,6 +388,13 @@ function connect(cb){
                 adapter.setState('states.mute', res.muted, true);
             }
         });
+        lgtvobj.request('ssap://tv/getExternalInputList', (err, res) => {
+                if(!err && res.devices){
+                    adapter.extendObject('states.input', {common: {states: null}}, () => {
+                        adapter.extendObject('states.input', {common: {states: inputs(res.devices)}});
+                    });
+                }
+            });
         if (parseInt(adapter.config.interval, 10)){
             pollTimerChannel = setInterval(pollChannel, parseInt(adapter.config.interval, 10));
             pollTimerOnlineStatus = setInterval(pollOnlineStatus, parseInt(adapter.config.interval, 10));
@@ -412,6 +419,14 @@ function connect(cb){
         cb && cb();
     });
 }
+
+const inputs = (arr) => {
+    let obj = {};
+    arr.forEach(function(o, i) {
+        obj[o.id] = o.label + ' (' + o.id + ')';
+    });
+    return obj;
+};
 
 function sendCommand(cmd, options, cb){
     if (isConnect){
