@@ -464,7 +464,7 @@ function connect(cb){
 }
 
 const launchList = (arr) => {
-    let obj = {};
+    let obj = {"livetv": "Live TV"};
     arr.forEach(function(o, i) {
         obj[o.id] = o.title;
     });
