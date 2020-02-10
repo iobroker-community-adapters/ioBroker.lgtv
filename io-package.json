@@ -96,7 +96,6 @@
     "ip": "",
     "mac": "",
     "timeout": "5000",
-    "interval": "60000",
     "power": false
   },
   "instanceObjects": [

@@ -354,7 +354,6 @@ function connect(cb){
         adapter.setState('info.connection', false, true);
         adapter.setState('states.on', false, true);
         adapter.setState('states.power', false, true);
-        //clearIntervals();
     });
 
     lgtvobj.on('close', (e) => {
@@ -376,7 +375,6 @@ function connect(cb){
     lgtvobj.on('connect', (error, response) => {
         adapter.log.debug('WebOS TV Connected');
         isConnect = true;
-        //clearIntervals();
         adapter.setState('info.connection', true, true);
         adapter.setState('states.on', true, true);
         adapter.setState('states.power', true, true);
@@ -404,14 +402,6 @@ function connect(cb){
                 });
             }
         });
-        /*
-        if (parseInt(adapter.config.interval, 10)){
-            pollTimerChannel = setInterval(pollChannel, parseInt(adapter.config.interval, 10));
-            pollTimerOnlineStatus = setInterval(pollOnlineStatus, parseInt(adapter.config.interval, 10));
-            pollTimerInput = setInterval(pollInputAndCurrentApp, parseInt(adapter.config.interval, 10));
-            pollTimerGetSoundOutput = setInterval(pollGetSoundOutput, parseInt(adapter.config.interval, 10));
-        }
-        */
         lgtvobj.subscribe('ssap://tv/getCurrentChannel',(err, res) => {
             if (!err && res){
                 adapter.log.debug('tv/getCurrentChannel: ' + JSON.stringify(res));
@@ -429,8 +419,8 @@ function connect(cb){
                 adapter.setState('states.input', appId.split(".").pop(), true);
                 appId= !!!appId;
                 adapter.setStateChanged('states.on', appId, true);
-                adapter.setStateChanged('states.power', true, true);
-                adapter.setStateChanged('info.connection', true, true);
+                adapter.setStateChanged('states.power', appId, true);
+                adapter.setStateChanged('info.connection', appId, true);
             } else {
                 adapter.log.debug('ERROR on get input and app: ' + err);
             }
@@ -524,94 +514,7 @@ function SetVolume(val){
         });
     }
 }
-/*
-function pollChannel(){
-    adapter.log.debug('Polling channel');
-    sendCommand('ssap://tv/getCurrentChannel', null, (err, channel) => {
-        let JSONChannel, ch;
-        JSONChannel = JSON.stringify(channel);
-        adapter.log.debug('DEBUGGING CHANNEL POLLING: ' + JSONChannel);
-        if (JSONChannel){
-            ch = JSONChannel.match(/"channelNumber":"(\d+)"/m);
-        }
-        if (!err && ch){
-            adapter.setState('states.channel', ch[1], true);
-        } else {
-            adapter.setState('states.channel', '', true);
-        }
 
-        if (JSONChannel) ch = JSONChannel.match(/.*"channelId":"(.*?)"/m);
-        if (!err && ch){
-            adapter.setState('states.channelId', ch[1], true);
-        } else {
-            adapter.setState('states.channelId', '', true);
-        }
-    });
-}
-
-function pollOnlineStatus(){
-    adapter.log.debug('Polling OnlineStatus');
-    sendCommand('com.webos.applicationManager/getForegroundAppInfo', null, (err, OnlineStatus) => {
-        adapter.log.debug('DEBUGGING pollOnlineStatus: ' + JSON.stringify(OnlineStatus));
-        if (!err && OnlineStatus){
-            adapter.setState('states.on', true, true);
-            adapter.setState('states.power', true, true);
-        } else {
-            adapter.setState('states.on', false, true);
-            adapter.setState('states.power', false, true);
-            adapter.setState('info.connection', false, true);
-        }
-    });
-}
-
-function pollInputAndCurrentApp(){
-    adapter.log.debug('Polling Input and current App');
-    sendCommand('ssap://com.webos.applicationManager/getForegroundAppInfo', null, (err, Input) => {
-        if (!err && Input){
-            let JSONInput, CurrentInputAndApp;
-            JSONInput = JSON.stringify(Input);
-            adapter.log.debug('DEBUGGING pollInputAndCurrentApp: ' + JSONInput);
-            if (JSONInput){
-                CurrentInputAndApp = JSONInput.match(/.*"appId":"(.*?)"/m);
-                if (CurrentInputAndApp){
-                    adapter.setState('states.currentApp', CurrentInputAndApp[1], true);
-                    const ins = CurrentInputAndApp[1].split(".");
-                    const input = ins[ins.length - 1].toString();
-                    adapter.setState('states.input', input, true);
-                }
-            }
-        } else {
-            adapter.log.debug('ERROR on polling input and app: ' + err);
-        }
-    });
-}
-
-function pollGetSoundOutput(){
-    adapter.log.debug('Polling current sound output');
-    sendCommand('ssap://com.webos.service.apiadapter/audio/getSoundOutput', null, (err, Output) => {
-        if (!err && Output){
-            let JSONOutput, CurrentSoundOutput;
-            JSONOutput = JSON.stringify(Output);
-            adapter.log.debug('DEBUGGING pollGetSoundOutput: ' + JSONOutput);
-            if (JSONOutput){
-                CurrentSoundOutput = JSONOutput.match(/.*"soundOutput":"(.*?)"/m);
-                if (CurrentSoundOutput){
-                    adapter.setState('states.soundOutput', CurrentSoundOutput[1], true);
-                }
-            }
-        } else {
-            adapter.log.debug('ERROR on Polling get current sound output: ' + err);
-        }
-    });
-}
-
-function clearIntervals(){
-    clearInterval(pollTimerChannel);
-    clearInterval(pollTimerOnlineStatus);
-    clearInterval(pollTimerInput);
-    clearInterval(pollTimerGetSoundOutput);
-}
-*/
 function main(){
     if (adapter.config.ip){
         adapter.log.info('Ready. Configured WebOS TV IP: ' + adapter.config.ip);
