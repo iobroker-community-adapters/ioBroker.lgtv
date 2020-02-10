@@ -417,7 +417,7 @@ function connect(cb){
                 let appId= res.appId || '';
                 adapter.setState('states.currentApp', appId, true);
                 adapter.setState('states.input', appId.split(".").pop(), true);
-                appId= !!!appId;
+                appId= !!appId;
                 adapter.setStateChanged('states.on', appId, true);
                 adapter.setStateChanged('states.power', appId, true);
                 adapter.setStateChanged('info.connection', appId, true);
