@@ -427,11 +427,10 @@ function connect(cb){
                 let appId= res.appId || '';
                 adapter.setState('states.currentApp', appId, true);
                 adapter.setState('states.input', appId.split(".").pop(), true);
-                if (!appId){
-                    adapter.setState('states.on', false, true);
-                    adapter.setState('states.power', false, true);
-                    adapter.setState('info.connection', false, true);
-                }
+                appId= !!!appId;
+                adapter.setStateChanged('states.on', appId, true);
+                adapter.setStateChanged('states.power', true, true);
+                adapter.setStateChanged('info.connection', true, true);
             } else {
                 adapter.log.debug('ERROR on get input and app: ' + err);
             }
