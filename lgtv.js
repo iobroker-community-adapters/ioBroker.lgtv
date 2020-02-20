@@ -20,6 +20,7 @@ let pollTimerGetSoundOutput = null;
 let isConnect = false;
 let lgtvobj, clientKey, volume, oldvolume;
 let keyfile = 'lgtvkeyfile';
+let renewTimeout = null
 
 function startAdapter(options){
     options = options || {};
@@ -57,8 +58,8 @@ function startAdapter(options){
                         break;
 
                     case 'states.power':
-                        adapter.log.debug('Sending turn OFF command to WebOS TV: ' + adapter.config.ip);
                         if (!state.val){
+                            adapter.log.debug('Sending turn OFF command to WebOS TV: ' + adapter.config.ip);
                             if (adapter.config.power){
                                 sendCommand('button', {name: 'power'}, (err, val) => {
                                     if (!err) adapter.setState('states.power', state.val, true);
@@ -327,6 +328,8 @@ function startAdapter(options){
             }
         },
         unload:       (callback) => {
+            renewTimeout && clearTimeout(renewTimeout);
+            lgtvobj.disconnect();
             callback();
         },
         ready:        () => {
@@ -340,8 +343,9 @@ function startAdapter(options){
 }
 
 function connect(cb){
+    let hostUrl = 'ws://' + adapter.config.ip + ':3000' 
     lgtvobj = new LGTV({
-        url:       'ws://' + adapter.config.ip + ':3000',
+        url:       hostUrl,
         timeout:   adapter.config.timeout,
         reconnect: 5000,
         clientKey: clientKey,
@@ -358,6 +362,7 @@ function connect(cb){
 
     lgtvobj.on('close', (e) => {
         adapter.log.debug('Connection closed: ' + e);
+        renewTimeout && clearTimeout(renewTimeout);
         adapter.setState('info.connection', false, true);
         adapter.setState('states.on', false, true);
         adapter.setState('states.power', false, true);
@@ -418,7 +423,18 @@ function connect(cb){
                 adapter.setState('states.currentApp', appId, true);
                 adapter.setState('states.input', appId.split(".").pop(), true);
                 appId= !!appId;
-                adapter.setStateChanged('states.on', appId, true);
+                adapter.setStateChanged('states.on', appId, true,function(err,stateID, notChanged) {
+                    if (!notChanged){ // state was changed
+                        renewTimeout && clearTimeout(renewTimeout); // avoid toggeling
+                        if (appId){ // if tv is switched on ...
+                            adapter.log.debug("renew connection in one minute...")
+                            renewTimeout = setTimeout(() => {
+                                lgtvobj.disconnect();
+                                setTimeout(lgtvobj.connect,500,hostUrl);
+                            }, 60000);
+                        }
+                    }
+                },);
                 adapter.setStateChanged('states.power', appId, true);
                 adapter.setStateChanged('info.connection', appId, true);
             } else {
@@ -450,6 +466,7 @@ function connect(cb){
         });
         cb && cb();
     });
+ 
 }
 
 const launchList = (arr) => {
