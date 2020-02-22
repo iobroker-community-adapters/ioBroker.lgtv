@@ -20,7 +20,8 @@ let pollTimerGetSoundOutput = null;
 let isConnect = false;
 let lgtvobj, clientKey, volume, oldvolume;
 let keyfile = 'lgtvkeyfile';
-let renewTimeout = null
+let renewTimeout = null;
+let curApp= null;
 
 function startAdapter(options){
     options = options || {};
@@ -419,24 +420,26 @@ function connect(cb){
         lgtvobj.subscribe('ssap://com.webos.applicationManager/getForegroundAppInfo',(err, res) => {
             if (!err && res){
                 adapter.log.debug('DEBUGGING getForegroundAppInfo: ' + JSON.stringify(res));
-                let appId= res.appId || '';
-                adapter.setState('states.currentApp', appId, true);
-                adapter.setState('states.input', appId.split(".").pop(), true);
-                appId= !!appId;
-                adapter.setStateChanged('states.on', appId, true,function(err,stateID, notChanged) {
-                    if (!notChanged){ // state was changed
-                        renewTimeout && clearTimeout(renewTimeout); // avoid toggeling
-                        if (appId){ // if tv is switched on ...
-                            adapter.log.debug("renew connection in one minute...")
-                            renewTimeout = setTimeout(() => {
-                                lgtvobj.disconnect();
-                                setTimeout(lgtvobj.connect,500,hostUrl);
-                            }, 60000);
+                curApp = res.appId || '';
+                setTimeout(function(){
+                    let isTVon= !!curApp;
+                    adapter.setState('states.currentApp', curApp, true);
+                    adapter.setState('states.input', curApp.split(".").pop(), true);
+                    adapter.setStateChanged('states.on', isTVon, true, function(err,stateID, notChanged) {
+                        if (!notChanged){ // state was changed
+                            renewTimeout && clearTimeout(renewTimeout); // avoid toggeling
+                            if (isTVon){ // if tv is switched on ...
+                                adapter.log.debug("renew connection in one minute...")
+                                renewTimeout = setTimeout(() => {
+                                    lgtvobj.disconnect();
+                                    setTimeout(lgtvobj.connect,500,hostUrl);
+                                }, 60000);
+                            }
                         }
-                    }
-                },);
-                adapter.setStateChanged('states.power', appId, true);
-                adapter.setStateChanged('info.connection', appId, true);
+                    });
+                    adapter.setStateChanged('states.power', isTVon, true);
+                    adapter.setStateChanged('info.connection', isTVon, true);
+                }, 500)
             } else {
                 adapter.log.debug('ERROR on get input and app: ' + err);
             }
