@@ -328,8 +328,8 @@ function startAdapter(options){
         unload:       (callback) => {
             renewTimeout && clearTimeout(renewTimeout);
             lgtvobj.disconnect();
-            checkCurApp(true)
-            adapter.setStateChanged('info.connection', false, true);
+            isConnect= false;
+            checkConnection(true);
             callback();
         },
         ready:        () => {
@@ -355,15 +355,12 @@ function connect(cb){
     });
     lgtvobj.on('connecting', (host) => {
         adapter.log.debug('Connecting to WebOS TV: ' + host);
-        checkCurApp(true);
-        adapter.setStateChanged('info.connection', false, true);
+        checkConnection();
     });
 
     lgtvobj.on('close', (e) => {
         adapter.log.debug('Connection closed: ' + e);
-        renewTimeout && clearTimeout(renewTimeout);
-        checkCurApp(true)
-        adapter.setStateChanged('info.connection', false, true);
+        checkConnection();
     });
 
     lgtvobj.on('prompt', () => {
@@ -376,8 +373,8 @@ function connect(cb){
 
     lgtvobj.on('connect', (error, response) => {
         adapter.log.debug('WebOS TV Connected');
-        adapter.setStateChanged('info.connection', true, true);
         isConnect = true;
+        adapter.setStateChanged('info.connection', true, true);
         lgtvobj.subscribe('ssap://audio/getVolume', (err, res) => {
             adapter.log.debug('audio/getVolume: ' + JSON.stringify(res));
             if (~res.changed.indexOf('volume')){
@@ -417,14 +414,12 @@ function connect(cb){
                 curApp = res.appId || '';
                 if (!curApp){ // some TV send empty app first, if they switched on
                     setTimeout(function(){
-                        if (!curApp){ // curApp is not set again in meantime
+                        if (!curApp){ // curApp is not set in meantime
                             checkCurApp(); // so TV is off
-                        } else {
-                            healthIntervall= setInterval(sendCommand, 10000, 'ssap://com.webos.service.tv.time/getCurrentTime', null, (err, val) => {
-                                adapter.log.debug("check TV connection: " + (err || "ok"))
-                                if (err)
-                                    checkCurApp(true)
-                            })
+                            if (healthIntervall){
+                                clearInterval(healthIntervall);
+                                healthIntervall = false // TV works fine,  healthIntervall is not longer nessessary
+                            }
                         }
                     },500) 
                 } else
@@ -476,15 +471,25 @@ const inputList = (arr) => {
     });
     return obj;
 };
+function checkConnection(secondCheck){
+    if (secondCheck){
+        if (!isConnect){
+            adapter.setStateChanged('info.connection', false, true);
+            healthIntervall && clearInterval(healthIntervall);
+            checkCurApp(true);
+        }
+    } else {
+        isConnect= false;
+        setTimeout(checkConnection,10000,true); //check, if isConnect is changed in 10 sec
+    }
+}
+
 function checkCurApp(powerOff){
     if (powerOff){
-        curApp && adapter.log.debug("TV is off")
         curApp= "";
-        healthIntervall && clearInterval(healthIntervall);
-    } else
-        adapter.log.debug(curApp ? "cur app is " + curApp : "TV is off")
+    }
     let isTVon= !!curApp;
-    
+    adapter.log.debug(curApp ? "cur app is " + curApp : "TV is off")
     adapter.setStateChanged('states.currentApp', curApp, true);
     adapter.setStateChanged('states.input', curApp.split(".").pop(), true);
     adapter.setStateChanged('states.power', isTVon, true);
@@ -492,12 +497,20 @@ function checkCurApp(powerOff){
         if (!notChanged){ // state was changed
             renewTimeout && clearTimeout(renewTimeout); // avoid toggeling
             if (isTVon){ // if tv is now switched on ...
-                adapter.log.debug("renew connection in one minute for stable subscribtions...")
+                adapter.log.debug("renew connection in one minute for stable subscriptions...")
                 renewTimeout = setTimeout(() => {
                     lgtvobj.disconnect();
                     setTimeout(lgtvobj.connect,500,hostUrl);
+                    if (healthIntervall !== false){
+                        healthIntervall= setInterval(sendCommand, 60000, 'ssap://com.webos.service.tv.time/getCurrentTime', null, (err, val) => {
+                            adapter.log.debug("check TV connection: " + (err || "ok"))
+                            if (err)
+                                checkCurApp(true)
+                        })
+                    }
                 }, 60000);
-            }
+            } else if (healthIntervall)
+                clearInterval(healthIntervall);
         }
     });
 }
