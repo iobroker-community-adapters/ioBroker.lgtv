@@ -328,6 +328,8 @@ function startAdapter(options){
         unload:       (callback) => {
             renewTimeout && clearTimeout(renewTimeout);
             lgtvobj.disconnect();
+            checkCurApp(true)
+            adapter.setStateChanged('info.connection', false, true);
             callback();
         },
         ready:        () => {
@@ -354,12 +356,14 @@ function connect(cb){
     lgtvobj.on('connecting', (host) => {
         adapter.log.debug('Connecting to WebOS TV: ' + host);
         checkCurApp(true);
+        adapter.setStateChanged('info.connection', false, true);
     });
 
     lgtvobj.on('close', (e) => {
         adapter.log.debug('Connection closed: ' + e);
         renewTimeout && clearTimeout(renewTimeout);
         checkCurApp(true)
+        adapter.setStateChanged('info.connection', false, true);
     });
 
     lgtvobj.on('prompt', () => {
@@ -368,11 +372,11 @@ function connect(cb){
 
     lgtvobj.on('error', (error) => {
         adapter.log.debug('Error on connecting or sending command to WebOS TV: ' + error);
-        adapter.setState('info.connection', false, true);
     });
 
     lgtvobj.on('connect', (error, response) => {
         adapter.log.debug('WebOS TV Connected');
+        adapter.setStateChanged('info.connection', true, true);
         isConnect = true;
         lgtvobj.subscribe('ssap://audio/getVolume', (err, res) => {
             adapter.log.debug('audio/getVolume: ' + JSON.stringify(res));
@@ -474,15 +478,16 @@ const inputList = (arr) => {
 };
 function checkCurApp(powerOff){
     if (powerOff){
+        curApp && adapter.log.debug("TV is off")
         curApp= "";
         healthIntervall && clearInterval(healthIntervall);
-    }
+    } else
+        adapter.log.debug(curApp ? "cur app is " + curApp : "TV is off")
     let isTVon= !!curApp;
-    adapter.log.debug(curApp ? "cur app is " + curApp : "TV is off")
+    
     adapter.setStateChanged('states.currentApp', curApp, true);
     adapter.setStateChanged('states.input', curApp.split(".").pop(), true);
     adapter.setStateChanged('states.power', isTVon, true);
-    adapter.setStateChanged('info.connection', isTVon, true);
     adapter.setStateChanged('states.on', isTVon, true, function(err,stateID, notChanged) {
         if (!notChanged){ // state was changed
             renewTimeout && clearTimeout(renewTimeout); // avoid toggeling
