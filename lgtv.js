@@ -21,7 +21,8 @@ let isConnect = false;
 let lgtvobj, clientKey, volume, oldvolume;
 let keyfile = 'lgtvkeyfile';
 let renewTimeout = null;
-let curApp= null;
+let healthIntervall= null
+let curApp= "";
 
 function startAdapter(options){
     options = options || {};
@@ -356,17 +357,13 @@ function connect(cb){
     });
     lgtvobj.on('connecting', (host) => {
         adapter.log.debug('Connecting to WebOS TV: ' + host);
-        adapter.setState('info.connection', false, true);
-        adapter.setState('states.on', false, true);
-        adapter.setState('states.power', false, true);
+        checkCurApp(true);
     });
 
     lgtvobj.on('close', (e) => {
         adapter.log.debug('Connection closed: ' + e);
         renewTimeout && clearTimeout(renewTimeout);
-        adapter.setState('info.connection', false, true);
-        adapter.setState('states.on', false, true);
-        adapter.setState('states.power', false, true);
+        checkCurApp(true)
     });
 
     lgtvobj.on('prompt', () => {
@@ -381,9 +378,6 @@ function connect(cb){
     lgtvobj.on('connect', (error, response) => {
         adapter.log.debug('WebOS TV Connected');
         isConnect = true;
-        adapter.setState('info.connection', true, true);
-        adapter.setState('states.on', true, true);
-        adapter.setState('states.power', true, true);
         lgtvobj.subscribe('ssap://audio/getVolume', (err, res) => {
             adapter.log.debug('audio/getVolume: ' + JSON.stringify(res));
             if (~res.changed.indexOf('volume')){
@@ -408,7 +402,7 @@ function connect(cb){
                 });
             }
         });
-        lgtvobj.subscribe('ssap://tv/getCurrentChannel',(err, res) => {
+        lgtvobj.subscribe('ssap://tv/getCurrentChannel', (err, res) => {
             if (!err && res){
                 adapter.log.debug('tv/getCurrentChannel: ' + JSON.stringify(res));
                 adapter.setState('states.channel', res.channelNumber || '', true);
@@ -421,26 +415,21 @@ function connect(cb){
             if (!err && res){
                 adapter.log.debug('DEBUGGING getForegroundAppInfo: ' + JSON.stringify(res));
                 curApp = res.appId || '';
-                setTimeout(function(){
-                    let isTVon= !!curApp;
-                    adapter.setState('states.currentApp', curApp, true);
-                    adapter.setState('states.input', curApp.split(".").pop(), true);
-                    adapter.setStateChanged('states.on', isTVon, true, function(err,stateID, notChanged) {
-                        if (!notChanged){ // state was changed
-                            renewTimeout && clearTimeout(renewTimeout); // avoid toggeling
-                            if (isTVon){ // if tv is switched on ...
-                                adapter.log.debug("renew connection in one minute...")
-                                renewTimeout = setTimeout(() => {
-                                    lgtvobj.disconnect();
-                                    setTimeout(lgtvobj.connect,500,hostUrl);
-                                }, 60000);
-                            }
+                if (!curApp){ // some TV send empty app first, if they switched on
+                    setTimeout(function(){
+                        if (!curApp){ // curApp is not set again in meantime
+                            checkCurApp(); // so TV is off
+                        } else {
+                            healthIntervall= setInterval(sendCommand, 10000, 'ssap://com.webos.service.tv.time/getCurrentTime', null, (err, val) => {
+                                adapter.log.debug("check TV connection: " + (err || "ok"))
+                                if (err)
+                                    checkCurApp(true)
+                            })
                         }
-                    });
-                    adapter.setStateChanged('states.power', isTVon, true);
-                    adapter.setStateChanged('info.connection', isTVon, true);
-                }, 500)
-            } else {
+                    },500) 
+                } else
+                    checkCurApp();
+             } else {
                 adapter.log.debug('ERROR on get input and app: ' + err);
             }
         });
@@ -487,6 +476,30 @@ const inputList = (arr) => {
     });
     return obj;
 };
+function checkCurApp(powerOff){
+    if (powerOff){
+        curApp= "";
+        healthIntervall && clearInterval(healthIntervall);
+    }
+    let isTVon= !!curApp;
+    adapter.log.debug(curApp ? "cur app is " + curApp : "TV is off")
+    adapter.setStateChanged('states.currentApp', curApp, true);
+    adapter.setStateChanged('states.input', curApp.split(".").pop(), true);
+    adapter.setStateChanged('states.power', isTVon, true);
+    adapter.setStateChanged('info.connection', isTVon, true);
+    adapter.setStateChanged('states.on', isTVon, true, function(err,stateID, notChanged) {
+        if (!notChanged){ // state was changed
+            renewTimeout && clearTimeout(renewTimeout); // avoid toggeling
+            if (isTVon){ // if tv is now switched on ...
+                adapter.log.debug("renew connection in one minute for stable subscriptions...")
+                renewTimeout = setTimeout(() => {
+                    lgtvobj.disconnect();
+                    setTimeout(lgtvobj.connect,500,hostUrl);
+                }, 60000);
+            }
+        }
+    });
+}
 
 function sendCommand(cmd, options, cb){
     if (isConnect){
