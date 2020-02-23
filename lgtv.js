@@ -11,12 +11,8 @@ let adapter;
 const LGTV = require('lgtv2');
 const wol = require('wol');
 const fs = require('fs');
-/*
-let pollTimerChannel = null;
-let pollTimerOnlineStatus = null;
-let pollTimerInput = null;
-let pollTimerGetSoundOutput = null;
-*/
+
+let hostUrl
 let isConnect = false;
 let lgtvobj, clientKey, volume, oldvolume;
 let keyfile = 'lgtvkeyfile';
@@ -345,7 +341,7 @@ function startAdapter(options){
 }
 
 function connect(cb){
-    let hostUrl = 'ws://' + adapter.config.ip + ':3000' 
+    hostUrl = 'ws://' + adapter.config.ip + ':3000' 
     lgtvobj = new LGTV({
         url:       hostUrl,
         timeout:   adapter.config.timeout,
@@ -491,7 +487,7 @@ function checkCurApp(powerOff){
         if (!notChanged){ // state was changed
             renewTimeout && clearTimeout(renewTimeout); // avoid toggeling
             if (isTVon){ // if tv is now switched on ...
-                adapter.log.debug("renew connection in one minute for stable subscriptions...")
+                adapter.log.debug("renew connection in one minute for stable subscribtions...")
                 renewTimeout = setTimeout(() => {
                     lgtvobj.disconnect();
                     setTimeout(lgtvobj.connect,500,hostUrl);
