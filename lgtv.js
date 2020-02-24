@@ -415,11 +415,11 @@ function connect(cb){
                 if (!curApp){ // some TV send empty app first, if they switched on
                     setTimeout(function(){
                         if (!curApp){ // curApp is not set in meantime
-                            checkCurApp(); // so TV is off
                             if (healthIntervall){
                                 clearInterval(healthIntervall);
                                 healthIntervall = false // TV works fine,  healthIntervall is not longer nessessary
                             }
+                            checkCurApp(); // so TV is off
                         }
                     },500) 
                 } else
