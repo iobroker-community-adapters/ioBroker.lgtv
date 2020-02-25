@@ -148,6 +148,8 @@ function startAdapter(options){
                         break;
 
                     case 'states.openURL':
+                        if (!state.val)
+                            return adapter.setState('states.openURL', "", true);
                         adapter.log.debug('Sending open ' + state.val + ' command to WebOS TV: ' + adapter.config.ip);
                         sendCommand('ssap://system.launcher/open', {target: state.val}, (err, val) => {
                             if (!err) adapter.setState('states.openURL', state.val, true);
@@ -275,6 +277,8 @@ function startAdapter(options){
 
                     case 'states.youtube':
                         let uri = state.val;
+                        if (!uri)
+                            return adapter.setState('states.youtube', "", true);
                         if (!~uri.indexOf('http')){
                             uri = 'https://www.youtube.com/watch?v=' + uri;
                         }
