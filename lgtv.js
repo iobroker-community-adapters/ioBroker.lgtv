@@ -331,7 +331,7 @@ function startAdapter(options){
         },
         unload:       (callback) => {
             renewTimeout && clearTimeout(renewTimeout);
-            lgtvobj.disconnect();
+            lgtvobj && lgtvobj.disconnect();
             isConnect= false;
             checkConnection(true);
             callback();
