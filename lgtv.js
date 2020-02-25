@@ -11,15 +11,14 @@ let adapter;
 const LGTV = require('lgtv2');
 const wol = require('wol');
 const fs = require('fs');
-/*
-let pollTimerChannel = null;
-let pollTimerOnlineStatus = null;
-let pollTimerInput = null;
-let pollTimerGetSoundOutput = null;
-*/
+
+let hostUrl
 let isConnect = false;
 let lgtvobj, clientKey, volume, oldvolume;
 let keyfile = 'lgtvkeyfile';
+let renewTimeout = null;
+let healthIntervall= null
+let curApp= "";
 
 function startAdapter(options){
     options = options || {};
@@ -57,8 +56,8 @@ function startAdapter(options){
                         break;
 
                     case 'states.power':
-                        adapter.log.debug('Sending turn OFF command to WebOS TV: ' + adapter.config.ip);
                         if (!state.val){
+                            adapter.log.debug('Sending turn OFF command to WebOS TV: ' + adapter.config.ip);
                             if (adapter.config.power){
                                 sendCommand('button', {name: 'power'}, (err, val) => {
                                     if (!err) adapter.setState('states.power', state.val, true);
@@ -149,6 +148,8 @@ function startAdapter(options){
                         break;
 
                     case 'states.openURL':
+                        if (!state.val)
+                            return adapter.setState('states.openURL', "", true);
                         adapter.log.debug('Sending open ' + state.val + ' command to WebOS TV: ' + adapter.config.ip);
                         sendCommand('ssap://system.launcher/open', {target: state.val}, (err, val) => {
                             if (!err) adapter.setState('states.openURL', state.val, true);
@@ -276,6 +277,8 @@ function startAdapter(options){
 
                     case 'states.youtube':
                         let uri = state.val;
+                        if (!uri)
+                            return adapter.setState('states.youtube', "", true);
                         if (!~uri.indexOf('http')){
                             uri = 'https://www.youtube.com/watch?v=' + uri;
                         }
@@ -327,6 +330,10 @@ function startAdapter(options){
             }
         },
         unload:       (callback) => {
+            renewTimeout && clearTimeout(renewTimeout);
+            lgtvobj && lgtvobj.disconnect();
+            isConnect= false;
+            checkConnection(true);
             callback();
         },
         ready:        () => {
@@ -340,8 +347,9 @@ function startAdapter(options){
 }
 
 function connect(cb){
+    hostUrl = 'ws://' + adapter.config.ip + ':3000' 
     lgtvobj = new LGTV({
-        url:       'ws://' + adapter.config.ip + ':3000',
+        url:       hostUrl,
         timeout:   adapter.config.timeout,
         reconnect: 5000,
         clientKey: clientKey,
@@ -351,16 +359,12 @@ function connect(cb){
     });
     lgtvobj.on('connecting', (host) => {
         adapter.log.debug('Connecting to WebOS TV: ' + host);
-        adapter.setState('info.connection', false, true);
-        adapter.setState('states.on', false, true);
-        adapter.setState('states.power', false, true);
+        checkConnection();
     });
 
     lgtvobj.on('close', (e) => {
         adapter.log.debug('Connection closed: ' + e);
-        adapter.setState('info.connection', false, true);
-        adapter.setState('states.on', false, true);
-        adapter.setState('states.power', false, true);
+        checkConnection();
     });
 
     lgtvobj.on('prompt', () => {
@@ -369,15 +373,12 @@ function connect(cb){
 
     lgtvobj.on('error', (error) => {
         adapter.log.debug('Error on connecting or sending command to WebOS TV: ' + error);
-        adapter.setState('info.connection', false, true);
     });
 
     lgtvobj.on('connect', (error, response) => {
         adapter.log.debug('WebOS TV Connected');
         isConnect = true;
-        adapter.setState('info.connection', true, true);
-        adapter.setState('states.on', true, true);
-        adapter.setState('states.power', true, true);
+        adapter.setStateChanged('info.connection', true, true);
         lgtvobj.subscribe('ssap://audio/getVolume', (err, res) => {
             adapter.log.debug('audio/getVolume: ' + JSON.stringify(res));
             if (~res.changed.indexOf('volume')){
@@ -402,7 +403,7 @@ function connect(cb){
                 });
             }
         });
-        lgtvobj.subscribe('ssap://tv/getCurrentChannel',(err, res) => {
+        lgtvobj.subscribe('ssap://tv/getCurrentChannel', (err, res) => {
             if (!err && res){
                 adapter.log.debug('tv/getCurrentChannel: ' + JSON.stringify(res));
                 adapter.setState('states.channel', res.channelNumber || '', true);
@@ -414,14 +415,20 @@ function connect(cb){
         lgtvobj.subscribe('ssap://com.webos.applicationManager/getForegroundAppInfo',(err, res) => {
             if (!err && res){
                 adapter.log.debug('DEBUGGING getForegroundAppInfo: ' + JSON.stringify(res));
-                let appId= res.appId || '';
-                adapter.setState('states.currentApp', appId, true);
-                adapter.setState('states.input', appId.split(".").pop(), true);
-                appId= !!appId;
-                adapter.setStateChanged('states.on', appId, true);
-                adapter.setStateChanged('states.power', appId, true);
-                adapter.setStateChanged('info.connection', appId, true);
-            } else {
+                curApp = res.appId || '';
+                if (!curApp){ // some TV send empty app first, if they switched on
+                    setTimeout(function(){
+                        if (!curApp){ // curApp is not set in meantime
+                            if (healthIntervall){
+                                clearInterval(healthIntervall);
+                                healthIntervall = false // TV works fine,  healthIntervall is not longer nessessary
+                            }
+                            checkCurApp(); // so TV is off
+                        }
+                    },500) 
+                } else
+                    checkCurApp();
+             } else {
                 adapter.log.debug('ERROR on get input and app: ' + err);
             }
         });
@@ -450,6 +457,7 @@ function connect(cb){
         });
         cb && cb();
     });
+ 
 }
 
 const launchList = (arr) => {
@@ -467,6 +475,49 @@ const inputList = (arr) => {
     });
     return obj;
 };
+function checkConnection(secondCheck){
+    if (secondCheck){
+        if (!isConnect){
+            adapter.setStateChanged('info.connection', false, true);
+            healthIntervall && clearInterval(healthIntervall);
+            checkCurApp(true);
+        }
+    } else {
+        isConnect= false;
+        setTimeout(checkConnection,10000,true); //check, if isConnect is changed in 10 sec
+    }
+}
+
+function checkCurApp(powerOff){
+    if (powerOff){
+        curApp= "";
+    }
+    let isTVon= !!curApp;
+    adapter.log.debug(curApp ? "cur app is " + curApp : "TV is off")
+    adapter.setStateChanged('states.currentApp', curApp, true);
+    adapter.setStateChanged('states.input', curApp.split(".").pop(), true);
+    adapter.setStateChanged('states.power', isTVon, true);
+    adapter.setStateChanged('states.on', isTVon, true, function(err,stateID, notChanged) {
+        if (!notChanged){ // state was changed
+            renewTimeout && clearTimeout(renewTimeout); // avoid toggeling
+            if (isTVon){ // if tv is now switched on ...
+                adapter.log.debug("renew connection in one minute for stable subscriptions...")
+                renewTimeout = setTimeout(() => {
+                    lgtvobj.disconnect();
+                    setTimeout(lgtvobj.connect,500,hostUrl);
+                    if (healthIntervall !== false){
+                        healthIntervall= setInterval(sendCommand, 60000, 'ssap://com.webos.service.tv.time/getCurrentTime', null, (err, val) => {
+                            adapter.log.debug("check TV connection: " + (err || "ok"))
+                            if (err)
+                                checkCurApp(true)
+                        })
+                    }
+                }, 60000);
+            } else if (healthIntervall)
+                clearInterval(healthIntervall);
+        }
+    });
+}
 
 function sendCommand(cmd, options, cb){
     if (isConnect){
