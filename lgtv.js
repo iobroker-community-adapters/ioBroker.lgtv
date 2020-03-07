@@ -419,9 +419,10 @@ function connect(cb){
                 if (!curApp){ // some TV send empty app first, if they switched on
                     setTimeout(function(){
                         if (!curApp){ // curApp is not set in meantime
-                            if (healthIntervall){
+                            if (healthIntervall && !adapter.config.healthIntervall){
                                 clearInterval(healthIntervall);
                                 healthIntervall = false // TV works fine,  healthIntervall is not longer nessessary
+                                adapter.log.info("detect poweroff event, polling not longer nessesary. if you have problems, check settings")
                             }
                             checkCurApp(); // so TV is off
                         }
