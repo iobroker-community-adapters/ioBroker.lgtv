@@ -331,7 +331,7 @@ function startAdapter(options){
         },
         unload:       (callback) => {
             renewTimeout && clearTimeout(renewTimeout);
-            lgtvobj.disconnect();
+            lgtvobj && lgtvobj.disconnect();
             isConnect= false;
             checkConnection(true);
             callback();
@@ -506,7 +506,7 @@ function checkCurApp(powerOff){
                     lgtvobj.disconnect();
                     setTimeout(lgtvobj.connect,500,hostUrl);
                     if (healthIntervall !== false){
-                        healthIntervall= setInterval(sendCommand, 60000, 'ssap://com.webos.service.tv.time/getCurrentTime', null, (err, val) => {
+                        healthIntervall= setInterval(sendCommand, adapter.config.healthIntervall || 60000, 'ssap://com.webos.service.tv.time/getCurrentTime', null, (err, val) => {
                             adapter.log.debug("check TV connection: " + (err || "ok"))
                             if (err)
                                 checkCurApp(true)
@@ -573,6 +573,8 @@ function main(){
         let dir = utils.controllerDir + '/' + adapter.systemConfig.dataDir + adapter.namespace.replace('.', '_') + '/';
         keyfile = dir + keyfile;
         adapter.log.debug('adapter.config = ' + JSON.stringify(adapter.config));
+        if (adapter.config.healthIntervall < 1)
+            healthIntervall = false;
         if (!fs.existsSync(dir)) fs.mkdirSync(dir);
         fs.readFile(keyfile, (err, data) => {
             if (!err){
