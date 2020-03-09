@@ -426,7 +426,7 @@ function connect(cb){
                             }
                             checkCurApp(); // so TV is off
                         }
-                    },500) 
+                    },1500) 
                 } else
                     checkCurApp();
              } else {
@@ -521,8 +521,8 @@ function checkCurApp(powerOff){
                         })
                     }
                 }, 60000);
-            } else if (healthIntervall)
-                clearInterval(healthIntervall);
+            } //else if (healthIntervall)
+                //clearInterval(healthIntervall);
         }
     });
 }
