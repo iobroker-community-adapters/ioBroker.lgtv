@@ -496,7 +496,14 @@ function checkCurApp(powerOff){
     let isTVon= !!curApp;
     adapter.log.debug(curApp ? "cur app is " + curApp : "TV is off")
     adapter.setStateChanged('states.currentApp', curApp, true);
-    adapter.setStateChanged('states.input', curApp.split(".").pop(), true);
+    let inp = curApp.split(".").pop()
+    if (inp.indexOf('hdmi') == 0){
+        adapter.setStateChanged('states.input', "HDMI_" + inp[4], true);
+        adapter.setStateChanged('states.launch', "", true);
+    } else {
+        adapter.setStateChanged('states.input', "", true);
+        adapter.setStateChanged('states.launch', inp, true);
+    }
     adapter.setStateChanged('states.power', isTVon, true);
     adapter.setStateChanged('states.on', isTVon, true, function(err,stateID, notChanged) {
         if (!notChanged){ // state was changed
