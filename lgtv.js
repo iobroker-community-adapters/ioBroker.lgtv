@@ -348,10 +348,13 @@ function startAdapter(options){
 
 function connect(cb){
     hostUrl = 'ws://' + adapter.config.ip + ':3000' 
+    let reconnect = adapter.config.reconnect
+    if (!reconnect || isNaN(reconnect) || reconnect < 5000)
+        reconnect= 5000;
     lgtvobj = new LGTV({
         url:       hostUrl,
         timeout:   adapter.config.timeout,
-        reconnect: 5000,
+        reconnect: reconnect,
         clientKey: clientKey,
         saveKey:   (key, cb) => {
             fs.writeFile(keyfile, key, cb)
