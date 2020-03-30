@@ -348,10 +348,13 @@ function startAdapter(options){
 
 function connect(cb){
     hostUrl = 'ws://' + adapter.config.ip + ':3000' 
+    let reconnect = adapter.config.reconnect
+    if (!reconnect || isNaN(reconnect) || reconnect < 5000)
+        reconnect= 5000;
     lgtvobj = new LGTV({
         url:       hostUrl,
         timeout:   adapter.config.timeout,
-        reconnect: 5000,
+        reconnect: reconnect,
         clientKey: clientKey,
         saveKey:   (key, cb) => {
             fs.writeFile(keyfile, key, cb)
@@ -419,13 +422,14 @@ function connect(cb){
                 if (!curApp){ // some TV send empty app first, if they switched on
                     setTimeout(function(){
                         if (!curApp){ // curApp is not set in meantime
-                            if (healthIntervall){
+                            if (healthIntervall && !adapter.config.healthIntervall){
                                 clearInterval(healthIntervall);
                                 healthIntervall = false // TV works fine,  healthIntervall is not longer nessessary
+                                adapter.log.info("detect poweroff event, polling not longer nessesary. if you have problems, check settings")
                             }
                             checkCurApp(); // so TV is off
                         }
-                    },500) 
+                    },1500) 
                 } else
                     checkCurApp();
              } else {
@@ -495,7 +499,14 @@ function checkCurApp(powerOff){
     let isTVon= !!curApp;
     adapter.log.debug(curApp ? "cur app is " + curApp : "TV is off")
     adapter.setStateChanged('states.currentApp', curApp, true);
-    adapter.setStateChanged('states.input', curApp.split(".").pop(), true);
+    let inp = curApp.split(".").pop()
+    if (inp.indexOf('hdmi') == 0){
+        adapter.setStateChanged('states.input', "HDMI_" + inp[4], true);
+        adapter.setStateChanged('states.launch', "", true);
+    } else {
+        adapter.setStateChanged('states.input', "", true);
+        adapter.setStateChanged('states.launch', inp, true);
+    }
     adapter.setStateChanged('states.power', isTVon, true);
     adapter.setStateChanged('states.on', isTVon, true, function(err,stateID, notChanged) {
         if (!notChanged){ // state was changed
@@ -506,15 +517,15 @@ function checkCurApp(powerOff){
                     lgtvobj.disconnect();
                     setTimeout(lgtvobj.connect,500,hostUrl);
                     if (healthIntervall !== false){
-                        healthIntervall= setInterval(sendCommand, 60000, 'ssap://com.webos.service.tv.time/getCurrentTime', null, (err, val) => {
+                        healthIntervall= setInterval(sendCommand, adapter.config.healthIntervall || 60000, 'ssap://com.webos.service.tv.time/getCurrentTime', null, (err, val) => {
                             adapter.log.debug("check TV connection: " + (err || "ok"))
                             if (err)
                                 checkCurApp(true)
                         })
                     }
                 }, 60000);
-            } else if (healthIntervall)
-                clearInterval(healthIntervall);
+            } //else if (healthIntervall)
+                //clearInterval(healthIntervall);
         }
     });
 }
@@ -573,6 +584,8 @@ function main(){
         let dir = utils.controllerDir + '/' + adapter.systemConfig.dataDir + adapter.namespace.replace('.', '_') + '/';
         keyfile = dir + keyfile;
         adapter.log.debug('adapter.config = ' + JSON.stringify(adapter.config));
+        if (adapter.config.healthIntervall < 1)
+            healthIntervall = false;
         if (!fs.existsSync(dir)) fs.mkdirSync(dir);
         fs.readFile(keyfile, (err, data) => {
             if (!err){
