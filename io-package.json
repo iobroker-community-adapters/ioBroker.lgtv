@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "lgtv",
-    "version": "1.1.6",
+    "version": "1.1.7",
     "news": {
+      "1.1.7": {
+        "en": "bugfix for IndexOf error",
+        "de": "bugfix for IndexOf error",
+        "ru": "bugfix for IndexOf error",
+        "pt": "bugfix for IndexOf error",
+        "nl": "bugfix for IndexOf error",
+        "fr": "bugfix for IndexOf error",
+        "it": "bugfix for IndexOf error",
+        "es": "bugfix for IndexOf error",
+        "pl": "bugfix for IndexOf error",
+        "zh-cn": "bugfix for IndexOf error",
+      },
       "1.1.6": {
         "en": "stable healt check and make reconnect time configurable",
         "de": "stable healt check and make reconnect time configurable",
@@ -114,13 +126,14 @@
     "type": "multimedia",
     "authors": [
       "SebastianSchultz <info@sebastian-schultz.de>"
-    ]
+    ],
+    "installedFrom": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/e47b7d0ccf0fa2b0a7dab0a8c5325243e4b9dd12"
   },
   "native": {
     "ip": "",
     "mac": "",
     "timeout": "5000",
-    "reconnect" : 5000,
+    "reconnect": 5000,
     "power": false
   },
   "instanceObjects": [

@@ -1,5 +1,25 @@
 {
-  "version": "1.1.6",
+  "_from": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/e47b7d0ccf0fa2b0a7dab0a8c5325243e4b9dd12",
+  "_id": "iobroker.lgtv@1.1.7",
+  "_inBundle": false,
+  "_integrity": "sha512-EMFeRJqRiU4X5z/LrFOpxrLezblYHb0yxEmwXRpKo1jyvnRF2pv3F70NvkC89/D0VKh/pwdVoHEbC4dsLKWVIw==",
+  "_location": "/iobroker.lgtv",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "remote",
+    "raw": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/e47b7d0ccf0fa2b0a7dab0a8c5325243e4b9dd12",
+    "rawSpec": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/e47b7d0ccf0fa2b0a7dab0a8c5325243e4b9dd12",
+    "saveSpec": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/e47b7d0ccf0fa2b0a7dab0a8c5325243e4b9dd12",
+    "fetchSpec": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/e47b7d0ccf0fa2b0a7dab0a8c5325243e4b9dd12"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/e47b7d0ccf0fa2b0a7dab0a8c5325243e4b9dd12",
+  "_shasum": "7c01fb90dcdaf56c2cdcb9a9cfc91bea55459cc3",
+  "_spec": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/e47b7d0ccf0fa2b0a7dab0a8c5325243e4b9dd12",
+  "_where": "/opt/iobroker",
   "author": {
     "name": "Sebastian Schultz",
     "email": "mail@sebastian-schultz.de"
@@ -67,5 +87,6 @@
     "test:integration": "mocha test/integration --exit",
     "test:package": "mocha test/package --exit",
     "test:unit": "mocha test/unit --exit"
-  }  
+  },
+  "version": "1.1.7"
 }
