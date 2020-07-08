@@ -49,20 +49,8 @@ function startAdapter(options){
                                 if (!err) adapter.setState('states.turnOff', state.val, true);
                             });
                         } else {
-                            adapter.getState(adapter.namespace + '.states.on', (err, tv_on) => {
-                                if (err) { adapter.log.debug('Error getting "on" state ' + err); return; }
-                                if (!tv_on.val) {
-                                    adapter.log.debug('TV is already off');
-                                    adapter.setState('states.turnOff', state.val, true);
-                                    return;
-                                }
-
-                                sendCommand('ssap://system/turnOff', (err, val) => {
-                                    if (!err && val.returnValue === true) {
-                                        adapter.setState('states.turnOff', state.val, true);
-                                        adapter.setState('states.on', false, true);
-                                    }
-                                });
+                            sendCommand('ssap://system/turnOff', {message: state.val}, (err, val) => {
+                                if (!err) adapter.setState('states.turnOff', state.val, true);
                             });
                         }
                         break;
@@ -75,20 +63,8 @@ function startAdapter(options){
                                     if (!err) adapter.setState('states.power', state.val, true);
                                 });
                             } else {
-                                adapter.getState(adapter.namespace + '.states.on', (err, tv_on) => {
-                                    if (err) { adapter.log.debug('Error getting "on" state ' + err); return; }
-                                    if (!tv_on.val) {
-                                        adapter.log.debug('TV is already off');
-                                        adapter.setState('states.power', state.val, true);
-                                        return;
-                                    }
-
-                                    sendCommand('ssap://system/turnOff', (err, val) => {
-                                        if (!err && val.returnValue === true) {
-                                            adapter.setState('states.power', state.val, true);
-                                            adapter.setState('states.on', false, true);
-                                        }
-                                    });
+                                sendCommand('ssap://system/turnOff', {message: state.val}, (err, val) => {
+                                    if (!err) adapter.setState('states.power', state.val, true);
                                 });
                             }
                         } else {
@@ -406,15 +382,21 @@ function connect(cb){
         adapter.log.debug('WebOS TV Connected');
         isConnect = true;
         adapter.setStateChanged('info.connection', true, true);
-        lgtvobj.subscribe('ssap://audio/getVolume', (err, res) => {
+        lgtvobj.subscribe('ssap://audio/getVolume', (err, res) => 
+		{
             adapter.log.debug('audio/getVolume: ' + JSON.stringify(res));
-            if (~res.changed.indexOf('volume')){
-                volume = parseInt(res.volume);
-                adapter.setState('states.volume', volume, true);
-            }
-            if (~res.changed.indexOf('muted')){
-                adapter.setState('states.mute', res.muted, true);
-            }
+			if (res && res.changed)
+			{
+				if (~res.changed.indexOf('volume'))
+				{
+					volume = parseInt(res.volume);
+					adapter.setState('states.volume', volume, true);
+				}
+				if (~res.changed.indexOf('muted'))
+				{
+					adapter.setState('states.mute', res.muted, true);
+				}
+			}
         });
         lgtvobj.request('ssap://tv/getExternalInputList', (err, res) => {
             if(!err && res.devices){
