@@ -13,7 +13,7 @@
         "it": "bugfix for IndexOf error",
         "es": "bugfix for IndexOf error",
         "pl": "bugfix for IndexOf error",
-        "zh-cn": "bugfix for IndexOf error",
+        "zh-cn": "bugfix for IndexOf error"
       },
       "1.1.6": {
         "en": "stable healt check and make reconnect time configurable",
