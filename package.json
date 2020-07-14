@@ -1,24 +1,24 @@
 {
-  "_from": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/e47b7d0ccf0fa2b0a7dab0a8c5325243e4b9dd12",
-  "_id": "iobroker.lgtv@1.1.8",
+  "_from": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/master",
+  "_id": "iobroker.lgtv@1.1.9",
   "_inBundle": false,
-  "_integrity": "sha512-EMFeRJqRiU4X5z/LrFOpxrLezblYHb0yxEmwXRpKo1jyvnRF2pv3F70NvkC89/D0VKh/pwdVoHEbC4dsLKWVIw==",
+  "_integrity": "sha512-FAzbI8KT2Ee1gdys0FBSexQD88e+cd3zhXWFBdTltNMeKrvqLgmAbuLC1j3Dl6OYgEsPQYDYIJNB0TQY6l4zZQ==",
   "_location": "/iobroker.lgtv",
   "_phantomChildren": {},
   "_requested": {
     "type": "remote",
-    "raw": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/e47b7d0ccf0fa2b0a7dab0a8c5325243e4b9dd12",
-    "rawSpec": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/e47b7d0ccf0fa2b0a7dab0a8c5325243e4b9dd12",
-    "saveSpec": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/e47b7d0ccf0fa2b0a7dab0a8c5325243e4b9dd12",
-    "fetchSpec": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/e47b7d0ccf0fa2b0a7dab0a8c5325243e4b9dd12"
+    "raw": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/master",
+    "rawSpec": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/master",
+    "saveSpec": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/master",
+    "fetchSpec": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/master"
   },
   "_requiredBy": [
     "#USER",
     "/"
   ],
-  "_resolved": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/e47b7d0ccf0fa2b0a7dab0a8c5325243e4b9dd12",
-  "_shasum": "7c01fb90dcdaf56c2cdcb9a9cfc91bea55459cc3",
-  "_spec": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/e47b7d0ccf0fa2b0a7dab0a8c5325243e4b9dd12",
+  "_resolved": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/master",
+  "_shasum": "f382b24ca733a76a6b41ff9d430351e0f2a7d58b",
+  "_spec": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/master",
   "_where": "/opt/iobroker",
   "author": {
     "name": "Sebastian Schultz",
@@ -88,5 +88,5 @@
     "test:package": "mocha test/package --exit",
     "test:unit": "mocha test/unit --exit"
   },
-  "version": "1.1.8"
+  "version": "1.1.9"
 }

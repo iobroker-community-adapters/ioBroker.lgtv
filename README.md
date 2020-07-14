@@ -203,6 +203,10 @@ is true when TV is on and false if TV is off
 
 
 ## Changelog
+
+### 1.1.9 (2020-07-14)
+* (SebastianSchultz) re-upload for fixing NPM update issue
+
 ### 1.1.8 (2020-07-08)
 * (SebastianSchultz) bugfix for "IndexOf" error
 

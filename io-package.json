@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "lgtv",
-    "version": "1.1.8",
+    "version": "1.1.9",
     "news": {
+      "1.1.9": {
+        "en": "re-upload for fixing NPM update issue",
+        "de": "re-upload for fixing NPM update issue",
+        "ru": "re-upload for fixing NPM update issue",
+        "pt": "re-upload for fixing NPM update issue",
+        "nl": "re-upload for fixing NPM update issue",
+        "fr": "re-upload for fixing NPM update issue",
+        "it": "re-upload for fixing NPM update issue",
+        "es": "re-upload for fixing NPM update issue",
+        "pl": "re-upload for fixing NPM update issue",
+        "zh-cn": "re-upload for fixing NPM update issue"
+      },
       "1.1.8": {
         "en": "bugfix for IndexOf error",
         "de": "bugfix for IndexOf error",
@@ -127,7 +139,7 @@
     "authors": [
       "SebastianSchultz <info@sebastian-schultz.de>"
     ],
-    "installedFrom": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/e47b7d0ccf0fa2b0a7dab0a8c5325243e4b9dd12"
+    "installedFrom": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/master"
   },
   "native": {
     "ip": "",
