@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "lgtv",
-    "version": "1.1.9",
+    "version": "1.1.10",
     "news": {
+      "1.1.10": {
+        "en": "support WebOS 5 for volume change",
+        "de": "support WebOS 5 for volume change",
+        "ru": "support WebOS 5 for volume change",
+        "pt": "support WebOS 5 for volume change",
+        "nl": "support WebOS 5 for volume change",
+        "fr": "support WebOS 5 for volume change",
+        "it": "support WebOS 5 for volume change",
+        "es": "support WebOS 5 for volume change",
+        "pl": "support WebOS 5 for volume change",
+        "zh-cn": "support WebOS 5 for volume change"
+      },
       "1.1.9": {
         "en": "re-upload for fixing NPM update issue",
         "de": "re-upload for fixing NPM update issue",
