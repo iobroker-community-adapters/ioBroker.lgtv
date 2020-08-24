@@ -150,8 +150,7 @@
     "type": "multimedia",
     "authors": [
       "SebastianSchultz <info@sebastian-schultz.de>"
-    ],
-    "installedFrom": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/master"
+    ]
   },
   "native": {
     "ip": "",
