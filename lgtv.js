@@ -385,17 +385,28 @@ function connect(cb){
         lgtvobj.subscribe('ssap://audio/getVolume', (err, res) => 
 		{
             adapter.log.debug('audio/getVolume: ' + JSON.stringify(res));
-			if (res && res.changed)
-			{
-				if (~res.changed.indexOf('volume'))
-				{
-					volume = parseInt(res.volume);
-					adapter.setState('states.volume', volume, true);
-				}
-				if (~res.changed.indexOf('muted'))
-				{
-					adapter.setState('states.mute', res.muted, true);
-				}
+            /*
+                {"changed":["volume"],"returnValue":true,"cause":"volumeUp","volumeMax":100,"scenario":"mastervolume_tv_speaker","muted":false,"volume":14,"action":"changed","supportvolume"...
+                {"changed":["muted"],"returnValue":true,"volumeMax":100,"scenario":"mastervolume_tv_speaker","muted":true,"volume":15,"caller":"com.webos.surfacemanager.audio","action":"change..
+            changed in WebOS 5?
+                {"volumeStatus":{"cause":"volumeDown","mode":"normal","adjustVolume":true,"activeStatus":true,"muteStatus":false,"volume":7,"soundOutput":"tv_speaker","maxVolume":100}
+                {"volumeStatus":{"activeStatus":true,"adjustVolume":true,"maxVolume":100,"muteStatus":true,"volume":10,"mode":"normal","soundOutput":"tv_speaker"}
+
+            */
+			if (res ){
+                if (res.changed){
+                    if (~res.changed.indexOf('volume')){
+                        volume = parseInt(res.volume);
+                        adapter.setState('states.volume', volume, true);
+                    }
+                    if (~res.changed.indexOf('muted')){
+                        adapter.setState('states.mute', res.muted, true);
+                    }
+                } else if (res.volumeStatus){
+                    volume = parseInt(res.volumeStatus.volume);
+                    adapter.setState('states.volume', volume, true);
+                    adapter.setState('states.mute', res.volumeStatus.muteStatus, true);
+                }
 			}
         });
         lgtvobj.request('ssap://tv/getExternalInputList', (err, res) => {
