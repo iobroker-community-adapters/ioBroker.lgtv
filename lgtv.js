@@ -11,6 +11,7 @@ let adapter;
 const LGTV = require('lgtv2');
 const wol = require('wol');
 const fs = require('fs');
+const path = require("path");
 
 let hostUrl
 let isConnect = false;
@@ -598,8 +599,8 @@ function main(){
     if (adapter.config.ip){
         adapter.log.info('Ready. Configured WebOS TV IP: ' + adapter.config.ip);
         adapter.subscribeStates('*');
-        let dir = utils.controllerDir + '/' + adapter.systemConfig.dataDir + adapter.namespace.replace('.', '_') + '/';
-        keyfile = dir + keyfile;
+        let dir = path.join(utils.getAbsoluteDefaultDataDir(), adapter.namespace.replace('.', '_'))
+        keyfile = path.join(dir, keyfile);
         adapter.log.debug('adapter.config = ' + JSON.stringify(adapter.config));
         if (adapter.config.healthIntervall < 1)
             healthIntervall = false;
