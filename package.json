@@ -54,7 +54,7 @@
     "grunt-http": "^2.2.0",
     "grunt-jscs": "^3.0.1",
     "grunt-replace": "^1.0.1",
-    "mocha": "^6.0.2"
+    "mocha": "^10.2.0"
   },
   "directories": {},
   "dist": {
