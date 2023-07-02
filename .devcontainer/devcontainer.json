@@ -1,0 +1,49 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/typescript-node
+{
+    "name": "Node.js & TypeScript",
+    // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+    "image": "mcr.microsoft.com/devcontainers/typescript-node:0-18",
+
+    // Features to add to the dev container. More info: https://containers.dev/features.
+    "features": {
+        "ghcr.io/devcontainers/features/sshd:1": {
+            "version": "latest"
+        },
+        "ghcr.io/devcontainers/features/github-cli:1": {
+            "version": "latest"
+        }
+    },
+
+    // Use 'forwardPorts' to make a list of ports inside the container available locally.
+    "forwardPorts": [8081],
+
+    // Use 'postCreateCommand' to run commands when the container is created.
+    "onCreateCommand": "npm install @iobroker/dev-server && npm run dev-server setup",
+
+    // Use 'postCreateCommand' to run commands after the container is created.
+    "postCreateCommand": "npm install",
+
+    // Configure tool-specific properties.
+    "customizations": {
+        "vscode": {
+            "vscode": {
+                "extensions": [
+                    "ms-vscode-remote.remote-containers",
+                    "dbaeumer.vscode-eslint",
+                    "esbenp.prettier-vscode",
+                    "github.vscode-github-actions",
+                    "github.vscode-pull-request-github"
+                ]
+            }
+        }
+    },
+    "portsAttributes": {
+        "8081": {
+            "label": "ioBroker Admin UI"
+        }
+    }
+
+    // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+    // "remoteUser": "root"
+}
