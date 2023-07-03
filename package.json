@@ -1,25 +1,4 @@
 {
-  "_from": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/master",
-  "_id": "iobroker.lgtv@1.1.9",
-  "_inBundle": false,
-  "_integrity": "sha512-FAzbI8KT2Ee1gdys0FBSexQD88e+cd3zhXWFBdTltNMeKrvqLgmAbuLC1j3Dl6OYgEsPQYDYIJNB0TQY6l4zZQ==",
-  "_location": "/iobroker.lgtv",
-  "_phantomChildren": {},
-  "_requested": {
-    "type": "remote",
-    "raw": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/master",
-    "rawSpec": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/master",
-    "saveSpec": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/master",
-    "fetchSpec": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/master"
-  },
-  "_requiredBy": [
-    "#USER",
-    "/"
-  ],
-  "_resolved": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/master",
-  "_shasum": "f382b24ca733a76a6b41ff9d430351e0f2a7d58b",
-  "_spec": "https://github.com/SebastianSchultz/ioBroker.lgtv/tarball/master",
-  "_where": "/opt/iobroker",
   "author": {
     "name": "Sebastian Schultz",
     "email": "mail@sebastian-schultz.de"
@@ -88,5 +67,5 @@
     "test:package": "mocha test/package --exit",
     "test:unit": "mocha test/unit --exit"
   },
-  "version": "1.1.10"
+  "version": "1.1.11"
 }

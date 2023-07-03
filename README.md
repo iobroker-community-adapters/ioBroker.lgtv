@@ -204,7 +204,7 @@ is true when TV is on and false if TV is off
 
 ## Changelog
 
-### 1.1.10
+### 1.1.11
 * (foxriver76) prepare for controller v5
 
 ### 1.1.9 (2020-07-14)
