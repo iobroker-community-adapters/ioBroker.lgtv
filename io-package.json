@@ -1,8 +1,21 @@
 {
     "common": {
         "name": "lgtv",
-        "version": "1.1.10",
+        "version": "1.1.12",
         "news": {
+            "1.1.12": {
+                "en": "We have prepared the adapter for js-controller version 5",
+                "de": "Wir haben den Adapter für js-controller Version 5 vorbereitet",
+                "ru": "Мы подготовили адаптер для js-controller версии 5",
+                "pt": "Nós preparamos o adaptador para a versão js-controller 5",
+                "nl": "We hebben de adapter voorbereid voor J's-controller versie 5",
+                "fr": "Nous avons préparé l'adaptateur pour js-controller version 5",
+                "it": "Abbiamo preparato l'adattatore per js-controller versione 5",
+                "es": "Hemos preparado el adaptador para js-controller versión 5",
+                "pl": "Zastosowano adapter do wersji 5 js",
+                "uk": "Ми підготували адаптер для js-controller версії 5",
+                "zh-cn": "我们已准备好供控制的手稿5"
+            },
             "1.1.10": {
                 "en": "support WebOS 5 for volume change",
                 "de": "support WebOS 5 for volume change",
@@ -124,6 +137,7 @@
                 "zh-cn": "General NPM update"
             }
         },
+        "title": "LG WebOS SmartTV",
         "titleLang": {
             "en": "LG WebOS SmartTV",
             "de": "LG WebOS SmartTV",

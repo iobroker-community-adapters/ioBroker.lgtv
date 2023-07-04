@@ -180,12 +180,14 @@ is true when TV is on and false if TV is off
 
 ### **WORK IN PROGRESS**
 
--   (foxriver76) prepare for controller v5
--   (jpawlowski) fix versioning hickup
 -   (jpawlowski) replace Travis and AppVeyor by GitHub Actions, based on ioBroker/create-adapter
 -   (jpawlowski) set NodeJS minimum version to 16
 -   (jpawlowski) update dependencies
 -   (jpawlowski) rename/correct configuration item healthIntervall to healthInterval
+
+### 1.1.12 (2023-07-04)
+
+-   (foxriver76) prepare for controller v5
 
 ### 1.1.10 (2020-08-24)
 
