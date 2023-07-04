@@ -12,7 +12,7 @@ let isConnect = false;
 let lgtvobj, clientKey, volume, oldvolume;
 let keyfile = 'lgtvkeyfile';
 let renewTimeout = null;
-let healthIntervall = null;
+let healthInterval = null;
 let curApp = '';
 
 function startAdapter(options) {
@@ -486,9 +486,9 @@ function connect(cb) {
                     setTimeout(function () {
                         if (!curApp) {
                             // curApp is not set in meantime
-                            if (healthIntervall && !adapter.config.healthIntervall) {
-                                clearInterval(healthIntervall);
-                                healthIntervall = false; // TV works fine,  healthIntervall is not longer nessessary
+                            if (healthInterval && !adapter.config.healthInterval) {
+                                clearInterval(healthInterval);
+                                healthInterval = false; // TV works fine,  healthInterval is not longer nessessary
                                 adapter.log.info(
                                     'detect poweroff event, polling not longer nessesary. if you have problems, check settings',
                                 );
@@ -547,7 +547,7 @@ function checkConnection(secondCheck) {
     if (secondCheck) {
         if (!isConnect) {
             adapter.setStateChanged('info.connection', false, true);
-            healthIntervall && clearInterval(healthIntervall);
+            healthInterval && clearInterval(healthInterval);
             checkCurApp(true);
         }
     } else {
@@ -584,10 +584,10 @@ function checkCurApp(powerOff) {
                 renewTimeout = setTimeout(() => {
                     lgtvobj.disconnect();
                     setTimeout(lgtvobj.connect, 500, hostUrl);
-                    if (healthIntervall !== false) {
-                        healthIntervall = setInterval(
+                    if (healthInterval !== false) {
+                        healthInterval = setInterval(
                             sendCommand,
-                            adapter.config.healthIntervall || 60000,
+                            adapter.config.healthInterval || 60000,
                             'ssap://com.webos.service.tv.time/getCurrentTime',
                             null,
                             (err, _val) => {
@@ -597,8 +597,8 @@ function checkCurApp(powerOff) {
                         );
                     }
                 }, 60000);
-            } //else if (healthIntervall)
-            //clearInterval(healthIntervall);
+            } //else if (healthInterval)
+            //clearInterval(healthInterval);
         }
     });
 }
@@ -659,7 +659,7 @@ function main() {
         const dir = path.join(utils.getAbsoluteDefaultDataDir(), adapter.namespace.replace('.', '_'));
         keyfile = path.join(dir, keyfile);
         adapter.log.debug('adapter.config = ' + JSON.stringify(adapter.config));
-        if (adapter.config.healthIntervall < 1) healthIntervall = false;
+        if (adapter.config.healthInterval < 1) healthInterval = false;
         if (!fs.existsSync(dir)) fs.mkdirSync(dir);
         fs.readFile(keyfile, (err, data) => {
             if (!err) {
