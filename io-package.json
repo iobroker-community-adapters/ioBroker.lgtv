@@ -137,7 +137,7 @@
     "enabled": false,
     "materialize": true,
     "compact": true,
-    "extIcon": "https://raw.githubusercontent.com/SebastianSchultz/ioBroker.lgtv/master/admin/lgtv.png",
+    "extIcon": "https://raw.githubusercontent.com/iobroker-community-adapters/ioBroker.lgtv/master/admin/lgtv.png",
     "keywords": [
       "lgtv",
       "WebOS",
@@ -145,11 +145,12 @@
       "TV",
       "LG"
     ],
-    "readme": "https://github.com/SebastianSchultz/iobroker.lgtv/blob/master/README.md",
+    "readme": "https://github.com/iobroker-community-adapters/iobroker.lgtv/blob/master/README.md",
     "loglevel": "info",
     "type": "multimedia",
     "authors": [
-      "SebastianSchultz <info@sebastian-schultz.de>"
+      "SebastianSchultz <info@sebastian-schultz.de>",
+      "mcm1957 <mcm57@gmx.at>"
     ]
   },
   "native": {
