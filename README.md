@@ -177,8 +177,7 @@ is true when TV is on and false if TV is off
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-
-### **WORK IN PROGRESS**
+### 2.0.0-alpha.0 (2023-09-29)
 
 - (mcm1957) Adapter has been mpoved to iobroker-community-adapters area
 - (mcm1957) POSSIBLE BREAKING: Adapter has been built from current github content. As latest npm packages have been created axternal, theres a chance that some changes got lost.

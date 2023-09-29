@@ -1,932 +1,885 @@
 {
-    "common": {
-        "name": "lgtv",
-        "version": "1.1.12",
-        "news": {
-            "1.1.12": {
-                "en": "We have prepared the adapter for js-controller version 5",
-                "de": "Wir haben den Adapter für js-controller Version 5 vorbereitet",
-                "ru": "Мы подготовили адаптер для js-controller версии 5",
-                "pt": "Nós preparamos o adaptador para a versão js-controller 5",
-                "nl": "We hebben de adapter voorbereid voor J's-controller versie 5",
-                "fr": "Nous avons préparé l'adaptateur pour js-controller version 5",
-                "it": "Abbiamo preparato l'adattatore per js-controller versione 5",
-                "es": "Hemos preparado el adaptador para js-controller versión 5",
-                "pl": "Zastosowano adapter do wersji 5 js",
-                "uk": "Ми підготували адаптер для js-controller версії 5",
-                "zh-cn": "我们已准备好供控制的手稿5"
-            },
-            "1.1.10": {
-                "en": "support WebOS 5 for volume change",
-                "de": "support WebOS 5 for volume change",
-                "ru": "support WebOS 5 for volume change",
-                "pt": "support WebOS 5 for volume change",
-                "nl": "support WebOS 5 for volume change",
-                "fr": "support WebOS 5 for volume change",
-                "it": "support WebOS 5 for volume change",
-                "es": "support WebOS 5 for volume change",
-                "pl": "support WebOS 5 for volume change",
-                "zh-cn": "support WebOS 5 for volume change"
-            },
-            "1.1.9": {
-                "en": "re-upload for fixing NPM update issue",
-                "de": "re-upload for fixing NPM update issue",
-                "ru": "re-upload for fixing NPM update issue",
-                "pt": "re-upload for fixing NPM update issue",
-                "nl": "re-upload for fixing NPM update issue",
-                "fr": "re-upload for fixing NPM update issue",
-                "it": "re-upload for fixing NPM update issue",
-                "es": "re-upload for fixing NPM update issue",
-                "pl": "re-upload for fixing NPM update issue",
-                "zh-cn": "re-upload for fixing NPM update issue"
-            },
-            "1.1.8": {
-                "en": "bugfix for IndexOf error",
-                "de": "bugfix for IndexOf error",
-                "ru": "bugfix for IndexOf error",
-                "pt": "bugfix for IndexOf error",
-                "nl": "bugfix for IndexOf error",
-                "fr": "bugfix for IndexOf error",
-                "it": "bugfix for IndexOf error",
-                "es": "bugfix for IndexOf error",
-                "pl": "bugfix for IndexOf error",
-                "zh-cn": "bugfix for IndexOf error"
-            },
-            "1.1.6": {
-                "en": "stable healt check and make reconnect time configurable",
-                "de": "stable healt check and make reconnect time configurable",
-                "ru": "stable healt check and make reconnect time configurable",
-                "pt": "stable healt check and make reconnect time configurable",
-                "nl": "stable healt check and make reconnect time configurable",
-                "fr": "stable healt check and make reconnect time configurable",
-                "it": "stable healt check and make reconnect time configurable",
-                "es": "stable healt check and make reconnect time configurable",
-                "pl": "stable healt check and make reconnect time configurable",
-                "zh-cn": "stable healt check and make reconnect time configurable"
-            },
-            "1.1.5": {
-                "en": "stable connection and subsciptions\nadd Polling for TV, which not support Power Off event\nchange some states role switch to button",
-                "de": "stable connection and subsciptions\nadd Polling for TV, which not support Power Off event\nchange some states role switch to button",
-                "ru": "stable connection and subsciptions\nadd Polling for TV, which not support Power Off event\nchange some states role switch to button",
-                "pt": "stable connection and subsciptions\nadd Polling for TV, which not support Power Off event\nchange some states role switch to button",
-                "nl": "stable connection and subsciptions\nadd Polling for TV, which not support Power Off event\nchange some states role switch to button",
-                "fr": "stable connection and subsciptions\nadd Polling for TV, which not support Power Off event\nchange some states role switch to button",
-                "it": "stable connection and subsciptions\nadd Polling for TV, which not support Power Off event\nchange some states role switch to button",
-                "es": "stable connection and subsciptions\nadd Polling for TV, which not support Power Off event\nchange some states role switch to button",
-                "pl": "stable connection and subsciptions\nadd Polling for TV, which not support Power Off event\nchange some states role switch to button",
-                "zh-cn": "stable connection and subsciptions\nadd Polling for TV, which not support Power Off event\nchange some states role switch to button"
-            },
-            "1.1.4": {
-                "en": "changed from pull to subscribing\nadd livetv to launch list",
-                "de": "changed from pull to subscribing\nadd livetv to launch list",
-                "ru": "changed from pull to subscribing\nadd livetv to launch list",
-                "pt": "changed from pull to subscribing\nadd livetv to launch list",
-                "nl": "changed from pull to subscribing\nadd livetv to launch list",
-                "fr": "changed from pull to subscribing\nadd livetv to launch list",
-                "it": "changed from pull to subscribing\nadd livetv to launch list",
-                "es": "changed from pull to subscribing\nadd livetv to launch list",
-                "pl": "changed from pull to subscribing\nadd livetv to launch list",
-                "zh-cn": "changed from pull to subscribing\nadd livetv to launch list"
-            },
-            "1.1.3": {
-                "en": "fixed connect() [Pull requests #62]\nfixed [issues #64]\nchange error log to debug [issues #59]",
-                "de": "fixed connect() [Pull requests #62]\nfixed [issues #64]\nchange error log to debug [issues #59]",
-                "ru": "fixed connect() [Pull requests #62]\nfixed [issues #64]\nchange error log to debug [issues #59]",
-                "pt": "fixed connect() [Pull requests #62]\nfixed [issues #64]\nchange error log to debug [issues #59]",
-                "nl": "fixed connect() [Pull requests #62]\nfixed [issues #64]\nchange error log to debug [issues #59]",
-                "fr": "fixed connect() [Pull requests #62]\nfixed [issues #64]\nchange error log to debug [issues #59]",
-                "it": "fixed connect() [Pull requests #62]\nfixed [issues #64]\nchange error log to debug [issues #59]",
-                "es": "fixed connect() [Pull requests #62]\nfixed [issues #64]\nchange error log to debug [issues #59]",
-                "pl": "fixed connect() [Pull requests #62]\nfixed [issues #64]\nchange error log to debug [issues #59]",
-                "zh-cn": "fixed connect() [Pull requests #62]\nfixed [issues #64]\nchange error log to debug [issues #59]"
-            },
-            "1.1.1": {
-                "en": "fix error reconect\nfix raw object\nadd mac address to admin settings",
-                "de": "fix error reconect\nfix raw object\nadd mac address to admin settings",
-                "ru": "fix error reconect\nfix raw object\nadd mac address to admin settings",
-                "pt": "fix error reconect\nfix raw object\nadd mac address to admin settings",
-                "nl": "fix error reconect\nfix raw object\nadd mac address to admin settings",
-                "fr": "fix error reconect\nfix raw object\nadd mac address to admin settings",
-                "it": "fix error reconect\nfix raw object\nadd mac address to admin settings",
-                "es": "fix error reconect\nfix raw object\nadd mac address to admin settings",
-                "pl": "fix error reconect\nfix raw object\nadd mac address to admin settings",
-                "zh-cn": "fix error reconect\nfix raw object\nadd mac address to admin settings"
-            },
-            "1.1.0": {
-                "en": "adding object remote.KEY\nfix connect to TV\nadd subscribe volume and mute state\ntranslate admin to RUS\nadd Turn On, using WOL\nadding new different objects",
-                "de": "adding object remote.KEY\nfix connect to TV\nadd subscribe volume and mute state\ntranslate admin to RUS\nadd Turn On, using WOL\nadding new different objects",
-                "ru": "adding object remote.KEY\nfix connect to TV\nadd subscribe volume and mute state\ntranslate admin to RUS\nadd Turn On, using WOL\nadding new different objects",
-                "pt": "adding object remote.KEY\nfix connect to TV\nadd subscribe volume and mute state\ntranslate admin to RUS\nadd Turn On, using WOL\nadding new different objects",
-                "nl": "adding object remote.KEY\nfix connect to TV\nadd subscribe volume and mute state\ntranslate admin to RUS\nadd Turn On, using WOL\nadding new different objects",
-                "fr": "adding object remote.KEY\nfix connect to TV\nadd subscribe volume and mute state\ntranslate admin to RUS\nadd Turn On, using WOL\nadding new different objects",
-                "it": "adding object remote.KEY\nfix connect to TV\nadd subscribe volume and mute state\ntranslate admin to RUS\nadd Turn On, using WOL\nadding new different objects",
-                "es": "adding object remote.KEY\nfix connect to TV\nadd subscribe volume and mute state\ntranslate admin to RUS\nadd Turn On, using WOL\nadding new different objects",
-                "pl": "adding object remote.KEY\nfix connect to TV\nadd subscribe volume and mute state\ntranslate admin to RUS\nadd Turn On, using WOL\nadding new different objects",
-                "zh-cn": "adding object remote.KEY\nfix connect to TV\nadd subscribe volume and mute state\ntranslate admin to RUS\nadd Turn On, using WOL\nadding new different objects"
-            },
-            "1.0.8": {
-                "en": "General NPM update",
-                "de": "General NPM update",
-                "ru": "General NPM update",
-                "pt": "General NPM update",
-                "nl": "General NPM update",
-                "fr": "General NPM update",
-                "it": "General NPM update",
-                "es": "General NPM update",
-                "pl": "General NPM update",
-                "zh-cn": "General NPM update"
-            }
-        },
-        "titleLang": {
-            "en": "LG WebOS SmartTV",
-            "de": "LG WebOS SmartTV",
-            "ru": "ЛГБ WebOS SmartTV",
-            "pt": "LG WebOS SmartTV",
-            "nl": "LG WebO SmartTV",
-            "fr": "LG WebOS SmartTV",
-            "it": "LG WebOS SmartTV",
-            "es": "LG WebOS SmartTV",
-            "pl": "Strona internetowa SmartTV",
-            "uk": "LG WebOS СмартTV",
-            "zh-cn": "LG网站"
-        },
-        "desc": {
-            "en": "Controls WebOS-based LG SmartTVs",
-            "de": "Steuert auf WebOS basierte LG SmartTVs",
-            "ru": "Управление WebOS на базе LG SmartTVs",
-            "pt": "Controles baseados em WebOS LG SmartTVs",
-            "nl": "Controle WebOS-gebaseerde LG SmartTV",
-            "fr": "Contrôles WebOS-based LG SmartTVs",
-            "it": "Controlli WebOS basati LG SmartTVs",
-            "es": "Controles LG SmartTVs basados en WebOS",
-            "pl": "Strona internetowa LG SmartTV",
-            "uk": "Контролери LG SmartTV",
-            "zh-cn": "A. 控制网络"
-        },
-        "authors": [
-            "SebastianSchultz <info@sebastian-schultz.de>",
-            "iobroker-community-adapters <mcm57@gmx.at>"
-        ],
-        "keywords": [
-            "lgtv", 
-            "WebOS", 
-            "Smart", 
-            "TV", 
-            "LG"
-        ],
-        "license": "MIT",
-        "platform": "Javascript/Node.js",
-        "main": "main.js",
-        "icon": "lgtv.png",
-        "enabled": false,
-        "extIcon": "https://raw.githubusercontent.com/iobroker-community-adapters/ioBroker.lgtv/master/admin/lgtv.png",
-        "readme": "https://github.com/iobroker-community-adapters/iobroker.lgtv/blob/master/README.md",
-        "loglevel": "info",
-        "mode": "daemon",
-        "type": "multimedia",
-        "compact": true,
-        "connectionType": "local",
-        "dataSource": "poll",
-        "materialize": true,
-        "dependencies": [
-            {
-                "js-controller": ">=4.0.24"
-            }
-        ],
-        "globalDependencies": [
-            {
-                "admin": ">=5.1.13"
-            }
-        ]
+  "common": {
+    "name": "lgtv",
+    "version": "2.0.0-alpha.0",
+    "news": {
+      "2.0.0-alpha.0": {
+        "en": "Adapter has been moved to iobroker-community-adapters area\nPOSSIBLE BREAKING: Adapter has been built from current github content. As latest npm packages have been created external, theres a chance that some changes got lost.\nTravis and AppVeyor have been replaced by GitHub Actions, based on ioBroker/create-adapter\nAdapter requires NodeJS 16 minimum now\nDependencies have been updated\nConfiguration item healthIntervall has been rename/correct to healthInterval",
+        "de": "Adapter wurde auf iobroker-community-adapter Bereich verschoben\nMÖGLICHERWEISE BREAKING: Adapter wurde aus aktuellen Github-Inhalten gebaut. Da die letzten npm Pakete external erstellt wurden, besteht die Chance, dass einige Änderungen verloren gingen.\nTravis und AppVeyor wurden vonauf GitHub Actions, basierend auf ioBroker/create-adapter umgestellt.\nAdapter benötigt jetzt mindestens NodeJS 16\nAbhängigkeiten wurden aktualisiert\nKonfigurationselement healthIntervall wurde umbenannt/korrigiert auf healthInterval",
+        "ru": "Адаптер был погружен в зону iobroker-community-adapters\nВОЗМОЖНОЕ ЗАВТРАК: адаптер был построен из текущего содержания github. Поскольку последние пакеты npm были созданы axternal, есть шанс, что некоторые изменения потеряли.\nTravis и AppVeyor были восстановлены GitHub Actions, на основе ioBroker/create-adapter\nAdpter требует минимума NodeJS 16\nВ зависимости были обновлены\nКонфигурация товара HealthIntervall была переименована/корректна для здоровья Интервал",
+        "pt": "Adapter foi modificado para iobroker-community-adapters area\nBREAKING POSSIBLE: O adaptador foi construído a partir do conteúdo do github atual. Como os pacotes npm mais recentes foram criados axternal, há uma chance de que algumas mudanças se perderam.\nTravis e AppVeyor foram replicenciados por GitHub Actions, baseado em ioBroker/create-adapter\nAdpter requer NodeJS 16 mínimo agora\nAs dependências foram atualizadas\nHealthIntervall foi renomeado/correto para saúde Intervalo",
+        "nl": "Adapter is gevormd tot iobroker-community-papters gebied\nAdapter is gebouwd uit de huidige github tevredenheid. De nieuwste NPM-pakketten zijn gecreëerd, er is een kans dat sommige veranderingen verloren zijn.\nTravis en AppVeyor zijn teruggekeerd door GitHub Actions, gebaseerd op ioBroker/create-adapter\nAdpter vereist NodeJS 16 minimum nu\nAfhankelijkheid\nVermoedelijk item gezondheidsintervall is hernoem/correctie van gezondheid Interview",
+        "fr": "Adaptateur a été mpoved to iobroker-community-adapters area\nPOSSIBLE BREAKING: L'adaptateur a été construit à partir de la teneur en githubes actuelle. Comme les derniers paquets npm ont été créés axternal, il ya une chance que certains changements ont été perdus.\nTravis et AppVeyor ont été rebranchés par GitHub Actions, basé sur ioBroker/create-adapter\nAdpter nécessite NodeJS 16 minimum maintenant\nLes dépendances ont été mises à jour\nÉlément de configuration santéIntervall a été renommé/correct à la santé Interval",
+        "it": "L'adattatore è stato ficcato nell'area di hobroker-community-adapters\nPOSSIBILE BREAKING: L'adattatore è stato costruito dal contenuto di github corrente. Poiché gli ultimi pacchetti npm sono stati creati axternal, c'è la possibilità che alcuni cambiamenti si siano persi.\nTravis e AppVeyor sono stati ripuliti da GitHub Actions, basato su ioBroker/create-adapter\nAdpter richiede NodeJS 16 minimo ora\nLe dipendenze sono state aggiornate\nConfigurazione prodotto saluteIntervall è stato rinominato / corretto per la salute Intervallo",
+        "es": "Adaptador ha sido mezclado a la zona de ibroker-community-adapters\nPOSSIBLE BREAKING: Adaptador ha sido construido a partir del contenido actual de github. Como los últimos paquetes de npm se han creado axternal, existe la posibilidad de que algunos cambios se pierdan.\nTravis y AppVeyor han sido repelidos por GitHub Actions, basado en ioBroker/create-adapter\nAdpter requiere NodeJS 16 mínimo ahora\nSe han actualizado las dependencias\nSalud del elemento de configuraciónIntervall ha sido renombrado/correcto para la salud Interval",
+        "pl": "Adapter został usunięty do iobrokersko-kommunitetów\nPOSSIBLE BREAKING: Adapter został zbudowany z aktualnych treści. Jako że najnowsze pakiety nm zostały stworzone axternal, istnieje możliwość, że niektóre zmiany zaginęły.\nTravis i AppVeyor zostali powtórzeni przez Akcje GitHub, oparte na ioBroker/create-adapter\nAdpter wymaga od NodeJS 16 minimum\nZależności zostały zaktualizowane\nKonfiguracja stanu zdrowia Intervalla została zmieniona i poprawiona do zdrowia. Intervalu",
+        "uk": "Перехідник був прив'язаний до області iobroker-community-adapters\nPOSSIBLE BREAKING: Адаптер був побудований з поточного вмісту github. Як останні пакети npm були створені axternal, є шанс, що деякі зміни були втрачені.\nTravis і AppVeyor були перероблені GitHub Дії, засновані на ioBroker/create-adapter\nAdpter вимагає NodeJS 16 мінімум зараз\nОновлено залежність\nКонфігурація продукту HealthIntervall було перейменовано/коректом для здоров'я Інтервал",
+        "zh-cn": "已经向加勒比妓院区道歉。\n导 言 由于最近创立了美分包,一些变化失去了机会。.\nGitHub行动根据OioBroker/create-adapter对Veyor进行了解释。\n现在需要至少16天的“JS”\n已更新了属地\n保健连带项目已重新命名/纠正。 间隔"
+      },
+      "1.1.12": {
+        "en": "We have prepared the adapter for js-controller version 5",
+        "de": "Wir haben den Adapter für js-controller Version 5 vorbereitet",
+        "ru": "Мы подготовили адаптер для js-controller версии 5",
+        "pt": "Nós preparamos o adaptador para a versão js-controller 5",
+        "nl": "We hebben de adapter voorbereid voor J's-controller versie 5",
+        "fr": "Nous avons préparé l'adaptateur pour js-controller version 5",
+        "it": "Abbiamo preparato l'adattatore per js-controller versione 5",
+        "es": "Hemos preparado el adaptador para js-controller versión 5",
+        "pl": "Zastosowano adapter do wersji 5 js",
+        "uk": "Ми підготували адаптер для js-controller версії 5",
+        "zh-cn": "我们已准备好供控制的手稿5"
+      },
+      "1.1.10": {
+        "en": "support WebOS 5 for volume change",
+        "de": "support WebOS 5 for volume change",
+        "ru": "support WebOS 5 for volume change",
+        "pt": "support WebOS 5 for volume change",
+        "nl": "support WebOS 5 for volume change",
+        "fr": "support WebOS 5 for volume change",
+        "it": "support WebOS 5 for volume change",
+        "es": "support WebOS 5 for volume change",
+        "pl": "support WebOS 5 for volume change",
+        "zh-cn": "support WebOS 5 for volume change"
+      },
+      "1.1.9": {
+        "en": "re-upload for fixing NPM update issue",
+        "de": "re-upload for fixing NPM update issue",
+        "ru": "re-upload for fixing NPM update issue",
+        "pt": "re-upload for fixing NPM update issue",
+        "nl": "re-upload for fixing NPM update issue",
+        "fr": "re-upload for fixing NPM update issue",
+        "it": "re-upload for fixing NPM update issue",
+        "es": "re-upload for fixing NPM update issue",
+        "pl": "re-upload for fixing NPM update issue",
+        "zh-cn": "re-upload for fixing NPM update issue"
+      },
+      "1.1.8": {
+        "en": "bugfix for IndexOf error",
+        "de": "bugfix for IndexOf error",
+        "ru": "bugfix for IndexOf error",
+        "pt": "bugfix for IndexOf error",
+        "nl": "bugfix for IndexOf error",
+        "fr": "bugfix for IndexOf error",
+        "it": "bugfix for IndexOf error",
+        "es": "bugfix for IndexOf error",
+        "pl": "bugfix for IndexOf error",
+        "zh-cn": "bugfix for IndexOf error"
+      },
+      "1.1.6": {
+        "en": "stable healt check and make reconnect time configurable",
+        "de": "stable healt check and make reconnect time configurable",
+        "ru": "stable healt check and make reconnect time configurable",
+        "pt": "stable healt check and make reconnect time configurable",
+        "nl": "stable healt check and make reconnect time configurable",
+        "fr": "stable healt check and make reconnect time configurable",
+        "it": "stable healt check and make reconnect time configurable",
+        "es": "stable healt check and make reconnect time configurable",
+        "pl": "stable healt check and make reconnect time configurable",
+        "zh-cn": "stable healt check and make reconnect time configurable"
+      },
+      "1.1.5": {
+        "en": "stable connection and subsciptions\nadd Polling for TV, which not support Power Off event\nchange some states role switch to button",
+        "de": "stable connection and subsciptions\nadd Polling for TV, which not support Power Off event\nchange some states role switch to button",
+        "ru": "stable connection and subsciptions\nadd Polling for TV, which not support Power Off event\nchange some states role switch to button",
+        "pt": "stable connection and subsciptions\nadd Polling for TV, which not support Power Off event\nchange some states role switch to button",
+        "nl": "stable connection and subsciptions\nadd Polling for TV, which not support Power Off event\nchange some states role switch to button",
+        "fr": "stable connection and subsciptions\nadd Polling for TV, which not support Power Off event\nchange some states role switch to button",
+        "it": "stable connection and subsciptions\nadd Polling for TV, which not support Power Off event\nchange some states role switch to button",
+        "es": "stable connection and subsciptions\nadd Polling for TV, which not support Power Off event\nchange some states role switch to button",
+        "pl": "stable connection and subsciptions\nadd Polling for TV, which not support Power Off event\nchange some states role switch to button",
+        "zh-cn": "stable connection and subsciptions\nadd Polling for TV, which not support Power Off event\nchange some states role switch to button"
+      }
     },
-    "native": {
-        "ip": "",
-        "mac": "",
-        "timeout": 5000,
-        "reconnect": 5000,
-        "healthInterval": 0,
-        "power": false
+    "titleLang": {
+      "en": "LG WebOS SmartTV",
+      "de": "LG WebOS SmartTV",
+      "ru": "ЛГБ WebOS SmartTV",
+      "pt": "LG WebOS SmartTV",
+      "nl": "LG WebO SmartTV",
+      "fr": "LG WebOS SmartTV",
+      "it": "LG WebOS SmartTV",
+      "es": "LG WebOS SmartTV",
+      "pl": "Strona internetowa SmartTV",
+      "uk": "LG WebOS СмартTV",
+      "zh-cn": "LG网站"
     },
-    "instanceObjects": [
-        {
-            "_id": "info.connection",
-            "type": "state",
-            "common": {
-                "role": "indicator.connected",
-                "name": "If connected to LG TV",
-                "type": "boolean",
-                "read": true,
-                "write": true,
-                "def": false
-            },
-            "native": {}
-        },
-        {
-            "_id": "states",
-            "type": "device",
-            "common": {
-                "name": "states"
-            },
-            "native": {}
-        },
-        {
-            "_id": "states.on",
-            "type": "state",
-            "common": {
-                "name": "Is TV is ON",
-                "role": "indicator.online",
-                "type": "boolean",
-                "read": true,
-                "write": false
-            },
-            "native": {}
-        },
-        {
-            "_id": "states.popup",
-            "type": "state",
-            "common": {
-                "name": "Show popup text on TV",
-                "role": "state",
-                "type": "string",
-                "read": false,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "states.turnOff",
-            "type": "state",
-            "common": {
-                "name": "Switch TV OFF",
-                "role": "button",
-                "type": "boolean",
-                "read": false,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "states.power",
-            "type": "state",
-            "common": {
-                "name": "Switch TV power",
-                "role": "switch",
-                "type": "boolean",
-                "read": true,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "states.mute",
-            "type": "state",
-            "common": {
-                "name": "Mute ON/OFF",
-                "role": "switch",
-                "type": "boolean",
-                "read": true,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "states.volumeUp",
-            "type": "state",
-            "common": {
-                "name": "Volume UP",
-                "role": "button",
-                "type": "boolean",
-                "read": false,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "states.volumeDown",
-            "type": "state",
-            "common": {
-                "name": "Volume DOWN",
-                "role": "button",
-                "type": "boolean",
-                "read": false,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "states.3Dmode",
-            "type": "state",
-            "common": {
-                "name": "3D mode ON/OFF",
-                "role": "switch",
-                "type": "boolean",
-                "read": false,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "states.channel",
-            "type": "state",
-            "common": {
-                "name": "Select channel",
-                "role": "state",
-                "type": "string",
-                "read": true,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "states.channelId",
-            "type": "state",
-            "common": {
-                "name": "Current channel  id",
-                "role": "state",
-                "type": "string",
-                "read": true,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "states.channelUp",
-            "type": "state",
-            "common": {
-                "name": "Channel UP",
-                "role": "button",
-                "type": "boolean",
-                "read": false,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "states.channelDown",
-            "type": "state",
-            "common": {
-                "name": "Channel DOWN",
-                "role": "button",
-                "type": "boolean",
-                "read": false,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "states.mediaPlay",
-            "type": "state",
-            "common": {
-                "name": "Media Play",
-                "role": "button",
-                "type": "boolean",
-                "read": false,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "states.mediaPause",
-            "type": "state",
-            "common": {
-                "name": "Media Pause",
-                "role": "button",
-                "type": "boolean",
-                "read": false,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "states.mediaStop",
-            "type": "state",
-            "common": {
-                "name": "Media Stop",
-                "role": "button",
-                "type": "boolean",
-                "read": false,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "states.mediaFastForward",
-            "type": "state",
-            "common": {
-                "name": "Media Fast Forward",
-                "role": "button",
-                "type": "boolean",
-                "read": false,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "states.mediaRewind",
-            "type": "state",
-            "common": {
-                "name": "Media Rewind",
-                "role": "button",
-                "type": "boolean",
-                "read": false,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "states.volume",
-            "type": "state",
-            "common": {
-                "name": "Current volume",
-                "role": "state",
-                "type": "number",
-                "read": true,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "states.input",
-            "type": "state",
-            "common": {
-                "name": "Select input source",
-                "role": "state",
-                "type": "string",
-                "states": {
-                    "av1": "AV_1",
-                    "scart": "Scart",
-                    "component": "Component",
-                    "hdmi1": "HDMI 1",
-                    "hdmi2": "HDMI 2",
-                    "hdmi3": "HDMI 3"
-                },
-                "read": false,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "states.currentApp",
-            "type": "state",
-            "common": {
-                "name": "current app",
-                "role": "state",
-                "type": "string",
-                "read": true,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "states.launch",
-            "type": "state",
-            "common": {
-                "name": "Launch app",
-                "role": "state",
-                "type": "string",
-                "states": {
-                    "livetv": "LiveTV",
-                    "smartshare": "Smart share",
-                    "tvuserguide": "TV User Guide",
-                    "netflix": "Netflix",
-                    "youtube": "You tube",
-                    "prime": "Amazon Prime",
-                    "amazon": "Amazon Prime Video"
-                },
-                "read": false,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "states.openURL",
-            "type": "state",
-            "common": {
-                "name": "Open URL",
-                "role": "state",
-                "type": "string",
-                "read": false,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "states.youtube",
-            "type": "state",
-            "common": {
-                "name": "Open YouTube video",
-                "role": "state",
-                "type": "string",
-                "read": false,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "states.drag",
-            "type": "state",
-            "common": {
-                "name": "Move/Drag",
-                "role": "state",
-                "type": "string",
-                "read": false,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "states.scroll",
-            "type": "state",
-            "common": {
-                "name": "Scroll",
-                "role": "state",
-                "type": "string",
-                "read": false,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "states.click",
-            "type": "state",
-            "common": {
-                "name": "Click",
-                "role": "button",
-                "type": "boolean",
-                "read": false,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "states.soundOutput",
-            "type": "state",
-            "common": {
-                "name": "Switch audio output",
-                "role": "state",
-                "type": "string",
-                "states": {
-                    "tv_speaker": "TV Speaker",
-                    "external_optical": "External Optical",
-                    "external_arc": "External ARC",
-                    "lineout": "LineOut",
-                    "headphone": "Headphone",
-                    "tv_external_speaker": "TV + External Speaker",
-                    "tv_speaker_headphone": "TV + Speaker Headphone",
-                    "bt_soundbar": "Bluetooth"
-                },
-                "read": true,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "states.raw",
-            "type": "state",
-            "common": {
-                "name": "Send and response API cmd {url: URL, cmd: CMD}",
-                "role": "state",
-                "type": "object",
-                "read": true,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "remote.power",
-            "type": "state",
-            "common": {
-                "name": "Remote key power",
-                "role": "button",
-                "type": "boolean",
-                "read": false,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "remote.red",
-            "type": "state",
-            "common": {
-                "name": "Remote key red",
-                "role": "button",
-                "type": "boolean",
-                "read": false,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "remote.green",
-            "type": "state",
-            "common": {
-                "name": "Remote key green",
-                "role": "button",
-                "type": "boolean",
-                "read": false,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "remote.yellow",
-            "type": "state",
-            "common": {
-                "name": "Remote key yellow",
-                "role": "button",
-                "type": "boolean",
-                "read": false,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "remote.blue",
-            "type": "state",
-            "common": {
-                "name": "Remote key blue",
-                "role": "button",
-                "type": "boolean",
-                "read": false,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "remote.home",
-            "type": "state",
-            "common": {
-                "name": "Remote key home",
-                "role": "button",
-                "type": "boolean",
-                "read": false,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "remote.menu",
-            "type": "state",
-            "common": {
-                "name": "Remote key menu",
-                "role": "button",
-                "type": "boolean",
-                "read": false,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "remote.cc",
-            "type": "state",
-            "common": {
-                "name": "Remote key cc",
-                "role": "button",
-                "type": "boolean",
-                "read": false,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "remote.back",
-            "type": "state",
-            "common": {
-                "name": "Remote key back",
-                "role": "button",
-                "type": "boolean",
-                "read": false,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "remote.up",
-            "type": "state",
-            "common": {
-                "name": "Remote key up",
-                "role": "button",
-                "type": "boolean",
-                "read": false,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "remote.down",
-            "type": "state",
-            "common": {
-                "name": "Remote key down",
-                "role": "button",
-                "type": "boolean",
-                "read": false,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "remote.left",
-            "type": "state",
-            "common": {
-                "name": "Remote key left",
-                "role": "button",
-                "type": "boolean",
-                "read": false,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "remote.right",
-            "type": "state",
-            "common": {
-                "name": "Remote key right",
-                "role": "button",
-                "type": "boolean",
-                "read": false,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "remote.enter",
-            "type": "state",
-            "common": {
-                "name": "Remote key enter",
-                "role": "button",
-                "type": "boolean",
-                "read": false,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "remote.dash",
-            "type": "state",
-            "common": {
-                "name": "Remote key dash",
-                "role": "button",
-                "type": "boolean",
-                "read": false,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "remote.exit",
-            "type": "state",
-            "common": {
-                "name": "Remote key exit",
-                "role": "button",
-                "type": "boolean",
-                "read": false,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "remote.0",
-            "type": "state",
-            "common": {
-                "name": "Remote key 0",
-                "role": "button",
-                "type": "boolean",
-                "read": false,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "remote.1",
-            "type": "state",
-            "common": {
-                "name": "Remote key 1",
-                "role": "button",
-                "type": "boolean",
-                "read": false,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "remote.2",
-            "type": "state",
-            "common": {
-                "name": "Remote key 2",
-                "role": "button",
-                "type": "boolean",
-                "read": false,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "remote.3",
-            "type": "state",
-            "common": {
-                "name": "Remote key 3",
-                "role": "button",
-                "type": "boolean",
-                "read": false,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "remote.4",
-            "type": "state",
-            "common": {
-                "name": "Remote key 4",
-                "role": "button",
-                "type": "boolean",
-                "read": false,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "remote.5",
-            "type": "state",
-            "common": {
-                "name": "Remote key 5",
-                "role": "button",
-                "type": "boolean",
-                "read": false,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "remote.6",
-            "type": "state",
-            "common": {
-                "name": "Remote key 6",
-                "role": "button",
-                "type": "boolean",
-                "read": false,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "remote.7",
-            "type": "state",
-            "common": {
-                "name": "Remote key 7",
-                "role": "button",
-                "type": "boolean",
-                "read": false,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "remote.8",
-            "type": "state",
-            "common": {
-                "name": "Remote key 8",
-                "role": "button",
-                "type": "boolean",
-                "read": false,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "remote.9",
-            "type": "state",
-            "common": {
-                "name": "Remote key 9",
-                "role": "button",
-                "type": "boolean",
-                "read": false,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "states.mac",
-            "type": "state",
-            "common": {
-                "name": "mac address",
-                "role": "state",
-                "type": "string",
-                "read": false,
-                "write": true
-            },
-            "native": {}
-        },
-        {
-            "_id": "states.model",
-            "type": "state",
-            "common": {
-                "name": "TV model",
-                "role": "state",
-                "type": "string",
-                "read": false,
-                "write": true
-            },
-            "native": {}
-        }
+    "desc": {
+      "en": "Controls WebOS-based LG SmartTVs",
+      "de": "Steuert auf WebOS basierte LG SmartTVs",
+      "ru": "Управление WebOS на базе LG SmartTVs",
+      "pt": "Controles baseados em WebOS LG SmartTVs",
+      "nl": "Controle WebOS-gebaseerde LG SmartTV",
+      "fr": "Contrôles WebOS-based LG SmartTVs",
+      "it": "Controlli WebOS basati LG SmartTVs",
+      "es": "Controles LG SmartTVs basados en WebOS",
+      "pl": "Strona internetowa LG SmartTV",
+      "uk": "Контролери LG SmartTV",
+      "zh-cn": "A. 控制网络"
+    },
+    "authors": [
+      "SebastianSchultz <info@sebastian-schultz.de>",
+      "iobroker-community-adapters <mcm57@gmx.at>"
+    ],
+    "keywords": [
+      "lgtv",
+      "WebOS",
+      "Smart",
+      "TV",
+      "LG"
+    ],
+    "license": "MIT",
+    "platform": "Javascript/Node.js",
+    "main": "main.js",
+    "icon": "lgtv.png",
+    "enabled": false,
+    "extIcon": "https://raw.githubusercontent.com/iobroker-community-adapters/ioBroker.lgtv/master/admin/lgtv.png",
+    "readme": "https://github.com/iobroker-community-adapters/iobroker.lgtv/blob/master/README.md",
+    "loglevel": "info",
+    "mode": "daemon",
+    "type": "multimedia",
+    "compact": true,
+    "connectionType": "local",
+    "dataSource": "poll",
+    "materialize": true,
+    "dependencies": [
+      {
+        "js-controller": ">=4.0.24"
+      }
+    ],
+    "globalDependencies": [
+      {
+        "admin": ">=5.1.13"
+      }
     ]
+  },
+  "native": {
+    "ip": "",
+    "mac": "",
+    "timeout": 5000,
+    "reconnect": 5000,
+    "healthInterval": 0,
+    "power": false
+  },
+  "instanceObjects": [
+    {
+      "_id": "info.connection",
+      "type": "state",
+      "common": {
+        "role": "indicator.connected",
+        "name": "If connected to LG TV",
+        "type": "boolean",
+        "read": true,
+        "write": true,
+        "def": false
+      },
+      "native": {}
+    },
+    {
+      "_id": "states",
+      "type": "device",
+      "common": {
+        "name": "states"
+      },
+      "native": {}
+    },
+    {
+      "_id": "states.on",
+      "type": "state",
+      "common": {
+        "name": "Is TV is ON",
+        "role": "indicator.online",
+        "type": "boolean",
+        "read": true,
+        "write": false
+      },
+      "native": {}
+    },
+    {
+      "_id": "states.popup",
+      "type": "state",
+      "common": {
+        "name": "Show popup text on TV",
+        "role": "state",
+        "type": "string",
+        "read": false,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "states.turnOff",
+      "type": "state",
+      "common": {
+        "name": "Switch TV OFF",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "states.power",
+      "type": "state",
+      "common": {
+        "name": "Switch TV power",
+        "role": "switch",
+        "type": "boolean",
+        "read": true,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "states.mute",
+      "type": "state",
+      "common": {
+        "name": "Mute ON/OFF",
+        "role": "switch",
+        "type": "boolean",
+        "read": true,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "states.volumeUp",
+      "type": "state",
+      "common": {
+        "name": "Volume UP",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "states.volumeDown",
+      "type": "state",
+      "common": {
+        "name": "Volume DOWN",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "states.3Dmode",
+      "type": "state",
+      "common": {
+        "name": "3D mode ON/OFF",
+        "role": "switch",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "states.channel",
+      "type": "state",
+      "common": {
+        "name": "Select channel",
+        "role": "state",
+        "type": "string",
+        "read": true,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "states.channelId",
+      "type": "state",
+      "common": {
+        "name": "Current channel  id",
+        "role": "state",
+        "type": "string",
+        "read": true,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "states.channelUp",
+      "type": "state",
+      "common": {
+        "name": "Channel UP",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "states.channelDown",
+      "type": "state",
+      "common": {
+        "name": "Channel DOWN",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "states.mediaPlay",
+      "type": "state",
+      "common": {
+        "name": "Media Play",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "states.mediaPause",
+      "type": "state",
+      "common": {
+        "name": "Media Pause",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "states.mediaStop",
+      "type": "state",
+      "common": {
+        "name": "Media Stop",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "states.mediaFastForward",
+      "type": "state",
+      "common": {
+        "name": "Media Fast Forward",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "states.mediaRewind",
+      "type": "state",
+      "common": {
+        "name": "Media Rewind",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "states.volume",
+      "type": "state",
+      "common": {
+        "name": "Current volume",
+        "role": "state",
+        "type": "number",
+        "read": true,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "states.input",
+      "type": "state",
+      "common": {
+        "name": "Select input source",
+        "role": "state",
+        "type": "string",
+        "states": {
+          "av1": "AV_1",
+          "scart": "Scart",
+          "component": "Component",
+          "hdmi1": "HDMI 1",
+          "hdmi2": "HDMI 2",
+          "hdmi3": "HDMI 3"
+        },
+        "read": false,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "states.currentApp",
+      "type": "state",
+      "common": {
+        "name": "current app",
+        "role": "state",
+        "type": "string",
+        "read": true,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "states.launch",
+      "type": "state",
+      "common": {
+        "name": "Launch app",
+        "role": "state",
+        "type": "string",
+        "states": {
+          "livetv": "LiveTV",
+          "smartshare": "Smart share",
+          "tvuserguide": "TV User Guide",
+          "netflix": "Netflix",
+          "youtube": "You tube",
+          "prime": "Amazon Prime",
+          "amazon": "Amazon Prime Video"
+        },
+        "read": false,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "states.openURL",
+      "type": "state",
+      "common": {
+        "name": "Open URL",
+        "role": "state",
+        "type": "string",
+        "read": false,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "states.youtube",
+      "type": "state",
+      "common": {
+        "name": "Open YouTube video",
+        "role": "state",
+        "type": "string",
+        "read": false,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "states.drag",
+      "type": "state",
+      "common": {
+        "name": "Move/Drag",
+        "role": "state",
+        "type": "string",
+        "read": false,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "states.scroll",
+      "type": "state",
+      "common": {
+        "name": "Scroll",
+        "role": "state",
+        "type": "string",
+        "read": false,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "states.click",
+      "type": "state",
+      "common": {
+        "name": "Click",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "states.soundOutput",
+      "type": "state",
+      "common": {
+        "name": "Switch audio output",
+        "role": "state",
+        "type": "string",
+        "states": {
+          "tv_speaker": "TV Speaker",
+          "external_optical": "External Optical",
+          "external_arc": "External ARC",
+          "lineout": "LineOut",
+          "headphone": "Headphone",
+          "tv_external_speaker": "TV + External Speaker",
+          "tv_speaker_headphone": "TV + Speaker Headphone",
+          "bt_soundbar": "Bluetooth"
+        },
+        "read": true,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "states.raw",
+      "type": "state",
+      "common": {
+        "name": "Send and response API cmd {url: URL, cmd: CMD}",
+        "role": "state",
+        "type": "object",
+        "read": true,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "remote.power",
+      "type": "state",
+      "common": {
+        "name": "Remote key power",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "remote.red",
+      "type": "state",
+      "common": {
+        "name": "Remote key red",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "remote.green",
+      "type": "state",
+      "common": {
+        "name": "Remote key green",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "remote.yellow",
+      "type": "state",
+      "common": {
+        "name": "Remote key yellow",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "remote.blue",
+      "type": "state",
+      "common": {
+        "name": "Remote key blue",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "remote.home",
+      "type": "state",
+      "common": {
+        "name": "Remote key home",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "remote.menu",
+      "type": "state",
+      "common": {
+        "name": "Remote key menu",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "remote.cc",
+      "type": "state",
+      "common": {
+        "name": "Remote key cc",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "remote.back",
+      "type": "state",
+      "common": {
+        "name": "Remote key back",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "remote.up",
+      "type": "state",
+      "common": {
+        "name": "Remote key up",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "remote.down",
+      "type": "state",
+      "common": {
+        "name": "Remote key down",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "remote.left",
+      "type": "state",
+      "common": {
+        "name": "Remote key left",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "remote.right",
+      "type": "state",
+      "common": {
+        "name": "Remote key right",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "remote.enter",
+      "type": "state",
+      "common": {
+        "name": "Remote key enter",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "remote.dash",
+      "type": "state",
+      "common": {
+        "name": "Remote key dash",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "remote.exit",
+      "type": "state",
+      "common": {
+        "name": "Remote key exit",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "remote.0",
+      "type": "state",
+      "common": {
+        "name": "Remote key 0",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "remote.1",
+      "type": "state",
+      "common": {
+        "name": "Remote key 1",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "remote.2",
+      "type": "state",
+      "common": {
+        "name": "Remote key 2",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "remote.3",
+      "type": "state",
+      "common": {
+        "name": "Remote key 3",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "remote.4",
+      "type": "state",
+      "common": {
+        "name": "Remote key 4",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "remote.5",
+      "type": "state",
+      "common": {
+        "name": "Remote key 5",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "remote.6",
+      "type": "state",
+      "common": {
+        "name": "Remote key 6",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "remote.7",
+      "type": "state",
+      "common": {
+        "name": "Remote key 7",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "remote.8",
+      "type": "state",
+      "common": {
+        "name": "Remote key 8",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "remote.9",
+      "type": "state",
+      "common": {
+        "name": "Remote key 9",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "states.mac",
+      "type": "state",
+      "common": {
+        "name": "mac address",
+        "role": "state",
+        "type": "string",
+        "read": false,
+        "write": true
+      },
+      "native": {}
+    },
+    {
+      "_id": "states.model",
+      "type": "state",
+      "common": {
+        "name": "TV model",
+        "role": "state",
+        "type": "string",
+        "read": false,
+        "write": true
+      },
+      "native": {}
+    }
+  ]
 }
