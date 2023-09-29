@@ -187,7 +187,7 @@
         "type": "multimedia",
         "compact": true,
         "connectionType": "local",
-        "dataSource": "pull",
+        "dataSource": "poll",
         "materialize": true,
         "dependencies": [
             {
