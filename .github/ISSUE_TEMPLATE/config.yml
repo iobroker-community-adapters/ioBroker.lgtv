@@ -1,7 +1,8 @@
 blank_issues_enabled: true
 contact_links:
     - name: 🙋 Stelle Fragen im ioBroker-Forum auf Deutsch
-      url: https://forum.iobroker.net/category/6/skripten-logik
+      url: https://forum.iobroker.net/category/5/iobroker-allgemein
+      about: Stelle fragen zum Adapter
     - name: 🙋 Ask questions in the ioBroker forum in English
-      url: https://forum.iobroker.net/category/18/scripting-logic
+      url: https://forum.iobroker.net/category/17/iobroker-general
       about: Ask structured and fully-formed questions about the adapter
