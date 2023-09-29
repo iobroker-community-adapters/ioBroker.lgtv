@@ -1,0 +1,103 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "npm",
+            "script": "dev-server:update",
+            "problemMatcher": [],
+            "label": "ioBroker: Update dev-server",
+            "detail": "Update ioBroker and its dependencies to the latest versions",
+            "icon": {
+                "id": "package"
+            },
+            "promptOnClose": true,
+            "presentation": {
+                "echo": false,
+                "reveal": "always",
+                "focus": false,
+                "panel": "dedicated",
+                "showReuseMessage": false,
+                "close": true
+            }
+        },
+        {
+            "type": "npm",
+            "script": "dev-server:run",
+            "problemMatcher": [],
+            "label": "ioBroker: Run dev-server",
+            "detail": "Run ioBroker dev-server, the adapter will not run, but you may test the Admin UI with hot-reload",
+            "icon": {
+                "id": "run"
+            },
+            "isBackground": true,
+            "promptOnClose": true,
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated",
+                "showReuseMessage": true,
+                "close": false
+            }
+        },
+        {
+            "type": "npm",
+            "script": "dev-server:watch",
+            "problemMatcher": [],
+            "label": "ioBroker: Watch dev-server",
+            "detail": "Run ioBroker dev-server and start the adapter in \"watch\" mode. The adapter will automatically restart when its source code changes. You may attach a debugger to the running adapter.",
+            "icon": {
+                "id": "eye-watch"
+            },
+            "isBackground": true,
+            "promptOnClose": true,
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated",
+                "showReuseMessage": true,
+                "close": false
+            }
+        },
+        {
+            "type": "npm",
+            "script": "dev-server:debug",
+            "problemMatcher": [],
+            "label": "ioBroker: Debug dev-server",
+            "detail": "Run ioBroker dev-server and start the adapter from ioBroker in \"debug\" mode. You may attach a debugger to the running adapter.",
+            "icon": {
+                "id": "bug"
+            },
+            "isBackground": true,
+            "promptOnClose": true,
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "dedicated",
+                "showReuseMessage": true,
+                "close": false
+            }
+        },
+        {
+            "type": "npm",
+            "script": "dev-server:upload",
+            "problemMatcher": [],
+            "label": "ioBroker: Upload dev-server",
+            "detail": "Upload the current version of your adapter to the ioBroker dev-server. This is only required if you changed something relevant in your io-package.json",
+            "icon": {
+                "id": "cloud-upload"
+            },
+            "promptOnClose": true,
+            "presentation": {
+                "echo": false,
+                "reveal": "always",
+                "focus": false,
+                "panel": "dedicated",
+                "showReuseMessage": false,
+                "close": true
+            }
+        }
+    ]
+}
