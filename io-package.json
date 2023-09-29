@@ -164,21 +164,40 @@
             "uk": "Контролери LG SmartTV",
             "zh-cn": "A. 控制网络"
         },
-        "license": "MIT",
-        "platform": "Javascript/Node.js",
-        "mode": "daemon",
-        "icon": "lgtv.png",
-        "enabled": false,
-        "materialize": true,
-        "compact": true,
-        "extIcon": "https://raw.githubusercontent.com/iobroker-community-adapters/ioBroker.lgtv/master/admin/lgtv.png",
-        "keywords": ["lgtv", "WebOS", "Smart", "TV", "LG"],
-        "readme": "https://github.com/iobroker-community-adapters/iobroker.lgtv/blob/master/README.md",
-        "loglevel": "info",
-        "type": "multimedia",
         "authors": [
             "SebastianSchultz <info@sebastian-schultz.de>",
             "iobroker-community-adapters <mcm57@gmx.at>"
+        ],
+        "keywords": [
+            "lgtv", 
+            "WebOS", 
+            "Smart", 
+            "TV", 
+            "LG"
+        ],
+        "license": "MIT",
+        "platform": "Javascript/Node.js",
+        "main": "main.js",
+        "icon": "lgtv.png",
+        "enabled": false,
+        "extIcon": "https://raw.githubusercontent.com/iobroker-community-adapters/ioBroker.lgtv/master/admin/lgtv.png",
+        "readme": "https://github.com/iobroker-community-adapters/iobroker.lgtv/blob/master/README.md",
+        "loglevel": "info",
+        "mode": "daemon",
+        "type": "multimedia",
+        "compact": true,
+        "connectionType": "local",
+        "dataSource": "pull",
+        "materialize": true,
+        "dependencies": [
+            {
+                "js-controller": ">=4.0.24"
+            }
+        ],
+        "globalDependencies": [
+            {
+                "admin": ">=5.1.13"
+            }
         ]
     },
     "native": {
