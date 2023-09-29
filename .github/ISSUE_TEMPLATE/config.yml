@@ -1,4 +1,4 @@
-blank_issues_enabled: false
+blank_issues_enabled: true
 contact_links:
     - name: 🙋 Stelle Fragen im ioBroker-Forum auf Deutsch
       url: https://forum.iobroker.net/category/6/skripten-logik
