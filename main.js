@@ -618,21 +618,32 @@ function sendCommand(cmd, options, cb) {
     }
 }
 
-function sendPacket(cmd, options, cb) {
-    if (~cmd.indexOf('ssap:') || ~cmd.indexOf('com.')) {
+function sendPacket(cmd, options, cb){
+    if (~cmd.indexOf('ssap:') || ~cmd.indexOf('com.')){
         lgtvobj.request(cmd, options, (_error, response) => {
-            if (_error) {
-                adapter.log.debug('ERROR! Response from TV: ' + (response ? JSON.stringify(response) : _error));
+            if (_error){
+                adapter.log.debug('ERROR! Response from TV: ' + (response ? JSON.stringify(response) :_error));
             }
             cb && cb(_error, response);
         });
     } else {
+        bypassCertificateValidation();
         lgtvobj.getSocket('ssap://com.webos.service.networkinput/getPointerInputSocket', (err, sock) => {
-            if (!err) {
+            if (!err){
                 sock.send(cmd, options);
             }
         });
     }
+}
+
+function bypassCertificateValidation() {
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+    let tls = require('tls');
+
+    tls.checkServerIdentity = (servername, cert) => {
+        // Skip certificate verification
+        return undefined;
+    };
 }
 
 function SetVolume(val) {
