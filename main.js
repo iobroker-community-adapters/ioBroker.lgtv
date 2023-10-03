@@ -394,8 +394,8 @@ function startAdapter(options) {
 }
 
 function connect(cb){
-    hostUrl = 'wss://' + adapter.config.ip + ':3001' 
-    let reconnect = adapter.config.reconnect
+    hostUrl = 'wss://' + adapter.config.ip + ':3001';
+    let reconnect = adapter.config.reconnect;
     if (!reconnect || isNaN(reconnect) || reconnect < 5000)
         reconnect= 5000;
     lgtvobj = new LGTV({
@@ -404,7 +404,7 @@ function connect(cb){
         reconnect: reconnect,
         clientKey: clientKey,
         saveKey:   (key, cb) => {
-            fs.writeFile(keyfile, key, cb)
+            fs.writeFile(keyfile, key, cb);
         },
         wsconfig: {
             keepalive: true,
@@ -565,10 +565,10 @@ function checkConnection(secondCheck) {
 
 function checkCurApp(powerOff){
     if (powerOff){
-        curApp= "";
+        curApp= '';
     }
-    let isTVon= !!curApp;
-    adapter.log.debug(curApp ? "cur app is " + curApp : "TV is off");
+    const isTVon= !!curApp;
+    adapter.log.debug(curApp ? 'cur app is ' + curApp : 'TV is off');
 
     if (curApp == 'com.webos.app.livetv') {
         setTimeout(() => {
@@ -585,12 +585,12 @@ function checkCurApp(powerOff){
     }
 
     adapter.setStateChanged('states.currentApp', curApp, true);
-    let inp = curApp.split(".").pop()
+    const inp = curApp.split('.').pop();
     if (inp.indexOf('hdmi') == 0){
-        adapter.setStateChanged('states.input', "HDMI_" + inp[4], true);
-        adapter.setStateChanged('states.launch', "", true);
+        adapter.setStateChanged('states.input', 'HDMI_' + inp[4], true);
+        adapter.setStateChanged('states.launch', '', true);
     } else {
-        adapter.setStateChanged('states.input', "", true);
+        adapter.setStateChanged('states.input', '', true);
         adapter.setStateChanged('states.launch', inp, true);
     }
     adapter.setStateChanged('states.power', isTVon, true);
@@ -598,20 +598,20 @@ function checkCurApp(powerOff){
         if (!notChanged){ // state was changed
             renewTimeout && clearTimeout(renewTimeout); // avoid toggeling
             if (isTVon){ // if tv is now switched on ...
-                adapter.log.debug("renew connection in one minute for stable subscriptions...")
+                adapter.log.debug('renew connection in one minute for stable subscriptions...');
                 renewTimeout = setTimeout(() => {
                     lgtvobj.disconnect();
                     setTimeout(lgtvobj.connect,500,hostUrl);
                     if (healthInterval !== false){
                         healthInterval= setInterval(sendCommand, adapter.config.healthInterval || 60000, 'ssap://com.webos.service.tv.time/getCurrentTime', null, (err, val) => {
-                            adapter.log.debug("check TV connection: " + (err || "ok"))
+                            adapter.log.debug("check TV connection: " + (err || 'ok'))
                             if (err)
-                                checkCurApp(true)
-                        })
+                                checkCurApp(true);
+                        });
                     }
                 }, 60000);
-            } //else if (healthInterval)
-                //clearInterval(healthInterval);
+            }
+
         }
     });
 }
@@ -643,8 +643,8 @@ function sendPacket(cmd, options, cb){
 }
 
 function bypassCertificateValidation() {
-    process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-    let tls = require('tls');
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+    const tls = require('tls');
 
     tls.checkServerIdentity = (servername, cert) => {
         // Skip certificate verification
