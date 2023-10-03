@@ -393,18 +393,25 @@ function startAdapter(options) {
     return adapter;
 }
 
-function connect(cb) {
-    hostUrl = 'ws://' + adapter.config.ip + ':3000';
-    let reconnect = adapter.config.reconnect;
-    if (!reconnect || isNaN(reconnect) || reconnect < 5000) reconnect = 5000;
+function connect(cb){
+    hostUrl = 'wss://' + adapter.config.ip + ':3001' 
+    let reconnect = adapter.config.reconnect
+    if (!reconnect || isNaN(reconnect) || reconnect < 5000)
+        reconnect= 5000;
     lgtvobj = new LGTV({
-        url: hostUrl,
-        timeout: adapter.config.timeout,
+        url:       hostUrl,
+        timeout:   adapter.config.timeout,
         reconnect: reconnect,
         clientKey: clientKey,
-        saveKey: (key, cb) => {
-            fs.writeFile(keyfile, key, cb);
+        saveKey:   (key, cb) => {
+            fs.writeFile(keyfile, key, cb)
         },
+        wsconfig: {
+            keepalive: true,
+            tlsOptions: {
+                rejectUnauthorized: false
+            }
+        }
     });
     lgtvobj.on('connecting', (host) => {
         adapter.log.debug('Connecting to WebOS TV: ' + host);
