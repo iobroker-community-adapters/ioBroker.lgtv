@@ -563,49 +563,55 @@ function checkConnection(secondCheck) {
     }
 }
 
-function checkCurApp(powerOff) {
-    if (powerOff) {
-        curApp = '';
+function checkCurApp(powerOff){
+    if (powerOff){
+        curApp= "";
     }
-    const isTVon = !!curApp;
-    adapter.log.debug(curApp ? 'cur app is ' + curApp : 'TV is off');
+    let isTVon= !!curApp;
+    adapter.log.debug(curApp ? "cur app is " + curApp : "TV is off");
+
+    if (curApp == 'com.webos.app.livetv') {
+        setTimeout(() => {
+            lgtvobj.subscribe('ssap://tv/getCurrentChannel', (err, res) => {
+                if (!err && res){
+                    adapter.log.debug('tv/getCurrentChannel: ' + JSON.stringify(res));
+                    adapter.setState('states.channel', res.channelNumber || '', true);
+                    adapter.setState('states.channelId', res.channelId ||'', true);
+                } else {
+                    adapter.log.debug('ERROR on getCurrentChannel: ' + err);
+                }
+            });
+        }, 3000);
+    }
+
     adapter.setStateChanged('states.currentApp', curApp, true);
-    const inp = curApp.split('.').pop();
-    if (!inp) {
-        //
-    } else if (inp.indexOf('hdmi') == 0) {
-        adapter.setStateChanged('states.input', 'HDMI_' + inp[4], true);
-        adapter.setStateChanged('states.launch', '', true);
+    let inp = curApp.split(".").pop()
+    if (inp.indexOf('hdmi') == 0){
+        adapter.setStateChanged('states.input', "HDMI_" + inp[4], true);
+        adapter.setStateChanged('states.launch', "", true);
     } else {
-        adapter.setStateChanged('states.input', '', true);
+        adapter.setStateChanged('states.input', "", true);
         adapter.setStateChanged('states.launch', inp, true);
     }
     adapter.setStateChanged('states.power', isTVon, true);
-    adapter.setStateChanged('states.on', isTVon, true, function (err, stateID, notChanged) {
-        if (!notChanged) {
-            // state was changed
+    adapter.setStateChanged('states.on', isTVon, true, function(err,stateID, notChanged) {
+        if (!notChanged){ // state was changed
             renewTimeout && clearTimeout(renewTimeout); // avoid toggeling
-            if (isTVon) {
-                // if tv is now switched on ...
-                adapter.log.debug('renew connection in one minute for stable subscriptions...');
+            if (isTVon){ // if tv is now switched on ...
+                adapter.log.debug("renew connection in one minute for stable subscriptions...")
                 renewTimeout = setTimeout(() => {
                     lgtvobj.disconnect();
-                    setTimeout(lgtvobj.connect, 500, hostUrl);
-                    if (healthInterval !== false) {
-                        healthInterval = setInterval(
-                            sendCommand,
-                            adapter.config.healthInterval || 60000,
-                            'ssap://com.webos.service.tv.time/getCurrentTime',
-                            null,
-                            (err, _val) => {
-                                adapter.log.debug('check TV connection: ' + (err || 'ok'));
-                                if (err) checkCurApp(true);
-                            },
-                        );
+                    setTimeout(lgtvobj.connect,500,hostUrl);
+                    if (healthInterval !== false){
+                        healthInterval= setInterval(sendCommand, adapter.config.healthInterval || 60000, 'ssap://com.webos.service.tv.time/getCurrentTime', null, (err, val) => {
+                            adapter.log.debug("check TV connection: " + (err || "ok"))
+                            if (err)
+                                checkCurApp(true)
+                        })
                     }
                 }, 60000);
             } //else if (healthInterval)
-            //clearInterval(healthInterval);
+                //clearInterval(healthInterval);
         }
     });
 }
