@@ -178,7 +178,7 @@ is true when TV is on and false if TV is off
     ### **WORK IN PROGRESS**
 -->
 
-## IN PROGRESS ##
+### **WORK IN PROGRESS**
 
 - (basti4557): Fixed a bug that killed the actual App State staying subsribed on changing from tv to app mode.
 - (basti4557): Websocket SSL States can be again sent / received due to the websocket ssl changes.
