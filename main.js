@@ -393,18 +393,25 @@ function startAdapter(options) {
     return adapter;
 }
 
-function connect(cb) {
-    hostUrl = 'ws://' + adapter.config.ip + ':3000';
+function connect(cb){
+    hostUrl = 'wss://' + adapter.config.ip + ':3001';
     let reconnect = adapter.config.reconnect;
-    if (!reconnect || isNaN(reconnect) || reconnect < 5000) reconnect = 5000;
+    if (!reconnect || isNaN(reconnect) || reconnect < 5000)
+        reconnect= 5000;
     lgtvobj = new LGTV({
-        url: hostUrl,
-        timeout: adapter.config.timeout,
+        url:       hostUrl,
+        timeout:   adapter.config.timeout,
         reconnect: reconnect,
         clientKey: clientKey,
-        saveKey: (key, cb) => {
+        saveKey:   (key, cb) => {
             fs.writeFile(keyfile, key, cb);
         },
+        wsconfig: {
+            keepalive: true,
+            tlsOptions: {
+                rejectUnauthorized: false
+            }
+        }
     });
     lgtvobj.on('connecting', (host) => {
         adapter.log.debug('Connecting to WebOS TV: ' + host);
@@ -556,17 +563,30 @@ function checkConnection(secondCheck) {
     }
 }
 
-function checkCurApp(powerOff) {
-    if (powerOff) {
-        curApp = '';
+function checkCurApp(powerOff){
+    if (powerOff){
+        curApp= '';
     }
-    const isTVon = !!curApp;
+    const isTVon= !!curApp;
     adapter.log.debug(curApp ? 'cur app is ' + curApp : 'TV is off');
+
+    if (curApp == 'com.webos.app.livetv') {
+        setTimeout(() => {
+            lgtvobj.subscribe('ssap://tv/getCurrentChannel', (err, res) => {
+                if (!err && res){
+                    adapter.log.debug('tv/getCurrentChannel: ' + JSON.stringify(res));
+                    adapter.setState('states.channel', res.channelNumber || '', true);
+                    adapter.setState('states.channelId', res.channelId ||'', true);
+                } else {
+                    adapter.log.debug('ERROR on getCurrentChannel: ' + err);
+                }
+            });
+        }, 3000);
+    }
+
     adapter.setStateChanged('states.currentApp', curApp, true);
     const inp = curApp.split('.').pop();
-    if (!inp) {
-        //
-    } else if (inp.indexOf('hdmi') == 0) {
+    if (inp && inp.indexOf('hdmi') == 0) {
         adapter.setStateChanged('states.input', 'HDMI_' + inp[4], true);
         adapter.setStateChanged('states.launch', '', true);
     } else {
@@ -574,31 +594,24 @@ function checkCurApp(powerOff) {
         adapter.setStateChanged('states.launch', inp, true);
     }
     adapter.setStateChanged('states.power', isTVon, true);
-    adapter.setStateChanged('states.on', isTVon, true, function (err, stateID, notChanged) {
-        if (!notChanged) {
-            // state was changed
+    adapter.setStateChanged('states.on', isTVon, true, function(err,stateID, notChanged) {
+        if (!notChanged){ // state was changed
             renewTimeout && clearTimeout(renewTimeout); // avoid toggeling
-            if (isTVon) {
-                // if tv is now switched on ...
+            if (isTVon){ // if tv is now switched on ...
                 adapter.log.debug('renew connection in one minute for stable subscriptions...');
                 renewTimeout = setTimeout(() => {
                     lgtvobj.disconnect();
-                    setTimeout(lgtvobj.connect, 500, hostUrl);
-                    if (healthInterval !== false) {
-                        healthInterval = setInterval(
-                            sendCommand,
-                            adapter.config.healthInterval || 60000,
-                            'ssap://com.webos.service.tv.time/getCurrentTime',
-                            null,
-                            (err, _val) => {
-                                adapter.log.debug('check TV connection: ' + (err || 'ok'));
-                                if (err) checkCurApp(true);
-                            },
-                        );
+                    setTimeout(lgtvobj.connect,500,hostUrl);
+                    if (healthInterval !== false){
+                        healthInterval= setInterval(sendCommand, adapter.config.healthInterval || 60000, 'ssap://com.webos.service.tv.time/getCurrentTime', null, (err, val) => {
+                            adapter.log.debug("check TV connection: " + (err || 'ok'))
+                            if (err)
+                                checkCurApp(true);
+                        });
                     }
                 }, 60000);
-            } //else if (healthInterval)
-            //clearInterval(healthInterval);
+            }
+
         }
     });
 }
@@ -611,21 +624,32 @@ function sendCommand(cmd, options, cb) {
     }
 }
 
-function sendPacket(cmd, options, cb) {
-    if (~cmd.indexOf('ssap:') || ~cmd.indexOf('com.')) {
+function sendPacket(cmd, options, cb){
+    if (~cmd.indexOf('ssap:') || ~cmd.indexOf('com.')){
         lgtvobj.request(cmd, options, (_error, response) => {
-            if (_error) {
-                adapter.log.debug('ERROR! Response from TV: ' + (response ? JSON.stringify(response) : _error));
+            if (_error){
+                adapter.log.debug('ERROR! Response from TV: ' + (response ? JSON.stringify(response) :_error));
             }
             cb && cb(_error, response);
         });
     } else {
+        bypassCertificateValidation();
         lgtvobj.getSocket('ssap://com.webos.service.networkinput/getPointerInputSocket', (err, sock) => {
-            if (!err) {
+            if (!err){
                 sock.send(cmd, options);
             }
         });
     }
+}
+
+function bypassCertificateValidation() {
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+    const tls = require('tls');
+
+    tls.checkServerIdentity = (servername, cert) => {
+        // Skip certificate verification
+        return undefined;
+    };
 }
 
 function SetVolume(val) {
