@@ -177,15 +177,17 @@ is true when TV is on and false if TV is off
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+
 ## IN PROGRESS ##
+
 - (basti4557): Fixed a bug that killed the actual App State staying subsribed on changing from tv to app mode.
 - (basti4557): Websocket SSL States can be again sent / received due to the websocket ssl changes.
 - (basti4557): Moved from Plain Websocket to SSL Websocket.
 
-### 2.0.0-alpha.0 (2023-09-29)
+### 2.0.0 (2023-10-03)
 
-- (mcm1957) Adapter has been mpoved to iobroker-community-adapters area
-- (mcm1957) POSSIBLE BREAKING: Adapter has been built from current github content. As latest npm packages have been created axternal, theres a chance that some changes got lost.
+- (mcm1957) Adapter has been moved to iobroker-community-adapters area
+- (mcm1957) POSSIBLE BREAKING: Adapter has been built from current github content. As latest npm packages have been created external, theres a chance that some changes got lost.
 - (jpawlowski) Travis and AppVeyor have been replced by GitHub Actions, based on ioBroker/create-adapter
 - (jpawlowski) Adpter requires NodeJS 16 minimum now
 - (jpawlowski) Dependencies have been updated

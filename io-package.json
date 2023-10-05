@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "lgtv",
-    "version": "2.0.0-alpha.0",
+    "version": "2.0.0",
     "news": {
+      "2.0.0": {
+        "en": "Adapter has been moved to iobroker-community-adapters area\nPOSSIBLE BREAKING: Adapter has been built from current github content. As latest npm packages have been created external, theres a chance that some changes got lost.\nTravis and AppVeyor have been replced by GitHub Actions, based on ioBroker/create-adapter\nAdpter requires NodeJS 16 minimum now\nDependencies have been updated\nConfiguration item healthIntervall has been rename/correct to healthInterval",
+        "de": "Adapter wurde in den iobroker-community-adapter Bereich verschoben\nPOSSIBLE BREAKING: Adapter wurde aus aktuellen Github-Inhalten gebaut. Da die letzten npm Pakete extern erstellt wurden, besteht die Chance, dass einige Änderungen verloren gingen.\nTravis und AppVeyor wurden von GitHub Actions, basierend auf ioBroker/create-Adapter\nAdpter benötigt jetzt mindestens NodeJS 16\nAbhängigkeiten wurden aktualisiert\nConfiguration item healthIntervall wurde umbenannt/korrigiert auf die Gesundheit Interoperabilität",
+        "ru": "Адаптер переехал в зону iobroker-community-adapters\nВОЗМОЖНОЕ ЗАВТРАК: адаптер был построен из текущего содержания github. Как последние пакеты npm были созданы внешние, есть шанс, что некоторые изменения потеряли.\nTravis и AppVeyor были восстановлены GitHub Actions, на основе ioBroker/create-adapter\nAdpter требует минимума NodeJS 16\nВ зависимости были обновлены\nКонфигурация товара HealthIntervall была переименована/корректна для здоровья Интервал",
+        "pt": "Adapter foi movido para iobroker-community-adapters area\nBREAKING POSSIBLE: O adaptador foi construído a partir do conteúdo do github atual. Como os pacotes npm mais recentes foram criados externos, há uma chance de que algumas mudanças se perderam.\nTravis e AppVeyor foram replicenciados por GitHub Actions, baseado em ioBroker/create-adapter\nAdpter requer NodeJS 16 mínimo agora\nAs dependências foram atualizadas\nHealthIntervall foi renomeado/correto para saúde Intervalo",
+        "nl": "Adapter is verplaatst naar iobroker-community-papters gebied\nAdapter is gebouwd uit de huidige github tevredenheid. De nieuwste NPM-pakketten zijn externe gecreëerd, er is een kans dat sommige veranderingen verloren zijn.\nTravis en AppVeyor zijn teruggekeerd door GitHub Actions, gebaseerd op ioBroker/create-adapter\nAdpter vereist NodeJS 16 minimum nu\nAfhankelijkheid\nVermoedelijk item gezondheidsintervall is hernoem/correctie van gezondheid Interview",
+        "fr": "L'adaptateur a été déplacé vers la zone d'iobroker-community-adapters\nPOSSIBLE BREAKING: L'adaptateur a été construit à partir de la teneur en githubes actuelle. Comme les derniers paquets npm ont été créés externe, il ya une chance que certains changements se sont perdus.\nTravis et AppVeyor ont été rebranchés par GitHub Actions, basé sur ioBroker/create-adapter\nAdpter nécessite NodeJS 16 minimum maintenant\nLes dépendances ont été mises à jour\nÉlément de configuration santéIntervall a été renommé/correct à la santé Interval",
+        "it": "L'adattatore è stato spostato nell'area di hobroker-community-adapters\nPOSSIBILE BREAKING: L'adattatore è stato costruito dal contenuto di github corrente. Poiché gli ultimi pacchetti npm sono stati creati esterni, c'è la possibilità che alcuni cambiamenti si siano persi.\nTravis e AppVeyor sono stati ripuliti da GitHub Actions, basato su ioBroker/create-adapter\nAdpter richiede NodeJS 16 minimo ora\nLe dipendenze sono state aggiornate\nConfigurazione prodotto saluteIntervall è stato rinominato / corretto per la salute Intervallo",
+        "es": "Adaptador ha sido trasladado a la zona de ibroker-community-adapters\nPOSSIBLE BREAKING: Adapter ha sido construido a partir del contenido actual de github. Como los últimos paquetes de npm se han creado externamente, existe la posibilidad de que algunos cambios se hayan perdido.\nTravis y AppVeyor han sido repelidos por GitHub Actions, basado en ioBroker/create-adapter\nAdpter requiere NodeJS 16 mínimo ahora\nSe han actualizado las dependencias\nSalud del elemento de configuraciónIntervall ha sido renombrado/correcto para la salud Interval",
+        "pl": "Adapter został przeniesiony do iobroker-kommunity-porządek\nPOSSIBLE BREAKING: Adapter został zbudowany z aktualnych treści. Jako że najnowsze pakiety nm zostały stworzone na zewnątrz, istnieje możliwość, że niektóre zmiany zostały utracone.\nTravis i AppVeyor zostali powtórzeni przez Akcje GitHub, oparte na ioBroker/create-adapter\nAdpter wymaga od NodeJS 16 minimum\nZależności zostały zaktualizowane\nKonfiguracja stanu zdrowia Intervalla została zmieniona i poprawiona do zdrowia. Intervalu",
+        "uk": "Переміщено перехід на область iobroker-community-adapters\nPOSSIBLE BREAKING: Адаптер був побудований з поточного вмісту github. Як нові пакети npm були створені зовнішні, є шанс, що деякі зміни були втрачені.\nTravis і AppVeyor були перероблені GitHub Дії, засновані на ioBroker/create-adapter\nAdpter вимагає NodeJS 16 мінімум зараз\nОновлено залежність\nКонфігурація продукту HealthIntervall було перейменовано/коректом для здоров'я Інтервал",
+        "zh-cn": "已经向加勒比采掘器-社区-营运区转移了道歉。\n导 言 由于最近制定了一揽子计划,一些变化失去了机会。.\nGitHub行动根据OioBroker/create-adapter对Veyor进行了解释。\n现在需要至少16天的“JS”\n已更新了属地\n保健连带项目已重新命名/纠正。 间隔"
+      },
       "2.0.0-alpha.0": {
         "en": "Adapter has been moved to iobroker-community-adapters area\nPOSSIBLE BREAKING: Adapter has been built from current github content. As latest npm packages have been created external, theres a chance that some changes got lost.\nTravis and AppVeyor have been replaced by GitHub Actions, based on ioBroker/create-adapter\nAdapter requires NodeJS 16 minimum now\nDependencies have been updated\nConfiguration item healthIntervall has been rename/correct to healthInterval",
         "de": "Adapter wurde auf iobroker-community-adapter Bereich verschoben\nMÖGLICHERWEISE BREAKING: Adapter wurde aus aktuellen Github-Inhalten gebaut. Da die letzten npm Pakete external erstellt wurden, besteht die Chance, dass einige Änderungen verloren gingen.\nTravis und AppVeyor wurden vonauf GitHub Actions, basierend auf ioBroker/create-adapter umgestellt.\nAdapter benötigt jetzt mindestens NodeJS 16\nAbhängigkeiten wurden aktualisiert\nKonfigurationselement healthIntervall wurde umbenannt/korrigiert auf healthInterval",
@@ -76,18 +89,6 @@
         "es": "stable healt check and make reconnect time configurable",
         "pl": "stable healt check and make reconnect time configurable",
         "zh-cn": "stable healt check and make reconnect time configurable"
-      },
-      "1.1.5": {
-        "en": "stable connection and subsciptions\nadd Polling for TV, which not support Power Off event\nchange some states role switch to button",
-        "de": "stable connection and subsciptions\nadd Polling for TV, which not support Power Off event\nchange some states role switch to button",
-        "ru": "stable connection and subsciptions\nadd Polling for TV, which not support Power Off event\nchange some states role switch to button",
-        "pt": "stable connection and subsciptions\nadd Polling for TV, which not support Power Off event\nchange some states role switch to button",
-        "nl": "stable connection and subsciptions\nadd Polling for TV, which not support Power Off event\nchange some states role switch to button",
-        "fr": "stable connection and subsciptions\nadd Polling for TV, which not support Power Off event\nchange some states role switch to button",
-        "it": "stable connection and subsciptions\nadd Polling for TV, which not support Power Off event\nchange some states role switch to button",
-        "es": "stable connection and subsciptions\nadd Polling for TV, which not support Power Off event\nchange some states role switch to button",
-        "pl": "stable connection and subsciptions\nadd Polling for TV, which not support Power Off event\nchange some states role switch to button",
-        "zh-cn": "stable connection and subsciptions\nadd Polling for TV, which not support Power Off event\nchange some states role switch to button"
       }
     },
     "titleLang": {
