@@ -180,9 +180,9 @@ is true when TV is on and false if TV is off
 
 ### **WORK IN PROGRESS**
 
-- (basti4557): Fixed a bug that killed the actual App State staying subsribed on changing from tv to app mode.
-- (basti4557): Websocket SSL States can be again sent / received due to the websocket ssl changes.
-- (basti4557): Moved from Plain Websocket to SSL Websocket.
+- (basti4557) A bug that destryed the actual app state on changing from tv to app mode has been fixed.
+- (basti4557) Websocket SSL states can now be sent / received again due to the websocket ssl changes.
+- (basti4557) Plain websocket has been replced by SSL Websocket.
 
 ### 2.0.0 (2023-10-03)
 
