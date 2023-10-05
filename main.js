@@ -408,6 +408,9 @@ function connect(cb){
         },
         wsconfig: {
             keepalive: true,
+            keepaliveInterval: 10000,
+            dropConnectionOnKeepaliveTimeout: false,
+            keepaliveGracePeriod: 5000,
             tlsOptions: {
                 rejectUnauthorized: false
             }
