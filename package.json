@@ -1,6 +1,6 @@
 {
   "name": "iobroker.lgtv",
-  "version": "2.1.0",
+  "version": "2.1.1-alpha.0",
   "description": "ioBroker LG WebOS SmartTV Adapter",
   "author": {
     "name": "Sebastian Schultz",

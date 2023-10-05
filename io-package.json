@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "lgtv",
-    "version": "2.1.0",
+    "version": "2.1.1-alpha.0",
     "news": {
+      "2.1.1-alpha.0": {
+        "en": "Websocket configuration has been fixed [#161].",
+        "de": "Websocket-Konfiguration wurde korrigiert [#161].",
+        "ru": "Конфигурация Websocket была исправлена #[161].",
+        "pt": "Configuração Websocket foi corrigida #[161].",
+        "nl": "Websocket vertrouwen is gerepareerd.",
+        "fr": "La configuration Websocket a été corrigée #[161].",
+        "it": "La configurazione Websocket è stata fissata #[161].",
+        "es": "La configuración Websocket ha sido fijada #[161].",
+        "pl": "Konfiguracja sieciowa została ustalona na #161 (pol.).",
+        "uk": "Налаштування Websocket було виправлено #[161].",
+        "zh-cn": "网站配置是固定的编号[161]。."
+      },
       "2.1.0": {
         "en": "A bug that destryed the actual app state on changing from tv to app mode has been fixed.\nWebsocket SSL states can now be sent / received again due to the websocket ssl changes.\nPlain websocket has been replaced by SSL Websocket.",
         "de": "Ein Fehler, der den aktuellen App-Zustand beim Wechsel von tv in den App-Modus entwarfstörte, wurde behoben.\nWebsocket SSL-Zustände können nun aufgrund der Websocket ssl-Änderungen wieder gesendet / empfangen werden.\nPlain Websocket wurde durch SSL Websocket ersetzt.",
@@ -78,18 +91,6 @@
         "es": "re-upload for fixing NPM update issue",
         "pl": "re-upload for fixing NPM update issue",
         "zh-cn": "re-upload for fixing NPM update issue"
-      },
-      "1.1.8": {
-        "en": "bugfix for IndexOf error",
-        "de": "bugfix for IndexOf error",
-        "ru": "bugfix for IndexOf error",
-        "pt": "bugfix for IndexOf error",
-        "nl": "bugfix for IndexOf error",
-        "fr": "bugfix for IndexOf error",
-        "it": "bugfix for IndexOf error",
-        "es": "bugfix for IndexOf error",
-        "pl": "bugfix for IndexOf error",
-        "zh-cn": "bugfix for IndexOf error"
       }
     },
     "titleLang": {
