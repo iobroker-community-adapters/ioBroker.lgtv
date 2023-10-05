@@ -603,8 +603,8 @@ function checkCurApp(powerOff){
                     lgtvobj.disconnect();
                     setTimeout(lgtvobj.connect,500,hostUrl);
                     if (healthInterval !== false){
-                        healthInterval= setInterval(sendCommand, adapter.config.healthInterval || 60000, 'ssap://com.webos.service.tv.time/getCurrentTime', null, (err, val) => {
-                            adapter.log.debug("check TV connection: " + (err || 'ok'))
+                        healthInterval= setInterval(sendCommand, adapter.config.healthInterval || 60000, 'ssap://com.webos.service.tv.time/getCurrentTime', null, (err, _val) => {
+                            adapter.log.debug('check TV connection: ' + (err || 'ok'));
                             if (err)
                                 checkCurApp(true);
                         });
@@ -646,7 +646,7 @@ function bypassCertificateValidation() {
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
     const tls = require('tls');
 
-    tls.checkServerIdentity = (servername, cert) => {
+    tls.checkServerIdentity = (_servername, _cert) => {
         // Skip certificate verification
         return undefined;
     };
