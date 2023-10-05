@@ -586,7 +586,7 @@ function checkCurApp(powerOff){
 
     adapter.setStateChanged('states.currentApp', curApp, true);
     const inp = curApp.split('.').pop();
-    if (inp.indexOf('hdmi') == 0){
+    if (inp && (inp.indexOf('hdmi') == 0){
         adapter.setStateChanged('states.input', 'HDMI_' + inp[4], true);
         adapter.setStateChanged('states.launch', '', true);
     } else {
