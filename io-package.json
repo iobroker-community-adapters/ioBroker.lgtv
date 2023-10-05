@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "lgtv",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "news": {
+      "2.1.0": {
+        "en": "A bug that destryed the actual app state on changing from tv to app mode has been fixed.\nWebsocket SSL states can now be sent / received again due to the websocket ssl changes.\nPlain websocket has been replaced by SSL Websocket.",
+        "de": "Ein Fehler, der den aktuellen App-Zustand beim Wechsel von tv in den App-Modus entwarfstörte, wurde behoben.\nWebsocket SSL-Zustände können nun aufgrund der Websocket ssl-Änderungen wieder gesendet / empfangen werden.\nPlain Websocket wurde durch SSL Websocket ersetzt.",
+        "ru": "Исправлена ошибка, которая захвачена фактическим состоянием приложения для изменения из ТВ в режим приложения.\nWebsocket SSL государства теперь могут быть отправлены / получены снова из-за изменений websocket ssl.\nPlain websocket был отреплирован SSL Websocket.",
+        "pt": "Um bug que desprezou o estado do aplicativo real em mudar de tv para modo de aplicativo foi corrigido.\nOs estados SSL do Websocket agora podem ser enviados / recebidos novamente devido às mudanças do ssl do websocket.\nWebsocket simples foi replced por SSL Websocket.",
+        "nl": "Een insect die de werkelijke app staat verachtte te veranderen van tv naar app mode is gerepareerd.\nWebsocket SSL staten kunnen nu worden gestuurd door de websocket ssl veranderingen.\nPlain websocket is vervuld door SSL Websocket.",
+        "fr": "Un bug qui a désintéressé l'état réel de l'application sur le changement de la télévision en mode appli a été corrigé.\nLes états SSL de Websocket peuvent maintenant être envoyés / reçus à nouveau en raison des changements de ssl de websocket.\nLe websocket de plaine a été rebranché par SSL Websocket.",
+        "it": "Un bug che ha destryed l'effettivo stato app sul cambiamento da tv a modalità app è stato fissato.\nWebsocket Stati SSL possono ora essere inviati / ricevuti nuovamente a causa delle modifiche di ssl websocket.\nPlain websocket è stato interrotto da SSL Websocket.",
+        "es": "Se ha fijado un error que destripó el estado de aplicación real al cambiar de tv a modo de aplicación.\nLos estados Websocket SSL pueden ser enviados / recibidos de nuevo debido a los cambios de ssl websocket.\nEl Websocket Plain ha sido repelido por SSL Websocket.",
+        "pl": "Uruchomiono, że stan rzeczywistych aplikacji zmieniających się z telewizji na tryb aplikacji.\nPaństwa internetowe SSL mogą być teraz wysyłane / otrzymywane ponownie z powodu zmian w słupie.\nWskaźnik internetowy został powtórzony przez SSL Websocket.",
+        "uk": "Виправлено помилку, яка спричинила фактичний стан додатку при зміні від телевізора до режиму програми.\nСтатус на сервери - Websocket SSL.\nСтатус на сервери.",
+        "zh-cn": "已经确定,将实际的估计状态从低温到管道。.\n如今,由于网站的小节变化,可再次发送/接收小页。.\nPlain的网页被SSL网的重新设计。."
+      },
       "2.0.0": {
         "en": "Adapter has been moved to iobroker-community-adapters area\nPOSSIBLE BREAKING: Adapter has been built from current github content. As latest npm packages have been created external, theres a chance that some changes got lost.\nTravis and AppVeyor have been replced by GitHub Actions, based on ioBroker/create-adapter\nAdpter requires NodeJS 16 minimum now\nDependencies have been updated\nConfiguration item healthIntervall has been rename/correct to healthInterval",
         "de": "Adapter wurde in den iobroker-community-adapter Bereich verschoben\nPOSSIBLE BREAKING: Adapter wurde aus aktuellen Github-Inhalten gebaut. Da die letzten npm Pakete extern erstellt wurden, besteht die Chance, dass einige Änderungen verloren gingen.\nTravis und AppVeyor wurden von GitHub Actions, basierend auf ioBroker/create-Adapter\nAdpter benötigt jetzt mindestens NodeJS 16\nAbhängigkeiten wurden aktualisiert\nConfiguration item healthIntervall wurde umbenannt/korrigiert auf die Gesundheit Interoperabilität",
@@ -77,18 +90,6 @@
         "es": "bugfix for IndexOf error",
         "pl": "bugfix for IndexOf error",
         "zh-cn": "bugfix for IndexOf error"
-      },
-      "1.1.6": {
-        "en": "stable healt check and make reconnect time configurable",
-        "de": "stable healt check and make reconnect time configurable",
-        "ru": "stable healt check and make reconnect time configurable",
-        "pt": "stable healt check and make reconnect time configurable",
-        "nl": "stable healt check and make reconnect time configurable",
-        "fr": "stable healt check and make reconnect time configurable",
-        "it": "stable healt check and make reconnect time configurable",
-        "es": "stable healt check and make reconnect time configurable",
-        "pl": "stable healt check and make reconnect time configurable",
-        "zh-cn": "stable healt check and make reconnect time configurable"
       }
     },
     "titleLang": {
