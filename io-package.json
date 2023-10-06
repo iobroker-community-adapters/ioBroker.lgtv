@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "lgtv",
-    "version": "2.1.1-alpha.0",
+    "version": "2.1.1",
     "news": {
+      "2.1.1": {
+        "en": "Websocket configuration has been fixed [#161].",
+        "de": "Websocket-Konfiguration wurde korrigiert. [#161]",
+        "ru": "Конфигурация Websocket была исправлена #[161].",
+        "pt": "Configuração Websocket foi corrigida #[161].",
+        "nl": "Websocket vertrouwen is gerepareerd.",
+        "fr": "La configuration Websocket a été corrigée #[161].",
+        "it": "La configurazione Websocket è stata fissata #[161].",
+        "es": "La configuración Websocket ha sido fijada #[161].",
+        "pl": "Konfiguracja sieciowa została ustalona na #161 (pol.).",
+        "uk": "Налаштування Websocket було виправлено #[161].",
+        "zh-cn": "网站配置是固定的编号[161]。."
+      },
       "2.1.1-alpha.0": {
         "en": "Websocket configuration has been fixed [#161].",
         "de": "Websocket-Konfiguration wurde korrigiert [#161].",
@@ -79,18 +92,6 @@
         "es": "support WebOS 5 for volume change",
         "pl": "support WebOS 5 for volume change",
         "zh-cn": "support WebOS 5 for volume change"
-      },
-      "1.1.9": {
-        "en": "re-upload for fixing NPM update issue",
-        "de": "re-upload for fixing NPM update issue",
-        "ru": "re-upload for fixing NPM update issue",
-        "pt": "re-upload for fixing NPM update issue",
-        "nl": "re-upload for fixing NPM update issue",
-        "fr": "re-upload for fixing NPM update issue",
-        "it": "re-upload for fixing NPM update issue",
-        "es": "re-upload for fixing NPM update issue",
-        "pl": "re-upload for fixing NPM update issue",
-        "zh-cn": "re-upload for fixing NPM update issue"
       }
     },
     "titleLang": {
