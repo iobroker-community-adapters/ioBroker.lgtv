@@ -177,7 +177,8 @@ is true when TV is on and false if TV is off
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### 2.1.1-alpha.0 (2023-10-05)
+### **WORK IN PROGRESS**
+
 - (basti4557) Websocket configuration has been fixed [#161].
 
 ### 2.1.0 (2023-10-05)
