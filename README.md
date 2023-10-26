@@ -179,7 +179,7 @@ is true when TV is on and false if TV is off
 -->
 ### **WORK IN PROGRESS**
 
-- (agross) Restored functioninality state.on turning false immediately after turning off the TV with turnOff [#165]
+- (agross) Functionality of state.on turning false immediately after turning off the TV with turnOff has been restored. [#165]
 - (mcm1957) Dependencies have been updated
 
 ### 2.1.1 (2023-10-06)
