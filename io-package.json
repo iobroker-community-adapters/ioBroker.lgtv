@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "lgtv",
-    "version": "2.1.1",
+    "version": "2.1.2",
     "news": {
+      "2.1.2": {
+        "en": "Functionality of state.on turning false immediately after turning off the TV with turnOff has been restored. [#165]\nDependencies have been updated",
+        "de": "Die Funktionalität, dass state.on sofort nach dem Ausschalten des Fernsehers mit turnOff auf „false“ gesetzt wurde, wurde wiederhergestellt. (#165)\nAbhängigkeiten wurden aktualisiert",
+        "ru": "Функциональность государства. при повороте ложно сразу после выключения телевизора с помощью turnOff был восстановлен. [#165]\nВ зависимости были обновлены",
+        "pt": "Funcionalidade do estado. ao virar falso imediatamente após desligar a TV com turnOff foi restaurado. [#165]\nAs dependências foram atualizadas",
+        "nl": "De staatsfunctie. De TV uitzetten met TurnOff is hersteld. _\nAfhankelijkheid",
+        "fr": "Fonctionnalité de l'état. de tourner à false immédiatement après avoir éteint la télévision avec turnOff a été restauré. [#165]\nLes dépendances ont été mises à jour",
+        "it": "Funzionalità dello stato. a girare falso subito dopo aver spento la TV con turnOff è stato ripristinato. [#165]\nLe dipendenze sono state aggiornate",
+        "es": "Funcionalidad del estado. al volverse falso inmediatamente después de apagar la televisión con turnOff ha sido restaurado. [#165]\nSe han actualizado las dependencias",
+        "pl": "Funkcjonalność państwa. Odwrócono się po tym, jak telewizja z kolei została odrestaurowana. (#165)\nZależności zostały zaktualizowane",
+        "uk": "Функціональність держави. після вимкнення телевізора з відреставрованою відключенням. [#165]\nОновлено залежність",
+        "zh-cn": "国家职能。 在电视转播后立即转播虚假情况,结果又恢复了。 [第165号]\n已更新了属地"
+      },
       "2.1.1": {
         "en": "Websocket configuration has been fixed [#161].",
         "de": "Websocket-Konfiguration wurde korrigiert. [#161]",
@@ -80,18 +93,6 @@
         "pl": "Zastosowano adapter do wersji 5 js",
         "uk": "Ми підготували адаптер для js-controller версії 5",
         "zh-cn": "我们已准备好供控制的手稿5"
-      },
-      "1.1.10": {
-        "en": "support WebOS 5 for volume change",
-        "de": "support WebOS 5 for volume change",
-        "ru": "support WebOS 5 for volume change",
-        "pt": "support WebOS 5 for volume change",
-        "nl": "support WebOS 5 for volume change",
-        "fr": "support WebOS 5 for volume change",
-        "it": "support WebOS 5 for volume change",
-        "es": "support WebOS 5 for volume change",
-        "pl": "support WebOS 5 for volume change",
-        "zh-cn": "support WebOS 5 for volume change"
       }
     },
     "titleLang": {
