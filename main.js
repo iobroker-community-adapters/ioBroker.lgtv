@@ -46,8 +46,20 @@ function startAdapter(options) {
                                 if (!err) adapter.setState('states.turnOff', state.val, true);
                             });
                         } else {
-                            sendCommand('ssap://system/turnOff', { message: state.val }, (err, _) => {
-                                if (!err) adapter.setState('states.turnOff', state.val, true);
+                            adapter.getState(adapter.namespace + '.states.on', (err, tv_on) => {
+                                if (err) { adapter.log.debug('Error getting "on" state ' + err); return; }
+                                if (!tv_on.val) {
+                                    adapter.log.debug('TV is already off');
+                                    adapter.setState('states.turnOff', state.val, true);
+                                    return;
+                                }
+
+                                sendCommand('ssap://system/turnOff', (err, val) => {
+                                    if (!err && val.returnValue === true) {
+                                        adapter.setState('states.turnOff', state.val, true);
+                                        adapter.setState('states.on', false, true);
+                                    }
+                                });
                             });
                         }
                         break;
@@ -60,8 +72,20 @@ function startAdapter(options) {
                                     if (!err) adapter.setState('states.power', state.val, true);
                                 });
                             } else {
-                                sendCommand('ssap://system/turnOff', { message: state.val }, (err, _val) => {
-                                    if (!err) adapter.setState('states.power', state.val, true);
+                                adapter.getState(adapter.namespace + '.states.on', (err, tv_on) => {
+                                    if (err) { adapter.log.debug('Error getting "on" state ' + err); return; }
+                                    if (!tv_on.val) {
+                                        adapter.log.debug('TV is already off');
+                                        adapter.setState('states.power', state.val, true);
+                                        return;
+                                    }
+
+                                    sendCommand('ssap://system/turnOff', (err, val) => {
+                                        if (!err && val.returnValue === true) {
+                                            adapter.setState('states.power', state.val, true);
+                                            adapter.setState('states.on', false, true);
+                                        }
+                                    });
                                 });
                             }
                         } else {
