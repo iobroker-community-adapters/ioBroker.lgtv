@@ -55,7 +55,7 @@
     "@types/node": "^20.8.10",
     "@types/proxyquire": "^1.3.31",
     "@types/sinon": "^10.0.13",
-    "@types/sinon-chai": "^3.2.10",
+    "@types/sinon-chai": "^3.2.12",
     "@types/wol": "^1.0.2",
     "chai": "^4.3.10",
     "chai-as-promised": "^7.1.1",
