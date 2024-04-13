@@ -123,7 +123,7 @@
     },
     "authors": [
       "SebastianSchultz <info@sebastian-schultz.de>",
-      "iobroker-community-adapters <mcm57@gmx.at>"
+      "iobroker-community-adapters <iobroker-community-adapters@gmx.de>"
     ],
     "keywords": [
       "lgtv",
@@ -132,14 +132,17 @@
       "TV",
       "LG"
     ],
-    "license": "MIT",
+    "licenseInformation": {
+      "license": "MIT",
+      "type": "free"
+    },
     "platform": "Javascript/Node.js",
-    "main": "main.js",
     "icon": "lgtv.png",
     "enabled": false,
     "extIcon": "https://raw.githubusercontent.com/iobroker-community-adapters/ioBroker.lgtv/master/admin/lgtv.png",
     "readme": "https://github.com/iobroker-community-adapters/iobroker.lgtv/blob/master/README.md",
     "loglevel": "info",
+    "tier": 2,
     "mode": "daemon",
     "type": "multimedia",
     "compact": true,
@@ -148,7 +151,7 @@
     "materialize": true,
     "dependencies": [
       {
-        "js-controller": ">=4.0.24"
+        "js-controller": ">=5.0.0"
       }
     ],
     "globalDependencies": [

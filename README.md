@@ -177,6 +177,11 @@ is true when TV is on and false if TV is off
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+
+* (mcm1957) Adapter requires node.js 18 and js-controller >= 5 now
+* (mcm1957) Dependencies have been updated
+
 ### 2.1.2 (2023-10-26)
 
 - (agross) Functionality of state.on turning false immediately after turning off the TV with turnOff has been restored. [#165]
