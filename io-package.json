@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "lgtv",
-    "version": "2.1.2",
+    "version": "2.2.0",
     "news": {
+      "2.2.0": {
+        "en": "Adapter requires node.js 18 and js-controller >= 5 now\nDependencies have been updated",
+        "de": "Adapter benötigt node.js 18 und js-controller >= 5 jetzt\nAbhängigkeiten wurden aktualisiert",
+        "ru": "Адаптер требует node.js 18 и js-controller >= 5 сейчас\nЗависимость обновлена",
+        "pt": "Adapter requer node.js 18 e js-controller >= 5 agora\nAs dependências foram atualizadas",
+        "nl": "Adapter vereist node.js 18 en js-controller Nu 5\nAfhankelijkheden zijn bijgewerkt",
+        "fr": "Adaptateur nécessite node.js 18 et js-controller >= 5 maintenant\nLes dépendances ont été actualisées",
+        "it": "Adattatore richiede node.js 18 e js-controller >= 5 ora\nLe dipendenze sono state aggiornate",
+        "es": "Adaptador requiere node.js 18 y js-controller √= 5 ahora\nSe han actualizado las dependencias",
+        "pl": "Adapter wymaga node.js 18 i sterownika js- > = 5 teraz\nZaktualizowano zależności",
+        "uk": "Адаптер вимагає node.js 18 і js-controller >= 5 тепер\nЗалежність було оновлено",
+        "zh-cn": "适配器需要节点.js 18和js控制器 QQ 现在5号\n依赖关系已更新"
+      },
       "2.1.2": {
         "en": "Functionality of state.on turning false immediately after turning off the TV with turnOff has been restored. [#165]\nDependencies have been updated",
         "de": "Die Funktionalität, dass state.on sofort nach dem Ausschalten des Fernsehers mit turnOff auf „false“ gesetzt wurde, wurde wiederhergestellt. (#165)\nAbhängigkeiten wurden aktualisiert",
@@ -80,19 +93,6 @@
         "pl": "Adapter został usunięty do iobrokersko-kommunitetów\nPOSSIBLE BREAKING: Adapter został zbudowany z aktualnych treści. Jako że najnowsze pakiety nm zostały stworzone axternal, istnieje możliwość, że niektóre zmiany zaginęły.\nTravis i AppVeyor zostali powtórzeni przez Akcje GitHub, oparte na ioBroker/create-adapter\nAdpter wymaga od NodeJS 16 minimum\nZależności zostały zaktualizowane\nKonfiguracja stanu zdrowia Intervalla została zmieniona i poprawiona do zdrowia. Intervalu",
         "uk": "Перехідник був прив'язаний до області iobroker-community-adapters\nPOSSIBLE BREAKING: Адаптер був побудований з поточного вмісту github. Як останні пакети npm були створені axternal, є шанс, що деякі зміни були втрачені.\nTravis і AppVeyor були перероблені GitHub Дії, засновані на ioBroker/create-adapter\nAdpter вимагає NodeJS 16 мінімум зараз\nОновлено залежність\nКонфігурація продукту HealthIntervall було перейменовано/коректом для здоров'я Інтервал",
         "zh-cn": "已经向加勒比妓院区道歉。\n导 言 由于最近创立了美分包,一些变化失去了机会。.\nGitHub行动根据OioBroker/create-adapter对Veyor进行了解释。\n现在需要至少16天的“JS”\n已更新了属地\n保健连带项目已重新命名/纠正。 间隔"
-      },
-      "1.1.12": {
-        "en": "We have prepared the adapter for js-controller version 5",
-        "de": "Wir haben den Adapter für js-controller Version 5 vorbereitet",
-        "ru": "Мы подготовили адаптер для js-controller версии 5",
-        "pt": "Nós preparamos o adaptador para a versão js-controller 5",
-        "nl": "We hebben de adapter voorbereid voor J's-controller versie 5",
-        "fr": "Nous avons préparé l'adaptateur pour js-controller version 5",
-        "it": "Abbiamo preparato l'adattatore per js-controller versione 5",
-        "es": "Hemos preparado el adaptador para js-controller versión 5",
-        "pl": "Zastosowano adapter do wersji 5 js",
-        "uk": "Ми підготували адаптер для js-controller версії 5",
-        "zh-cn": "我们已准备好供控制的手稿5"
       }
     },
     "titleLang": {
