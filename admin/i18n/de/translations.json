@@ -1,0 +1,14 @@
+{
+  "Auto": "Auto",
+  "Manual": "Manual",
+  "My select": "Mein Auswahl",
+  "on save adapter restarts with new config immediately": "Beim Speichern von Einstellungen der Adapter wird sofort neu gestartet.",
+  "template adapter settings": "Beispiel",
+  "ip": "IP-Adresse des LG WebOS TVs",
+  "mac": "MAC-Adresse des LG WebOS TVs",
+  "power": "Schalten Sie den Fernseher als Fernbedienungstaste aus",
+  "timeout": "Timeout in ms",
+  "reconnect": "Reconnect intervall in ms",
+  "healthInterval": "Abfrageintervall in ms",
+  "help_tip": "Bei der ersten Verbindung zwischen ioBroker und dem LG TV-Gerät ist es erforderlich,<br />dass Sie diese Verbindung am TV-Bildschirm erlauben."
+}

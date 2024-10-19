@@ -148,7 +148,6 @@
     "compact": true,
     "connectionType": "local",
     "dataSource": "poll",
-    "materialize": true,
     "dependencies": [
       {
         "js-controller": ">=5.0.0"
@@ -158,7 +157,10 @@
       {
         "admin": ">=5.1.13"
       }
-    ]
+    ],
+    "adminUI": {
+      "config": "json"
+    }
   },
   "native": {
     "ip": "",
