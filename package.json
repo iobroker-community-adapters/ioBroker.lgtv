@@ -34,7 +34,7 @@
     "node": ">= 20"
   },
   "dependencies": {
-    "@iobroker/adapter-core": "^3.1.6",
+    "@iobroker/adapter-core": "^3.2.2",
     "lgtv2": "^1.6.3",
     "websocket": "^1.0.35",
     "wol": "^1.0.7"
