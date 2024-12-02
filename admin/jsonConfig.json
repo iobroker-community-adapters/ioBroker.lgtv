@@ -1,0 +1,76 @@
+{
+  "type": "panel",
+  "i18n": true,
+  "items": {
+    "ip": {
+      "type": "text",
+      "label": "ip",
+      "trim": true,
+      "xs": 12,
+      "sm": 6,
+      "md": 4,
+      "lg": 3,
+      "xl": 3
+    },
+    "mac": {
+      "type": "text",
+      "label": "mac",
+      "trim": true,
+      "xs": 12,
+      "sm": 6,
+      "md": 4,
+      "lg": 3,
+      "xl": 3
+    },
+    "timeout": {
+      "type": "number",
+      "label": "timeout",
+      "min": 15000,
+      "xs": 12,
+      "sm": 6,
+      "md": 4,
+      "lg": 2,
+      "xl": 2,
+      "newLine": true
+    },
+    "healthInterval": {
+      "type": "number",
+      "label": "healthInterval",
+      "min": 5000,
+      "xs": 12,
+      "sm": 6,
+      "md": 4,
+      "lg": 2,
+      "xl": 2
+    },
+    "reconnect": {
+      "type": "number",
+      "label": "reconnect",
+      "min": 0,
+      "xs": 12,
+      "sm": 6,
+      "md": 4,
+      "lg": 2,
+      "xl": 2
+    },
+    "power": {
+      "type": "checkbox",
+      "label": "power",
+      "xs": 12,
+      "sm": 12,
+      "md": 12,
+      "lg": 5,
+      "xl": 5,
+      "newLine": true
+    },
+    "help_tip": {
+      "type": "staticText",
+      "text": "help_tip",
+      "xs": 12,
+      "sm": 12,
+      "md": 12,
+      "lg": 12,
+      "xl": 12
+    }
+  }
+}
