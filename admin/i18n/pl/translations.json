@@ -1,1 +1,14 @@
-{}
+{
+    "Auto": "Automatyczny",
+    "Manual": "Podręcznik",
+    "My select": "Mój wybór",
+    "on save adapter restarts with new config immediately": "po zapisaniu adapter natychmiast uruchamia się ponownie z nową konfiguracją",
+    "template adapter settings": "ustawienia adaptera szablonu",
+    "ip": "Adres IP telewizora LG WebOS",
+    "mac": "Adres MAC telewizora LG WebOS",
+    "power": "Wyłącz telewizor jako przycisk pilota",
+    "timeout": "Limit czasu w ms",
+    "reconnect": "Interwał ponownego połączenia w ms",
+    "healthInterval": "Interwał odpytywania w ms",
+    "help_tip": "Przy pierwszym połączeniu ioBroker z telewizorem musisz zezwolić na to połączenie na ekranie telewizora."
+}

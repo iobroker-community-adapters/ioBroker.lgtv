@@ -1,14 +1,14 @@
 {
-  "Auto": "Auto",
-  "Manual": "Manuale",
-  "My select": "La mia selezione",
-  "on save adapter restarts with new config immediately": "su save adapter si riavvia immediatamente con la nuova configurazione",
-  "template adapter settings": "impostazioni dell'adattatore del modello",
-  "ip": "IP adress of the LG WebOS TV",
-  "mac": "MAC adress of the LG WebOS TV",
-  "power": "Turn off the TV as a remote control button",
-  "timeout": "Timeout in ms",
-  "reconnect": "Reconnect interval in ms",
-  "healthInterval": "Poll interval in ms",
-  "help_tip": "At first connection from ioBroker to your TV you must allow this connection on your TV screen."
+    "Auto": "Auto",
+    "Manual": "Manuale",
+    "My select": "La mia selezione",
+    "on save adapter restarts with new config immediately": "su save adapter si riavvia immediatamente con la nuova configurazione",
+    "template adapter settings": "impostazioni dell'adattatore del modello",
+    "ip": "IP adress of the LG WebOS TV",
+    "mac": "MAC adress of the LG WebOS TV",
+    "power": "Turn off the TV as a remote control button",
+    "timeout": "Timeout in ms",
+    "reconnect": "Reconnect interval in ms",
+    "healthInterval": "Poll interval in ms",
+    "help_tip": "At first connection from ioBroker to your TV you must allow this connection on your TV screen."
 }

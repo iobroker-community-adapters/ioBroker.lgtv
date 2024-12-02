@@ -1,14 +1,14 @@
 {
-  "Auto": "Автоматически",
-  "Manual": "Вручную",
-  "My select": "Выбор",
-  "on save adapter restarts with new config immediately": "При сохранении настроек адаптера он сразу же перезапускается",
-  "template adapter settings": "Пример",
-  "ip": "IP адрес LG WebOS TV",
-  "mac": "MAC адрес LG WebOS TV",
-  "power": "Выключение телевизора как кнопкой пульта",
-  "timeout": "Таймаут в мс",
-  "reconnect": "Переподключить интервал в мс",
-  "healthInterval": "Инетрвал обновления в мс",
-  "help_tip": "При первом подключении ioBroker к телевизору вы должны разрешить подключение на экране телевизора.."
+    "Auto": "Автоматически",
+    "Manual": "Вручную",
+    "My select": "Выбор",
+    "on save adapter restarts with new config immediately": "При сохранении настроек адаптера он сразу же перезапускается",
+    "template adapter settings": "Пример",
+    "ip": "IP адрес LG WebOS TV",
+    "mac": "MAC адрес LG WebOS TV",
+    "power": "Выключение телевизора как кнопкой пульта",
+    "timeout": "Таймаут в мс",
+    "reconnect": "Переподключить интервал в мс",
+    "healthInterval": "Инетрвал обновления в мс",
+    "help_tip": "При первом подключении ioBroker к телевизору вы должны разрешить подключение на экране телевизора.."
 }

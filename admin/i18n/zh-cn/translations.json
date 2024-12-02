@@ -1,1 +1,14 @@
-{}
+{
+    "Auto": "汽车",
+    "Manual": "手动的",
+    "My select": "我的选择",
+    "on save adapter restarts with new config immediately": "保存适配器后立即使用新配置重新启动",
+    "template adapter settings": "模板适配器设置",
+    "ip": "LG WebOS 电视的 IP 地址",
+    "mac": "LG WebOS 电视的 MAC 地址",
+    "power": "作为遥控器按钮关闭电视",
+    "timeout": "超时（以毫秒为单位）",
+    "reconnect": "重新连接间隔（以毫秒为单位）",
+    "healthInterval": "轮询间隔（以毫秒为单位）",
+    "help_tip": "首次从 ioBroker 连接到电视时，您必须在电视屏幕上允许此连接。"
+}
