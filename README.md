@@ -178,6 +178,10 @@ is true when TV is on and false if TV is off
     ### **WORK IN PROGRESS**
 -->
 
+### **WORK IN PROGRESS**
+
+* (Feuer-Sturm) Some default values and limits of paramaters have been corrected.
+
 ### 2.3.0 (2024-12-02)
 
 * (mcm1957) Adapter requires node.js 20 now.
