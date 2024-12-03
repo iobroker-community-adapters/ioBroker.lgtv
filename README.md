@@ -177,8 +177,7 @@ is true when TV is on and false if TV is off
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-
-### **WORK IN PROGRESS**
+### 2.3.1 (2024-12-03)
 
 * (Feuer-Sturm) Some default values and limits of paramaters have been corrected.
 

@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "lgtv",
-    "version": "2.3.0",
+    "version": "2.3.1",
     "news": {
+      "2.3.1": {
+        "en": "Some default values and limits of paramaters have been corrected.",
+        "de": "Einige Standardwerte und Grenzwerte von Paramatern wurden korrigiert.",
+        "ru": "Были исправлены некоторые значения по умолчанию и пределы параматеров.",
+        "pt": "Alguns valores padrão e limites de paramaters foram corrigidos.",
+        "nl": "Sommige standaardwaarden en grenzen van paramaters zijn gecorrigeerd.",
+        "fr": "Certaines valeurs et limites par défaut des paramamètres ont été corrigées.",
+        "it": "Alcuni valori e limiti di default dei paramaters sono stati corretti.",
+        "es": "Se han corregido algunos valores y límites predeterminados de los paramatistas.",
+        "pl": "Niektóre wartości domyślne i granice parametrów zostały skorygowane.",
+        "uk": "Виправлено деякі значення за замовчуванням та ліміти параметрів.",
+        "zh-cn": "参数的一些默认值和限度已经纠正."
+      },
       "2.3.0": {
         "en": "Adapter requires node.js 20 now.\nAdapter requires js-controller 5 and admin 6 now.\nAdapter has been migrated to jsonConfig and responsive design rules have been applied.\nDependencies have been updated.",
         "de": "Adapter benötigt node.js 20 jetzt.\nAdapter benötigt jetzt js-controller 5 und admin 6.\nAdapter wurde auf jsonConfig migriert und responsive Designregeln angewendet.\nAbhängigkeiten wurden aktualisiert.",
