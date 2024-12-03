@@ -25,7 +25,8 @@
     "timeout": {
       "type": "number",
       "label": "timeout",
-      "min": 15000,
+      "min": 5000,
+      "help": "Min. 5000ms",
       "xs": 12,
       "sm": 6,
       "md": 4,
@@ -36,7 +37,6 @@
     "healthInterval": {
       "type": "number",
       "label": "healthInterval",
-      "min": 5000,
       "xs": 12,
       "sm": 6,
       "md": 4,
@@ -46,7 +46,8 @@
     "reconnect": {
       "type": "number",
       "label": "reconnect",
-      "min": 0,
+      "help": "Min. 5000ms",
+      "min": 5000,
       "xs": 12,
       "sm": 6,
       "md": 4,
