@@ -37,6 +37,7 @@
     "healthInterval": {
       "type": "number",
       "label": "healthInterval",
+      "min": 0,
       "xs": 12,
       "sm": 6,
       "md": 4,
