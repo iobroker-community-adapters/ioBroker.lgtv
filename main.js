@@ -782,6 +782,9 @@ function main() {
         adapter.log.debug(`adapter.config = ${JSON.stringify(adapter.config)}`);
         if (adapter.config.healthInterval < 1) {
             healthInterval = false;
+        } else if (adapter.config.healthInterval < 5000) {
+            adapter.log.info(`Health-Interval must not be less than 5s; setting adjusted.`);
+            adapter.config.healthInterval = 5000;
         }
         if (!fs.existsSync(dir)) {
             fs.mkdirSync(dir);
