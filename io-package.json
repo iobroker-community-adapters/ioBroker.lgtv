@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "lgtv",
-    "version": "2.3.1",
+    "version": "2.3.2",
     "news": {
+      "2.3.2": {
+        "en": "Health-interval limited to 5s minimum.\nCompact mode has been disabled due to outdated timer handling.\nDependencies have been updated",
+        "de": "Health-Interval begrenzt auf 5s Minimum.\nDer kompakte Modus wurde aufgrund der veralteten Timerhandhabung deaktiviert.\nAbhängigkeiten wurden aktualisiert",
+        "ru": "Медико-интервал ограничен минимумом 5.\nКомпактный режим был отключен из-за устаревшей обработки таймеров.\nЗависимость обновлена",
+        "pt": "Intervalo de saúde limitado ao mínimo de 5 anos.\nO modo compacto foi desativado devido ao manuseio de temporizador desatualizado.\nAs dependências foram atualizadas",
+        "nl": "Gezondheid-interval beperkt tot 5s minimum.\nCompacte modus is uitgeschakeld vanwege verouderde timerbehandeling.\nAfhankelijkheden zijn bijgewerkt",
+        "fr": "Intervalle de santé limité à 5s minimum.\nLe mode compact a été désactivé en raison d'une manipulation de minuterie dépassée.\nLes dépendances ont été actualisées",
+        "it": "Intervallo sanitario limitato al minimo 5s.\nLa modalità compatta è stata disabilitata a causa della gestione dei timer obsoleti.\nLe dipendenze sono state aggiornate",
+        "es": "Intervalo de salud limitado a 5s mínimo.\nEl modo compacto ha sido desactivado debido al manejo de temporizador obsoleto.\nSe han actualizado las dependencias",
+        "pl": "Odstęp między pacjentami w stanie zdrowia ograniczony do minimum 5.\nTryb kompaktowy został wyłączony z powodu przestarzałego obsługi zegara.\nZaktualizowano zależności",
+        "uk": "Охорона здоров'я обмежена до 5-х мінімуму.\nКомпактний режим був вимкнений через застарілу роботу таймера.\nЗалежність було оновлено",
+        "zh-cn": "健康间歇时间最少限5秒.\n由于过时的定时器处理,已禁用压缩模式 .\n依赖关系已更新"
+      },
       "2.3.1": {
         "en": "Some default values and limits of paramaters have been corrected.",
         "de": "Einige Standardwerte und Grenzwerte von Paramatern wurden korrigiert.",
@@ -80,19 +93,6 @@
         "pl": "Konfiguracja sieciowa została ustalona na #161 (pol.).",
         "uk": "Налаштування Websocket було виправлено #[161].",
         "zh-cn": "网站配置是固定的编号[161]。."
-      },
-      "2.1.0": {
-        "en": "A bug that destryed the actual app state on changing from tv to app mode has been fixed.\nWebsocket SSL states can now be sent / received again due to the websocket ssl changes.\nPlain websocket has been replaced by SSL Websocket.",
-        "de": "Ein Fehler, der den aktuellen App-Zustand beim Wechsel von tv in den App-Modus entwarfstörte, wurde behoben.\nWebsocket SSL-Zustände können nun aufgrund der Websocket ssl-Änderungen wieder gesendet / empfangen werden.\nPlain Websocket wurde durch SSL Websocket ersetzt.",
-        "ru": "Исправлена ошибка, которая захвачена фактическим состоянием приложения для изменения из ТВ в режим приложения.\nWebsocket SSL государства теперь могут быть отправлены / получены снова из-за изменений websocket ssl.\nPlain websocket был отреплирован SSL Websocket.",
-        "pt": "Um bug que desprezou o estado do aplicativo real em mudar de tv para modo de aplicativo foi corrigido.\nOs estados SSL do Websocket agora podem ser enviados / recebidos novamente devido às mudanças do ssl do websocket.\nWebsocket simples foi replced por SSL Websocket.",
-        "nl": "Een insect die de werkelijke app staat verachtte te veranderen van tv naar app mode is gerepareerd.\nWebsocket SSL staten kunnen nu worden gestuurd door de websocket ssl veranderingen.\nPlain websocket is vervuld door SSL Websocket.",
-        "fr": "Un bug qui a désintéressé l'état réel de l'application sur le changement de la télévision en mode appli a été corrigé.\nLes états SSL de Websocket peuvent maintenant être envoyés / reçus à nouveau en raison des changements de ssl de websocket.\nLe websocket de plaine a été rebranché par SSL Websocket.",
-        "it": "Un bug che ha destryed l'effettivo stato app sul cambiamento da tv a modalità app è stato fissato.\nWebsocket Stati SSL possono ora essere inviati / ricevuti nuovamente a causa delle modifiche di ssl websocket.\nPlain websocket è stato interrotto da SSL Websocket.",
-        "es": "Se ha fijado un error que destripó el estado de aplicación real al cambiar de tv a modo de aplicación.\nLos estados Websocket SSL pueden ser enviados / recibidos de nuevo debido a los cambios de ssl websocket.\nEl Websocket Plain ha sido repelido por SSL Websocket.",
-        "pl": "Uruchomiono, że stan rzeczywistych aplikacji zmieniających się z telewizji na tryb aplikacji.\nPaństwa internetowe SSL mogą być teraz wysyłane / otrzymywane ponownie z powodu zmian w słupie.\nWskaźnik internetowy został powtórzony przez SSL Websocket.",
-        "uk": "Виправлено помилку, яка спричинила фактичний стан додатку при зміні від телевізора до режиму програми.\nСтатус на сервери - Websocket SSL.\nСтатус на сервери.",
-        "zh-cn": "已经确定,将实际的估计状态从低温到管道。.\n如今,由于网站的小节变化,可再次发送/接收小页。.\nPlain的网页被SSL网的重新设计。."
       }
     },
     "titleLang": {
