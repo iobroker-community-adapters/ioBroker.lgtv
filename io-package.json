@@ -4,8 +4,8 @@
     "version": "2.3.2",
     "news": {
       "2.3.2": {
-        "en": "Health-interval limited to 5s minimum.\nCompact mode has been disabled due to outdated timer handling.\nDependencies have been updated",
-        "de": "Health-Interval begrenzt auf 5s Minimum.\nDer kompakte Modus wurde aufgrund der veralteten Timerhandhabung deaktiviert.\nAbhängigkeiten wurden aktualisiert",
+        "en": "Poll-Interval limited to 5s minimum.\nCompact mode has been disabled due to outdated timer handling.\nDependencies have been updated",
+        "de": "Abfrage-Interval begrenzt auf 5s Minimum.\nDer kompakte Modus wurde aufgrund der veralteten Timerhandhabung deaktiviert.\nAbhängigkeiten wurden aktualisiert",
         "ru": "Медико-интервал ограничен минимумом 5.\nКомпактный режим был отключен из-за устаревшей обработки таймеров.\nЗависимость обновлена",
         "pt": "Intervalo de saúde limitado ao mínimo de 5 anos.\nO modo compacto foi desativado devido ao manuseio de temporizador desatualizado.\nAs dependências foram atualizadas",
         "nl": "Gezondheid-interval beperkt tot 5s minimum.\nCompacte modus is uitgeschakeld vanwege verouderde timerbehandeling.\nAfhankelijkheden zijn bijgewerkt",
