@@ -7,6 +7,7 @@
     "ip": "IP adress of the LG WebOS TV",
     "mac": "MAC adress of the LG WebOS TV",
     "power": "Turn off the TV as a remote control button",
+    "wolwithip": "Incluir endereço IP no pacote Wake-On-LAN para usar unicast (viaja através de sub-redes)",
     "timeout": "Timeout in ms",
     "reconnect": "Reconnect interval in ms",
     "healthInterval": "Poll interval in ms",
