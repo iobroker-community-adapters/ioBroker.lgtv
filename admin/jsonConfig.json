@@ -65,6 +65,16 @@
       "xl": 5,
       "newLine": true
     },
+    "wolwithip": {
+      "type": "checkbox",
+      "label": "wolwithip",
+      "xs": 12,
+      "sm": 12,
+      "md": 12,
+      "lg": 5,
+      "xl": 5,
+      "newLine": true
+    },
     "help_tip": {
       "type": "staticText",
       "text": "help_tip",

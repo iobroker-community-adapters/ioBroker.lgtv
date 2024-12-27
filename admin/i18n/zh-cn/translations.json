@@ -7,6 +7,7 @@
     "ip": "LG WebOS 电视的 IP 地址",
     "mac": "LG WebOS 电视的 MAC 地址",
     "power": "作为遥控器按钮关闭电视",
+    "wolwithip": "在Wake-On-LAN包中包含IP地址,以使用独播(跨子网的旅行)",
     "timeout": "超时（以毫秒为单位）",
     "reconnect": "重新连接间隔（以毫秒为单位）",
     "healthInterval": "轮询间隔（以毫秒为单位）",

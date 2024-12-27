@@ -7,6 +7,7 @@
     "ip": "Adres IP telewizora LG WebOS",
     "mac": "Adres MAC telewizora LG WebOS",
     "power": "Wyłącz telewizor jako przycisk pilota",
+    "wolwithip": "Uwzględnienie adresu IP w pakiecie Wake-On-LAN w celu użycia unicastu (podróż przez podsieci).",
     "timeout": "Limit czasu w ms",
     "reconnect": "Interwał ponownego połączenia w ms",
     "healthInterval": "Interwał odpytywania w ms",

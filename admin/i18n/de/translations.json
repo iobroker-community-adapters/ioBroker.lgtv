@@ -7,6 +7,7 @@
     "ip": "IP-Adresse des LG WebOS TVs",
     "mac": "MAC-Adresse des LG WebOS TVs",
     "power": "Schalten Sie den Fernseher als Fernbedienungstaste aus",
+    "wolwithip": "IP-Adresse in das Wake-On-LAN-Paket aufnehmen, um Unicast zu verwenden (wird über Subnetze hinweg übertragen)",
     "timeout": "Timeout in ms",
     "reconnect": "Reconnect intervall in ms",
     "healthInterval": "Abfrageintervall in ms",
