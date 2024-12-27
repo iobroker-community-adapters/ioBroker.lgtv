@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "lgtv",
-    "version": "2.3.2",
+    "version": "2.4.0",
     "news": {
+      "2.4.0": {
+        "en": "Ability to unicast the WOL packet has been added. This is needed if sender and TV are on different subnets.\nDependencies have been updated",
+        "de": "Die Funktion das WOL-Paket als Unicast Paket zu versenden wurde hinzugefügt. Dies ist erforderlich, wenn Sender und TV auf verschiedenen Subnetzen sind.\nAbhängigkeiten wurden aktualisiert",
+        "ru": "Добавлена способность к выпуску пакета WOL. Это необходимо, если отправитель и телевизор находятся на разных подсетях.\nЗависимость обновлена",
+        "pt": "Capacidade de Unicast o pacote WOL foi adicionado. Isso é necessário se o remetente e a TV estiverem em diferentes sub-redes.\nAs dependências foram atualizadas",
+        "nl": "De mogelijkheid om het WOL pakket te unicasten is toegevoegd. Dit is nodig als afzender en TV op verschillende subnetten.\nAfhankelijkheden zijn bijgewerkt",
+        "fr": "La possibilité d'unicaster le paquet WOL a été ajoutée. Cela est nécessaire si l'expéditeur et la télévision sont sur différents sous-réseaux.\nLes dépendances ont été actualisées",
+        "it": "È stata aggiunta la capacità di unicast il pacchetto WOL. Questo è necessario se il mittente e la TV sono su diverse sottorete.\nLe dipendenze sono state aggiornate",
+        "es": "Ha añadido capacidad para unicast el paquete WOL. Esto es necesario si el remitente y la televisión están en diferentes subredes.\nSe han actualizado las dependencias",
+        "pl": "Dodano możliwość łączenia pakietu WOL. Jest to konieczne, jeśli nadawca i telewizja są na różnych podsieciach.\nZaktualizowano zależności",
+        "uk": "Додана можливість університи пакет WOL. Це необхідно, якщо відправник і телевізор знаходяться на різних підмережах.\nЗалежність було оновлено",
+        "zh-cn": "增加了统一WOL包的能力。 如果发送器和电视在不同的子网上,则需要这样做.\n依赖关系已更新"
+      },
       "2.3.2": {
         "en": "Poll-Interval limited to 5s minimum.\nCompact mode has been disabled due to outdated timer handling.\nDependencies have been updated",
         "de": "Abfrage-Interval begrenzt auf 5s Minimum.\nDer kompakte Modus wurde aufgrund der veralteten Timerhandhabung deaktiviert.\nAbhängigkeiten wurden aktualisiert",
@@ -71,19 +84,6 @@
       "2.1.1": {
         "en": "Websocket configuration has been fixed [#161].",
         "de": "Websocket-Konfiguration wurde korrigiert. [#161]",
-        "ru": "Конфигурация Websocket была исправлена #[161].",
-        "pt": "Configuração Websocket foi corrigida #[161].",
-        "nl": "Websocket vertrouwen is gerepareerd.",
-        "fr": "La configuration Websocket a été corrigée #[161].",
-        "it": "La configurazione Websocket è stata fissata #[161].",
-        "es": "La configuración Websocket ha sido fijada #[161].",
-        "pl": "Konfiguracja sieciowa została ustalona na #161 (pol.).",
-        "uk": "Налаштування Websocket було виправлено #[161].",
-        "zh-cn": "网站配置是固定的编号[161]。."
-      },
-      "2.1.1-alpha.0": {
-        "en": "Websocket configuration has been fixed [#161].",
-        "de": "Websocket-Konfiguration wurde korrigiert [#161].",
         "ru": "Конфигурация Websocket была исправлена #[161].",
         "pt": "Configuração Websocket foi corrigida #[161].",
         "nl": "Websocket vertrouwen is gerepareerd.",
