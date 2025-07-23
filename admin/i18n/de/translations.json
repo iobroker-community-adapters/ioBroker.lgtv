@@ -1,15 +1,15 @@
 {
     "Auto": "Auto",
     "Manual": "Manual",
-    "My select": "Mein Auswahl",
-    "on save adapter restarts with new config immediately": "Beim Speichern von Einstellungen der Adapter wird sofort neu gestartet.",
+    "My select": "Auswahl",
+    "on save adapter restarts with new config immediately": "Beim Speichern von Einstellungen wird der Adapter neu gestartet",
     "template adapter settings": "Beispiel",
     "ip": "IP-Adresse des LG WebOS TVs",
     "mac": "MAC-Adresse des LG WebOS TVs",
-    "power": "Schalten Sie den Fernseher als Fernbedienungstaste aus",
-    "wolwithip": "IP-Adresse in das Wake-On-LAN-Paket aufnehmen, um Unicast zu verwenden (wird über Subnetze hinweg übertragen)",
+    "power": "Abschalten des Fernsehers mittels Fernbedienungstaste",
+    "wolwithip": "IP-Adresse in das Wake-On-LAN-Paket aufnehmen um Unicast zu verwenden (wird über Subnetze hinweg übertragen)",
     "timeout": "Timeout in ms",
-    "reconnect": "Reconnect intervall in ms",
+    "reconnect": "Reconnect Intervall in ms",
     "healthInterval": "Abfrageintervall in ms",
-    "help_tip": "Bei der ersten Verbindung zwischen ioBroker und dem LG TV-Gerät ist es erforderlich,<br />dass Sie diese Verbindung am TV-Bildschirm erlauben."
+    "help_tip": "Bei der ersten Verbindung zwischen ioBroker und dem LG TV-Gerät ist es erforderlich <br />dass Sie diese Verbindung am TV-Bildschirm erlauben."
 }
