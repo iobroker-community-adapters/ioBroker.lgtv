@@ -46,7 +46,7 @@
     "@alcalzone/release-script-plugin-manual-review": "^3.7.0",
     "@iobroker/adapter-dev": "^1.4.0",
     "@iobroker/dev-server": "^0.7.8",
-    "@iobroker/eslint-config": "^2.0.2",
+    "@iobroker/eslint-config": "^2.1.0",
     "@iobroker/testing": "^5.0.4",
     "@tsconfig/node18": "^18.2.4",
     "@types/chai": "^4.3.20",
