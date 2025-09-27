@@ -607,18 +607,24 @@ function connect(cb) {
             }
         });
         sendCommand('ssap://com.webos.service.update/getCurrentSWInformation', null, (err, val) => {
-            if (!err && val) {
+            if (!err) {
                 adapter.log.debug(`getCurrentSWInformation: ${JSON.stringify(val)}`);
-                const macValue = adapter.config.mac ? adapter.config.mac : val.device_id;
-                if (macValue !== undefined) {
-                    adapter.setState('states.mac', macValue, true);
+                const mac = adapter.config.mac ? adapter.config.mac : val?.device_id;
+                if (mac !== undefined && mac !== null) {
+                    adapter.setState('states.mac', mac, true);
+                } else {
+                    adapter.log.debug('Skipping states.mac update because device_id is missing');
                 }
             }
         });
         sendCommand('ssap://system/getSystemInfo', null, (err, val) => {
-            if (!err && val && val.modelName !== undefined) {
+            if (!err) {
                 adapter.log.debug(`getSystemInfo: ${JSON.stringify(val)}`);
-                adapter.setState('states.model', val.modelName, true);
+                if (val?.modelName !== undefined && val.modelName !== null) {
+                    adapter.setState('states.model', val.modelName, true);
+                } else {
+                    adapter.log.debug('Skipping states.model update because modelName is missing');
+                }
             }
         });
         cb && cb();
