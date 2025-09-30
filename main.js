@@ -613,7 +613,8 @@ function connect(cb) {
                 if (mac !== undefined && mac !== null) {
                     adapter.setState('states.mac', mac, true);
                 } else {
-                    adapter.log.debug('Skipping states.mac update because device_id is missing');
+                    adapter.log.info('Skipping states.mac update because device_id is missing');
+                    adapter.setState('states.mac', '', true);
                 }
             }
         });
@@ -623,7 +624,8 @@ function connect(cb) {
                 if (val?.modelName !== undefined && val.modelName !== null) {
                     adapter.setState('states.model', val.modelName, true);
                 } else {
-                    adapter.log.debug('Skipping states.model update because modelName is missing');
+                    adapter.log.info('Skipping states.model update because modelName is missing');
+                    adapter.setState('states.model', '', true);
                 }
             }
         });
