@@ -6,16 +6,14 @@
     "name": "Sebastian Schultz",
     "email": "mail@sebastian-schultz.de"
   },
-  "maintainers": [
-    {
-      "name": "iobroker-community-adapters",
-      "email": "mcm57@gmx.at"
-    }
-  ],
   "contributors": [
     {
       "name": "Hobbyquaker",
       "email": "hq@ccu.io"
+    },
+    {
+      "name": "iobroker-community-adapters",
+      "email": "mcm57@gmx.at"
     }
   ],
   "homepage": "https://github.com/iobroker-community-adapters/iobroker.lgtv",
