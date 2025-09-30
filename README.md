@@ -177,6 +177,12 @@ is true when TV is on and false if TV is off
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+
+* (schoebelh) A crash when used with webOS update 25 has been fixed. [#336,#337]
+* (mcm1957) Adapter requires node.js >= 20, js-controller >= 6.0.11 and admin >= 7.6.17 now
+* (mcm1957) Dependencies have been updated
+
 ### 2.4.0 (2024-12-27)
 
 * (uKL) Ability to unicast the WOL packet has been added. This is needed if sender and TV are on different subnets.
