@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "lgtv",
-    "version": "2.4.0",
+    "version": "2.5.0",
     "news": {
+      "2.5.0": {
+        "en": "A crash when used with webOS update 25 has been fixed. [#336,#337]\nAdapter requires node.js >= 20, js-controller >= 6.0.11 and admin >= 7.6.17 now\nDependencies have been updated",
+        "de": "Ein Crash bei Verwendung mit webOS update 25 wurde behoben. (#336, #337)\nAdapter benötigt node.js >= 20, js-controller >= 6.0.11 und admin >= 7.6.17 jetzt\nAbhängigkeiten wurden aktualisiert",
+        "ru": "Исправлен сбой при использовании с обновлением 25 webOS. [#336, #337]\nАдаптер требует node.js >= 20, js-контроллер >= 6.0.11 и админ >= 7.6.17 сейчас\nЗависимости были обновлены",
+        "pt": "Um crash quando usado com o webOS update 25 foi corrigido. [# 336,# 337]\nO adaptador necessita de nodo.js >= 20, js-controlador >= 6.0.11 e administrador >= 7.6.17 agora\nAs dependências foram atualizadas",
+        "nl": "Een crash bij gebruik met webOS-update 25 is opgelost. [#336,#337]\nVoor adapters zijn node.js < 20, js-controller <= 6,0.11 en admin <= 7.6.17 nu vereist\nAfhankelijkheden zijn bijgewerkt",
+        "fr": "Un crash avec la mise à jour webOS 25 a été corrigé. [#336,#337]\nAdapter nécessite node.js >= 20, js-controller >= 6.0.11 et admin >= 7.6.17 maintenant\nLes dépendances ont été actualisées",
+        "it": "Un crash quando utilizzato con webOS aggiornamento 25 è stato fissato. [#336,#337]\nAdattatore richiede node.js >= 20, js-controller >= 6.0.11 e admin >= 7.6.17 ora\nLe dipendenze sono state aggiornate",
+        "es": "Un accidente cuando se utiliza con la actualización webOS 25 ha sido fijo. [#336,#337]\nAdaptador requiere node.js ю= 20, js-controller √= 6.0.11 y admin= 7.6.17 ahora\nSe han actualizado las dependencias",
+        "pl": "Katastrofa używana przy aktualizacji systemu weblos 25 została naprawiona. [# 336, # 337]\nAdapter wymaga node.js > = 20, kontroler js- i admin > = 7.6.17\nZaktualizowano zależności",
+        "uk": "Виправлено помилку при використанні вебОС оновлення 25. [#336,#337]\nАдаптер вимагає node.js >= 20, js-controller >= 6.0.11 і admin >= 7.6.17 тепер\nЗалежність було оновлено",
+        "zh-cn": "与 WebOS 更新 25 一起使用的崩溃已被修复 。 [#336,#337] (中文(简体) )\n适配器需要节点.js >= 20,js控制器 >= 6.0.11和admin >= 7.6.17 现在\n依赖关系已更新"
+      },
       "2.4.0": {
         "en": "Ability to unicast the WOL packet has been added. This is needed if sender and TV are on different subnets.\nDependencies have been updated",
         "de": "Die Funktion das WOL-Paket als Unicast Paket zu versenden wurde hinzugefügt. Dies ist erforderlich, wenn Sender und TV auf verschiedenen Subnetzen sind.\nAbhängigkeiten wurden aktualisiert",
@@ -80,19 +93,6 @@
         "pl": "Funkcjonalność państwa. Odwrócono się po tym, jak telewizja z kolei została odrestaurowana. (#165)\nZależności zostały zaktualizowane",
         "uk": "Функціональність держави. після вимкнення телевізора з відреставрованою відключенням. [#165]\nОновлено залежність",
         "zh-cn": "国家职能。 在电视转播后立即转播虚假情况,结果又恢复了。 [第165号]\n已更新了属地"
-      },
-      "2.1.1": {
-        "en": "Websocket configuration has been fixed [#161].",
-        "de": "Websocket-Konfiguration wurde korrigiert. [#161]",
-        "ru": "Конфигурация Websocket была исправлена #[161].",
-        "pt": "Configuração Websocket foi corrigida #[161].",
-        "nl": "Websocket vertrouwen is gerepareerd.",
-        "fr": "La configuration Websocket a été corrigée #[161].",
-        "it": "La configurazione Websocket è stata fissata #[161].",
-        "es": "La configuración Websocket ha sido fijada #[161].",
-        "pl": "Konfiguracja sieciowa została ustalona na #161 (pol.).",
-        "uk": "Налаштування Websocket було виправлено #[161].",
-        "zh-cn": "网站配置是固定的编号[161]。."
       }
     },
     "titleLang": {
