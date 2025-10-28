@@ -1,6 +1,7 @@
+
 # ioBroker Adapter Development with GitHub Copilot
 
-**Version:** 0.4.0
+**Version:** 0.4.2
 **Template Source:** https://github.com/DrozmotiX/ioBroker-Copilot-Instructions
 
 This file contains instructions and best practices for GitHub Copilot when working on ioBroker adapter development.
@@ -8,8 +9,6 @@ This file contains instructions and best practices for GitHub Copilot when worki
 ## Project Context
 
 You are working on an ioBroker adapter. ioBroker is an integration platform for the Internet of Things, focused on building smart home and industrial IoT solutions. Adapters are plugins that connect ioBroker to external systems, devices, or services.
-
-## Adapter-Specific Context: LG WebOS SmartTV
 
 **Adapter Name:** lgtv
 **Primary Function:** Controls and monitors LG WebOS Smart TVs via WebSocket connection
@@ -552,10 +551,12 @@ Use this consistent format for changelog entries:
 
 ### Package Management
 - Always use `npm` for dependency management in ioBroker adapters
+- When working on new features in a repository with an existing package-lock.json file, use `npm ci` to install dependencies. Use `npm install` only when adding or updating dependencies.
 - Keep dependencies minimal and focused
-- Regularly update dependencies to latest stable versions
-- Use `npm audit` to check for security vulnerabilities
-- Before committing, ensure package.json and package-lock.json are in sync by running `npm install`
+- Only update dependencies to latest stable versions when necessary or in separate Pull Requests. Avoid updating dependencies when adding features that don't require these updates.
+- When you modify `package.json`:
+  1. Run `npm install` to update and sync `package-lock.json`.
+  2. If `package-lock.json` was updated, commit both `package.json` and `package-lock.json`.
 
 ### Dependency Best Practices
 - Prefer built-in Node.js modules when possible
@@ -851,3 +852,5 @@ it('should handle TV connection timeout gracefully', function () {
     });
 }).timeout(30000);
 ```
+
+[CUSTOMIZE: Add any adapter-specific coding standards or patterns here]
