@@ -2,19 +2,10 @@
   "name": "iobroker.lgtv",
   "version": "2.5.0",
   "description": "ioBroker LG WebOS SmartTV Adapter",
-  "author": {
-    "name": "Sebastian Schultz",
-    "email": "mail@sebastian-schultz.de"
-  },
+  "author": "Sebastian Schultz <mail@sebastian-schultz.de>",
   "contributors": [
-    {
-      "name": "Hobbyquaker",
-      "email": "hq@ccu.io"
-    },
-    {
-      "name": "iobroker-community-adapters",
-      "email": "mcm57@gmx.at"
-    }
+    "Hobbyquaker <hq@ccu.io>",
+    "iobroker-community-adapters <mcm57@gmx.at>"
   ],
   "homepage": "https://github.com/iobroker-community-adapters/iobroker.lgtv",
   "license": "MIT",

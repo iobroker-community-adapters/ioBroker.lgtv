@@ -209,6 +209,8 @@ is true when TV is on and false if TV is off
 
 MIT License
 
+
+Copyright (c) 2026 iobroker-community-adapters <iobroker-community-adapters@gmx.de>  
 Copyright (c) 2024 - 2025 iobroker-community-adapters <iobroker-community-adapters@gmx.de>
 Copyright (c) 2023 Sebastian Schultz.
 
