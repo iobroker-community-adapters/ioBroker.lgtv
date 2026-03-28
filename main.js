@@ -4,8 +4,8 @@ const utils = require('@iobroker/adapter-core');
 let adapter;
 const LGTV = require('lgtv2');
 const wol = require('wol');
-const fs = require('fs');
-const path = require('path');
+const fs = require('node:fs');
+const path = require('node:path');
 
 let hostUrl;
 let isConnect = false;
@@ -792,7 +792,7 @@ function sendPacket(cmd, options, cb) {
 
 function bypassCertificateValidation() {
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-    const tls = require('tls');
+    const tls = require('node:tls');
 
     tls.checkServerIdentity = (_servername, _cert) => {
         // Skip certificate verification
