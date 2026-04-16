@@ -533,6 +533,7 @@
           "tv_speaker": "TV Speaker",
           "external_optical": "External Optical",
           "external_arc": "External ARC",
+          "external_speaker": "External Speaker",
           "lineout": "LineOut",
           "headphone": "Headphone",
           "tv_external_speaker": "TV + External Speaker",
