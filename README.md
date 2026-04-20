@@ -181,6 +181,7 @@ is true when TV is on and false if TV is off
 ### **WORK IN PROGRESS**
 - (mcm1957) Adapter requires node.js >= 22 now
 - (copilot) Adapter requires admin >= 7.7.22 now
+- (krobipd) External_speaker option to soundOutput state list added.
 - (mcm1957) Dependencies have been updated
 
 ### 2.5.0 (2025-09-30)
