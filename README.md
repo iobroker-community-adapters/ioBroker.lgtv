@@ -177,8 +177,7 @@ is true when TV is on and false if TV is off
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-
-### **WORK IN PROGRESS**
+### 2.6.0 (2026-04-20)
 - (mcm1957) Adapter requires node.js >= 22 now
 - (copilot) Adapter requires admin >= 7.7.22 now
 - (krobipd) External_speaker option to soundOutput state list added.
@@ -204,13 +203,6 @@ is true when TV is on and false if TV is off
 ### 2.3.1 (2024-12-03)
 
 * (Feuer-Sturm) Some default values and limits of paramaters have been corrected.
-
-### 2.3.0 (2024-12-02)
-
-* (mcm1957) Adapter requires node.js 20 now.
-* (mcm1957) Adapter requires js-controller 5 and admin 6 now.
-* (Jey-Cee) Adapter has been migrated to jsonConfig and responsive design rules have been applied.
-* (mcm1957) Dependencies have been updated.
 
 ## License
 

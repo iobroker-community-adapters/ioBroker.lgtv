@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "lgtv",
-    "version": "2.5.0",
+    "version": "2.6.0",
     "news": {
+      "2.6.0": {
+        "en": "Adapter requires node.js >= 22 now\nAdapter requires admin >= 7.7.22 now\nExternal_speaker option to soundOutput state list added.\nDependencies have been updated",
+        "de": "Adapter benötigt node.js >= 22 jetzt\nAdapter benötigt admin >= 7.7.22 jetzt\nExternal speaker option to soundOutput state list hinzugefügt.\nAbhängigkeiten wurden aktualisiert",
+        "ru": "Адаптер требует node.js >= 22 сейчас\nАдаптер требует администратора >= 7.7.22\nДобавлена опция External speaker для SoundOutput State List.\nЗависимости были обновлены",
+        "pt": "Adaptador requer nod.js >= 22 agora\nAdaptador requer admin >= 7.7.22 agora\nOpção externa alto-falante para a lista de estados de saída adicionada.\nAs dependências foram atualizadas",
+        "nl": "Voor de adapter zijn node.js < 22 nu nodig\nAdapter vereist admin < 7.7.22 nu\nExterne luidspreker optie om de statuslijst uit te voeren.\nAfhankelijkheden zijn bijgewerkt",
+        "fr": "Adaptateur nécessite node.js >= 22 maintenant\nAdaptateur nécessite admin >= 7.7.22 maintenant\nL'option External speaker pour sonner la liste des états de sortie a été ajoutée.\nLes dépendances ont été actualisées",
+        "it": "Adattatore richiede node.js >= 22 ora\nAdattatore richiede admin >= 7.7.22 ora\nEsterno speaker opzione per suonoEstratto elenco aggiunto.\nLe dipendenze sono state aggiornate",
+        "es": "Adaptador requiere node.js ю= 22 ahora\nEl adaptador requiere administrador= 7.7.22 ahora\nOpción External speaker para sonarLa lista de estados Output añadido.\nSe han actualizado las dependencias",
+        "pl": "Adapter wymaga node.js > = 22\nAdapter wymaga admin > = 7.7.22\nDodano opcję External _ speaker do listy stanu dźwięku.\nZaktualizowano zależności",
+        "uk": "Адаптер вимагає node.js >= 22 тепер\nАдаптер вимагає адмін >= 7.7.22 тепер\nВаріант зовнішнього спакера для звукозапису додано.\nЗалежність було оновлено",
+        "zh-cn": "适配器需要节点.js 现在22\n适任者需要管理员 \\ 7.7.22 现在\n添加语音输出状态列表的外部  speakers 选项 .\n依赖关系已更新"
+      },
       "2.5.0": {
         "en": "A crash when used with webOS update 25 has been fixed. [#336,#337]\nAdapter requires node.js >= 20, js-controller >= 6.0.11 and admin >= 7.6.17 now\nDependencies have been updated",
         "de": "Ein Crash bei Verwendung mit webOS update 25 wurde behoben. (#336, #337)\nAdapter benötigt node.js >= 20, js-controller >= 6.0.11 und admin >= 7.6.17 jetzt\nAbhängigkeiten wurden aktualisiert",
@@ -80,19 +93,6 @@
         "pl": "Adapter wymaga node.js 18 i sterownika js- > = 5 teraz\nZaktualizowano zależności",
         "uk": "Адаптер вимагає node.js 18 і js-controller >= 5 тепер\nЗалежність було оновлено",
         "zh-cn": "适配器需要节点.js 18和js控制器 QQ 现在5号\n依赖关系已更新"
-      },
-      "2.1.2": {
-        "en": "Functionality of state.on turning false immediately after turning off the TV with turnOff has been restored. [#165]\nDependencies have been updated",
-        "de": "Die Funktionalität, dass state.on sofort nach dem Ausschalten des Fernsehers mit turnOff auf „false“ gesetzt wurde, wurde wiederhergestellt. (#165)\nAbhängigkeiten wurden aktualisiert",
-        "ru": "Функциональность государства. при повороте ложно сразу после выключения телевизора с помощью turnOff был восстановлен. [#165]\nВ зависимости были обновлены",
-        "pt": "Funcionalidade do estado. ao virar falso imediatamente após desligar a TV com turnOff foi restaurado. [#165]\nAs dependências foram atualizadas",
-        "nl": "De staatsfunctie. De TV uitzetten met TurnOff is hersteld. _\nAfhankelijkheid",
-        "fr": "Fonctionnalité de l'état. de tourner à false immédiatement après avoir éteint la télévision avec turnOff a été restauré. [#165]\nLes dépendances ont été mises à jour",
-        "it": "Funzionalità dello stato. a girare falso subito dopo aver spento la TV con turnOff è stato ripristinato. [#165]\nLe dipendenze sono state aggiornate",
-        "es": "Funcionalidad del estado. al volverse falso inmediatamente después de apagar la televisión con turnOff ha sido restaurado. [#165]\nSe han actualizado las dependencias",
-        "pl": "Funkcjonalność państwa. Odwrócono się po tym, jak telewizja z kolei została odrestaurowana. (#165)\nZależności zostały zaktualizowane",
-        "uk": "Функціональність держави. після вимкнення телевізора з відреставрованою відключенням. [#165]\nОновлено залежність",
-        "zh-cn": "国家职能。 在电视转播后立即转播虚假情况,结果又恢复了。 [第165号]\n已更新了属地"
       }
     },
     "titleLang": {
