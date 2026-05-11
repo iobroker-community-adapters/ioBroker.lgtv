@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "lgtv",
-    "version": "2.7.1",
+    "version": "2.7.2",
     "news": {
+      "2.7.2": {
+        "en": "Reconnect watchdog no longer warns and recreates the LGTV instance while the TV is simply switched off. [#419]",
+        "de": "Reconnect Watchdog warnt nicht mehr und rekreiert die LGTV-Instanz, während der Fernseher einfach ausgeschaltet ist. [#419]",
+        "ru": "Reconnect watchdog больше не предупреждает и не воссоздает экземпляр LGTV, пока телевизор просто выключен.[419]",
+        "pt": "Reconectar watchdog já não avisa e recria a instância LGTV enquanto a TV é simplesmente desligada. [#419]",
+        "nl": "Waakhond opnieuw verbinden waarschuwt en herschept de LGTV instantie niet langer terwijl de TV simpelweg wordt uitgeschakeld. [#419]",
+        "fr": "Reconnecter le chien de garde n'avertit plus et recrée l'instance LGTV alors que le téléviseur est simplement éteint. [#419]",
+        "it": "Reconnect watchdog non avverte più e ricrea l'istanza LGTV mentre la TV è semplicemente spenta. [#419]",
+        "es": "Reconnect watchdog ya no advierte y recrea la instancia LGTV mientras que la televisión simplemente se apaga. [#419]",
+        "pl": "Recontact watchdog już nie ostrzega i odtwarza instancję LGTV, podczas gdy telewizor jest po prostu wyłączony. [# 419]",
+        "uk": "Відключення годинника більше не попереджає і відтворює екземпляр LGTV, поки телевізор просто вимкнено. [#419]",
+        "zh-cn": "重新连接的监视器不再警告和重新创建 LGTV 实例, 而电视却被关闭。 [# 419]"
+      },
       "2.7.1": {
         "en": "Handling of online state has been improved.\nSupport for picture settings has been added.\nTimerhandling has been cleaned up.\nDependencies have been updated",
         "de": "Der Umgang mit Online-Zustand wurde verbessert.\nUnterstützung für Bildeinstellungen wurde hinzugefügt.\nTimerhandling wurde gereinigt.\nAbhängigkeiten wurden aktualisiert",
