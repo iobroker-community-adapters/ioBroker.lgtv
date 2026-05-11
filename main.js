@@ -6,6 +6,7 @@ const LGTV = require('lgtv2');
 const wol = require('wol');
 const fs = require('node:fs');
 const path = require('node:path');
+const { probeTcpReachable } = require('./lib/probe');
 
 let hostUrl;
 let isConnect = false;
@@ -94,11 +95,17 @@ function coercePictureValue(key, raw) {
 // schedules another retry and the adapter stays "offline" until the user
 // restarts it. The watchdog observes how long ago the library last emitted a
 // `connecting` event and forces a fresh LGTV instance once the gap exceeds
-// the threshold while we're still disconnected.
+// the threshold while we're still disconnected. To avoid noisy warnings while
+// the TV is simply powered off, the watchdog gates the recreate behind a quick
+// TCP probe of the WebSocket port — the recreate (and warning) only fire when
+// the TV is actually reachable on the network.
 let lastConnectingAt = 0;
 let watchdogTimer = null;
+let watchdogProbeInFlight = false;
 const WATCHDOG_CHECK_MS = 30000;
 const WATCHDOG_STUCK_MS = 60000;
+const WATCHDOG_PROBE_PORT = 3001;
+const WATCHDOG_PROBE_TIMEOUT_MS = 2000;
 
 function startAdapter(options) {
     options = options || {};
@@ -883,24 +890,45 @@ function checkConnection(secondCheck) {
 }
 
 function checkReconnectWatchdog() {
-    if (isConnect) {
+    if (isConnect || watchdogProbeInFlight) {
         return;
     }
     const idleMs = Date.now() - lastConnectingAt;
     if (idleMs <= WATCHDOG_STUCK_MS) {
         return;
     }
-    adapter.log.warn(
-        `[WATCHDOG] No reconnect attempt for ${Math.round(idleMs / 1000)}s while disconnected — recreating LGTV instance`,
-    );
-    try {
-        lgtvobj && lgtvobj.disconnect();
-    } catch (err) {
-        adapter.log.debug(`[WATCHDOG] disconnect failed: ${err}`);
-    }
-    // Suppress retrigger until the new instance has had a chance to settle.
-    lastConnectingAt = Date.now();
-    adapter.setTimeout(connect, 1000);
+    watchdogProbeInFlight = true;
+    probeTcpReachable(adapter.config.ip, WATCHDOG_PROBE_PORT, WATCHDOG_PROBE_TIMEOUT_MS)
+        .then(reachable => {
+            if (!reachable) {
+                // TV is off / unreachable — defer the next probe by a full
+                // window so we don't poll the network every 30s while the TV
+                // sleeps. The lgtv2 library keeps retrying internally; the
+                // watchdog only steps in once it sees a stuck handshake.
+                lastConnectingAt = Date.now();
+                adapter.log.debug(
+                    `[WATCHDOG] TV ${adapter.config.ip}:${WATCHDOG_PROBE_PORT} not reachable — skipping recreate`,
+                );
+                return;
+            }
+            adapter.log.warn(
+                `[WATCHDOG] No reconnect attempt for ${Math.round(idleMs / 1000)}s while disconnected — recreating LGTV instance`,
+            );
+            try {
+                lgtvobj && lgtvobj.disconnect();
+            } catch (err) {
+                adapter.log.debug(`[WATCHDOG] disconnect failed: ${err}`);
+            }
+            // Suppress retrigger until the new instance has had a chance to settle.
+            lastConnectingAt = Date.now();
+            adapter.setTimeout(connect, 1000);
+        })
+        .catch(err => {
+            adapter.log.debug(`[WATCHDOG] probe failed: ${err}`);
+        })
+        .finally(() => {
+            watchdogProbeInFlight = false;
+        });
 }
 
 function checkCurApp(powerOff) {
