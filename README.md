@@ -178,7 +178,7 @@ is true when TV is on and false if TV is off
     ### **WORK IN PROGRESS**
 -->
 ### **WORK IN PROGRESS**
-- (krobipd) Reconnect watchdog no longer warns and recreates the LGTV instance while the TV is simply switched off. A short TCP reachability probe gates the recreate so the warning only fires when the TV is actually online but the WebSocket handshake is stuck.
+- (krobipd) Reconnect watchdog no longer warns and recreates the LGTV instance while the TV is simply switched off. [#419]
 
 ### 2.7.1 (2026-05-10)
 - (krobipd) Handling of online state has been improved.
