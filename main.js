@@ -1102,6 +1102,7 @@ function main() {
         const dir = path.join(utils.getAbsoluteDefaultDataDir(), adapter.namespace.replace('.', '_'));
         keyfile = path.join(dir, keyfile);
         adapter.log.debug(`adapter.config = ${JSON.stringify(adapter.config)}`);
+        adapter.config.healthInterval = parseInt(adapter.config.healthInterval, 10) || 0;
         if (adapter.config.healthInterval < 1) {
             healthInterval = false;
         } else if (adapter.config.healthInterval < 5000) {
