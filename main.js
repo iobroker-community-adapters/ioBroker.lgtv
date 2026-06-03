@@ -114,6 +114,9 @@ function startAdapter(options) {
         name: 'lgtv',
         stateChange: (id, state) => {
             if (id && state && !state.ack) {
+                if (state.val === undefined || state.val === null) {
+                    return;
+                }
                 id = id.substring(adapter.namespace.length + 1);
                 let vals, dx, dy;
                 if (~state.val.toString().indexOf(',')) {
@@ -484,7 +487,8 @@ function startAdapter(options) {
                             sendCommand(obj.url, obj.cmd, (err, val) => {
                                 if (!err) {
                                     adapter.log.debug(`Response RAW  command api ${JSON.stringify(val)}`);
-                                    adapter.setState('states.raw', JSON.stringify(val), true);
+                                    const rawResult = val !== undefined ? JSON.stringify(val) : '';
+                                    adapter.setState('states.raw', rawResult, true);
                                 }
                             });
                         } catch (e) {
@@ -605,13 +609,14 @@ function startAdapter(options) {
 
 function connect(cb) {
     hostUrl = `wss://${adapter.config.ip}:3001`;
-    let reconnect = adapter.config.reconnect;
+    let reconnect = parseInt(adapter.config.reconnect, 10);
     if (!reconnect || isNaN(reconnect) || reconnect < 5000) {
         reconnect = 5000;
     }
+    const timeout = parseInt(adapter.config.timeout, 10) || 15000;
     lgtvobj = new LGTV({
         url: hostUrl,
-        timeout: adapter.config.timeout,
+        timeout: timeout,
         reconnect: reconnect,
         clientKey: clientKey,
         saveKey: (key, cb) => {
@@ -662,20 +667,27 @@ function connect(cb) {
             */
             if (res) {
                 if (res.changed) {
-                    if (~res.changed.indexOf('volume') && res.volume !== undefined) {
+                    if (~res.changed.indexOf('volume') && res.volume !== undefined && res.volume !== null) {
                         volume = parseInt(res.volume);
-                        adapter.setState('states.volume', volume, true);
+                        if (Number.isFinite(volume)) {
+                            adapter.setState('states.volume', volume, true);
+                        }
                     }
-                    if (~res.changed.indexOf('muted') && res.muted !== undefined) {
-                        adapter.setState('states.mute', res.muted, true);
+                    if (~res.changed.indexOf('muted') && res.muted !== undefined && res.muted !== null) {
+                        adapter.setState('states.mute', !!res.muted, true);
                     }
                 } else if (res.volumeStatus) {
-                    if (res.volumeStatus.volume !== undefined) {
+                    if (res.volumeStatus.volume !== undefined && res.volumeStatus.volume !== null) {
                         volume = parseInt(res.volumeStatus.volume);
-                        adapter.setState('states.volume', volume, true);
+                        if (Number.isFinite(volume)) {
+                            adapter.setState('states.volume', volume, true);
+                        }
                     }
-                    if (res.volumeStatus.muteStatus !== undefined) {
-                        adapter.setState('states.mute', res.volumeStatus.muteStatus, true);
+                    if (res.volumeStatus.muteStatus !== undefined && res.volumeStatus.muteStatus !== null) {
+                        adapter.setState('states.mute', !!res.volumeStatus.muteStatus, true);
+                    }
+                    if (res.volumeStatus.soundOutput !== undefined && res.volumeStatus.soundOutput !== null) {
+                        adapter.setState('states.soundOutput', res.volumeStatus.soundOutput || '', true);
                     }
                 }
             }
