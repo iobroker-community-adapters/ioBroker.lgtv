@@ -1068,49 +1068,10 @@ function SetVolume(val) {
     }
 }
 
-// One-shot migration: upgrade `states.picture.eyeComfortMode` from the
-// previous string-with-on/off-states schema to a plain boolean so scripts
-// can use `setState(..., true)`. Idempotent — no-op once migrated.
-function migrateEyeComfortModeToBoolean(cb) {
-    const id = 'states.picture.eyeComfortMode';
-    adapter.getObject(id, (err, obj) => {
-        if (err || !obj || !obj.common) {
-            cb && cb();
-            return;
-        }
-        if (obj.common.type === 'boolean' && !obj.common.states) {
-            cb && cb();
-            return;
-        }
-        const patch = { common: { type: 'boolean', states: null } };
-        adapter.extendObject(id, patch, extErr => {
-            if (extErr) {
-                adapter.log.debug(`eyeComfortMode migration extendObject error: ${extErr}`);
-            } else {
-                adapter.log.info('Migrated states.picture.eyeComfortMode to boolean type');
-            }
-            // Coerce any leftover string value so a script polling right after
-            // the upgrade reads a real boolean.
-            adapter.getState(id, (gErr, st) => {
-                if (!gErr && st && typeof st.val === 'string') {
-                    const t = st.val.trim().toLowerCase();
-                    const v = t === 'on' || t === 'true' || t === '1';
-                    adapter.setState(id, v, true);
-                }
-                cb && cb();
-            });
-        });
-    });
-}
-
 function main() {
     if (adapter.config.ip) {
         adapter.log.info(`Ready. Configured WebOS TV IP: ${adapter.config.ip}`);
         adapter.subscribeStates('*');
-        // Run the one-shot eyeComfortMode boolean migration in the background.
-        // Failure is non-fatal — the adapter still works; only the state type
-        // remains string until the next start.
-        migrateEyeComfortModeToBoolean();
         const dir = path.join(utils.getAbsoluteDefaultDataDir(), adapter.namespace.replace('.', '_'));
         keyfile = path.join(dir, keyfile);
         adapter.log.debug(`adapter.config = ${JSON.stringify(adapter.config)}`);

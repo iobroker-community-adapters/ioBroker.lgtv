@@ -178,7 +178,9 @@ is true when TV is on and false if TV is off
     ### **WORK IN PROGRESS**
 -->
 ### **WORK IN PROGRESS**
-* (arteck) fix uncaught exception: Parameter "timeout"
+ - (arteck) fix uncaught exception: Parameter "timeout"
+ - (krobipd) Removed the eyeComfortMode boolean-migration 
+
 
 ### 2.7.2 (2026-05-11)
 - (krobipd) Reconnect watchdog no longer warns and recreates the LGTV instance while the TV is simply switched off. [#419]
