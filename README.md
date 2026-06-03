@@ -178,7 +178,12 @@ is true when TV is on and false if TV is off
     ### **WORK IN PROGRESS**
 -->
 ### **WORK IN PROGRESS**
-- (krobipd) Removed the eyeComfortMode boolean-migration that emitted `Migrated states.picture.eyeComfortMode to boolean type` on every adapter start. The js-controller schema merge already covers the type change on adapter upgrade; existing installs keep their state and a stale `states: {on, off}` enum is harmless. Run `iobroker upload lgtv` once if the picture-state still shows the old dropdown.
+ - (arteck) fix uncaught exception: Parameter "timeout"
+ - (krobipd) Removed the eyeComfortMode boolean-migration 
+
+
+### 2.7.2 (2026-05-11)
+- (krobipd) Reconnect watchdog no longer warns and recreates the LGTV instance while the TV is simply switched off. [#419]
 
 ### 2.7.1 (2026-05-10)
 - (krobipd) Handling of online state has been improved.
@@ -203,11 +208,7 @@ is true when TV is on and false if TV is off
 * (uKL) Ability to unicast the WOL packet has been added. This is needed if sender and TV are on different subnets.
 * (mcm1957) Dependencies have been updated
 
-### 2.3.2 (2024-12-21)
-
-* (mcm1957) Poll-interval limited to 5s minimum.
-* (mcm1957) Compact mode has been disabled due to outdated timer handling.
-* (mcm1957) Dependencies have been updated
+[Older changelogs can be found there](CHANGELOG_OLD.md)
 
 ## License
 
