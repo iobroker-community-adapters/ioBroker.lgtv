@@ -1,4 +1,9 @@
 # Older changes
+## 2.4.0 (2024-12-27)
+
+* (uKL) Ability to unicast the WOL packet has been added. This is needed if sender and TV are on different subnets.
+* (mcm1957) Dependencies have been updated
+
 ## 2.3.2 (2024-12-21)
 
 * (mcm1957) Poll-interval limited to 5s minimum.

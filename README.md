@@ -177,10 +177,9 @@ is true when TV is on and false if TV is off
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 2.7.3 (2026-06-03)
  - (arteck) fix uncaught exception: Parameter "timeout"
- - (krobipd) Removed the eyeComfortMode boolean-migration 
-
+ - (krobipd) Removed the eyeComfortMode boolean-migration
 
 ### 2.7.2 (2026-05-11)
 - (krobipd) Reconnect watchdog no longer warns and recreates the LGTV instance while the TV is simply switched off. [#419]
@@ -203,14 +202,7 @@ is true when TV is on and false if TV is off
 * (mcm1957) Adapter requires node.js >= 20, js-controller >= 6.0.11 and admin >= 7.6.17 now
 * (mcm1957) Dependencies have been updated
 
-### 2.4.0 (2024-12-27)
-
-* (uKL) Ability to unicast the WOL packet has been added. This is needed if sender and TV are on different subnets.
-* (mcm1957) Dependencies have been updated
-
-[Older changelogs can be found there](CHANGELOG_OLD.md)
-
-## License
+[Older changelogs can be found there](CHANGELOG_OLD.md)## License
 
 MIT License
 

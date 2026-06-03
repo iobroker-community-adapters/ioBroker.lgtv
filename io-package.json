@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "lgtv",
-    "version": "2.7.2",
+    "version": "2.7.3",
     "news": {
+      "2.7.3": {
+        "en": "fix uncaught exception: Parameter \"timeout\"\nRemoved the eyeComfortMode boolean-migration",
+        "de": "fix uncaught Ausnahme: Parameter \"timeout\"\nEntfernen Sie das AugeComfortMode boolean-migration",
+        "ru": "исправить непойманное исключение: параметр «тайм-аут»\nСнят глазComfortMode булево-миграция",
+        "pt": "corrigir exceção não recebida: Parâmetro \"timeout\"\nRemoveu o eyeComfortMode boolean-migration",
+        "nl": "fix uncaught uitzondering: Parameter \"timeout\"\nVerwijderde het oogComfortMode boolean-migratie",
+        "fr": "correction d'exception non prise: Paramètre \"timeout\"\nSupprimé l'œilComfortMode de migration booléenne",
+        "it": "correggere l'eccezione: Parametro \"timeout\"\nRimuovi l'occhioComfortMode boolean-migration",
+        "es": "fijar la excepción no traída: Parámetro \"timeout\"\nQuitar el ojoComfortMode boolean-migración",
+        "pl": "naprawić niezłowiony wyjątek: Parametr \"timeout\"\nUsunięto eyeoComfortMode boolean- migracja",
+        "uk": "зафіксувати виключення: параметр \"timeout\"\nЗняття очейComfortMode boolean-migration",
+        "zh-cn": "固定未发现的例外:参数“超时”\n删除了眼部舒适度Mode布尔迁移"
+      },
       "2.7.2": {
         "en": "Reconnect watchdog no longer warns and recreates the LGTV instance while the TV is simply switched off. [#419]",
         "de": "Reconnect Watchdog warnt nicht mehr und rekreiert die LGTV-Instanz, während der Fernseher einfach ausgeschaltet ist. [#419]",
@@ -80,19 +93,6 @@
         "pl": "Odstęp między pacjentami w stanie zdrowia ograniczony do minimum 5.\nTryb kompaktowy został wyłączony z powodu przestarzałego obsługi zegara.\nZaktualizowano zależności",
         "uk": "Охорона здоров'я обмежена до 5-х мінімуму.\nКомпактний режим був вимкнений через застарілу роботу таймера.\nЗалежність було оновлено",
         "zh-cn": "健康间歇时间最少限5秒.\n由于过时的定时器处理,已禁用压缩模式 .\n依赖关系已更新"
-      },
-      "2.3.1": {
-        "en": "Some default values and limits of paramaters have been corrected.",
-        "de": "Einige Standardwerte und Grenzwerte von Paramatern wurden korrigiert.",
-        "ru": "Были исправлены некоторые значения по умолчанию и пределы параматеров.",
-        "pt": "Alguns valores padrão e limites de paramaters foram corrigidos.",
-        "nl": "Sommige standaardwaarden en grenzen van paramaters zijn gecorrigeerd.",
-        "fr": "Certaines valeurs et limites par défaut des paramamètres ont été corrigées.",
-        "it": "Alcuni valori e limiti di default dei paramaters sono stati corretti.",
-        "es": "Se han corregido algunos valores y límites predeterminados de los paramatistas.",
-        "pl": "Niektóre wartości domyślne i granice parametrów zostały skorygowane.",
-        "uk": "Виправлено деякі значення за замовчуванням та ліміти параметрів.",
-        "zh-cn": "参数的一些默认值和限度已经纠正."
       }
     },
     "titleLang": {
