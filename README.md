@@ -177,6 +177,10 @@ is true when TV is on and false if TV is off
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+- (mcm1957) Compact mode has been disabled due to usage of process.env
+- (mcm1957) Dependencies have been updated
+
 ### 2.7.3 (2026-06-03)
  - (arteck) fix uncaught exception: Parameter "timeout"
  - (krobipd) Removed the eyeComfortMode boolean-migration
