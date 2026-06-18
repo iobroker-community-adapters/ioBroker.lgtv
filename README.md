@@ -177,7 +177,7 @@ is true when TV is on and false if TV is off
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 2.7.4 (2026-06-18)
 - (mcm1957) Compact mode has been disabled due to usage of process.env
 - (mcm1957) Dependencies have been updated
 
@@ -199,12 +199,6 @@ is true when TV is on and false if TV is off
 - (copilot) Adapter requires admin >= 7.7.22 now
 - (krobipd) External_speaker option to soundOutput state list added.
 - (mcm1957) Dependencies have been updated
-
-### 2.5.0 (2025-09-30)
-
-* (schoebelh) A crash when used with webOS update 25 has been fixed. [#336,#337]
-* (mcm1957) Adapter requires node.js >= 20, js-controller >= 6.0.11 and admin >= 7.6.17 now
-* (mcm1957) Dependencies have been updated
 
 [Older changelogs can be found there](CHANGELOG_OLD.md)
 
