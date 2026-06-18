@@ -202,7 +202,9 @@ is true when TV is on and false if TV is off
 * (mcm1957) Adapter requires node.js >= 20, js-controller >= 6.0.11 and admin >= 7.6.17 now
 * (mcm1957) Dependencies have been updated
 
-[Older changelogs can be found there](CHANGELOG_OLD.md)## License
+[Older changelogs can be found there](CHANGELOG_OLD.md)
+
+## License
 
 MIT License
 
