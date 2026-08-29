@@ -2,7 +2,7 @@
 
 const utils = require('@iobroker/adapter-core');
 let adapter;
-const LGTV = require('lgtv2');
+const LGTV = /** @type {any} */ (require('lgtv2'));
 const wol = require('wol');
 const fs = require('node:fs');
 const path = require('node:path');
@@ -569,7 +569,18 @@ function startAdapter(options) {
                         if (~id.indexOf('remote')) {
                             adapter.log.debug(`State change "${id}" - VALUE: ${JSON.stringify(state)}`);
                             const ids = id.split('.');
-                            const key = ids[ids.length - 1].toString().toUpperCase();
+                            const stateName = ids[ids.length - 1].toString();
+                            if (stateName.toLowerCase() === 'power' && state.val) {
+                                wakeTv();
+                                adapter.setState(id, state.val, true);
+                                break;
+                            }
+                            const remoteKeyMap = {
+                                '3dmode': '3D_MODE',
+                                livezoom: 'LIVE_ZOOM',
+                                aspectratio: 'ASPECT_RATIO',
+                            };
+                            const key = remoteKeyMap[stateName.toLowerCase()] || stateName.toUpperCase();
                             sendCommand('button', { name: key }, (err, _val) => {
                                 if (!err) {
                                     adapter.setState(id, state.val, true);
@@ -648,6 +659,12 @@ function connect(cb) {
     });
 
     lgtvobj.on('error', error => {
+        if (error && /register already in progress/i.test(error.message || String(error))) {
+            // webOS 26 may briefly reject a second register while the first
+            // pairing request is still being accepted. lgtv2 retries and the
+            // following connection succeeds, so this is not actionable.
+            return;
+        }
         adapter.log.debug(`Error on connecting or sending command to WebOS TV: ${error}`);
     });
 
@@ -784,7 +801,6 @@ function connect(cb) {
                 }
             };
             lgtvobj.subscribe('ssap://settings/getSystemSettings', { category: cat, keys: [key] }, handler);
-            lgtvobj.request('ssap://settings/getSystemSettings', { category: cat, keys: [key] }, handler);
         });
         sendCommand('ssap://api/getServiceList', null, (err, val) => {
             if (!err) {
@@ -1027,11 +1043,38 @@ function sendPacket(cmd, options, cb) {
     } else {
         bypassCertificateValidation();
         lgtvobj.getSocket('ssap://com.webos.service.networkinput/getPointerInputSocket', (err, sock) => {
-            if (!err) {
+            if (err) {
+                adapter.log.debug(`ERROR opening WebOS remote input socket: ${err}`);
+                cb && cb(err);
+                return;
+            }
+            try {
                 sock.send(cmd, options);
+                cb && cb(null, { returnValue: true });
+            } catch (sendError) {
+                adapter.log.debug(`ERROR sending WebOS remote input command: ${sendError}`);
+                cb && cb(sendError);
             }
         });
     }
+}
+
+function wakeTv() {
+    adapter.getState(`${adapter.namespace}.states.mac`, (err, macState) => {
+        const mac = macState?.val || adapter.config.mac;
+        if (err || !mac) {
+            adapter.log.error('Cannot wake TV: no MAC address configured or learned yet.');
+            return;
+        }
+        const wakeOptions = adapter.config.wolwithip ? { address: adapter.config.ip } : undefined;
+        wol.wake(mac, wakeOptions, wakeError => {
+            if (wakeError) {
+                adapter.log.error(`WOL failed for TV ${mac}: ${wakeError}`);
+            } else {
+                adapter.log.debug(`Sent WOL to TV MAC ${mac}`);
+            }
+        });
+    });
 }
 
 function bypassCertificateValidation() {
