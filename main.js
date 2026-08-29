@@ -201,32 +201,7 @@ function startAdapter(options) {
                                 });
                             }
                         } else {
-                            adapter.getState(`${adapter.namespace}.states.mac`, (err, macState) => {
-                                adapter.log.debug(`GetState mac: ${JSON.stringify(macState)}`);
-                                if (macState) {
-                                    if (adapter.config.wolwithip) {
-                                        adapter.log.debug(`Should include mac address with WOL packet.`);
-
-                                        wol.wake(macState.val, { address: adapter.config.ip }, (err, _res) => {
-                                            if (!err) {
-                                                adapter.log.debug(
-                                                    `Send WOL to MAC: {${macState.val}} & IP: {${adapter.config.ip}} OK`,
-                                                );
-                                            }
-                                        });
-                                    } else {
-                                        wol.wake(macState.val, (err, _res) => {
-                                            if (!err) {
-                                                adapter.log.debug(`Send WOL to MAC: {${macState.val}} OK`);
-                                            }
-                                        });
-                                    }
-                                } else {
-                                    adapter.log.error(
-                                        'Error get MAC address TV. Please turn on the TV manually first!',
-                                    );
-                                }
-                            });
+                            wakeTv();
                         }
                         break;
 
@@ -1032,6 +1007,24 @@ function sendPacket(cmd, options, cb) {
             }
         });
     }
+}
+
+function wakeTv() {
+    adapter.getState(`${adapter.namespace}.states.mac`, (err, macState) => {
+        const mac = macState?.val || adapter.config.mac;
+        if (err || !mac) {
+            adapter.log.error('Cannot wake TV: no MAC address configured or learned yet.');
+            return;
+        }
+        const wakeOptions = adapter.config.wolwithip ? { address: adapter.config.ip } : undefined;
+        wol.wake(mac, wakeOptions, wakeError => {
+            if (wakeError) {
+                adapter.log.error(`WOL failed for TV ${mac}: ${wakeError}`);
+            } else {
+                adapter.log.debug(`Sent WOL to TV MAC ${mac}`);
+            }
+        });
+    });
 }
 
 function bypassCertificateValidation() {

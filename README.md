@@ -177,6 +177,9 @@ is true when TV is on and false if TV is off
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+- (Voodoo2man) Use the configured MAC address as a fallback for Wake-on-LAN.
+
 ### 2.7.4 (2026-06-18)
 - (mcm1957) Compact mode has been disabled due to usage of process.env
 - (mcm1957) Dependencies have been updated
