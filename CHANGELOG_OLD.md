@@ -1,4 +1,10 @@
 # Older changes
+## 2.7.1 (2026-05-10)
+- (krobipd) Handling of online state has been improved.
+- (krobipd) Support for picture settings has been added.
+- (krobipd) Timer handling has been cleaned up.
+- (mcm1957) Dependencies have been updated
+
 ## 2.6.0 (2026-04-20)
 - (mcm1957) Adapter requires node.js >= 22 now
 - (copilot) Adapter requires admin >= 7.7.22 now

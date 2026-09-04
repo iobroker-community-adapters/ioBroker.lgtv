@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "lgtv",
-    "version": "3.0.0",
+    "version": "3.0.1",
     "news": {
+      "3.0.1": {
+        "en": "Removed prepare script",
+        "de": "Prepe-Script entfernt",
+        "ru": "Удален сценарий подготовки",
+        "pt": "Roteiro de preparação",
+        "nl": "Prepare-script verwijderd",
+        "fr": "Script de préparation supprimé",
+        "it": "Prepara script rimosso",
+        "es": "Se eliminó Prepare el guion",
+        "pl": "Usunięto skrypt przygotowania",
+        "uk": "Вилучено скрипт підготовки",
+        "zh-cn": "移除了准备脚本"
+      },
       "3.0.0": {
         "en": "Add WebOS 26 compatibility.\nUse the configured MAC address as a fallback for Wake-on-LAN.\nA malformed MAC address or a Wake-on-LAN socket error does not terminate the adapter anymore\nThe MAC address is validated in the admin configuration\nAdded the missing default value for the `wolwithip` setting\n`remote.power` switches the TV off again instead of only sending Wake-on-LAN\nMigrated the connection options from the deprecated `wsconfig` block to the lgtv2 v2 option names\nRemoved the process wide TLS bypass, the certificate check is now relaxed per connection only\nRemoved the unused `websocket` dependency\nThe adapter was refactored to TypeScript. The sources moved to `src/`, the published code is the compiled `build/`\nThe admin translations moved from `admin/i18n/<lang>/translations.json` to the flat `admin/i18n/<lang>.json`\nThe unit tests use `node:assert` instead of `chai`\nAdded a \"Control TV\" remote-control widget for the ioBroker.devices adapter",
         "de": "WebOS 26-kompatibel.\nNutzt die konfigurierte MAC-Adresse als Ersatz für Wake-On-LAN.\nEine falsche MAC-Adresse oder ein Wake-on-LAN-Socketfehler beenden den Adapter nicht mehr\nDie MAC-Adresse wird in der Admin-Konfiguration geprüft\nFehlender Standardwert für `wolwithip` hinzugefügt\n`remote.power` schaltet den TV wieder aus, statt nur Wake-on-LAN zu senden\nVerbindungsoptionen vom veralteten Block „wsconfig“ auf LGTV2 v2-Optionsnamen migriert\nTLS-Bypass entfernt, die Zertifikatsprüfung ist nun nur noch pro Verbindung möglich\nUngenutzte Websocket-Abhängigkeit entfernt\nDer Adapter wurde auf TypeScript umgestellt. Die Quellen wurden nach `src/“ verschoben, der Code ist kompiliert\n<lang>Die Admin-Übersetzungen wurden von `admin/i18n/ /translations.json `in `admin/i18n/ <lang>.json`\nDie Unit-Tests nutzen `node:assert` statt `chai`\nWidget „TV steuern“ für den ioBroker.Devices-Adapter hinzugefügt",
@@ -80,19 +93,6 @@
         "pl": "Adapter wymaga node.js > = 22\nAdapter wymaga admin > = 7.7.22\nDodano opcję External _ speaker do listy stanu dźwięku.\nZaktualizowano zależności",
         "uk": "Адаптер вимагає node.js >= 22 тепер\nАдаптер вимагає адмін >= 7.7.22 тепер\nВаріант зовнішнього спакера для звукозапису додано.\nЗалежність було оновлено",
         "zh-cn": "适配器需要节点.js 现在22\n适任者需要管理员 \\ 7.7.22 现在\n添加语音输出状态列表的外部  speakers 选项 .\n依赖关系已更新"
-      },
-      "2.5.0": {
-        "en": "A crash when used with webOS update 25 has been fixed. [#336,#337]\nAdapter requires node.js >= 20, js-controller >= 6.0.11 and admin >= 7.6.17 now\nDependencies have been updated",
-        "de": "Ein Crash bei Verwendung mit webOS update 25 wurde behoben. (#336, #337)\nAdapter benötigt node.js >= 20, js-controller >= 6.0.11 und admin >= 7.6.17 jetzt\nAbhängigkeiten wurden aktualisiert",
-        "ru": "Исправлен сбой при использовании с обновлением 25 webOS. [#336, #337]\nАдаптер требует node.js >= 20, js-контроллер >= 6.0.11 и админ >= 7.6.17 сейчас\nЗависимости были обновлены",
-        "pt": "Um crash quando usado com o webOS update 25 foi corrigido. [# 336,# 337]\nO adaptador necessita de nodo.js >= 20, js-controlador >= 6.0.11 e administrador >= 7.6.17 agora\nAs dependências foram atualizadas",
-        "nl": "Een crash bij gebruik met webOS-update 25 is opgelost. [#336,#337]\nVoor adapters zijn node.js < 20, js-controller <= 6,0.11 en admin <= 7.6.17 nu vereist\nAfhankelijkheden zijn bijgewerkt",
-        "fr": "Un crash avec la mise à jour webOS 25 a été corrigé. [#336,#337]\nAdapter nécessite node.js >= 20, js-controller >= 6.0.11 et admin >= 7.6.17 maintenant\nLes dépendances ont été actualisées",
-        "it": "Un crash quando utilizzato con webOS aggiornamento 25 è stato fissato. [#336,#337]\nAdattatore richiede node.js >= 20, js-controller >= 6.0.11 e admin >= 7.6.17 ora\nLe dipendenze sono state aggiornate",
-        "es": "Un accidente cuando se utiliza con la actualización webOS 25 ha sido fijo. [#336,#337]\nAdaptador requiere node.js ю= 20, js-controller √= 6.0.11 y admin= 7.6.17 ahora\nSe han actualizado las dependencias",
-        "pl": "Katastrofa używana przy aktualizacji systemu weblos 25 została naprawiona. [# 336, # 337]\nAdapter wymaga node.js > = 20, kontroler js- i admin > = 7.6.17\nZaktualizowano zależności",
-        "uk": "Виправлено помилку при використанні вебОС оновлення 25. [#336,#337]\nАдаптер вимагає node.js >= 20, js-controller >= 6.0.11 і admin >= 7.6.17 тепер\nЗалежність було оновлено",
-        "zh-cn": "与 WebOS 更新 25 一起使用的崩溃已被修复 。 [#336,#337] (中文(简体) )\n适配器需要节点.js >= 20,js控制器 >= 6.0.11和admin >= 7.6.17 现在\n依赖关系已更新"
       }
     },
     "titleLang": {

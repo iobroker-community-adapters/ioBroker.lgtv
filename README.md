@@ -196,7 +196,7 @@ widget settings.
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 3.0.1 (2026-09-04)
 - (GermanBluefox) Removed prepare script
 
 ### 3.0.0 (2026-09-04)
@@ -224,12 +224,6 @@ widget settings.
 
 ### 2.7.2 (2026-05-11)
 - (krobipd) Reconnect watchdog no longer warns and recreates the LGTV instance while the TV is simply switched off. [#419]
-
-### 2.7.1 (2026-05-10)
-- (krobipd) Handling of online state has been improved.
-- (krobipd) Support for picture settings has been added.
-- (krobipd) Timer handling has been cleaned up.
-- (mcm1957) Dependencies have been updated
 
 [Older changelogs can be found there](CHANGELOG_OLD.md)
 
