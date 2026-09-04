@@ -196,7 +196,7 @@ widget settings.
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 3.0.0 (2026-09-04)
 - (Voodoo2man) Add WebOS 26 compatibility.
 - (Voodoo2man) Use the configured MAC address as a fallback for Wake-on-LAN.
 - (GermanBluefox) A malformed MAC address or a Wake-on-LAN socket error does not terminate the adapter anymore
@@ -226,12 +226,6 @@ widget settings.
 - (krobipd) Handling of online state has been improved.
 - (krobipd) Support for picture settings has been added.
 - (krobipd) Timerhandling has been cleaned up.
-- (mcm1957) Dependencies have been updated
-
-### 2.6.0 (2026-04-20)
-- (mcm1957) Adapter requires node.js >= 22 now
-- (copilot) Adapter requires admin >= 7.7.22 now
-- (krobipd) External_speaker option to soundOutput state list added.
 - (mcm1957) Dependencies have been updated
 
 [Older changelogs can be found there](CHANGELOG_OLD.md)

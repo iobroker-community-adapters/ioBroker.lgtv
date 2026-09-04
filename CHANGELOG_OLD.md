@@ -1,10 +1,15 @@
 # Older changes
+## 2.6.0 (2026-04-20)
+- (mcm1957) Adapter requires node.js >= 22 now
+- (copilot) Adapter requires admin >= 7.7.22 now
+- (krobipd) External_speaker option to soundOutput state list added.
+- (mcm1957) Dependencies have been updated
+
 ## 2.5.0 (2025-09-30)
 
 * (schoebelh) A crash when used with webOS update 25 has been fixed. [#336,#337]
 * (mcm1957) Adapter requires node.js >= 20, js-controller >= 6.0.11 and admin >= 7.6.17 now
 * (mcm1957) Dependencies have been updated
-
 
 ## 2.4.0 (2024-12-27)
 
