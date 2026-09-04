@@ -61,7 +61,6 @@
     "devices-3-copy": "tsx tasks.ts --3-copy",
     "check": "tsc -p tsconfig.json --noEmit",
     "check-devices": "tsc --noEmit -p src-devices/tsconfig.json",
-    "prepare": "npm run build",
     "lint": "eslint -c eslint.config.mjs",
     "test:js": "mocha test/probe --exit",
     "test:package": "mocha test/packageFiles --exit",

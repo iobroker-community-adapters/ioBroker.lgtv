@@ -20,6 +20,7 @@ admin/i18n/*/flat.txt
 .commitinfo
 
 # TypeScript build output
+build
 *.tsbuildinfo
 
 # devices widget (sources build into admin/dm-widgets, which IS committed)

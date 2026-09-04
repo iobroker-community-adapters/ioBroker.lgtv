@@ -24,7 +24,7 @@ npm run translate                         # translate-adapter -b admin/i18n/en.j
 npm run release-patch                     # moves the README changelog into io-package news
 ```
 
-`npm ci`/`npm install` runs `prepare` → `npm run build`, so a fresh checkout is buildable without an extra step. `npm run test:js` requires `build/lib/probe.js`, i.e. a completed build. The integration test aborts with "JS-Controller is already running!" if one is running on the machine.
+There is deliberately **no `prepare` script** — `npm ci`/`npm install` does not build. Run `npm run build` yourself after a fresh checkout, before starting the adapter and before `npm run test:js` (it requires `build/lib/probe.js`). Because `build/` is neither committed nor built on install, `common.nogit` is `true` in `io-package.json`: the adapter can only be installed from npm, not from GitHub. The integration test aborts with "JS-Controller is already running!" if one is running on the machine.
 
 ## Architecture
 

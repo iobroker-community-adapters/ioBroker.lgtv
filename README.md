@@ -171,7 +171,7 @@ it is true when TV is on and false if TV is off
 
 ---
 
-## Remote control widget for ioBroker.devices
+## Remote control widget for `ioBroker.devices`
 
 The adapter ships a **Control TV** widget for the `devices` adapter. Add it there via
 *Add widget → Control TV*, pick the lgtv instance, and the widget drives the `remote.*` states
@@ -196,6 +196,9 @@ widget settings.
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+- (GermanBluefox) Removed prepare script
+
 ### 3.0.0 (2026-09-04)
 - (Voodoo2man) Add WebOS 26 compatibility.
 - (Voodoo2man) Use the configured MAC address as a fallback for Wake-on-LAN.
@@ -209,7 +212,7 @@ widget settings.
 - (GermanBluefox) The adapter was refactored to TypeScript. The sources moved to `src/`, the published code is the compiled `build/`
 - (GermanBluefox) The admin translations moved from `admin/i18n/<lang>/translations.json` to the flat `admin/i18n/<lang>.json`
 - (GermanBluefox) The unit tests use `node:assert` instead of `chai`
-- (GermanBluefox) Added a "Control TV" remote-control widget for the ioBroker.devices adapter
+- (GermanBluefox) Added a "Control TV" remote-control widget for the `ioBroker.devices` adapter
 
 ### 2.7.4 (2026-06-18)
 - (mcm1957) Compact mode has been disabled due to usage of process.env
@@ -225,7 +228,7 @@ widget settings.
 ### 2.7.1 (2026-05-10)
 - (krobipd) Handling of online state has been improved.
 - (krobipd) Support for picture settings has been added.
-- (krobipd) Timerhandling has been cleaned up.
+- (krobipd) Timer handling has been cleaned up.
 - (mcm1957) Dependencies have been updated
 
 [Older changelogs can be found there](CHANGELOG_OLD.md)

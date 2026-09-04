@@ -145,6 +145,7 @@
     "loglevel": "info",
     "tier": 2,
     "mode": "daemon",
+    "nogit": true,
     "type": "multimedia",
     "compact": false,
     "connectionType": "local",
