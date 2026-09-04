@@ -82,6 +82,43 @@ Writes cannot use `ssap://settings/setSystemSettings` — it is not exposed publ
 
 `wakeTv()` reads `states.mac` and falls back to `config.mac`, because `states.mac` is only filled after the first successful connection. `wol.wake()` **throws synchronously** on a malformed MAC and the promise it returns rejects *in addition to* calling the callback — both are handled, and both would otherwise take the adapter down. The admin dialog validates the MAC format as well.
 
+## Devices widget (`src-devices/`)
+
+`common.deviceWidgets` in `io-package.json` registers the **Control TV** remote for the
+ioBroker.devices adapter. The widget is a Module Federation remote (`DevicesWidgetLgTvSet`,
+entry `customDevices.js`) built with Vite and copied to `admin/dm-widgets/` by `tasks.ts`.
+
+```bash
+npm run build-devices     # npm install + vite build + copy to admin/dm-widgets
+npm run check-devices     # tsc for the widget - vite strips types WITHOUT checking them
+cd src-devices && npm start   # standalone dev harness against a js-controller on :8081
+```
+
+- **`admin/dm-widgets/` is committed** (like ioBroker.ping does it), so CI and `npm pack` never
+  have to run Vite. Re-run `npm run build-devices` whenever something under `src-devices/`
+  changes, and commit the result.
+- `tasks.ts` sets `process.execArgv = []` before forking. Without it tsx's loader bootstrap is
+  inherited by the forked Vite, which then loads `vite.config.ts` as CommonJS and dies with
+  `define_import_meta_default.resolve is not a function`.
+- The widget imports React/MUI from `@iobroker/dm-widgets`, never from `react`/`@mui/material`
+  directly, so it shares the host's instances. It uses only `Box` and `Typography` — the
+  smallest set the host is guaranteed to bridge — and draws every key as a text glyph rather
+  than depending on a particular MUI icon being exposed.
+- Keys write `true` to `lgtv.<n>.remote.<key>` with ack=false; status comes from
+  `states.on`, `states.volume`, `states.mute` and `states.currentApp`. Everything is derived
+  from the configured instance, so the widget needs **no `sendTo` handler** in the adapter.
+- Widget translations live in `src-devices/src/i18n/<lang>.json` (keys prefixed
+  `lgtvremote_`) and are separate from the admin translations in `admin/i18n/`.
+- The README screenshots in `docs/` are produced from `src-devices/preview.html`, which renders
+  all three layouts with canned state (no js-controller needed). Serve it with
+  `cd src-devices && npx vite --port 3199` and screenshot the `[data-shot]` elements. The
+  preview mirrors two things the host normally provides: the `render()` size dispatch and a
+  representative `getTileStyles` (the packaged one is a stub returning `{}`).
+- Tile wrappers set `boxSizing: 'border-box'` explicitly and grids use `minmax(0, 1fr)`. Both
+  matter: the host's CssBaseline would supply border-box, but relying on it made the tile
+  overflow its own cell, and a bare `1fr` is `minmax(auto, 1fr)`, which let the square keys
+  blow the track out and clipped the last column.
+
 ## Conventions
 
 - Timers always via `this.setTimeout` / `this.setInterval` (adapter-core cleans them up on unload), never the globals.

@@ -171,6 +171,25 @@ it is true when TV is on and false if TV is off
 
 ---
 
+## Remote control widget for ioBroker.devices
+
+The adapter ships a **Control TV** widget for the `devices` adapter. Add it there via
+*Add widget → Control TV*, pick the lgtv instance, and the widget drives the `remote.*` states
+of that instance directly. The status line shows the current volume, the mute state and the
+running app; the dot in the corner reflects `states.on`.
+
+The power key follows `remote.power`: it sends the POWER button while the TV is on and a
+Wake-on-LAN packet while it is off.
+
+| Compact (1x1)                              | Wide (2x0.5)                         | Full remote (2x1 / 2x2)                     |
+|--------------------------------------------|--------------------------------------|---------------------------------------------|
+| ![Compact layout](docs/widget-compact.png) | ![Wide layout](docs/widget-wide.png) | ![Full remote layout](docs/widget-full.png) |
+
+The channel keys, media keys, colour keys and the number pad can each be switched off in the
+widget settings.
+
+---
+
 ## Changelog
 
 <!--
@@ -190,6 +209,7 @@ it is true when TV is on and false if TV is off
 - (GermanBluefox) The adapter was refactored to TypeScript. The sources moved to `src/`, the published code is the compiled `build/`
 - (GermanBluefox) The admin translations moved from `admin/i18n/<lang>/translations.json` to the flat `admin/i18n/<lang>.json`
 - (GermanBluefox) The unit tests use `node:assert` instead of `chai`
+- (GermanBluefox) Added a "Control TV" remote-control widget for the ioBroker.devices adapter
 
 ### 2.7.4 (2026-06-18)
 - (mcm1957) Compact mode has been disabled due to usage of process.env

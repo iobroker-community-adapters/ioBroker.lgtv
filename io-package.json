@@ -161,6 +161,28 @@
     ],
     "adminUI": {
       "config": "json"
+    },
+    "deviceWidgets": {
+      "components": [
+        {
+          "name": "RemoteControlComponent",
+          "label": "Control TV",
+          "description": {
+            "en": "Remote control for the LG WebOS TV",
+            "de": "Fernbedienung für den LG WebOS TV",
+            "ru": "Пульт дистанционного управления для LG WebOS TV",
+            "pt": "Controlo remoto para a TV LG WebOS",
+            "nl": "Afstandsbediening voor de LG WebOS TV",
+            "fr": "Télécommande pour le téléviseur LG WebOS",
+            "it": "Telecomando per la TV LG WebOS",
+            "es": "Mando a distancia para el televisor LG WebOS",
+            "pl": "Pilot do telewizora LG WebOS",
+            "uk": "Пульт дистанційного керування для LG WebOS TV",
+            "zh-cn": "LG WebOS 电视遥控器"
+          },
+          "icon": "remote.png"
+        }
+      ]
     }
   },
   "native": {
@@ -873,169 +895,337 @@
     {
       "_id": "remote.volumeUp",
       "type": "state",
-      "common": { "name": "Remote key volume up", "role": "button", "type": "boolean", "read": false, "write": true },
+      "common": {
+        "name": "Remote key volume up",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
       "native": {}
     },
     {
       "_id": "remote.volumeDown",
       "type": "state",
-      "common": { "name": "Remote key volume down", "role": "button", "type": "boolean", "read": false, "write": true },
+      "common": {
+        "name": "Remote key volume down",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
       "native": {}
     },
     {
       "_id": "remote.mute",
       "type": "state",
-      "common": { "name": "Remote key mute", "role": "button", "type": "boolean", "read": false, "write": true },
+      "common": {
+        "name": "Remote key mute",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
       "native": {}
     },
     {
       "_id": "remote.channelUp",
       "type": "state",
-      "common": { "name": "Remote key channel up", "role": "button", "type": "boolean", "read": false, "write": true },
+      "common": {
+        "name": "Remote key channel up",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
       "native": {}
     },
     {
       "_id": "remote.channelDown",
       "type": "state",
-      "common": { "name": "Remote key channel down", "role": "button", "type": "boolean", "read": false, "write": true },
+      "common": {
+        "name": "Remote key channel down",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
       "native": {}
     },
     {
       "_id": "remote.info",
       "type": "state",
-      "common": { "name": "Remote key info", "role": "button", "type": "boolean", "read": false, "write": true },
+      "common": {
+        "name": "Remote key info",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
       "native": {}
     },
     {
       "_id": "remote.list",
       "type": "state",
-      "common": { "name": "Remote key list", "role": "button", "type": "boolean", "read": false, "write": true },
+      "common": {
+        "name": "Remote key list",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
       "native": {}
     },
     {
       "_id": "remote.asterisk",
       "type": "state",
-      "common": { "name": "Remote key asterisk", "role": "button", "type": "boolean", "read": false, "write": true },
+      "common": {
+        "name": "Remote key asterisk",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
       "native": {}
     },
     {
       "_id": "remote.play",
       "type": "state",
-      "common": { "name": "Remote key play", "role": "button", "type": "boolean", "read": false, "write": true },
+      "common": {
+        "name": "Remote key play",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
       "native": {}
     },
     {
       "_id": "remote.pause",
       "type": "state",
-      "common": { "name": "Remote key pause", "role": "button", "type": "boolean", "read": false, "write": true },
+      "common": {
+        "name": "Remote key pause",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
       "native": {}
     },
     {
       "_id": "remote.stop",
       "type": "state",
-      "common": { "name": "Remote key stop", "role": "button", "type": "boolean", "read": false, "write": true },
+      "common": {
+        "name": "Remote key stop",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
       "native": {}
     },
     {
       "_id": "remote.rewind",
       "type": "state",
-      "common": { "name": "Remote key rewind", "role": "button", "type": "boolean", "read": false, "write": true },
+      "common": {
+        "name": "Remote key rewind",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
       "native": {}
     },
     {
       "_id": "remote.fastForward",
       "type": "state",
-      "common": { "name": "Remote key fast forward", "role": "button", "type": "boolean", "read": false, "write": true },
+      "common": {
+        "name": "Remote key fast forward",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
       "native": {}
     },
     {
       "_id": "remote.record",
       "type": "state",
-      "common": { "name": "Remote key record", "role": "button", "type": "boolean", "read": false, "write": true },
+      "common": {
+        "name": "Remote key record",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
       "native": {}
     },
     {
       "_id": "remote.favorites",
       "type": "state",
-      "common": { "name": "Remote key favorites", "role": "button", "type": "boolean", "read": false, "write": true },
+      "common": {
+        "name": "Remote key favorites",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
       "native": {}
     },
     {
       "_id": "remote.recent",
       "type": "state",
-      "common": { "name": "Remote key recent", "role": "button", "type": "boolean", "read": false, "write": true },
+      "common": {
+        "name": "Remote key recent",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
       "native": {}
     },
     {
       "_id": "remote.myApps",
       "type": "state",
-      "common": { "name": "Remote key my apps", "role": "button", "type": "boolean", "read": false, "write": true },
+      "common": {
+        "name": "Remote key my apps",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
       "native": {}
     },
     {
       "_id": "remote.flashback",
       "type": "state",
-      "common": { "name": "Remote key flashback", "role": "button", "type": "boolean", "read": false, "write": true },
+      "common": {
+        "name": "Remote key flashback",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
       "native": {}
     },
     {
       "_id": "remote.qmenu",
       "type": "state",
-      "common": { "name": "Remote key qmenu", "role": "button", "type": "boolean", "read": false, "write": true },
+      "common": {
+        "name": "Remote key qmenu",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
       "native": {}
     },
     {
       "_id": "remote.program",
       "type": "state",
-      "common": { "name": "Remote key program", "role": "button", "type": "boolean", "read": false, "write": true },
+      "common": {
+        "name": "Remote key program",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
       "native": {}
     },
     {
       "_id": "remote.liveZoom",
       "type": "state",
-      "common": { "name": "Remote key live zoom", "role": "button", "type": "boolean", "read": false, "write": true },
+      "common": {
+        "name": "Remote key live zoom",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
       "native": {}
     },
     {
       "_id": "remote.aspectRatio",
       "type": "state",
-      "common": { "name": "Remote key aspect ratio", "role": "button", "type": "boolean", "read": false, "write": true },
+      "common": {
+        "name": "Remote key aspect ratio",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
       "native": {}
     },
     {
       "_id": "remote.3dMode",
       "type": "state",
-      "common": { "name": "Remote key 3D mode", "role": "button", "type": "boolean", "read": false, "write": true },
+      "common": {
+        "name": "Remote key 3D mode",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
       "native": {}
     },
     {
       "_id": "remote.eject",
       "type": "state",
-      "common": { "name": "Remote key eject", "role": "button", "type": "boolean", "read": false, "write": true },
+      "common": {
+        "name": "Remote key eject",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
       "native": {}
     },
     {
       "_id": "remote.sap",
       "type": "state",
-      "common": { "name": "Remote key sap", "role": "button", "type": "boolean", "read": false, "write": true },
+      "common": {
+        "name": "Remote key sap",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
       "native": {}
     },
     {
       "_id": "remote.ad",
       "type": "state",
-      "common": { "name": "Remote key ad", "role": "button", "type": "boolean", "read": false, "write": true },
+      "common": {
+        "name": "Remote key ad",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
       "native": {}
     },
     {
       "_id": "remote.goToPrev",
       "type": "state",
-      "common": { "name": "Remote key go to previous", "role": "button", "type": "boolean", "read": false, "write": true },
+      "common": {
+        "name": "Remote key go to previous",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
       "native": {}
     },
     {
       "_id": "remote.goToNext",
       "type": "state",
-      "common": { "name": "Remote key go to next", "role": "button", "type": "boolean", "read": false, "write": true },
+      "common": {
+        "name": "Remote key go to next",
+        "role": "button",
+        "type": "boolean",
+        "read": false,
+        "write": true
+      },
       "native": {}
     },
     {

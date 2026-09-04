@@ -13,7 +13,18 @@ export default [
         },
     },
     {
-        ignores: ['admin/**/*', 'node_modules/**/*', 'test/**/*', 'build/**/*', 'tmp/**/*', 'www/**/*', '.**/*'],
+        ignores: [
+            'admin/**/*',
+            'node_modules/**/*',
+            'test/**/*',
+            'build/**/*',
+            'tmp/**/*',
+            'www/**/*',
+            '.**/*',
+            // own tsconfig + own eslint scope; not part of the adapter's type-aware project
+            'src-devices/**/*',
+            'tasks.ts',
+        ],
     },
     {
         rules: {
