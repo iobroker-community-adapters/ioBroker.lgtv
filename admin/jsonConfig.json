@@ -16,6 +16,8 @@
       "type": "text",
       "label": "mac",
       "trim": true,
+      "validator": "!data.mac || /^([0-9a-fA-F]{2}[:-]?){5}[0-9a-fA-F]{2}$/.test(data.mac.trim())",
+      "validatorErrorText": "invalid_mac",
       "xs": 12,
       "sm": 6,
       "md": 4,

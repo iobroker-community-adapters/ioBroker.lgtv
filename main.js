@@ -1011,19 +1011,31 @@ function sendPacket(cmd, options, cb) {
 
 function wakeTv() {
     adapter.getState(`${adapter.namespace}.states.mac`, (err, macState) => {
-        const mac = macState?.val || adapter.config.mac;
-        if (err || !mac) {
+        if (err) {
+            adapter.log.debug(`Error getting "mac" state: ${err}`);
+        }
+        // states.mac is only filled after the first successful connection, so fall back to the configured MAC
+        const mac = String(macState?.val || adapter.config.mac || '').trim();
+        if (!mac) {
             adapter.log.error('Cannot wake TV: no MAC address configured or learned yet.');
             return;
         }
+
         const wakeOptions = adapter.config.wolwithip ? { address: adapter.config.ip } : undefined;
-        wol.wake(mac, wakeOptions, wakeError => {
-            if (wakeError) {
-                adapter.log.error(`WOL failed for TV ${mac}: ${wakeError}`);
-            } else {
-                adapter.log.debug(`Sent WOL to TV MAC ${mac}`);
-            }
-        });
+        try {
+            // wol.wake() throws synchronously on a malformed MAC address
+            wol.wake(mac, wakeOptions, wakeError => {
+                if (wakeError) {
+                    adapter.log.error(`WOL failed for TV ${mac}: ${wakeError}`);
+                } else {
+                    adapter.log.debug(`Sent WOL to TV MAC ${mac}`);
+                }
+            })
+                // the returned promise rejects in addition to the callback and would else terminate the adapter
+                .catch(wakeError => adapter.log.debug(`WOL promise rejected for TV ${mac}: ${wakeError}`));
+        } catch (e) {
+            adapter.log.error(`Cannot wake TV: invalid MAC address "${mac}": ${e}`);
+        }
     });
 }
 

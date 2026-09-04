@@ -169,7 +169,8 @@
     "timeout": 5000,
     "reconnect": 5000,
     "healthInterval": 0,
-    "power": false
+    "power": false,
+    "wolwithip": false
   },
   "instanceObjects": [
     {

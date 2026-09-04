@@ -6,6 +6,7 @@
     "template adapter settings": "impostazioni dell'adattatore del modello",
     "ip": "IP adress of the LG WebOS TV",
     "mac": "MAC adress of the LG WebOS TV",
+    "invalid_mac": "Indirizzo MAC non valido. Formato previsto: AA:BB:CC:DD:EE:FF",
     "power": "Turn off the TV as a remote control button",
     "wolwithip": "Includere l'indirizzo IP nel pacchetto Wake-On-LAN per utilizzare unicast (viaggia attraverso le subnet).",
     "timeout": "Timeout in ms",
