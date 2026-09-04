@@ -29,8 +29,6 @@ jobs:
             - uses: ioBroker/testing-action-check@v2
               with:
                   node-version: '24.x'
-                  # Uncomment the following line if your adapter cannot be installed using 'npm ci'
-                  # install-command: 'npm install'
                   lint: true
 
     # Runs adapter tests on all supported node versions and OSes
@@ -41,7 +39,7 @@ jobs:
         runs-on: ${{ matrix.os }}
         strategy:
             matrix:
-                node-version: [22.x, 24.x]
+                node-version: [22.x, 24.x, 26.x]
                 os: [ubuntu-latest, windows-latest, macos-latest]
 
         steps:
@@ -49,8 +47,6 @@ jobs:
               with:
                   node-version: ${{ matrix.node-version }}
                   os: ${{ matrix.os }}
-                  # Uncomment the following line if your adapter cannot be installed using 'npm ci'
-                  # install-command: 'npm install'
 
     # Deploys the final package to NPM
     deploy:
@@ -64,7 +60,7 @@ jobs:
 
         runs-on: ubuntu-latest
 
-        # Write permissions are required to create Github releases
+        # Write permissions are required to create GitHub releases
         permissions:
             contents: write
             id-token: write
@@ -73,18 +69,4 @@ jobs:
             - uses: ioBroker/testing-action-deploy@v1
               with:
                   node-version: '24.x'
-                  # Uncomment the following line if your adapter cannot be installed using 'npm ci'
-                  # install-command: 'npm install'
-                  # npm-token: ${{ secrets.NPM_TOKEN }}  # Commented out for migration to Trusted Publishing
                   github-token: ${{ secrets.GITHUB_TOKEN }}
-
-                  #   # When using Sentry for error reporting, Sentry can be informed about new releases
-                  #   # To enable create a API-Token in Sentry (User settings, API keys)
-                  #   # Enter this token as a GitHub secret (with name SENTRY_AUTH_TOKEN) in the repository options
-                  #   # Then uncomment and customize the following block:
-                  #   sentry: true
-                  #   sentry-token: ${{ secrets.SENTRY_AUTH_TOKEN }}
-                  #   sentry-project: 'iobroker-lgtv'
-                  #   sentry-version-prefix: 'iobroker.lgtv'
-                  #   # If your sentry project is linked to a GitHub repository, you can enable the following option
-                  #   sentry-github-integration: true

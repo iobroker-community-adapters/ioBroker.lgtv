@@ -2,7 +2,10 @@
 
 const utils = require('@iobroker/adapter-core');
 let adapter;
-const LGTV = /** @type {any} */ (require('lgtv2'));
+// lgtv2 v2 is ESM and exports the class as `module.exports` for require(), but its
+// index.d.ts only declares `export default`. Cast to the real constructor type rather
+// than to `any`, so that the connection options below stay type checked.
+const LGTV = /** @type {typeof import('lgtv2').default} */ (/** @type {unknown} */ (require('lgtv2')));
 const wol = require('wol');
 const fs = require('node:fs');
 const path = require('node:path');
@@ -89,16 +92,18 @@ function coercePictureValue(key, raw) {
     return typeof raw === 'string' ? raw : String(raw);
 }
 
-// Reconnect watchdog: the underlying lgtv2 library relies on the `websocket@1`
-// package for retries. If that socket gets stuck during the connect handshake
-// (TCP open, no upgrade response, no `connectFailed` event), the library never
-// schedules another retry and the adapter stays "offline" until the user
-// restarts it. The watchdog observes how long ago the library last emitted a
-// `connecting` event and forces a fresh LGTV instance once the gap exceeds
-// the threshold while we're still disconnected. To avoid noisy warnings while
-// the TV is simply powered off, the watchdog gates the recreate behind a quick
-// TCP probe of the WebSocket port — the recreate (and warning) only fire when
-// the TV is actually reachable on the network.
+// Reconnect watchdog (last resort). It was written for lgtv2 v1, whose
+// `websocket@1` transport could get stuck during the connect handshake
+// (TCP open, no upgrade response, no `connectFailed` event) and then never
+// schedule another retry. lgtv2 v2 handles that case itself: `handshakeTimeout`
+// fails the attempt after 10s and its own reconnect fires ~5s later, so a
+// `connecting` event arrives well before WATCHDOG_STUCK_MS is reached.
+// The watchdog is kept as a generic net for any other state that leaves the
+// adapter disconnected without further connect attempts: it observes how long
+// ago the library last emitted a `connecting` event and forces a fresh LGTV
+// instance once the gap exceeds the threshold. To avoid noisy warnings while
+// the TV is simply powered off, the recreate is gated behind a quick TCP probe
+// of the WebSocket port.
 let lastConnectingAt = 0;
 let watchdogTimer = null;
 let watchdogProbeInFlight = false;
@@ -546,8 +551,23 @@ function startAdapter(options) {
                             const ids = id.split('.');
                             const stateName = ids[ids.length - 1].toString();
                             if (stateName.toLowerCase() === 'power' && state.val) {
-                                wakeTv();
-                                adapter.setState(id, state.val, true);
+                                // The TV only answers on the pointer input socket while it is running.
+                                // Send the POWER button to switch it off, wake it via WOL when it is off.
+                                adapter.getState(`${adapter.namespace}.states.on`, (onErr, tv_on) => {
+                                    if (onErr) {
+                                        adapter.log.debug(`Error getting "on" state ${onErr}`);
+                                    }
+                                    if (tv_on?.val) {
+                                        sendCommand('button', { name: 'POWER' }, powerErr => {
+                                            if (!powerErr) {
+                                                adapter.setState(id, state.val, true);
+                                            }
+                                        });
+                                    } else {
+                                        wakeTv();
+                                        adapter.setState(id, state.val, true);
+                                    }
+                                });
                                 break;
                             }
                             const remoteKeyMap = {
@@ -608,15 +628,15 @@ function connect(cb) {
         saveKey: (key, cb) => {
             fs.writeFile(keyfile, key, cb);
         },
-        wsconfig: {
-            keepalive: true,
-            keepaliveInterval: 10000,
-            dropConnectionOnKeepaliveTimeout: false,
-            keepaliveGracePeriod: 5000,
-            tlsOptions: {
-                rejectUnauthorized: false,
-            },
-        },
+        // lgtv2 v2 option names. The v1 "wsconfig" block is still accepted as a deprecated
+        // alias, except for "dropConnectionOnKeepaliveTimeout", which v2 discards: keepalive
+        // always closes a dead connection so the built-in reconnect can take over.
+        keepalive: true,
+        keepaliveInterval: 10000,
+        keepaliveGracePeriod: 5000,
+        // The TV uses a self-signed certificate. lgtv2 applies this to the control
+        // socket and to the pointer input socket, so no process-wide TLS bypass is needed.
+        rejectUnauthorized: false,
     });
     lgtvobj.on('connecting', host => {
         lastConnectingAt = Date.now();
@@ -1016,7 +1036,6 @@ function sendPacket(cmd, options, cb) {
             cb && cb(_error, response);
         });
     } else {
-        bypassCertificateValidation();
         lgtvobj.getSocket('ssap://com.webos.service.networkinput/getPointerInputSocket', (err, sock) => {
             if (err) {
                 adapter.log.debug(`ERROR opening WebOS remote input socket: ${err}`);
@@ -1036,30 +1055,32 @@ function sendPacket(cmd, options, cb) {
 
 function wakeTv() {
     adapter.getState(`${adapter.namespace}.states.mac`, (err, macState) => {
-        const mac = macState?.val || adapter.config.mac;
-        if (err || !mac) {
+        if (err) {
+            adapter.log.debug(`Error getting "mac" state: ${err}`);
+        }
+        // states.mac is only filled after the first successful connection, so fall back to the configured MAC
+        const mac = String(macState?.val || adapter.config.mac || '').trim();
+        if (!mac) {
             adapter.log.error('Cannot wake TV: no MAC address configured or learned yet.');
             return;
         }
+
         const wakeOptions = adapter.config.wolwithip ? { address: adapter.config.ip } : undefined;
-        wol.wake(mac, wakeOptions, wakeError => {
-            if (wakeError) {
-                adapter.log.error(`WOL failed for TV ${mac}: ${wakeError}`);
-            } else {
-                adapter.log.debug(`Sent WOL to TV MAC ${mac}`);
-            }
-        });
+        try {
+            // wol.wake() throws synchronously on a malformed MAC address
+            wol.wake(mac, wakeOptions, wakeError => {
+                if (wakeError) {
+                    adapter.log.error(`WOL failed for TV ${mac}: ${wakeError}`);
+                } else {
+                    adapter.log.debug(`Sent WOL to TV MAC ${mac}`);
+                }
+            })
+                // the returned promise rejects in addition to the callback and would else terminate the adapter
+                .catch(wakeError => adapter.log.debug(`WOL promise rejected for TV ${mac}: ${wakeError}`));
+        } catch (e) {
+            adapter.log.error(`Cannot wake TV: invalid MAC address "${mac}": ${e}`);
+        }
     });
-}
-
-function bypassCertificateValidation() {
-    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-    const tls = require('node:tls');
-
-    tls.checkServerIdentity = (_servername, _cert) => {
-        // Skip certificate verification
-        return undefined;
-    };
 }
 
 function SetVolume(val) {

@@ -183,6 +183,10 @@ it is true when TV is on and false if TV is off
 - (GermanBluefox) A malformed MAC address or a Wake-on-LAN socket error does not terminate the adapter anymore
 - (GermanBluefox) The MAC address is validated in the admin configuration
 - (GermanBluefox) Added the missing default value for the `wolwithip` setting
+- (GermanBluefox) `remote.power` switches the TV off again instead of only sending Wake-on-LAN
+- (GermanBluefox) Migrated the connection options from the deprecated `wsconfig` block to the lgtv2 v2 option names
+- (GermanBluefox) Removed the process wide TLS bypass, the certificate check is now relaxed per connection only
+- (GermanBluefox) Removed the unused `websocket` dependency
 
 ### 2.7.4 (2026-06-18)
 - (mcm1957) Compact mode has been disabled due to usage of process.env
