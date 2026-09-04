@@ -23,7 +23,7 @@
     "node": ">= 22"
   },
   "dependencies": {
-    "@iobroker/adapter-core": "^3.3.2",
+    "@iobroker/adapter-core": "^3.4.3",
     "lgtv2": "^2.0.0",
     "websocket": "^1.0.35",
     "wol": "^1.0.7"
@@ -61,7 +61,9 @@
     "check": "tsc --noEmit -p tsconfig.check.json",
     "lint": "eslint -c eslint.config.mjs .",
     "translate": "translate-adapter",
-    "release": "release-script"
+    "release": "release-script",
+    "update-packages": "npx -y npm-check-updates --upgrade",
+    "npm": "npm i"
   },
   "bugs": {
     "url": "https://github.com/SebastianSchultz/iobroker.lgtv/issues"

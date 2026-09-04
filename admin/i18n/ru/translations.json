@@ -6,6 +6,7 @@
     "template adapter settings": "Пример",
     "ip": "IP адрес LG WebOS TV",
     "mac": "MAC адрес LG WebOS TV",
+    "invalid_mac": "Неверный MAC-адрес. Ожидаемый формат: AA:BB:CC:DD:EE:FF",
     "power": "Выключение телевизора как кнопкой пульта",
     "wolwithip": "Включите IP-адрес в пакет Wake-On-LAN, чтобы использовать одноадресную рассылку (проходит через подсети).",
     "timeout": "Таймаут в мс",

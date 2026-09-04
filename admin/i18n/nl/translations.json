@@ -6,6 +6,7 @@
     "template adapter settings": "sjabloon-adapterinstellingen",
     "ip": "IP adress of the LG WebOS TV",
     "mac": "MAC adress of the LG WebOS TV",
+    "invalid_mac": "Ongeldig MAC-adres. Verwacht formaat: AA:BB:CC:DD:EE:FF",
     "power": "Turn off the TV as a remote control button",
     "wolwithip": "IP-adres opnemen in Wake-On-LAN-pakket om unicast te gebruiken (reist door subnetten)",
     "timeout": "Timeout in ms",

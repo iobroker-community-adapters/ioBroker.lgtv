@@ -19,7 +19,7 @@ Remote controlling an LG WebOS SmartTV (2013 models and higher) from [ioBroker](
 
 ## Usage:
 
-Install the adapter through ioBroker admin interface.
+Install the adapter through the ioBroker admin interface.
 In the adapter config input the ip address of your LG WebOS TV.
 At first connection you will receive a pairing prompt on your TV screen where you should allow the connection.
 
@@ -110,27 +110,27 @@ Can also be used to open images or videos (in the browser).
 
 `setState('lgtv.0.states.input', 'av1');`
 
-Switches the iput oh the TV to AV1.
+Switches the input on the TV to AV1.
 
 `setState('lgtv.0.states.input', 'scart');`
 
-Switches the iput oh the TV to Scart.
+Switches the input on the TV to Scart.
 
 `setState('lgtv.0.states.input', 'component');`
 
-Switches the iput oh the TV to Component.
+Switches the input oh the TV to Component.
 
 `setState('lgtv.0.states.input', 'hdmi1');`
 
-Switches the iput oh the TV to HDMI 1.
+Switches the input oh the TV to HDMI 1.
 
 `setState('lgtv.0.states.input', 'hdmi2');`
 
-Switches the iput oh the TV to HDMI 2.
+Switches the input oh the TV to HDMI 2.
 
 `setState('lgtv.0.states.input', 'hdmi3');`
 
-Switches the iput oh the TV to HDMI 3.
+Switches the input oh the TV to HDMI 3.
 
 `setState('lgtv.0.states.youtube', 'https://www.youtube.com/watch?v=AjSpMQfRmEo'); OR setState('lgtv.0.states.youtube', 'AjSpMQfRmEo');`
 
@@ -157,17 +157,17 @@ Switch audio output through ARC (HDMI).
 
 ## States
 
-channel
+`channel`
 
 holds the current channel
 
-volume
+`volume`
 
 holds the current volume level and can change the volume
 
-on
+`on`
 
-is true when TV is on and false if TV is off
+it is true when TV is on and false if TV is off
 
 ---
 
@@ -179,6 +179,10 @@ is true when TV is on and false if TV is off
 -->
 ### **WORK IN PROGRESS**
 - (Voodoo2man) Add WebOS 26 compatibility.
+- (Voodoo2man) Use the configured MAC address as a fallback for Wake-on-LAN.
+- (GermanBluefox) A malformed MAC address or a Wake-on-LAN socket error does not terminate the adapter anymore
+- (GermanBluefox) The MAC address is validated in the admin configuration
+- (GermanBluefox) Added the missing default value for the `wolwithip` setting
 
 ### 2.7.4 (2026-06-18)
 - (mcm1957) Compact mode has been disabled due to usage of process.env
