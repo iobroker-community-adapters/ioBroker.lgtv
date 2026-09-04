@@ -1,6 +1,4 @@
-'use strict';
-
-const net = require('node:net');
+import { Socket } from 'node:net';
 
 /**
  * Best-effort TCP reachability probe.
@@ -9,20 +7,20 @@ const net = require('node:net');
  * within `timeoutMs`, `false` on any error or timeout. Never rejects —
  * callers can treat a `false` result as "unreachable".
  *
- * @param {string} host hostname or IP address; empty string resolves false immediately
- * @param {number} port TCP port to connect to
- * @param {number} timeoutMs maximum time to wait for the TCP handshake before resolving false
- * @returns {Promise<boolean>} true when the handshake completed, false on timeout or error
+ * @param host hostname or IP address; empty string resolves false immediately
+ * @param port TCP port to connect to
+ * @param timeoutMs maximum time to wait for the TCP handshake before resolving false
+ * @returns true when the handshake completed, false on timeout or error
  */
-function probeTcpReachable(host, port, timeoutMs) {
-    return new Promise(resolve => {
+export function probeTcpReachable(host: string, port: number, timeoutMs: number): Promise<boolean> {
+    return new Promise<boolean>(resolve => {
         if (!host) {
             resolve(false);
             return;
         }
-        const socket = new net.Socket();
+        const socket = new Socket();
         let settled = false;
-        const finish = result => {
+        const finish = (result: boolean): void => {
             if (settled) {
                 return;
             }
@@ -45,5 +43,3 @@ function probeTcpReachable(host, port, timeoutMs) {
         }
     });
 }
-
-module.exports = { probeTcpReachable };

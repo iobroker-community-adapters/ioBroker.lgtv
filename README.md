@@ -187,6 +187,9 @@ it is true when TV is on and false if TV is off
 - (GermanBluefox) Migrated the connection options from the deprecated `wsconfig` block to the lgtv2 v2 option names
 - (GermanBluefox) Removed the process wide TLS bypass, the certificate check is now relaxed per connection only
 - (GermanBluefox) Removed the unused `websocket` dependency
+- (GermanBluefox) The adapter was refactored to TypeScript. The sources moved to `src/`, the published code is the compiled `build/`
+- (GermanBluefox) The admin translations moved from `admin/i18n/<lang>/translations.json` to the flat `admin/i18n/<lang>.json`
+- (GermanBluefox) The unit tests use `node:assert` instead of `chai`
 
 ### 2.7.4 (2026-06-18)
 - (mcm1957) Compact mode has been disabled due to usage of process.env

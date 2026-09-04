@@ -1,8 +1,8 @@
 'use strict';
 
-const { expect } = require('chai');
+const assert = require('node:assert');
 const net = require('node:net');
-const { probeTcpReachable } = require('./probe');
+const { probeTcpReachable } = require('../build/lib/probe');
 
 function startListener() {
     return new Promise((resolve, reject) => {
@@ -19,7 +19,7 @@ describe('lib/probe — probeTcpReachable', () => {
         try {
             const port = server.address().port;
             const reachable = await probeTcpReachable('127.0.0.1', port, 1000);
-            expect(reachable).to.equal(true);
+            assert.strictEqual(reachable, true);
         } finally {
             server.close();
         }
@@ -31,7 +31,7 @@ describe('lib/probe — probeTcpReachable', () => {
         const port = tmp.address().port;
         await new Promise(r => tmp.close(r));
         const reachable = await probeTcpReachable('127.0.0.1', port, 1000);
-        expect(reachable).to.equal(false);
+        assert.strictEqual(reachable, false);
     });
 
     it('resolves false within the timeout when the host swallows the SYN', async () => {
@@ -39,12 +39,12 @@ describe('lib/probe — probeTcpReachable', () => {
         const start = Date.now();
         const reachable = await probeTcpReachable('192.0.2.1', 3001, 300);
         const elapsed = Date.now() - start;
-        expect(reachable).to.equal(false);
-        expect(elapsed).to.be.lessThan(1500);
+        assert.strictEqual(reachable, false);
+        assert.ok(elapsed < 1500, `probe took ${elapsed}ms, expected < 1500ms`);
     });
 
     it('resolves false for an empty host without touching the network', async () => {
         const reachable = await probeTcpReachable('', 3001, 1000);
-        expect(reachable).to.equal(false);
+        assert.strictEqual(reachable, false);
     });
 });
