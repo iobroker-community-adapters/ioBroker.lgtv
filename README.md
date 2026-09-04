@@ -93,7 +93,7 @@ Opening the Netflix App on the TV.
 
 `setState('lgtv.0.states.launch', 'youtube');`
 
-Opens the Youtube App on the TV.
+Opens the YouTube App on the TV.
 
 `setState('lgtv.0.states.launch', 'prime');`
 
