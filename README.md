@@ -178,6 +178,7 @@ it is true when TV is on and false if TV is off
     ### **WORK IN PROGRESS**
 -->
 ### **WORK IN PROGRESS**
+- (Voodoo2man) Add WebOS 26 compatibility.
 - (Voodoo2man) Use the configured MAC address as a fallback for Wake-on-LAN.
 - (GermanBluefox) A malformed MAC address or a Wake-on-LAN socket error does not terminate the adapter anymore
 - (GermanBluefox) The MAC address is validated in the admin configuration
