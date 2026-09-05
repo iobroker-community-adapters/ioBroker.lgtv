@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "lgtv",
-    "version": "3.0.2",
+    "version": "3.0.3",
     "news": {
+      "3.0.3": {
+        "en": "The WebOS 26 pairing fallback now also asks for the pointer permissions, so the remote buttons, pointer moves, scrolling and clicks work after a fresh pairing\nOlder TVs get the signed pairing manifest again; the unsigned manifest is only used after the TV rejected the signed one (ported from lgtv2 2.0.1)\nAdopted the upstream `lgtv2` test suite for the vendored transport",
+        "de": "Das WebOS 26-Pairing-Fallback fragt jetzt auch nach Zeigerrechten, sodass die Tasten, Scrollen und Klicken nach erneutem Pairing\nÄltere Fernseher erhalten wieder das signierte Manifest. Es wird nur benutzt, wenn es abgewiesen wurde (portiert von LGTv2 2.0.1)\nAdoptierte die Upstream-Testsuite „lgtv2“ für den Transport",
+        "ru": "Резервный вариант сопряжения webOS 26 теперь также запрашивает разрешения для указателя, поэтому кнопки дистанционного управления, перемещение курсора, прокрутка и щелчки работают после нового сопряжения\nСтарые телевизоры снова получают подписанный манифест сопряжения; неподписанный манифест используется только после того, как телевизор отклонил подписанный манифест (портирован из lgtv2 2.0.1)\nПринял набор тестов upstream `lgtv2` для транспорта, поставляемого поставщиком",
+        "pt": "O emparelhamento do webOS 26 agora também solicita as permissões do ponteiro, então os botões remotos, a rolagem e os cliques funcionam após um novo emparelhamento\nTVs antigas recebem o manifesto de emparelhamento assinado novamente; só é usado após a TV rejeitar o assinado (portado do lgtv2 2.0.1)\nAdotou a suíte de testes upstream `lgtv2` para o transporte vendido",
+        "nl": "Bij de terugkoppeling van webOS 26 wordt nu ook gevraagd om de pointerrechten, zodat de knoppen op de afstandsbediening, de muisaanwijzer, het scrollen en de klikken werken na een nieuwe koppeling\nOudere tv's krijgen opnieuw het ondertekende koppelingsmanifest; het niet-ondertekende manifest wordt alleen gebruikt nadat de tv het ondertekende manifest heeft afgewezen (overgezet vanaf lgtv2 2.0.1)\nHeeft de stroomopwaartse `lgtv2` testsuite goedgekeurd voor het transport van leveranciers",
+        "fr": "La solution de couplage WebOS 26 demande désormais l'autorisation du pointeur. Ainsi, les boutons de la télécommande, les mouvements du pointeur et les clics fonctionnent\nLes anciens téléviseurs reçoivent à nouveau le manifeste de couplage signé ; le manifeste non signé n'est utilisé que lorsque le téléviseur a rejeté le manifeste signé (porté depuis lgtv2 2.0.1)\nA adopté la suite de tests « lgtv2 » en amont pour le transport du fournisseur",
+        "it": "Il sistema di abbinamento di webOS 26 ora richiede anche i permessi del puntatore, quindi i tasti del telecomando, lo scorrimento e i clic\nI TV più vecchi ricevono nuovamente il Pairing Manifest firmato; quello non firmato viene usato solo dopo che la TV ha rifiutato\nHa adottato la suite di test «lgtv2» upstream per il trasporto",
+        "es": "La alternativa de emparejamiento de WebOS 26 ahora también pide los permisos del puntero, por lo que los botones remotos, los movimientos del puntero, el desplazamiento y los clics funcionan tras un nuevo emparejamiento\nLos televisores antiguos vuelven a recibir el manifiesto de emparejamiento firmado; el sin firmar solo se usa después de que el televisor rechace el firmado (portado de lgtv2 2.0.1)\nAdoptó el conjunto de pruebas «lgtv2» para el transporte vendido",
+        "pl": "Zapasowy system parowania WebOS 26 prosi teraz również o uprawnienia wskaźnika, więc przyciski zdalne, ruchy wskaźnika, przewijanie i kliknięcia działają po nowym parowaniu\nStarsze telewizory ponownie otrzymują podpisany manifest parowania; niepodpisany manifest jest używany dopiero po odrzuceniu podpisanego przez telewizor (przeniesiono z lgtv2 2.0.1)\nPrzyjęto pakiet testowy „lgtv2” dla transportu sprzedawanego",
+        "uk": "Запасний резерв пари WebOS 26 тепер також запитує дозволи вказівника, тому віддалені кнопки, переміщення вказівника, прокрутка та клацання працюють після свіжого сполучення\nСтарі телевізори знову отримують підписаний маніфест сполучення; непідписаний маніфест використовується лише після того, як телевізор відхилив підписаний маніфест (перенесений з lgtv2 2.0.1)\nПрийнято набір тестів «lgtv2» вище за тестом для транспорту, що продається",
+        "zh-cn": "webOS 26 配对后备功能现在还会要求指针权限，因此远程按钮、指针移动、滚动和点击在全新配对后起作用\n较旧的电视再次获得签名的配对清单；只有在电视拒绝签名的配对清单（从 lgtv2 2.0.1 移植）之后才使用未签名的清单\n为供应商传输采用了上游 “lgtv2” 测试套件"
+      },
       "3.0.2": {
         "en": "The `lgtv2` library was ported to TypeScript and is now built into the adapter, so the ESM-only npm package is no longer required",
         "de": "Die `lgtv2`-Bibliothek wurde auf TypeScript portiert und ist nun im Adapter integriert, sodass das NPM-Paket entfällt",
@@ -80,19 +93,6 @@
         "pl": "Recontact watchdog już nie ostrzega i odtwarza instancję LGTV, podczas gdy telewizor jest po prostu wyłączony. [# 419]",
         "uk": "Відключення годинника більше не попереджає і відтворює екземпляр LGTV, поки телевізор просто вимкнено. [#419]",
         "zh-cn": "重新连接的监视器不再警告和重新创建 LGTV 实例, 而电视却被关闭。 [# 419]"
-      },
-      "2.7.1": {
-        "en": "Handling of online state has been improved.\nSupport for picture settings has been added.\nTimerhandling has been cleaned up.\nDependencies have been updated",
-        "de": "Der Umgang mit Online-Zustand wurde verbessert.\nUnterstützung für Bildeinstellungen wurde hinzugefügt.\nTimerhandling wurde gereinigt.\nAbhängigkeiten wurden aktualisiert",
-        "ru": "Улучшена работа с онлайн-государством.\nДобавлена поддержка настроек изображения.\nТаймшерлинг был очищен.\nЗависимости были обновлены",
-        "pt": "O tratamento do estado online foi melhorado.\nO suporte para configurações de imagem foi adicionado.\nO temporizador foi limpo.\nAs dependências foram atualizadas",
-        "nl": "De omgang met online state is verbeterd.\nOndersteuning voor afbeeldingsinstellingen is toegevoegd.\nTimerhandling is opgeruimd.\nAfhankelijkheden zijn bijgewerkt",
-        "fr": "Le traitement de l'état en ligne a été amélioré.\nLa prise en charge des paramètres d'image a été ajoutée.\nLe traitement du temps a été nettoyé.\nLes dépendances ont été actualisées",
-        "it": "La gestione dello stato online è stata migliorata.\nÈ stato aggiunto il supporto per le impostazioni dell'immagine.\nIl timerhandling è stato ripulito.\nLe dipendenze sono state aggiornate",
-        "es": "Se ha mejorado el manejo del estado en línea.\nSe ha añadido soporte para ajustes de imagen.\nEl manejo temporal ha sido limpiado.\nSe han actualizado las dependencias",
-        "pl": "Ulepszono obsługę państwa online.\nDodano wsparcie dla ustawień obrazu.\nObróbka czasu została wyczyszczona.\nZaktualizowano zależności",
-        "uk": "Удосконалено роботу онлайн-держави.\nДодано підтримку налаштування зображень.\nОчищається від часу.\nЗалежність було оновлено",
-        "zh-cn": "对在线状态的处理有所改善.\n已添加对图片设置的支持 .\n计时处理已经清理完毕.\n依赖关系已更新"
       }
     },
     "titleLang": {

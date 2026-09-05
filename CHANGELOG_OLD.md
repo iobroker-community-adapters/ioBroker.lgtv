@@ -1,4 +1,8 @@
 # Older changes
+## 2.7.3 (2026-06-03)
+ - (arteck) fix uncaught exception: Parameter "timeout"
+ - (krobipd) Removed the eyeComfortMode boolean-migration
+
 ## 2.7.2 (2026-05-11)
 - (krobipd) Reconnect watchdog no longer warns and recreates the LGTV instance while the TV is simply switched off. [#419]
 
