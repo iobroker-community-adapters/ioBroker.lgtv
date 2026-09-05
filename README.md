@@ -189,6 +189,12 @@ The channel keys, media keys, colour keys and the number pad can each be switche
 widget settings.
 
 ---
+## Installation
+
+Install this adapter using ioBroker repositories.
+
+>[!NOTE]
+> This adapter does not support installation from GitHub.
 
 ## Changelog
 
