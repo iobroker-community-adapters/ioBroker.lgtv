@@ -986,8 +986,11 @@ class LgTv extends utils.Adapter {
 
     private checkCurApp(powerOff?: boolean): void {
         if (powerOff) {
+            // Connection lost. Some TVs close the socket the moment they are switched off,
+            // before any power-state push gets out, so the last reported state is stale now.
             this.curApp = '';
             this.powerState = undefined;
+            void this.setStateChanged('states.powerState', 'off', true);
         }
         // The power state reported by the TV decides; the foreground app is the fallback
         // for TVs without that endpoint (they report an empty app while in standby).
