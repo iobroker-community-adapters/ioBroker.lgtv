@@ -202,7 +202,7 @@ Install this adapter using ioBroker repositories.
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 3.0.2 (2026-09-05)
 - (GermanBluefox) The `lgtv2` library was ported to TypeScript and is now built into the adapter, so the ESM-only npm package is no longer required
 
 ### 3.0.1 (2026-09-04)
@@ -230,9 +230,6 @@ Install this adapter using ioBroker repositories.
 ### 2.7.3 (2026-06-03)
  - (arteck) fix uncaught exception: Parameter "timeout"
  - (krobipd) Removed the eyeComfortMode boolean-migration
-
-### 2.7.2 (2026-05-11)
-- (krobipd) Reconnect watchdog no longer warns and recreates the LGTV instance while the TV is simply switched off. [#419]
 
 [Older changelogs can be found there](CHANGELOG_OLD.md)
 

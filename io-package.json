@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "lgtv",
-    "version": "3.0.1",
+    "version": "3.0.2",
     "news": {
+      "3.0.2": {
+        "en": "The `lgtv2` library was ported to TypeScript and is now built into the adapter, so the ESM-only npm package is no longer required",
+        "de": "Die `lgtv2`-Bibliothek wurde auf TypeScript portiert und ist nun im Adapter integriert, sodass das NPM-Paket entfällt",
+        "ru": "Библиотека `lgtv2` была перенесена на TypeScript и теперь встроена в адаптер, поэтому пакет npm, предназначенный только для ESM, больше не требуется",
+        "pt": "A biblioteca `lgtv2` foi portada para o TypeScript e agora vem no adaptador, então o pacote npm só ESM",
+        "nl": "De `lgtv2` bibliotheek werd overgezet naar TypeScript en is nu ingebouwd in de adapter, zodat het npm-pakket dat alleen voor ESM bestemd is niet langer nodig",
+        "fr": "La bibliothèque « lgtv2 » a été portée sur TypeScript et est intégrée à l'adaptateur. Le package npm réservé à ESM n'est plus requis",
+        "it": "La libreria `lgtv2` è stata convertita in TypeScript ed è ora integrata nell'adattatore, solo per ESM",
+        "es": "La biblioteca «lgtv2» se portó a TypeScript y ahora está integrada en el adaptador, por lo que ya no necesita el paquete npm solo para ESM",
+        "pl": "Biblioteka `lgtv2` została przeniesiona do TypeScript i jest teraz wbudowana w adapter, więc pakiet npm tylko dla ESM nie jest już wymagany",
+        "uk": "Бібліотека `lgtv2` була перенесена на TypeScript і тепер вбудована в адаптер, тому пакет npm лише для ESM більше не потрібен",
+        "zh-cn": "`lgtv2` 库已移植到 TypeScript，现在已内置到适配器中，因此不再需要仅限 ESM 的 npm 包"
+      },
       "3.0.1": {
         "en": "Removed prepare script",
         "de": "Prepe-Script entfernt",
@@ -80,19 +93,6 @@
         "pl": "Ulepszono obsługę państwa online.\nDodano wsparcie dla ustawień obrazu.\nObróbka czasu została wyczyszczona.\nZaktualizowano zależności",
         "uk": "Удосконалено роботу онлайн-держави.\nДодано підтримку налаштування зображень.\nОчищається від часу.\nЗалежність було оновлено",
         "zh-cn": "对在线状态的处理有所改善.\n已添加对图片设置的支持 .\n计时处理已经清理完毕.\n依赖关系已更新"
-      },
-      "2.6.0": {
-        "en": "Adapter requires node.js >= 22 now\nAdapter requires admin >= 7.7.22 now\nExternal_speaker option to soundOutput state list added.\nDependencies have been updated",
-        "de": "Adapter benötigt node.js >= 22 jetzt\nAdapter benötigt admin >= 7.7.22 jetzt\nExternal speaker option to soundOutput state list hinzugefügt.\nAbhängigkeiten wurden aktualisiert",
-        "ru": "Адаптер требует node.js >= 22 сейчас\nАдаптер требует администратора >= 7.7.22\nДобавлена опция External speaker для SoundOutput State List.\nЗависимости были обновлены",
-        "pt": "Adaptador requer nod.js >= 22 agora\nAdaptador requer admin >= 7.7.22 agora\nOpção externa alto-falante para a lista de estados de saída adicionada.\nAs dependências foram atualizadas",
-        "nl": "Voor de adapter zijn node.js < 22 nu nodig\nAdapter vereist admin < 7.7.22 nu\nExterne luidspreker optie om de statuslijst uit te voeren.\nAfhankelijkheden zijn bijgewerkt",
-        "fr": "Adaptateur nécessite node.js >= 22 maintenant\nAdaptateur nécessite admin >= 7.7.22 maintenant\nL'option External speaker pour sonner la liste des états de sortie a été ajoutée.\nLes dépendances ont été actualisées",
-        "it": "Adattatore richiede node.js >= 22 ora\nAdattatore richiede admin >= 7.7.22 ora\nEsterno speaker opzione per suonoEstratto elenco aggiunto.\nLe dipendenze sono state aggiornate",
-        "es": "Adaptador requiere node.js ю= 22 ahora\nEl adaptador requiere administrador= 7.7.22 ahora\nOpción External speaker para sonarLa lista de estados Output añadido.\nSe han actualizado las dependencias",
-        "pl": "Adapter wymaga node.js > = 22\nAdapter wymaga admin > = 7.7.22\nDodano opcję External _ speaker do listy stanu dźwięku.\nZaktualizowano zależności",
-        "uk": "Адаптер вимагає node.js >= 22 тепер\nАдаптер вимагає адмін >= 7.7.22 тепер\nВаріант зовнішнього спакера для звукозапису додано.\nЗалежність було оновлено",
-        "zh-cn": "适配器需要节点.js 现在22\n适任者需要管理员 \\ 7.7.22 现在\n添加语音输出状态列表的外部  speakers 选项 .\n依赖关系已更新"
       }
     },
     "titleLang": {

@@ -1,4 +1,7 @@
 # Older changes
+## 2.7.2 (2026-05-11)
+- (krobipd) Reconnect watchdog no longer warns and recreates the LGTV instance while the TV is simply switched off. [#419]
+
 ## 2.7.1 (2026-05-10)
 - (krobipd) Handling of online state has been improved.
 - (krobipd) Support for picture settings has been added.
