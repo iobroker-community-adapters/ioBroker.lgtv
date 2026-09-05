@@ -196,6 +196,9 @@ widget settings.
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+- (Voodoo2man) Fix WebOS 26 pairing with a generic manifest and persist the pairing key across reconnects.
+
 ### 3.0.1 (2026-09-04)
 - (GermanBluefox) Removed prepare script
 

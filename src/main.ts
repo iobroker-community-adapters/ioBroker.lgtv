@@ -590,9 +590,7 @@ class LgTv extends utils.Adapter {
             timeout,
             reconnect,
             clientKey: this.clientKey,
-            saveKey: (key, keyCb) => {
-                writeFile(this.keyFile, key, keyCb);
-            },
+            keyFile: this.keyFile,
             // lgtv2 v2 option names. The v1 "wsconfig" block is still accepted as a deprecated
             // alias, except for "dropConnectionOnKeepaliveTimeout", which v2 discards: keepalive
             // always closes a dead connection so the built-in reconnection can take over.

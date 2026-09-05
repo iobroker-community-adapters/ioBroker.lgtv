@@ -53,6 +53,7 @@
   ],
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
+    "prepack": "npm run build",
     "watch": "tsc -p tsconfig.build.json --watch",
     "build-devices": "tsx tasks.ts",
     "devices-0-clean": "tsx tasks.ts --0-clean",
@@ -62,7 +63,7 @@
     "check": "tsc -p tsconfig.json --noEmit",
     "check-devices": "tsc --noEmit -p src-devices/tsconfig.json",
     "lint": "eslint -c eslint.config.mjs",
-    "test:js": "mocha test/probe --exit",
+    "test:js": "npm run build && mocha test/probe --exit",
     "test:package": "mocha test/packageFiles --exit",
     "test:integration": "mocha test/integrationAdapter --exit",
     "test": "npm run test:js && npm run test:package",
