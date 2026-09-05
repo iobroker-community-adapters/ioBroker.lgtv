@@ -28,6 +28,14 @@ import WebSocket, { type ClientOptions, type RawData } from 'ws';
 
 import pairingTemplate from './pairing.json';
 
+function unsignedPairing(): Record<string, any> {
+    const pairing = JSON.parse(JSON.stringify(pairingTemplate)) as Record<string, any>;
+    delete pairing.manifest.signed;
+    pairing.manifest.appVersion = '1.0';
+    pairing.manifest.permissions.push('CONTROL_INPUT_TEXT', 'CONTROL_MOUSE_AND_KEYBOARD');
+    return pairing;
+}
+
 export type Callback<T = any> = (err: Error | null | undefined, result?: T) => void;
 
 /** stores the client key the TV handed out after pairing */
@@ -715,35 +723,42 @@ class LGTV extends EventEmitter<EventMap> {
     };
 
     register(): void {
-        const pairing: Record<string, any> = { ...pairingTemplate };
-        if (this.clientKey) {
-            pairing['client-key'] = this.clientKey;
-        }
+        const register = (pairing: Record<string, any>, fallback: boolean): void => {
+            if (this.clientKey) {
+                pairing['client-key'] = this.clientKey;
+            }
 
-        this.send('register', undefined, pairing, (err, res?: Record<string, any>) => {
-            if (err) {
-                // e.g. "403 cancelled" when the user declines on the TV
-                this.emit('error', err);
-                return;
-            }
-            if (res && typeof res['client-key'] === 'string' && res['client-key'] !== '') {
-                this.isPaired = true;
-                this.connection = true;
-                this.emit('connect');
-                if (this.config.learnMac) {
-                    this.learnMacs();
+            this.send('register', undefined, pairing, (err, res?: Record<string, any>) => {
+                if (err) {
+                    if (fallback && /403.*blacklisted certificate detected/i.test(err.message || String(err))) {
+                        register(unsignedPairing(), false);
+                        return;
+                    }
+                    // e.g. "403 cancelled" when the user declines on the TV
+                    this.emit('error', err);
+                    return;
                 }
-                if (res['client-key'] !== this.clientKey) {
-                    this.saveKey(res['client-key'], saveErr => {
-                        if (saveErr) {
-                            this.emit('error', saveErr);
-                        }
-                    });
+                if (res && typeof res['client-key'] === 'string' && res['client-key'] !== '') {
+                    this.isPaired = true;
+                    this.connection = true;
+                    this.emit('connect');
+                    if (this.config.learnMac) {
+                        this.learnMacs();
+                    }
+                    if (res['client-key'] !== this.clientKey) {
+                        this.saveKey(res['client-key'], saveErr => {
+                            if (saveErr) {
+                                this.emit('error', saveErr);
+                            }
+                        });
+                    }
+                } else {
+                    this.emit('prompt');
                 }
-            } else {
-                this.emit('prompt');
-            }
-        });
+            });
+        };
+
+        register(JSON.parse(JSON.stringify(pairingTemplate)) as Record<string, any>, true);
     }
 
     // the callback form comes first: a function also satisfies `Record<string, any>`, so with the
