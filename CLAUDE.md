@@ -80,6 +80,29 @@ Writes cannot use `ssap://settings/setSystemSettings` — it is not exposed publ
 - `eyeComfortMode` is exposed as a `boolean` state but Luna expects `'on'`/`'off'` — mapped in `pictureBoolToLuna` / `coercePictureValue`.
 - webOS blocks *reads* of `pictureMode`, `colorTemperature`, `eyeComfortMode` and `justScan`, so those four are effectively write-only.
 
+### Power state — what `states.on` means
+
+`states.on` follows the power state the TV reports through
+`ssap://com.webos.service.tvpower/power/getPowerState` (subscribed in `subscribeTv()` via
+lgtv2's `subscribePowerState`, published raw as `states.powerState`). `on`, `screen_off` and
+`screen_saver` count as on; `standby` (Active Standby) and `off` count as off. Only when the TV
+never answers that subscription (webOS 3 and older) does the foreground app decide, as it did up
+to 3.0.3 — an empty `appId` then means "off".
+
+Two things this is built around:
+
+- **A live socket is not a running TV.** Some TVs keep the WebSocket open for minutes after
+  switching off (measured: ~6.5 min on an OLED65B19LA), so `info.connection` must never be the
+  source of `states.on`. Others close it the same second without any push (OLED48A19LA); then
+  `checkCurApp(true)` — reached through `checkConnection()` 10 s after `close` — sets
+  `states.on` and `states.powerState` to off.
+- **An SSAP error is an answer, not a lost connection.** The health poll (`healthInterval`)
+  requests the power state and only treats transport failures (`not connected`, `timeout`,
+  `connection closed`; no `code: 'ESSAP'`) as "TV unreachable". Up to 3.0.3 it polled
+  `com.webos.service.tv.time/getCurrentTime`, which does not exist on webOS 6 and later; lgtv2 1.x
+  hid that 404 (every answer came back with `err = null`), the vendored 2.x reports it, and the
+  poll switched a running TV off every interval.
+
 ### Health poll tri-state
 
 `healthInterval` is deliberately `ioBroker.Interval | undefined | false`. `false` means "the TV reports its state reliably, never poll again" and is different from `undefined` ("no timer right now"). This comes from the JavaScript original — do not collapse it into a plain handle.
