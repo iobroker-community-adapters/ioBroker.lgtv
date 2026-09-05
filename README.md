@@ -202,8 +202,11 @@ Install this adapter using ioBroker repositories.
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+- (GermanBluefox) The `lgtv2` library was ported to TypeScript and is now built into the adapter, so the ESM-only npm package is no longer required
+
 ### 3.0.1 (2026-09-04)
-- (GermanBluefox) Removed prepare script
+- (GermanBluefox) Removed a prepare script
 
 ### 3.0.0 (2026-09-04)
 - (Voodoo2man) Add WebOS 26 compatibility.

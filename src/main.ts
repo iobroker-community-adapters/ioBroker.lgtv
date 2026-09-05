@@ -30,10 +30,10 @@ import type {
     SystemSettingsResponse,
     VolumeResponse,
 } from './lib/types';
-// lgtv2 v2 is an ESM-only package. This build is CommonJS (the compact-mode export at the
-// bottom needs `module.exports`), so the value is pulled in with a dynamic `import()` in
-// `connect()` and only the type is imported statically — see REFACTORING.md section 6.4.
-import type { LGTV as LgTvClient } from 'lgtv2' with { 'resolution-mode': 'import' };
+// lgtv2 lives in `src/lgtv2` (a TypeScript port of https://github.com/hobbyquaker/lgtv2, which is
+// published as ESM only). It compiles into this CommonJS build, so the constructor is imported
+// statically here instead of through a dynamic `import()` inside `connect()`.
+import { LGTV } from './lgtv2';
 
 // Picture settings — write goes through createAlert with the alert immediately
 // closed (the TV applies the luna setting via the onclose handler). Read goes
@@ -142,7 +142,7 @@ function inputList(arr: ExternalInput[]): Record<string, string> {
 }
 
 class LgTv extends utils.Adapter {
-    private lgtv: LgTvClient | null = null;
+    private lgtv: LGTV | null = null;
     private hostUrl = '';
     private isConnect = false;
     private clientKey: string | undefined = undefined;
@@ -187,7 +187,7 @@ class LgTv extends utils.Adapter {
         if (!id || !state || state.ack) {
             return;
         }
-        if (state.val === undefined || state.val === null) {
+        if (state.val == null) {
             return;
         }
         id = id.substring(this.namespace.length + 1);
@@ -414,7 +414,7 @@ class LgTv extends utils.Adapter {
                     void this.setState('states.youtube', '', true);
                     return;
                 }
-                if (!~uri.indexOf('http')) {
+                if (!uri.startsWith('http://') && !uri.startsWith('https://')) {
                     uri = `https://www.youtube.com/watch?v=${uri}`;
                 }
                 this.sendCommand(
@@ -471,7 +471,7 @@ class LgTv extends utils.Adapter {
                 break;
 
             default:
-                if (~id.indexOf('remote')) {
+                if (id.includes('remote')) {
                     this.handleRemoteKey(id, state);
                 }
                 break;
@@ -572,7 +572,7 @@ class LgTv extends utils.Adapter {
         });
     }
 
-    private async connect(cb?: () => void): Promise<void> {
+    private connect(cb?: () => void): void {
         this.hostUrl = `wss://${this.config.ip}:3001`;
         // `reconnect` and `timeout` are declared as numbers, but instances configured with an
         // older admin can still carry strings in `native` — keep the defensive parse.
@@ -581,9 +581,6 @@ class LgTv extends utils.Adapter {
             reconnect = 5000;
         }
         const timeout = parseInt(String(this.config.timeout), 10) || 15000;
-
-        // lgtv2 v2 is ESM-only, so the constructor has to be pulled in dynamically here.
-        const { default: LGTV } = await import('lgtv2');
 
         const lgtv = new LGTV({
             url: this.hostUrl,
@@ -643,7 +640,7 @@ class LgTv extends utils.Adapter {
     }
 
     /** All subscriptions and one-shot requests issued right after a successful connection */
-    private subscribeTv(lgtv: LgTvClient): void {
+    private subscribeTv(lgtv: LGTV): void {
         lgtv.subscribe<VolumeResponse>('ssap://audio/getVolume', (_err, res) => {
             this.log.debug(`audio/getVolume: ${JSON.stringify(res)}`);
             /*
@@ -656,27 +653,27 @@ class LgTv extends utils.Adapter {
                 return;
             }
             if (res.changed) {
-                if (~res.changed.indexOf('volume') && res.volume !== undefined && res.volume !== null) {
+                if (res.changed.includes('volume') && res.volume != null) {
                     this.volume = parseInt(String(res.volume));
                     if (Number.isFinite(this.volume)) {
                         void this.setState('states.volume', this.volume, true);
                     }
                 }
-                if (~res.changed.indexOf('muted') && res.muted !== undefined && res.muted !== null) {
+                if (res.changed.includes('muted') && res.muted != null) {
                     void this.setState('states.mute', !!res.muted, true);
                 }
             } else if (res.volumeStatus) {
                 const status = res.volumeStatus;
-                if (status.volume !== undefined && status.volume !== null) {
+                if (status.volume != null) {
                     this.volume = parseInt(String(status.volume));
                     if (Number.isFinite(this.volume)) {
                         void this.setState('states.volume', this.volume, true);
                     }
                 }
-                if (status.muteStatus !== undefined && status.muteStatus !== null) {
+                if (status.muteStatus != null) {
                     void this.setState('states.mute', !!status.muteStatus, true);
                 }
-                if (status.soundOutput !== undefined && status.soundOutput !== null) {
+                if (status.soundOutput != null) {
                     void this.setState('states.soundOutput', status.soundOutput || '', true);
                 }
             }
@@ -727,10 +724,10 @@ class LgTv extends utils.Adapter {
                     // curApp is not set in meantime
                     if (this.healthInterval && !this.config.healthInterval) {
                         this.clearInterval(this.healthInterval);
-                        // TV works fine, healthInterval is not longer nessessary
+                        // TV works fine, healthInterval is no longer necessary
                         this.healthInterval = false;
                         this.log.info(
-                            'detect poweroff event, polling not longer nessesary. if you have problems, check settings',
+                            'detect poweroff event, polling not longer necessary. if you have problems, check settings',
                         );
                     }
                     this.checkCurApp(); // so TV is off
@@ -763,7 +760,7 @@ class LgTv extends utils.Adapter {
                         return;
                     }
                     const raw = res?.settings?.[key];
-                    if (raw !== undefined && raw !== null) {
+                    if (raw != null) {
                         const value = coercePictureValue(key, raw);
                         if (value !== null) {
                             this.log.debug(`getSystemSettings ${cat}.${key}: ${value}`);
@@ -792,8 +789,8 @@ class LgTv extends utils.Adapter {
                     return;
                 }
                 this.log.debug(`getCurrentSWInformation: ${JSON.stringify(val)}`);
-                const mac = this.config.mac ? this.config.mac : val?.device_id;
-                if (mac !== undefined && mac !== null) {
+                const mac = this.config.mac || val?.device_id;
+                if (mac != null) {
                     void this.setState('states.mac', mac, true);
                 } else {
                     this.log.info('Skipping states.mac update because device_id is missing');
@@ -807,7 +804,7 @@ class LgTv extends utils.Adapter {
                 return;
             }
             this.log.debug(`getSystemInfo: ${JSON.stringify(val)}`);
-            if (val?.modelName !== undefined && val.modelName !== null) {
+            if (val?.modelName != null) {
                 void this.setState('states.model', val.modelName, true);
             } else {
                 this.log.info('Skipping states.model update because modelName is missing');
@@ -957,7 +954,7 @@ class LgTv extends utils.Adapter {
 
         void this.setStateChanged('states.currentApp', this.curApp, true);
         const inp = this.curApp.split('.').pop();
-        if (inp && inp.indexOf('hdmi') === 0) {
+        if (inp?.startsWith('hdmi')) {
             void this.setStateChanged('states.input', `HDMI_${inp[4]}`, true);
             void this.setStateChanged('states.launch', '', true);
         } else {
@@ -970,11 +967,11 @@ class LgTv extends utils.Adapter {
                 return;
             }
             // state was changed
-            this.clearTimeout(this.renewTimeout); // avoid toggeling
+            this.clearTimeout(this.renewTimeout); // avoid toggling
             if (!isTVon) {
                 return;
             }
-            // if tv is now switched on ...
+            // if TV is now switched on ...
             this.log.debug('renew connection in one minute for stable subscriptions...');
             this.renewTimeout = this.setTimeout(() => {
                 void this.lgtv?.disconnect(); // the returned promise never rejects
@@ -1017,7 +1014,7 @@ class LgTv extends utils.Adapter {
         if (!lgtv) {
             return;
         }
-        if (~cmd.indexOf('ssap:') || ~cmd.indexOf('com.')) {
+        if (cmd.includes('ssap:') || cmd.includes('com.')) {
             lgtv.request<T>(cmd, options ?? {}, (error, response) => {
                 if (error) {
                     this.log.debug(`ERROR! Response from TV: ${response ? JSON.stringify(response) : error}`);

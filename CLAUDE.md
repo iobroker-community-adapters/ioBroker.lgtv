@@ -33,6 +33,8 @@ There is deliberately **no `prepare` script** — `npm ci`/`npm install` does no
 | Path | Content |
 | --- | --- |
 | `src/main.ts` | the whole adapter: one `LgTv extends utils.Adapter` class |
+| `src/lgtv2/index.ts` | vendored lgtv2 transport, ported to TypeScript (see below) |
+| `src/lgtv2/pairing.json` | the pairing manifest sent to the TV, imported by `index.ts` |
 | `src/lib/types.ts` | shapes of the SSAP responses that are actually consumed |
 | `src/lib/probe.ts` | `probeTcpReachable` — TCP liveness probe used by the reconnect watchdog |
 | `src/lib/adapter-config.d.ts` | augments `ioBroker.AdapterConfig` |
@@ -43,16 +45,19 @@ There is deliberately **no `prepare` script** — `npm ci`/`npm install` does no
 
 The adapter has no `onMessage` handler, so `common.messagebox` is not set and there is no documented `sendTo` API.
 
-### Transport: lgtv2 v2
+### Transport: the vendored lgtv2 (`src/lgtv2/`)
 
-`lgtv2` is an **ESM-only** package while this build is CommonJS (the compact-mode export at the bottom of `main.ts` needs `module.exports`). The constructor is therefore pulled in with a dynamic `import()` inside `connect()`, and only the *type* is imported statically with `with { 'resolution-mode': 'import' }`. Do not change `module`/`moduleResolution` away from `Node16` — that would rewrite the `import()` to `require()` and the adapter would die at runtime with `ERR_REQUIRE_ESM`. After a build, `grep -n "import(" build/main.js` must still find it.
+`src/lgtv2/index.ts` is a TypeScript port of [lgtv2](https://github.com/hobbyquaker/lgtv2) v2.0.0 (commit `da521d78`) — the npm package is no longer a dependency, `ws` and `@types/ws` are direct ones instead. Upstream is published as **ESM only**, which is why `main.ts` used to pull the constructor in with a dynamic `import()` inside `connect()`; the port compiles into this CommonJS build, so the import is a plain static one again.
+
+The port keeps the runtime behaviour of the original, verified with the upstream `node --test` suite run against `build/lgtv2/index.js` through a small ESM shim. Only two things are deliberately gone, both ESM-only: the `module.exports` alias export and, with the constructor function now being a real class, calling `LGTV()` without `new`. Upstream stays JavaScript, so a fix there has to be ported over by hand.
 
 Details that bite:
 
-- The v1 `wsconfig` option block is still accepted by v2 as a deprecated alias, but **`dropConnectionOnKeepaliveTimeout` is silently discarded** — v2 always drops a dead connection so its own reconnect can take over. The options are passed flat.
-- The TV uses a self-signed certificate. `rejectUnauthorized: false` is passed per connection; lgtv2 applies it to the control socket *and* the pointer input socket. There must be no process-wide TLS bypass (`NODE_TLS_REJECT_UNAUTHORIZED`) — that is what got compact mode disabled in 2.7.4.
-- `request(uri, cb)` resolves to the `request(uri, payload?)` **promise** overload, which types the callback as a payload object. Always pass the empty payload explicitly: `request(uri, {}, cb)`. `subscribe(uri, cb)` is fine.
-- `lgtv.connect` is an instance property, not a prototype method, so passing it detached to `setTimeout` works.
+- The v1 `wsconfig` option block is still accepted as a deprecated alias, but **`dropConnectionOnKeepaliveTimeout` is silently discarded** — a dead connection is always dropped so the built-in reconnect can take over. The options are passed flat.
+- The TV uses a self-signed certificate. `rejectUnauthorized: false` is passed per connection and applies to the control socket *and* the pointer input socket. There must be no process-wide TLS bypass (`NODE_TLS_REJECT_UNAUTHORIZED`) — that is what got compact mode disabled in 2.7.4.
+- `lgtv.connect` is a bound instance property, not a prototype method — `main.ts` hands it to `setTimeout` detached. It is written as a class field (`connect = (url?) => {...}`) for exactly that reason; turning it into a normal method would break that call site with a `this` of `undefined`.
+- `pairing.json` is imported with `resolveJsonModule` and copied to `build/lgtv2/` by tsc. It has to stay next to `index.ts`.
+- `request(uri, cb)` works: the callback overload is listed before the promise one, because a function also satisfies `Record<string, any>` and would otherwise be taken for a payload. `request(uri, {}, cb)` is equally fine and is what `main.ts` uses.
 - `disconnect()` returns a promise that only ever resolves.
 
 ### Command helpers
