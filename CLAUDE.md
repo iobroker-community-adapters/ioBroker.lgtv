@@ -128,3 +128,8 @@ cd src-devices && npm start   # standalone dev harness against a js-controller o
 ## Release
 
 `compact` is currently `false` in `io-package.json`. It was disabled in 2.7.4 because of the process-wide `process.env` TLS bypass; that bypass is gone, so compact mode can be re-enabled once it has been verified on a real installation.
+
+## IMPORTANT
+- never use a npm prepare script
+- never publish build tree
+- never use prebuild script
