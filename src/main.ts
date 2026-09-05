@@ -33,7 +33,7 @@ import type {
 // lgtv2 lives in `src/lgtv2` (a TypeScript port of https://github.com/hobbyquaker/lgtv2, which is
 // published as ESM only). It compiles into this CommonJS build, so the constructor is imported
 // statically here instead of through a dynamic `import()` inside `connect()`.
-import { LGTV } from './lgtv2';
+import { LGTV, type PowerState, type PowerStateResult, type SsapError } from './lgtv2';
 
 // Picture settings — write goes through createAlert with the alert immediately
 // closed (the TV applies the luna setting via the onclose handler). Read goes
@@ -57,6 +57,20 @@ const PICTURE_NUMERIC_KEYS = new Set(['brightness', 'backlight', 'contrast', 'co
 // expects the lowercase strings, so we map at the boundary on both sides:
 // boolean ⇄ 'on'/'off' in setPictureSetting / coercePictureValue.
 const PICTURE_BOOLEAN_KEYS = new Set(['eyeComfortMode']);
+
+/**
+ * `states.on` = the TV is running. The TV reports its power state through
+ * `ssap://com.webos.service.tvpower/power/getPowerState` (webOS 4+); lgtv2 maps the raw
+ * values to these names. `screen_off` and `screen_saver` are a running TV with a dark
+ * panel, `standby` is the quick-start standby in which the TV still keeps its network
+ * connection open for minutes — that is the state that must NOT count as "on".
+ */
+const POWER_ON_STATES = new Set<PowerState>(['on', 'screen_off', 'screen_saver']);
+
+/** true when the TV answered — an SSAP error still means the connection is alive */
+function isTransportError(err: Error): boolean {
+    return (err as Partial<SsapError>).code !== 'ESSAP';
+}
 
 const WATCHDOG_CHECK_MS = 30000;
 const WATCHDOG_STUCK_MS = 60000;
@@ -150,6 +164,12 @@ class LgTv extends utils.Adapter {
     private oldVolume = 0;
     private keyFile = 'lgtvkeyfile';
     private curApp = '';
+    /**
+     * Last power state the TV reported, `undefined` while the TV has not answered the
+     * power-state subscription (older firmware, or not connected). While it is known it is
+     * the source of `states.on`; otherwise the foreground app serves as the fallback.
+     */
+    private powerState: PowerState | undefined = undefined;
     private renewTimeout: ioBroker.Timeout | undefined = undefined;
     /**
      * Handle of the health poll, or `false` when polling was switched off.
@@ -735,6 +755,18 @@ class LgTv extends utils.Adapter {
             },
         );
 
+        // The TV pushes every power transition (Active → Active Standby → Suspend, ...). Where
+        // the endpoint is missing (webOS 3 and older) the subscription fails once and
+        // `states.on` keeps following the foreground app as before.
+        lgtv.subscribePowerState((err, res) => {
+            if (err) {
+                this.log.debug(`getPowerState subscription failed, falling back to the foreground app: ${err}`);
+                this.powerState = undefined;
+                return;
+            }
+            this.applyPowerState(res);
+        });
+
         lgtv.subscribe<SoundOutputResponse>('ssap://com.webos.service.apiadapter/audio/getSoundOutput', (err, res) => {
             if (!err && res) {
                 this.log.debug(`audio/getSoundOutput: ${JSON.stringify(res)}`);
@@ -937,12 +969,32 @@ class LgTv extends utils.Adapter {
             });
     }
 
+    /** A power state reported by the TV: remember it, publish it and re-evaluate `states.on` */
+    private applyPowerState(res: PowerStateResult | undefined): void {
+        if (!res || res.state === 'unknown') {
+            this.log.debug(`getPowerState: unexpected answer ${JSON.stringify(res?.raw)}`);
+            return;
+        }
+        const changed = res.state !== this.powerState;
+        this.powerState = res.state;
+        void this.setStateChanged('states.powerState', res.state, true);
+        if (changed) {
+            this.log.debug(`TV power state: ${res.state}`);
+            this.checkCurApp();
+        }
+    }
+
     private checkCurApp(powerOff?: boolean): void {
         if (powerOff) {
             this.curApp = '';
+            this.powerState = undefined;
         }
-        const isTVon = !!this.curApp;
-        this.log.debug(this.curApp ? `cur app is ${this.curApp}` : 'TV is off');
+        // The power state reported by the TV decides; the foreground app is the fallback
+        // for TVs without that endpoint (they report an empty app while in standby).
+        const isTVon = this.powerState ? POWER_ON_STATES.has(this.powerState) : !!this.curApp;
+        this.log.debug(
+            `${this.curApp ? `cur app is ${this.curApp}` : 'no foreground app'}, power state ${this.powerState ?? 'unknown'} → TV is ${isTVon ? 'on' : 'off'}`,
+        );
 
         if (this.curApp === 'com.webos.app.livetv') {
             this.setTimeout(() => {
@@ -980,16 +1032,26 @@ class LgTv extends utils.Adapter {
                     this.setTimeout(lgtvConnect, 500, this.hostUrl);
                 }
                 if (this.healthInterval !== false) {
-                    this.healthInterval = this.setInterval(
-                        () =>
-                            this.sendCommand('ssap://com.webos.service.tv.time/getCurrentTime', null, err => {
-                                this.log.debug(`check TV connection: ${err || 'ok'}`);
-                                if (err) {
+                    // Poll the power state. Only a transport failure (socket gone, request
+                    // timed out) means the TV is unreachable; an SSAP error is an answer from
+                    // a running TV and must not switch `states.on` off. Older adapter versions
+                    // polled a service that does not exist on webOS 6 and later, and the
+                    // resulting 404 was mistaken for a powered-off TV.
+                    this.healthInterval = this.setInterval(() => {
+                        if (!this.isConnect || !this.lgtv) {
+                            return;
+                        }
+                        this.lgtv.getPowerState((err, res) => {
+                            this.log.debug(`check TV connection: ${err || 'ok'}`);
+                            if (err) {
+                                if (isTransportError(err)) {
                                     this.checkCurApp(true);
                                 }
-                            }),
-                        this.config.healthInterval || 60000,
-                    );
+                                return;
+                            }
+                            this.applyPowerState(res);
+                        });
+                    }, this.config.healthInterval || 60000);
                 }
             }, 60000);
         });

@@ -167,7 +167,15 @@ holds the current volume level and can change the volume
 
 `on`
 
-it is true when TV is on and false if TV is off
+it is true when TV is on and false if TV is off. The value follows the power state the TV
+reports itself (`states.powerState`): `on`, `screen_off` and `screen_saver` count as on,
+`standby` (the quick-start standby, in which the TV keeps its network connection open for a
+while) and `off` count as off. TVs without that endpoint (webOS 3 and older) are considered
+on while they report a foreground app.
+
+`powerState`
+
+the raw power state as reported by the TV: `on`, `screen_off`, `screen_saver`, `standby` or `off`
 
 ---
 
@@ -202,6 +210,9 @@ Install this adapter using ioBroker repositories.
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+- (krobipd) `states.on` follows the power state the TV reports (`getPowerState`, new state `states.powerState`) instead of only the foreground app. The health poll asked for a service that does not exist on webOS 6 and later, and since 3.0.0 that 404 switched `states.on` off every poll while the TV was running
+
 ### 3.0.3 (2026-09-05)
 - (GermanBluefox) The WebOS 26 pairing fallback now also asks for the pointer permissions, so the remote buttons, pointer moves, scrolling and clicks work after a fresh pairing
 - (GermanBluefox) Older TVs get the signed pairing manifest again; the unsigned manifest is only used after the TV rejected the signed one (ported from lgtv2 2.0.1)
