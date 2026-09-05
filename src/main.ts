@@ -174,6 +174,8 @@ class LgTv extends utils.Adapter {
     private lastConnectingAt = 0;
     private watchdogTimer: ioBroker.Interval | undefined = undefined;
     private watchdogProbeInFlight = false;
+    /** set in onUnload: the `close` event of the final disconnect must not start a new timer */
+    private unloading = false;
 
     public constructor(options: Partial<utils.AdapterOptions> = {}) {
         super({ ...options, systemConfig: true, name: 'lgtv' });
@@ -880,6 +882,11 @@ class LgTv extends utils.Adapter {
     }
 
     private checkConnection(secondCheck?: boolean): void {
+        if (this.unloading) {
+            // disconnect() in onUnload emits `close` after the unload callback has run;
+            // a timer started now would only produce "setTimeout called, but adapter is shutting down"
+            return;
+        }
         if (secondCheck) {
             if (!this.isConnect) {
                 void this.setStateChanged('info.connection', false, true);
@@ -1124,6 +1131,7 @@ class LgTv extends utils.Adapter {
     }
 
     private onUnload(callback: () => void): void {
+        this.unloading = true;
         try {
             this.clearTimeout(this.renewTimeout);
             if (this.healthInterval) {
