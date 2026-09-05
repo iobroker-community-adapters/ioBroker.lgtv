@@ -17,14 +17,14 @@ npm run check                             # type check only (tsconfig.json, noEm
 npm run lint                              # eslint (@iobroker/eslint-config, flat config)
 npx eslint -c eslint.config.mjs --fix .   # autofix + prettier formatting
 
-npm run test:js                           # unit tests for src/lib (needs a build first)
+npm run test:js                           # unit tests for src/lib and src/lgtv2 (needs a build first)
 npm run test:package                      # validates package.json / io-package.json / admin JSON (fast)
 npm run test:integration                  # starts a real js-controller + adapter instance
 npm run translate                         # translate-adapter -b admin/i18n/en.json
 npm run release-patch                     # moves the README changelog into io-package news
 ```
 
-There is deliberately **no `prepare` script** — `npm ci`/`npm install` does not build. Run `npm run build` yourself after a fresh checkout, before starting the adapter and before `npm run test:js` (it requires `build/lib/probe.js`). Because `build/` is neither committed nor built on install, `common.nogit` is `true` in `io-package.json`: the adapter can only be installed from npm, not from GitHub. The integration test aborts with "JS-Controller is already running!" if one is running on the machine.
+There is deliberately **no `prepare` script** — `npm ci`/`npm install` does not build. Run `npm run build` yourself after a fresh checkout, before starting the adapter and before `npm run test:js` (it runs against `build/lib/probe.js` and `build/lgtv2/index.js`). Because `build/` is neither committed nor built on install, `common.nogit` is `true` in `io-package.json`: the adapter can only be installed from npm, not from GitHub. The integration test aborts with "JS-Controller is already running!" if one is running on the machine.
 
 ## Architecture
 
@@ -47,16 +47,17 @@ The adapter has no `onMessage` handler, so `common.messagebox` is not set and th
 
 ### Transport: the vendored lgtv2 (`src/lgtv2/`)
 
-`src/lgtv2/index.ts` is a TypeScript port of [lgtv2](https://github.com/hobbyquaker/lgtv2) v2.0.0 (commit `da521d78`) — the npm package is no longer a dependency, `ws` and `@types/ws` are direct ones instead. Upstream is published as **ESM only**, which is why `main.ts` used to pull the constructor in with a dynamic `import()` inside `connect()`; the port compiles into this CommonJS build, so the import is a plain static one again.
+`src/lgtv2/index.ts` is a TypeScript port of [lgtv2](https://github.com/hobbyquaker/lgtv2) v2.0.1 (commit `eef4a398`), plus the pointer permissions of upstream [PR #52](https://github.com/hobbyquaker/lgtv2/pull/52) — the npm package is no longer a dependency, `ws` and `@types/ws` are direct ones instead. Upstream is published as **ESM only**, which is why `main.ts` used to pull the constructor in with a dynamic `import()` inside `connect()`; the port compiles into this CommonJS build, so the import is a plain static one again.
 
-The port keeps the runtime behaviour of the original, verified with the upstream `node --test` suite run against `build/lgtv2/index.js` through a small ESM shim. Only two things are deliberately gone, both ESM-only: the `module.exports` alias export and, with the constructor function now being a real class, calling `LGTV()` without `new`. Upstream stays JavaScript, so a fix there has to be ported over by hand.
+The port keeps the runtime behaviour of the original, verified with the upstream test suite: `test/lgtv2.js`, `test/lgtv2Helpers.js` and `test/mockTv.js` are upstream's `test/*.test.js` and `test/mock-tv.js`, converted from ESM + `node --test` to CommonJS + mocha and run against `build/lgtv2/index.js` — keep them in sync when upstream changes. The certificate tests shell out to `openssl` and skip themselves where it is not on the PATH. Only two things are deliberately gone, both ESM-only: the `module.exports` alias export and, with the constructor function now being a real class, calling `LGTV()` without `new`. Upstream stays JavaScript, so a fix there has to be ported over by hand.
 
 Details that bite:
 
 - The v1 `wsconfig` option block is still accepted as a deprecated alias, but **`dropConnectionOnKeepaliveTimeout` is silently discarded** — a dead connection is always dropped so the built-in reconnect can take over. The options are passed flat.
 - The TV uses a self-signed certificate. `rejectUnauthorized: false` is passed per connection and applies to the control socket *and* the pointer input socket. There must be no process-wide TLS bypass (`NODE_TLS_REJECT_UNAUTHORIZED`) — that is what got compact mode disabled in 2.7.4.
 - `lgtv.connect` is a bound instance property, not a prototype method — `main.ts` hands it to `setTimeout` detached. It is written as a class field (`connect = (url?) => {...}`) for exactly that reason; turning it into a normal method would break that call site with a `this` of `undefined`.
-- `pairing.json` is imported with `resolveJsonModule` and copied to `build/lgtv2/` by tsc. It has to stay next to `index.ts`.
+- `pairing.json` is imported with `resolveJsonModule` and copied to `build/lgtv2/` by tsc. It has to stay next to `index.ts`. It is upstream's file verbatim, **including the signed `com.lge.test` manifest** — do not strip the `signed` block again: `register()` sends it first and only falls back to `unsignedPairing()` (no `signed`, `appVersion` 1.0) when the TV answers "403 … blacklisted certificate detected", which is what webOS 26 does.
+- `unsignedPairing()` adds `CONTROL_INPUT_TEXT` and `CONTROL_MOUSE_AND_KEYBOARD` to the permissions, because those two only exist inside the signed block. Without them the client key the TV hands out is rejected by `getPointerInputSocket` with "401 insufficient permissions" and every `remote.*` button, move, scroll and click is dead.
 - `request(uri, cb)` works: the callback overload is listed before the promise one, because a function also satisfies `Record<string, any>` and would otherwise be taken for a payload. `request(uri, {}, cb)` is equally fine and is what `main.ts` uses.
 - `disconnect()` returns a promise that only ever resolves.
 

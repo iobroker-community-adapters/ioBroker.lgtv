@@ -63,7 +63,7 @@
     "check": "tsc -p tsconfig.json --noEmit",
     "check-devices": "tsc --noEmit -p src-devices/tsconfig.json",
     "lint": "eslint -c eslint.config.mjs",
-    "test:js": "mocha test/probe --exit",
+    "test:js": "mocha test/probe test/lgtv2 test/lgtv2Helpers --exit",
     "test:package": "mocha test/packageFiles --exit",
     "test:integration": "mocha test/integrationAdapter --exit",
     "test": "npm run test:js && npm run test:package",
