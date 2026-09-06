@@ -587,6 +587,14 @@ class LgTv extends utils.Adapter {
             timeout,
             reconnect,
             clientKey: this.clientKey,
+            // Without keyFile lgtv2 derives its file paths from $LGTV2_KEY_DIR / %APPDATA% / $HOME,
+            // so `<keyFile>.mac` (and `.cert`, once verifyCert is used) would end up in the home
+            // directory of the ioBroker user instead of the adapter's data directory. saveKey
+            // already writes the client key here; this makes the rest follow.
+            keyFile: this.keyFile,
+            // The MACs lgtv2 learns from the TV are never read: wakeTv() uses states.mac and the
+            // configured MAC. Learning them only wrote a file nobody looks at.
+            learnMac: false,
             saveKey: (key, keyCb) => {
                 writeFile(this.keyFile, key, keyCb);
             },
