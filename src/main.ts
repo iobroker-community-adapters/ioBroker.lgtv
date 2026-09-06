@@ -917,6 +917,9 @@ class LgTv extends utils.Adapter {
                 void this.setStateChanged('info.connection', false, true);
                 if (this.healthInterval) {
                     this.clearInterval(this.healthInterval);
+                    // forget the handle as well - `false` (never poll again) must survive, but a
+                    // cleared handle would stay truthy and hide that no timer is running
+                    this.healthInterval = undefined;
                 }
                 this.checkCurApp(true);
             }
@@ -1035,6 +1038,13 @@ class LgTv extends utils.Adapter {
                     this.setTimeout(lgtvConnect, 500, this.hostUrl);
                 }
                 if (this.healthInterval !== false) {
+                    // Every switch-on runs through here, so drop the previous poll first. A TV
+                    // that is switched off and on again without the connection dropping in
+                    // between would otherwise leave its old interval running for good, and each
+                    // cycle would add another one.
+                    if (this.healthInterval) {
+                        this.clearInterval(this.healthInterval);
+                    }
                     // Poll the power state. Only a transport failure (socket gone, request
                     // timed out) means the TV is unreachable; an SSAP error is an answer from
                     // a running TV and must not switch `states.on` off. Older adapter versions

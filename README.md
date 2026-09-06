@@ -213,6 +213,7 @@ Install this adapter using ioBroker repositories.
 -->
 ### **WORK IN PROGRESS**
 - (krobipd) `states.on` follows the power state the TV reports (`getPowerState`, new state `states.powerState`) instead of only the foreground app. The health poll asked for a service that does not exist on webOS 6 and later, and since 3.0.0 that 404 switched `states.on` off every poll while the TV was running
+- (krobipd) Switching the TV off and on again no longer leaves an additional health poll running for every cycle
 
 ### 3.0.3 (2026-09-05)
 - (GermanBluefox) The WebOS 26 pairing fallback now also asks for the pointer permissions, so the remote buttons, pointer moves, scrolling and clicks work after a fresh pairing
