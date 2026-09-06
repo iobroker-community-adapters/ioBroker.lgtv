@@ -175,7 +175,8 @@ on while they report a foreground app.
 
 `powerState`
 
-the raw power state as reported by the TV: `on`, `screen_off`, `screen_saver`, `standby` or `off`
+the power state reported by the TV, mapped to `on`, `screen_off`, `screen_saver`, `standby` or `off`
+(the TV itself reports `Active`, `Screen Off`, `Screen Saver`, `Active Standby` and `Suspend`/`Power Off`)
 
 ---
 

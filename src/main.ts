@@ -67,7 +67,7 @@ const PICTURE_BOOLEAN_KEYS = new Set(['eyeComfortMode']);
  */
 const POWER_ON_STATES = new Set<PowerState>(['on', 'screen_off', 'screen_saver']);
 
-/** true when the TV answered — an SSAP error still means the connection is alive */
+/** true when the request never reached the TV — an SSAP error is an answer, the connection is alive */
 function isTransportError(err: Error): boolean {
     return (err as Partial<SsapError>).code !== 'ESSAP';
 }

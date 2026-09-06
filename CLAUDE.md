@@ -83,8 +83,10 @@ Writes cannot use `ssap://settings/setSystemSettings` — it is not exposed publ
 ### Power state — what `states.on` means
 
 `states.on` follows the power state the TV reports through
-`ssap://com.webos.service.tvpower/power/getPowerState` (subscribed in `subscribeTv()` via
-lgtv2's `subscribePowerState`, published raw as `states.powerState`). `on`, `screen_off` and
+`ssap://com.webos.service.tvpower/power/getPowerState`, subscribed in `subscribeTv()` via lgtv2's
+`subscribePowerState`. lgtv2 maps the TV's own wording (`Active`, `Screen Off`, `Screen Saver`,
+`Active Standby`, `Suspend`/`Power Off`) to `on`, `screen_off`, `screen_saver`, `standby` and `off`;
+that mapped value is published as `states.powerState`. `on`, `screen_off` and
 `screen_saver` count as on; `standby` (Active Standby) and `off` count as off. Only when the TV
 never answers that subscription (webOS 3 and older) does the foreground app decide, as it did up
 to 3.0.3 — an empty `appId` then means "off".
