@@ -204,6 +204,7 @@ Install this adapter using ioBroker repositories.
 -->
 ### **WORK IN PROGRESS**
 - (krobipd) Stopping the adapter while the TV was connected no longer logs "setTimeout called, but adapter is shutting down"
+- (krobipd) A stopped or crashed instance no longer keeps reporting `info.connection` as connected
 
 ### 3.0.3 (2026-09-05)
 - (GermanBluefox) The WebOS 26 pairing fallback now also asks for the pointer permissions, so the remote buttons, pointer moves, scrolling and clicks work after a fresh pairing

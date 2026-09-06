@@ -1093,6 +1093,11 @@ class LgTv extends utils.Adapter {
     }
 
     private onReady(): void {
+        // Nothing is connected yet, and a previous run that was killed rather than unloaded left
+        // its own `true` behind - the host does not reset it (its reset reads
+        // <ns>.info.connection but writes to the namespace root). Start from the truth.
+        void this.setStateChanged('info.connection', false, true);
+
         if (!this.config.ip) {
             this.log.error('No configure IP address');
             return;
@@ -1146,7 +1151,16 @@ class LgTv extends utils.Adapter {
         } catch {
             // ignore errors during shutdown
         }
-        callback();
+        // Reset info.connection here: the path that would do it (checkConnection, 10 s after the
+        // close event) is exactly the one suppressed above, and the host does not do it either -
+        // its own reset reads <ns>.info.connection but writes to the namespace root. Without this
+        // a stopped instance keeps reporting "connected". The callback must follow the write, not
+        // race it: a fire-and-forget write plus an immediate callback never reaches the database.
+        try {
+            this.setStateChanged('info.connection', false, true, () => callback());
+        } catch {
+            callback();
+        }
     }
 }
 
