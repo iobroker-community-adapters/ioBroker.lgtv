@@ -20,6 +20,20 @@ updates:
         update-types:
           - 'version-update:semver-major'
 
+  # The devices widget under src-devices/ has its own package.json, and its build output in
+  # admin/dm-widgets/ is committed and shipped. Without this entry no security update ever
+  # reaches the code that actually goes out with the adapter.
+  - package-ecosystem: 'npm'
+    directory: '/src-devices'
+    schedule:
+      interval: 'cron'
+      timezone: 'Europe/Berlin'
+      cronjob: '23 3 24 * *'
+    open-pull-requests-limit: 15
+    versioning-strategy: 'increase'
+    cooldown:
+      default-days: 7
+
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
