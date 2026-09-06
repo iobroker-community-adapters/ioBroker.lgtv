@@ -1,16 +1,12 @@
 {
-    "Auto": "Auto",
-    "Manual": "Manuale",
-    "My select": "La mia selezione",
-    "on save adapter restarts with new config immediately": "su save adapter si riavvia immediatamente con la nuova configurazione",
-    "template adapter settings": "impostazioni dell'adattatore del modello",
-    "ip": "IP adress of the LG WebOS TV",
-    "mac": "MAC adress of the LG WebOS TV",
+    "ip": "Indirizzo IP del televisore LG WebOS",
+    "mac": "Indirizzo MAC del televisore LG WebOS",
     "invalid_mac": "Indirizzo MAC non valido. Formato previsto: AA:BB:CC:DD:EE:FF",
-    "power": "Turn off the TV as a remote control button",
+    "power": "Spegnere il televisore con il tasto del telecomando",
     "wolwithip": "Includere l'indirizzo IP nel pacchetto Wake-On-LAN per utilizzare unicast (viaggia attraverso le subnet).",
-    "timeout": "Timeout in ms",
-    "reconnect": "Reconnect interval in ms",
-    "healthInterval": "Poll interval in ms",
-    "help_tip": "At first connection from ioBroker to your TV you must allow this connection on your TV screen."
+    "timeout": "Tempo di attesa in ms",
+    "reconnect": "Intervallo di riconnessione in ms",
+    "healthInterval": "Intervallo di interrogazione in ms",
+    "help_tip": "Alla prima connessione di ioBroker al televisore è necessario autorizzare questa connessione sullo schermo del televisore.",
+    "Min. 5000ms": "Min. 5000 ms"
 }
