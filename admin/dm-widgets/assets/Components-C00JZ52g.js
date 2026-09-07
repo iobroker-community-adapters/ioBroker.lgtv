@@ -1,0 +1,1 @@
+import{t as e}from"./RemoteControlComponent-_XTEre-S.js";var t={RemoteControlComponent:e};export{t as default};
