@@ -60,6 +60,7 @@ Details that bite:
 - `unsignedPairing()` adds `CONTROL_INPUT_TEXT` and `CONTROL_MOUSE_AND_KEYBOARD` to the permissions, because those two only exist inside the signed block. Without them the client key the TV hands out is rejected by `getPointerInputSocket` with "401 insufficient permissions" and every `remote.*` button, move, scroll and click is dead.
 - `request(uri, cb)` works: the callback overload is listed before the promise one, because a function also satisfies `Record<string, any>` and would otherwise be taken for a payload. `request(uri, {}, cb)` is equally fine and is what `main.ts` uses.
 - `disconnect()` returns a promise that only ever resolves.
+- **`keyFile` has to be passed in.** Without it lgtv2 falls back to `defaultKeyDir()` — `$LGTV2_KEY_DIR`, `%APPDATA%` or `$HOME/.lgtv2` — and derives `<keyFile>.mac` and `<keyFile>.cert` from there, which would put adapter files in the home directory of the ioBroker user. `saveKey` alone only covers the client key itself.
 
 ### Command helpers
 
