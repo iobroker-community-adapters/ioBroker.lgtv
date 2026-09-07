@@ -431,7 +431,8 @@ class LgTv extends utils.Adapter {
 
             case 'states.drag':
                 // The event type is 'move' for both moves and drags.
-                if (dx && dy) {
+                // A zero on one axis is a valid movement, so this must not be a truthiness check.
+                if (dx !== undefined && dy !== undefined && Number.isFinite(dx) && Number.isFinite(dy)) {
                     this.sendCommand('move', { dx, dy, drag: vals?.[2] === 'drag' ? 1 : 0 }, err => {
                         if (!err) {
                             void this.setState(id, state.val, true);
@@ -441,7 +442,8 @@ class LgTv extends utils.Adapter {
                 break;
 
             case 'states.scroll':
-                if (dx && dy) {
+                // Scrolling is almost always vertical only ("0,5"), so a zero dx has to pass.
+                if (dx !== undefined && dy !== undefined && Number.isFinite(dx) && Number.isFinite(dy)) {
                     this.sendCommand('scroll', { dx, dy }, err => {
                         if (!err) {
                             void this.setState(id, state.val, true);
