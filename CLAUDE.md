@@ -164,3 +164,4 @@ cd src-devices && npm start   # standalone dev harness against a js-controller o
 - never use npm prepare script
 - never use npm prebuild script
 - never publish build/ tree
+- changelog entries must focus on users not developers. Omit technical deatils. Schangelog entry should be as short as possible, restrict to one sentence if possible. 
