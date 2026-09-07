@@ -148,6 +148,8 @@ class LgTv extends utils.Adapter {
     private clientKey: string | undefined = undefined;
     private volume = 0;
     private oldVolume = 0;
+    /** handle of the stepped volume ramp started by setVolume(), if one is running */
+    private volumeRamp: ioBroker.Interval | undefined = undefined;
     private keyFile = 'lgtvkeyfile';
     private curApp = '';
     private renewTimeout: ioBroker.Timeout | undefined = undefined;
@@ -664,9 +666,10 @@ class LgTv extends utils.Adapter {
             }
             if (res.changed) {
                 if (res.changed.includes('volume') && res.volume != null) {
-                    this.volume = parseInt(String(res.volume));
-                    if (Number.isFinite(this.volume)) {
-                        void this.setState('states.volume', this.volume, true);
+                    const volume = parseInt(String(res.volume));
+                    if (Number.isFinite(volume)) {
+                        this.volume = volume;
+                        void this.setState('states.volume', volume, true);
                     }
                 }
                 if (res.changed.includes('muted') && res.muted != null) {
@@ -675,9 +678,10 @@ class LgTv extends utils.Adapter {
             } else if (res.volumeStatus) {
                 const status = res.volumeStatus;
                 if (status.volume != null) {
-                    this.volume = parseInt(String(status.volume));
-                    if (Number.isFinite(this.volume)) {
-                        void this.setState('states.volume', this.volume, true);
+                    const volume = parseInt(String(status.volume));
+                    if (Number.isFinite(volume)) {
+                        this.volume = volume;
+                        void this.setState('states.volume', volume, true);
                     }
                 }
                 if (status.muteStatus != null) {
@@ -1080,18 +1084,28 @@ class LgTv extends utils.Adapter {
     }
 
     private setVolume(val: number): void {
+        // A ramp still running belongs to an older target and would keep stepping towards it,
+        // so two quick writes to states.volume would fight over the TV every 500 ms.
+        this.stopVolumeRamp();
         if (val >= this.volume + 5) {
             let vol = this.oldVolume;
-            const interval = this.setInterval(() => {
+            this.volumeRamp = this.setInterval(() => {
                 vol = vol + 2;
                 if (vol >= val) {
                     vol = val;
-                    this.clearInterval(interval);
+                    this.stopVolumeRamp();
                 }
                 this.sendCommand('ssap://audio/setVolume', { volume: vol });
             }, 500);
         } else {
             this.sendCommand('ssap://audio/setVolume', { volume: val });
+        }
+    }
+
+    private stopVolumeRamp(): void {
+        if (this.volumeRamp) {
+            this.clearInterval(this.volumeRamp);
+            this.volumeRamp = undefined;
         }
     }
 
@@ -1136,6 +1150,7 @@ class LgTv extends utils.Adapter {
     private onUnload(callback: () => void): void {
         try {
             this.clearTimeout(this.renewTimeout);
+            this.stopVolumeRamp();
             if (this.healthInterval) {
                 this.clearInterval(this.healthInterval);
             }
