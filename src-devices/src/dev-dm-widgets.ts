@@ -25,22 +25,13 @@ import * as AdapterReactRuntime from '@iobroker/gui-components';
 // re-exporting `@iobroker/dm-widgets` here resolves straight back into this file and
 // `WidgetGeneric` ends up being the module namespace — React then fails with
 // "Class extends value [object Module] is not a constructor or null".
-export {
-    WidgetGeneric,
-    default,
-    isNeumorphicTheme,
-    StateContext,
-} from '@iobroker/dm-widgets/build/index.js';
+export { WidgetGeneric, default, isNeumorphicTheme, StateContext } from '@iobroker/dm-widgets/build/index.js';
 
 // The packaged `getTileStyles` is a compile-time stub that returns `{}` — the real card
 // background/border comes from the host at runtime. For the standalone harness (and for the
 // documentation screenshots produced from it) we approximate it, so the widget is not shown
 // floating on a bare page. Dev only: production resolves the real package.
-export function getTileStyles(
-    _theme: unknown,
-    isActive: boolean,
-    accentColor?: string,
-): Record<string, unknown> {
+export function getTileStyles(_theme: unknown, isActive: boolean, accentColor?: string): Record<string, unknown> {
     return {
         backgroundColor: isActive ? 'rgba(63, 191, 95, 0.10)' : 'rgba(255, 255, 255, 0.04)',
         border: `1px solid ${accentColor || (isActive ? 'rgba(63, 191, 95, 0.45)' : 'rgba(255, 255, 255, 0.12)')}`,

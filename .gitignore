@@ -28,3 +28,8 @@ build
 src-devices/build
 src-devices/node_modules
 src-devices/.__mf__temp/
+
+# admin custom component (sources build into admin/custom, which IS committed)
+src-admin/build
+src-admin/node_modules
+src-admin/.__mf__temp/

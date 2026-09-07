@@ -38,7 +38,7 @@ There is deliberately **no `prepare` script** — `npm ci`/`npm install` does no
 | `src/lib/types.ts` | shapes of the SSAP responses that are actually consumed |
 | `src/lib/probe.ts` | `probeTcpReachable` — TCP liveness probe used by the reconnect watchdog |
 | `src/lib/adapter-config.d.ts` | augments `ioBroker.AdapterConfig` |
-| `admin/jsonConfig.json` | the configuration dialog |
+| `admin/jsonConfig.json` | the configuration dialog — a `tabs` root: settings plus the remote-control tab |
 | `admin/i18n/<lang>.json` | flat translation files, keyed by the `label`s in `jsonConfig.json` |
 
 `src/lib/adapter-config.d.ts` is hand-maintained and must be kept in sync with `native` in `io-package.json` **and** with `admin/jsonConfig.json` — nothing generates it.
@@ -124,6 +124,10 @@ entry `customDevices.js`) built with Vite and copied to `admin/dm-widgets/` by `
 npm run build-devices     # npm install + vite build + copy to admin/dm-widgets
 npm run check-devices     # tsc for the widget - vite strips types WITHOUT checking them
 cd src-devices && npm start   # standalone dev harness against a js-controller on :8081
+
+npm run build-admin       # same for the admin custom component -> admin/custom
+npm run check-admin       # tsc for the component
+cd src-admin && npm start     # standalone dev harness on :4173
 ```
 
 - **`admin/dm-widgets/` is committed** (like ioBroker.ping does it), so CI and `npm pack` never
@@ -150,6 +154,38 @@ cd src-devices && npm start   # standalone dev harness against a js-controller o
   matter: the host's CssBaseline would supply border-box, but relying on it made the tile
   overflow its own cell, and a bare `1fr` is `minmax(auto, 1fr)`, which let the square keys
   blow the track out and clipped the last column.
+
+## Admin remote-control tab (`src-admin/`)
+
+`admin/jsonConfig.json` has a `tabs` root: `settingsTab` holds the actual configuration,
+`remoteTab` holds one `type: "custom"` item that loads the Module Federation remote
+`ConfigCustomLgTvSet` (entry `custom/customComponents.js`, exposed module `Components`,
+component `RemoteControl`). Built with Vite from `src-admin/` and copied to `admin/custom/`
+by `tasks.ts --admin`.
+
+- **`admin/custom/` is committed**, like `admin/dm-widgets/`. Re-run `npm run build-admin`
+  whenever something under `src-admin/` changes, and commit the result.
+- The item is named `_remote`. The leading underscore is the ecosystem convention for a custom
+  component that is pure UI and must not end up in `native` — the component never calls
+  `onChange`, so nothing is written to the configuration.
+- It writes `lgtv.<n>.remote.<key>` with ack=false and reads `states.on`, `states.powerState`,
+  `states.volume`, `states.mute`, `states.currentApp` and `states.input` over
+  `oContext.socket`. Key presses take effect immediately and have nothing to do with the
+  dialog's Save button. Everything is derived from `oContext.adapterName`/`instance`, so the
+  adapter needs **no `sendTo` handler**.
+- Buttons are disabled while `props.alive` is false; a running instance is required.
+- **Nothing is imported from `@iobroker/gui-components`.** Every module in the federation
+  `shared` list gets a full fallback bundle emitted next to the remote entry, and
+  gui-components alone was 7.3 MB the admin host never loads. `ConfigGeneric.getText()` already
+  resolves keys through `I18n`, so it replaces `I18n.t()`. For the same reason
+  `vite.config.ts` passes an explicit `SHARED` array instead of `package.json` — that cut
+  `admin/custom` from 9.0 MB to 3.4 MB.
+- Component translations live in `src-admin/src/i18n/<lang>.json` (keys prefixed
+  `lgtvadmin_`) and are copied to `admin/custom/i18n/`, which is where the item's
+  `"i18n": true` makes admin look for them. The two tab labels (`tab_settings`, `tab_remote`)
+  are ordinary dialog keys and live in `admin/i18n/` instead.
+- Only `src-admin/build` is excluded from eslint, not the sources — unlike `src-devices`,
+  which is ignored wholesale.
 
 ## Conventions
 

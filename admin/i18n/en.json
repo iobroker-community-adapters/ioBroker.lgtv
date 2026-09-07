@@ -8,5 +8,7 @@
     "reconnect": "Reconnect interval in ms",
     "healthInterval": "Poll interval in ms",
     "help_tip": "At first connection from ioBroker to your TV you must allow this connection on your TV screen.",
-    "Min. 5000ms": "Min. 5000ms"
+    "Min. 5000ms": "Min. 5000ms",
+    "tab_settings": "Settings",
+    "tab_remote": "Remote control"
 }

@@ -33,26 +33,35 @@ class MockStateContext implements IStateContext {
     imagePrefix = '';
     themeType = 'dark' as const;
 
+    // eslint-disable-next-line class-methods-use-this
     getState(id: string, handler: (id: string, state: ioBroker.State) => void): void {
         const val = CANNED[id];
         if (val !== undefined) {
             handler(id, { val, ack: true, ts: Date.now(), .../* rest is unused by the widget */ {} } as ioBroker.State);
         }
     }
+    // eslint-disable-next-line class-methods-use-this
     removeState(): void {}
-    async getObject<T>(): Promise<T | undefined> {
-        return undefined;
+    // eslint-disable-next-line class-methods-use-this
+    getObject<T>(): Promise<T | undefined> {
+        return Promise.resolve(undefined);
     }
+    // eslint-disable-next-line class-methods-use-this
     getObjectProperty(): void {}
+    // eslint-disable-next-line class-methods-use-this
     async removeObject(): Promise<void> {}
+    // eslint-disable-next-line class-methods-use-this
     getImagePath(): string | null {
         return null;
     }
     // Only used on click; the screenshots never press a key.
+    // eslint-disable-next-line class-methods-use-this
     getSocket(): any {
         return { setState: (id: string, val: unknown) => console.log('setState', id, val) };
     }
+    // eslint-disable-next-line class-methods-use-this
     setCoordinates(): void {}
+    // eslint-disable-next-line class-methods-use-this
     destroy(): void {}
 }
 
@@ -61,15 +70,19 @@ class MockStateContext implements IStateContext {
  * compile-time stubs, so the few chrome helpers the widget calls are neutralised here.
  */
 class PreviewRemote extends RemoteControlComponent {
+    // eslint-disable-next-line class-methods-use-this
     protected renderIndicators(): React.JSX.Element | null {
         return null;
     }
+    // eslint-disable-next-line class-methods-use-this
     protected renderSettingsButton(): React.JSX.Element | null {
         return null;
     }
+    // eslint-disable-next-line class-methods-use-this
     protected getAccentColor(): string | undefined {
         return undefined;
     }
+    // eslint-disable-next-line class-methods-use-this
     protected getWidgetClass(): string {
         return 'preview-widget';
     }

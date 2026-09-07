@@ -8,5 +8,7 @@
     "reconnect": "Reconnect Intervall in ms",
     "healthInterval": "Abfrageintervall in ms",
     "help_tip": "Bei der ersten Verbindung zwischen ioBroker und dem LG TV-Gerät ist es erforderlich, dass Sie diese Verbindung am TV-Bildschirm erlauben.",
-    "Min. 5000ms": "Mind. 5000 ms"
+    "Min. 5000ms": "Mind. 5000 ms",
+    "tab_settings": "Einstellungen",
+    "tab_remote": "Fernbedienung"
 }

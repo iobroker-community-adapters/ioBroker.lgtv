@@ -8,5 +8,7 @@
     "reconnect": "Intervallo di riconnessione in ms",
     "healthInterval": "Intervallo di interrogazione in ms",
     "help_tip": "Alla prima connessione di ioBroker al televisore è necessario autorizzare questa connessione sullo schermo del televisore.",
-    "Min. 5000ms": "Min. 5000 ms"
+    "Min. 5000ms": "Min. 5000 ms",
+    "tab_settings": "Impostazioni",
+    "tab_remote": "Telecomando"
 }

@@ -197,6 +197,20 @@ Wake-on-LAN packet while it is off.
 The channel keys, media keys, colour keys and the number pad can each be switched off in the
 widget settings.
 
+## Remote control in the admin
+
+The instance settings have two tabs. **Settings** holds the configuration; **Remote control**
+is a full remote for the TV, so it can be operated straight from the admin without a script or
+a `devices` view.
+
+It writes the same `remote.*` states as the widget above and shows the TV's power state, the
+running app, the current input and the volume, which can also be dragged. The keys act
+immediately — they are state writes, not settings, so the dialog's *Save* button has nothing to
+do with them.
+
+The instance has to be running: while it is stopped the keys are disabled and the tab says so.
+
+---
 ---
 ## Installation
 
@@ -212,6 +226,7 @@ Install this adapter using ioBroker repositories.
     ### **WORK IN PROGRESS**
 -->
 ### **WORK IN PROGRESS**
+- (GermanBluefox) The instance settings have a second tab with a remote control, so the TV can be operated directly from the admin
 - (krobipd) `states.scroll` and `states.drag` no longer ignore a movement whose horizontal or vertical part is zero, so plain vertical scrolling (`0,5`) works
 - (krobipd) The configuration dialog is fully translated in all eleven languages; the minimum-value hints no longer show up as untranslated raw text
 - (krobipd) The adapter no longer creates files in the home directory of the ioBroker user; the client key, the MAC cache and the certificate file all stay in the adapter's data directory

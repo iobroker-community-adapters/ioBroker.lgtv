@@ -5,12 +5,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { Connection, type ThemeType } from '@iobroker/gui-components';
-import type {
-    IStateContext,
-    ObjectChangeListener,
-    StateChangeListener,
-    WidgetInfo,
-} from '@iobroker/dm-widgets';
+import type { IStateContext, ObjectChangeListener, StateChangeListener, WidgetInfo } from '@iobroker/dm-widgets';
 
 import RemoteControlComponent from './RemoteControlComponent';
 
@@ -99,7 +94,9 @@ class DevStateContext implements IStateContext {
         }
     }
 
+    // eslint-disable-next-line class-methods-use-this
     getObjectProperty(_id: string, _property: string, _cb: ObjectChangeListener): void {}
+    // eslint-disable-next-line class-methods-use-this
     async removeObject(_id: string, _cb: ObjectChangeListener): Promise<void> {}
 
     getSocket(): Connection {
@@ -121,15 +118,19 @@ class DevStateContext implements IStateContext {
  * widget calls, to keep the standalone render from crashing.
  */
 class DevRemote extends RemoteControlComponent {
+    // eslint-disable-next-line class-methods-use-this
     protected renderIndicators(): React.JSX.Element | null {
         return null;
     }
+    // eslint-disable-next-line class-methods-use-this
     protected renderSettingsButton(): React.JSX.Element | null {
         return null;
     }
+    // eslint-disable-next-line class-methods-use-this
     protected getAccentColor(): string | undefined {
         return undefined;
     }
+    // eslint-disable-next-line class-methods-use-this
     protected getWidgetClass(): string {
         return 'dev-widget';
     }

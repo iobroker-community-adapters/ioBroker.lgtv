@@ -185,10 +185,7 @@ export class RemoteControlComponent extends WidgetGeneric<RemoteControlState, Re
 
     private subscribeStates(): void {
         const ctx = this.props.stateContext;
-        const sub = (
-            id: string,
-            apply: (state: ioBroker.State) => void,
-        ): void => {
+        const sub = (id: string, apply: (state: ioBroker.State) => void): void => {
             const handler = (_id: string, state: ioBroker.State | null | undefined): void => {
                 if (state) {
                     apply(state);
@@ -501,7 +498,9 @@ export class RemoteControlComponent extends WidgetGeneric<RemoteControlState, Re
                 onClick={(e: React.MouseEvent) => e.stopPropagation()}
             >
                 {this.renderHeader(false)}
-                <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(4, minmax(0, 1fr))', gap: 0.5, width: '100%' }}>
+                <Box
+                    sx={{ display: 'grid', gridTemplateColumns: 'repeat(4, minmax(0, 1fr))', gap: 0.5, width: '100%' }}
+                >
                     {this.renderPowerKey()}
                     {this.renderKey('list', '≡', { title: I18n.t('lgtvremote_list') })}
                     {this.renderKey('qmenu', 'Q', { title: I18n.t('lgtvremote_qmenu') })}
@@ -549,7 +548,14 @@ export class RemoteControlComponent extends WidgetGeneric<RemoteControlState, Re
                         {indicators}
                     </div>
                     <Box
-                        sx={{ display: 'flex', flexDirection: 'column', gap: 0.5, width: '100%', flex: 1, minHeight: 0 }}
+                        sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: 0.5,
+                            width: '100%',
+                            flex: 1,
+                            minHeight: 0,
+                        }}
                         onClick={(e: React.MouseEvent) => e.stopPropagation()}
                     >
                         {this.renderHeader(true)}

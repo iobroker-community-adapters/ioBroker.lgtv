@@ -8,5 +8,7 @@
     "reconnect": "重新连接间隔（以毫秒为单位）",
     "healthInterval": "轮询间隔（以毫秒为单位）",
     "help_tip": "首次从 ioBroker 连接到电视时，您必须在电视屏幕上允许此连接。",
-    "Min. 5000ms": "最少 5000 毫秒"
+    "Min. 5000ms": "最少 5000 毫秒",
+    "tab_settings": "设置",
+    "tab_remote": "遥控器"
 }

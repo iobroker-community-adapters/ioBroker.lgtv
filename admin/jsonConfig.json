@@ -1,90 +1,114 @@
 {
-  "type": "panel",
+  "type": "tabs",
   "i18n": true,
   "items": {
-    "ip": {
-      "type": "text",
-      "label": "ip",
-      "trim": true,
-      "xs": 12,
-      "sm": 6,
-      "md": 4,
-      "lg": 3,
-      "xl": 3
+    "settingsTab": {
+      "type": "panel",
+      "label": "tab_settings",
+      "items": {
+        "ip": {
+          "type": "text",
+          "label": "ip",
+          "trim": true,
+          "xs": 12,
+          "sm": 6,
+          "md": 4,
+          "lg": 3,
+          "xl": 3
+        },
+        "mac": {
+          "type": "text",
+          "label": "mac",
+          "trim": true,
+          "validator": "!data.mac || /^([0-9a-fA-F]{2}[:-]?){5}[0-9a-fA-F]{2}$/.test(data.mac.trim())",
+          "validatorErrorText": "invalid_mac",
+          "xs": 12,
+          "sm": 6,
+          "md": 4,
+          "lg": 3,
+          "xl": 3
+        },
+        "timeout": {
+          "type": "number",
+          "label": "timeout",
+          "min": 5000,
+          "help": "Min. 5000ms",
+          "xs": 12,
+          "sm": 6,
+          "md": 4,
+          "lg": 2,
+          "xl": 2,
+          "newLine": true
+        },
+        "healthInterval": {
+          "type": "number",
+          "label": "healthInterval",
+          "min": 0,
+          "xs": 12,
+          "sm": 6,
+          "md": 4,
+          "lg": 2,
+          "xl": 2
+        },
+        "reconnect": {
+          "type": "number",
+          "label": "reconnect",
+          "help": "Min. 5000ms",
+          "min": 5000,
+          "xs": 12,
+          "sm": 6,
+          "md": 4,
+          "lg": 2,
+          "xl": 2
+        },
+        "power": {
+          "type": "checkbox",
+          "label": "power",
+          "xs": 12,
+          "sm": 12,
+          "md": 12,
+          "lg": 5,
+          "xl": 5,
+          "newLine": true
+        },
+        "wolwithip": {
+          "type": "checkbox",
+          "label": "wolwithip",
+          "xs": 12,
+          "sm": 12,
+          "md": 12,
+          "lg": 5,
+          "xl": 5,
+          "newLine": true
+        },
+        "help_tip": {
+          "type": "staticText",
+          "text": "help_tip",
+          "xs": 12,
+          "sm": 12,
+          "md": 12,
+          "lg": 12,
+          "xl": 12
+        }
+      }
     },
-    "mac": {
-      "type": "text",
-      "label": "mac",
-      "trim": true,
-      "validator": "!data.mac || /^([0-9a-fA-F]{2}[:-]?){5}[0-9a-fA-F]{2}$/.test(data.mac.trim())",
-      "validatorErrorText": "invalid_mac",
-      "xs": 12,
-      "sm": 6,
-      "md": 4,
-      "lg": 3,
-      "xl": 3
-    },
-    "timeout": {
-      "type": "number",
-      "label": "timeout",
-      "min": 5000,
-      "help": "Min. 5000ms",
-      "xs": 12,
-      "sm": 6,
-      "md": 4,
-      "lg": 2,
-      "xl": 2,
-      "newLine": true
-    },
-    "healthInterval": {
-      "type": "number",
-      "label": "healthInterval",
-      "min": 0,
-      "xs": 12,
-      "sm": 6,
-      "md": 4,
-      "lg": 2,
-      "xl": 2
-    },
-    "reconnect": {
-      "type": "number",
-      "label": "reconnect",
-      "help": "Min. 5000ms",
-      "min": 5000,
-      "xs": 12,
-      "sm": 6,
-      "md": 4,
-      "lg": 2,
-      "xl": 2
-    },
-    "power": {
-      "type": "checkbox",
-      "label": "power",
-      "xs": 12,
-      "sm": 12,
-      "md": 12,
-      "lg": 5,
-      "xl": 5,
-      "newLine": true
-    },
-    "wolwithip": {
-      "type": "checkbox",
-      "label": "wolwithip",
-      "xs": 12,
-      "sm": 12,
-      "md": 12,
-      "lg": 5,
-      "xl": 5,
-      "newLine": true
-    },
-    "help_tip": {
-      "type": "staticText",
-      "text": "help_tip",
-      "xs": 12,
-      "sm": 12,
-      "md": 12,
-      "lg": 12,
-      "xl": 12
+    "remoteTab": {
+      "type": "panel",
+      "label": "tab_remote",
+      "items": {
+        "_remote": {
+          "type": "custom",
+          "i18n": true,
+          "url": "custom/customComponents.js",
+          "name": "ConfigCustomLgTvSet/Components/RemoteControl",
+          "guiApi": 2,
+          "xs": 12,
+          "sm": 12,
+          "md": 12,
+          "lg": 12,
+          "xl": 12
+        }
+      }
     }
   }
 }
