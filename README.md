@@ -218,8 +218,9 @@ Install this adapter using ioBroker repositories.
 - (krobipd) Two volume changes in quick succession no longer fight over the TV, and an unreadable volume from the TV no longer disables the stepped volume ramp
 - (krobipd) Stopping the adapter while the TV was connected no longer logs "setTimeout called, but adapter is shutting down"
 - (krobipd) A stopped or crashed instance no longer keeps reporting `info.connection` as connected
-- (krobipd) `states.on` follows the power state the TV reports (`getPowerState`, new state `states.powerState`) instead of only the foreground app. The health poll asked for a service that does not exist on webOS 6 and later, and since 3.0.0 that 404 switched `states.on` off every poll while the TV was running
-- (krobipd) Switching the TV off and on again no longer leaves an additional health poll running for every cycle
+- (krobipd) The TV is no longer reported as switched off while it is actually running
+- (krobipd) The new state `states.powerState` shows the power state the TV reports itself
+- (krobipd) Switching the TV off and on repeatedly no longer piles up connection checks
 
 ### 3.0.3 (2026-09-05)
 - (GermanBluefox) The WebOS 26 pairing fallback now also asks for the pointer permissions, so the remote buttons, pointer moves, scrolling and clicks work after a fresh pairing

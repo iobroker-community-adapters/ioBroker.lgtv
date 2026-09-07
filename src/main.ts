@@ -172,6 +172,12 @@ class LgTv extends utils.Adapter {
      * the source of `states.on`; otherwise the foreground app serves as the fallback.
      */
     private powerState: PowerState | undefined = undefined;
+    /**
+     * True once this TV has answered the power-state subscription. Unlike `powerState` it
+     * survives a lost connection, so `states.powerState` is only written for TVs that report
+     * one at all - on webOS 3 and older the state stays empty instead of claiming "off".
+     */
+    private powerStateSeen = false;
     private renewTimeout: ioBroker.Timeout | undefined = undefined;
     /**
      * Handle of the health poll, or `false` when polling was switched off.
@@ -777,7 +783,16 @@ class LgTv extends utils.Adapter {
         lgtv.subscribePowerState((err, res) => {
             if (err) {
                 this.log.debug(`getPowerState subscription failed, falling back to the foreground app: ${err}`);
+                // `states.on` was following the power state until now, so it has to be
+                // re-evaluated against the fallback. Only then: a subscription that fails
+                // before the foreground app has answered would otherwise push a spurious
+                // `false` and take it back a moment later.
+                const hadPowerState = this.powerState !== undefined;
                 this.powerState = undefined;
+                this.powerStateSeen = false;
+                if (hadPowerState) {
+                    this.checkCurApp();
+                }
                 return;
             }
             this.applyPowerState(res);
@@ -1001,6 +1016,7 @@ class LgTv extends utils.Adapter {
         }
         const changed = res.state !== this.powerState;
         this.powerState = res.state;
+        this.powerStateSeen = true;
         void this.setStateChanged('states.powerState', res.state, true);
         if (changed) {
             this.log.debug(`TV power state: ${res.state}`);
@@ -1014,7 +1030,9 @@ class LgTv extends utils.Adapter {
             // before any power-state push gets out, so the last reported state is stale now.
             this.curApp = '';
             this.powerState = undefined;
-            void this.setStateChanged('states.powerState', 'off', true);
+            if (this.powerStateSeen) {
+                void this.setStateChanged('states.powerState', 'off', true);
+            }
         }
         // The power state reported by the TV decides; the foreground app is the fallback
         // for TVs without that endpoint (they report an empty app while in standby).

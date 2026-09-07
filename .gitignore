@@ -12,6 +12,7 @@ nbproject
 iobroker.*.tgz
 
 Thumbs.db
+.DS_Store
 
 # i18n intermediate files
 admin/i18n/flat.txt
