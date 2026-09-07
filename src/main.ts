@@ -72,6 +72,13 @@ function isTransportError(err: Error): boolean {
     return (err as Partial<SsapError>).code !== 'ESSAP';
 }
 
+/**
+ * How long onUnload waits for the `info.connection` write to be acknowledged before it calls
+ * the unload callback anyway. Below the host's default `common.stopTimeout` of 500 ms, so the
+ * adapter always stops on its own rather than being killed.
+ */
+const UNLOAD_ACK_GRACE_MS = 400;
+
 const WATCHDOG_CHECK_MS = 30000;
 const WATCHDOG_STUCK_MS = 60000;
 const WATCHDOG_PROBE_PORT = 3001;
@@ -1274,10 +1281,26 @@ class LgTv extends utils.Adapter {
         // its own reset reads <ns>.info.connection but writes to the namespace root. Without this
         // a stopped instance keeps reporting "connected". The callback must follow the write, not
         // race it: a fire-and-forget write plus an immediate callback never reaches the database.
-        try {
-            this.setStateChanged('info.connection', false, true, () => callback());
-        } catch {
+        // If that write is never acknowledged - a states database that is already gone, a slow
+        // backend - the callback would never come and the host would SIGKILL the process on
+        // common.stopTimeout (500 ms by default) instead of letting it stop cleanly. The write
+        // itself is dispatched either way; only the acknowledgement is waited for, and not for
+        // longer than the host is willing to wait. A plain setTimeout on purpose: this.setTimeout
+        // is exactly what adapter-core refuses once unloading has started.
+        let settled = false;
+        const finish = (): void => {
+            if (settled) {
+                return;
+            }
+            settled = true;
             callback();
+        };
+        // unref'd: the grace timer must never be the reason the process stays alive
+        setTimeout(finish, UNLOAD_ACK_GRACE_MS).unref();
+        try {
+            this.setStateChanged('info.connection', false, true, finish);
+        } catch {
+            finish();
         }
     }
 }
