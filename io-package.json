@@ -230,6 +230,25 @@
       "native": {}
     },
     {
+      "_id": "states.powerState",
+      "type": "state",
+      "common": {
+        "name": "Power state reported by the TV",
+        "role": "text",
+        "type": "string",
+        "read": true,
+        "write": false,
+        "states": {
+          "on": "On",
+          "screen_off": "Screen off",
+          "screen_saver": "Screen saver",
+          "standby": "Standby",
+          "off": "Off"
+        }
+      },
+      "native": {}
+    },
+    {
       "_id": "states.popup",
       "type": "state",
       "common": {
