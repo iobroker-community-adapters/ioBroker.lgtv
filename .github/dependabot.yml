@@ -7,7 +7,7 @@ updates:
 
   - package-ecosystem: 'npm'
     directories:
-      - `**/*'
+      - '**/*'
     schedule:
       interval: 'cron'
       timezone: 'Europe/Berlin'
