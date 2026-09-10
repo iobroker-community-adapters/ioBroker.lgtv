@@ -29,6 +29,7 @@ jobs:
             - uses: ioBroker/testing-action-check@v2
               with:
                   node-version: '24.x'
+                  install-command: 'npm run npm'
                   type-checking: true
                   lint: true
 
@@ -48,6 +49,7 @@ jobs:
               with:
                   node-version: ${{ matrix.node-version }}
                   os: ${{ matrix.os }}
+                  install-command: 'npm run npm'
                   build: true
 
     # Deploys the final package to NPM
@@ -72,4 +74,5 @@ jobs:
               with:
                   node-version: '24.x'
                   build: true
+                  install-command: 'npm run npm'
                   github-token: ${{ secrets.GITHUB_TOKEN }}
