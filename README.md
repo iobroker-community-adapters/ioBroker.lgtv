@@ -214,14 +214,6 @@ do with them.
 
 The instance has to be running: while it is stopped the keys are disabled and the tab says so.
 
----
----
-## Installation
-
-Install this adapter using ioBroker repositories.
-
->[!NOTE]
-> This adapter does not support installation from GitHub.
 
 ## Changelog
 
