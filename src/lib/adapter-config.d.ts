@@ -19,6 +19,8 @@ declare global {
             power: boolean;
             /** Include the TV IP in the Wake-on-LAN packet to send it as unicast */
             wolwithip: boolean;
+            /** Raise the volume in steps of 2 every 500 ms for increases of 5 or more; false sets it at once */
+            volumeRamp: boolean;
         }
     }
 }

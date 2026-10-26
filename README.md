@@ -167,7 +167,9 @@ holds the current channel
 
 `volume`
 
-holds the current volume level and can change the volume
+holds the current volume level and can change the volume. By default an increase of 5 or more is
+ramped up in steps of 2 every 500 ms, to spare the speakers; switch off *Ramp volume increases*
+in the instance settings to set every level at once
 
 `on`
 
@@ -222,6 +224,7 @@ The instance has to be running: while it is stopped the keys are disabled and th
     ### **WORK IN PROGRESS**
 -->
 ### **WORK IN PROGRESS**
+- (AlanSRU) New setting *Ramp volume increases* (on by default): switched off, `states.volume` is set at once instead of in steps
 - (mcm57) Fixed invalid state roles and read/write flags in object definitions
 
 ### 3.0.5 (2026-09-10)

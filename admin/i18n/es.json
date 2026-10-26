@@ -4,6 +4,7 @@
     "invalid_mac": "Dirección MAC no válida. Formato esperado: AA:BB:CC:DD:EE:FF",
     "power": "Apagar el televisor mediante el botón del mando a distancia",
     "wolwithip": "Incluir la dirección IP en el paquete Wake-On-LAN para utilizar unidifusión (viaja a través de subredes).",
+    "volumeRamp": "Subir el volumen gradualmente (2 cada 500 ms para aumentos de 5 o más)",
     "timeout": "Tiempo de espera en ms",
     "reconnect": "Intervalo de reconexión en ms",
     "healthInterval": "Intervalo de consulta en ms",
