@@ -193,7 +193,8 @@
     "reconnect": 5000,
     "healthInterval": 0,
     "power": false,
-    "wolwithip": false
+    "wolwithip": false,
+    "volumeRamp": true
   },
   "instanceObjects": [
     {

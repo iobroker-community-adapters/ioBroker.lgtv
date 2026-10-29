@@ -4,6 +4,7 @@
     "invalid_mac": "Nieprawidłowy adres MAC. Oczekiwany format: AA:BB:CC:DD:EE:FF",
     "power": "Wyłącz telewizor jako przycisk pilota",
     "wolwithip": "Uwzględnienie adresu IP w pakiecie Wake-On-LAN w celu użycia unicastu (podróż przez podsieci).",
+    "volumeRamp": "Stopniowo zwiększaj głośność (o 2 co 500 ms przy wzroście o 5 lub więcej)",
     "timeout": "Limit czasu w ms",
     "reconnect": "Interwał ponownego połączenia w ms",
     "healthInterval": "Interwał odpytywania w ms",

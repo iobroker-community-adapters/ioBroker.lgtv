@@ -4,6 +4,7 @@
     "invalid_mac": "Indirizzo MAC non valido. Formato previsto: AA:BB:CC:DD:EE:FF",
     "power": "Spegnere il televisore con il tasto del telecomando",
     "wolwithip": "Includere l'indirizzo IP nel pacchetto Wake-On-LAN per utilizzare unicast (viaggia attraverso le subnet).",
+    "volumeRamp": "Aumenta il volume gradualmente (di 2 ogni 500 ms per aumenti di 5 o più)",
     "timeout": "Tempo di attesa in ms",
     "reconnect": "Intervallo di riconnessione in ms",
     "healthInterval": "Intervallo di interrogazione in ms",

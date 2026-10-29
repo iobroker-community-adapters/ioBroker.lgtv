@@ -4,6 +4,7 @@
     "invalid_mac": "Ungültige MAC-Adresse. Erwartetes Format: AA:BB:CC:DD:EE:FF",
     "power": "Abschalten des Fernsehers mittels Fernbedienungstaste",
     "wolwithip": "IP-Adresse in das Wake-On-LAN-Paket aufnehmen um Unicast zu verwenden (wird über Subnetze hinweg übertragen)",
+    "volumeRamp": "Lautstärke schrittweise erhöhen (um 2 alle 500 ms bei Erhöhungen ab 5)",
     "timeout": "Timeout in ms",
     "reconnect": "Reconnect Intervall in ms",
     "healthInterval": "Abfrageintervall in ms",

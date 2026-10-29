@@ -1194,7 +1194,8 @@ class LgTv extends utils.Adapter {
         // A ramp still running belongs to an older target and would keep stepping towards it,
         // so two quick writes to states.volume would fight over the TV every 500 ms.
         this.stopVolumeRamp();
-        if (val >= this.volume + 5) {
+        // `volumeRamp` is undefined on instances configured before the option existed: keep ramping.
+        if (this.config.volumeRamp !== false && val >= this.volume + 5) {
             let vol = this.oldVolume;
             this.volumeRamp = this.setInterval(() => {
                 vol = vol + 2;
