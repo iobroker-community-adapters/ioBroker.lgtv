@@ -224,7 +224,7 @@ The instance has to be running: while it is stopped the keys are disabled and th
     ### **WORK IN PROGRESS**
 -->
 ### **WORK IN PROGRESS**
-- (AlanSRU) New setting *Ramp volume increases* (on by default): switched off, `states.volume` is set at once instead of in steps
+- (AlanSRU) Added an option to set the volume immediately instead of raising it step by step
 - (mcm57) Fixed invalid state roles and read/write flags in object definitions
 
 ### 3.0.5 (2026-09-10)

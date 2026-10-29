@@ -170,7 +170,7 @@ class LgTv extends utils.Adapter {
     private volume = 0;
     private oldVolume = 0;
     /** handle of the stepped volume ramp started by setVolume(), if one is running */
-    private volumeRamp: ioBroker.Interval | undefined = undefined;
+    private volumeRampTimer: ioBroker.Interval | undefined = undefined;
     private keyFile = 'lgtvkeyfile';
     private curApp = '';
     /**
@@ -1197,7 +1197,7 @@ class LgTv extends utils.Adapter {
         // `volumeRamp` is undefined on instances configured before the option existed: keep ramping.
         if (this.config.volumeRamp !== false && val >= this.volume + 5) {
             let vol = this.oldVolume;
-            this.volumeRamp = this.setInterval(() => {
+            this.volumeRampTimer = this.setInterval(() => {
                 vol = vol + 2;
                 if (vol >= val) {
                     vol = val;
@@ -1211,9 +1211,9 @@ class LgTv extends utils.Adapter {
     }
 
     private stopVolumeRamp(): void {
-        if (this.volumeRamp) {
-            this.clearInterval(this.volumeRamp);
-            this.volumeRamp = undefined;
+        if (this.volumeRampTimer) {
+            this.clearInterval(this.volumeRampTimer);
+            this.volumeRampTimer = undefined;
         }
     }
 
