@@ -251,7 +251,7 @@ Both also follow the TV: they show the input or app that is in the foreground, a
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 3.1.0 (2026-10-29)
 - (GermanBluefox) The IP field of the settings offers the TVs found in the network
 - (GermanBluefox) Added the channel `tv`, so visualizations and the devices adapter can control the TV
 - (GermanBluefox) The remote control in the settings has buttons for apps and inputs and can be operated with the keyboard
@@ -281,21 +281,6 @@ Both also follow the TV: they show the input or app that is in the foreground, a
 
 ### 3.0.1 (2026-09-04)
 - (GermanBluefox) Removed a prepare script
-
-### 3.0.0 (2026-09-04)
-- (Voodoo2man) Add WebOS 26 compatibility.
-- (Voodoo2man) Use the configured MAC address as a fallback for Wake-on-LAN.
-- (GermanBluefox) A malformed MAC address or a Wake-on-LAN socket error does not terminate the adapter anymore
-- (GermanBluefox) The MAC address is validated in the admin configuration
-- (GermanBluefox) Added the missing default value for the `wolwithip` setting
-- (GermanBluefox) `remote.power` switches the TV off again instead of only sending Wake-on-LAN
-- (GermanBluefox) Migrated the connection options from the deprecated `wsconfig` block to the lgtv2 v2 option names
-- (GermanBluefox) Removed the process wide TLS bypass, the certificate check is now relaxed per connection only
-- (GermanBluefox) Removed the unused `websocket` dependency
-- (GermanBluefox) The adapter was refactored to TypeScript. The sources moved to `src/`, the published code is the compiled `build/`
-- (GermanBluefox) The admin translations moved from `admin/i18n/<lang>/translations.json` to the flat `admin/i18n/<lang>.json`
-- (GermanBluefox) The unit tests use `node:assert` instead of `chai`
-- (GermanBluefox) Added a "Control TV" remote-control widget for the `ioBroker.devices` adapter
 
 [Older changelogs can be found there](CHANGELOG_OLD.md)
 
