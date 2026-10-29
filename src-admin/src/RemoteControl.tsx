@@ -11,6 +11,11 @@
 //     lgtv.<instance>.states.mute         boolean, read/write
 //     lgtv.<instance>.states.currentApp   string, read-only
 //     lgtv.<instance>.states.input        string, read-only here
+//     lgtv.<instance>.tv.app              string, write - an app of the type-detector list (YOUTUBE, ...)
+//     lgtv.<instance>.tv.input            string, write - an input of the type-detector list (HDMI1, ...)
+//
+// The app and input buttons come from `common.states` of tv.app / tv.input, which the instance fills
+// with what the TV reported.
 //
 // Everything is derived from the instance the dialog was opened for, so no `sendTo` handler is
 // needed in the adapter. Key presses are immediate and independent of the dialog's Save button -
@@ -37,6 +42,51 @@ const COLOR_KEYS: { key: string; color: string }[] = [
 /** `states.powerState` values that mean the panel may be dark but the TV is running. */
 const POWER_ON_STATES = new Set(['on', 'screen_off', 'screen_saver']);
 
+/** Brand-like colors of the app buttons - text only, no logos */
+const APP_COLORS: Record<string, string> = {
+    YOUTUBE: '#ff0000',
+    YOUTUBE_MUSIC: '#ff0000',
+    NETFLIX: '#e50914',
+    DISNEY_PLUS: '#113ccf',
+    PRIME_VIDEO: '#00a8e1',
+    APPLE_TV: '#000000',
+    SPOTIFY: '#1db954',
+    TWITCH: '#9146ff',
+    PLEX: '#e5a00d',
+};
+
+/** Keyboard keys that work while the remote has the focus → `remote.<key>` */
+const KEYBOARD: Record<string, string> = {
+    ArrowUp: 'up',
+    ArrowDown: 'down',
+    ArrowLeft: 'left',
+    ArrowRight: 'right',
+    Enter: 'enter',
+    Backspace: 'back',
+    Escape: 'exit',
+    Home: 'home',
+    '+': 'volumeUp',
+    '-': 'volumeDown',
+    m: 'mute',
+    ' ': 'play',
+    0: '0',
+    1: '1',
+    2: '2',
+    3: '3',
+    4: '4',
+    5: '5',
+    6: '6',
+    7: '7',
+    8: '8',
+    9: '9',
+};
+
+/** How long after the TV came on its apps and inputs are read again - the instance learns them on connect */
+const CHOICES_RELOAD_MS = 5000;
+
+/** One entry of `common.states` of tv.app / tv.input */
+type Choice = { id: string; label: string };
+
 const NUMPAD_KEYS = ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'dash', '0', 'flashback'];
 const NUMPAD_LABELS: Record<string, string> = { dash: '–', flashback: '↺' };
 
@@ -52,11 +102,18 @@ interface RemoteControlState extends ConfigGenericState {
     volumeDraft: number | null;
     /** Key that was pressed last, for the short press highlight */
     pressed: string | null;
+    /** `common.states` of tv.app / tv.input */
+    apps: Choice[];
+    inputs: Choice[];
+    /** Current values of tv.app / tv.input */
+    tvApp: string;
+    tvInput: string;
 }
 
 export default class RemoteControl extends ConfigGeneric<ConfigGenericProps, RemoteControlState> {
     private subscribed: string[] = [];
     private pressTimer: ReturnType<typeof setTimeout> | null = null;
+    private reloadTimer: ReturnType<typeof setTimeout> | null = null;
 
     constructor(props: ConfigGenericProps) {
         super(props);
@@ -70,6 +127,10 @@ export default class RemoteControl extends ConfigGeneric<ConfigGenericProps, Rem
             input: null,
             volumeDraft: null,
             pressed: null,
+            apps: [],
+            inputs: [],
+            tvApp: '',
+            tvInput: '',
         };
     }
 
@@ -86,6 +147,8 @@ export default class RemoteControl extends ConfigGeneric<ConfigGenericProps, Rem
             `${this.instanceId}.states.mute`,
             `${this.instanceId}.states.currentApp`,
             `${this.instanceId}.states.input`,
+            `${this.instanceId}.tv.app`,
+            `${this.instanceId}.tv.input`,
         ];
     }
 
@@ -93,6 +156,7 @@ export default class RemoteControl extends ConfigGeneric<ConfigGenericProps, Rem
         await super.componentDidMount();
 
         const ids = this.watchedIds;
+        await this.loadChoices();
 
         // Read once so the panel is populated even if nothing changes while it is open, then
         // subscribe. Both go through the admin socket, which is already connected here.
@@ -125,6 +189,31 @@ export default class RemoteControl extends ConfigGeneric<ConfigGenericProps, Rem
             clearTimeout(this.pressTimer);
             this.pressTimer = null;
         }
+        if (this.reloadTimer) {
+            clearTimeout(this.reloadTimer);
+            this.reloadTimer = null;
+        }
+    }
+
+    /** The apps and inputs the instance offers in tv.app / tv.input */
+    private async loadChoices(): Promise<void> {
+        const read = async (id: string): Promise<Choice[]> => {
+            try {
+                const obj = await this.props.oContext.socket.getObject(`${this.instanceId}.${id}`);
+                const states = obj?.common?.states;
+                if (states && typeof states === 'object' && !Array.isArray(states)) {
+                    return Object.entries(states as Record<string, string>).map(([key, label]) => ({
+                        id: key,
+                        label,
+                    }));
+                }
+            } catch {
+                // the instance never ran - no buttons
+            }
+            return [];
+        };
+        const [apps, inputs] = await Promise.all([read('tv.app'), read('tv.input')]);
+        this.setState({ apps, inputs });
     }
 
     private onStateChange = (id: string, state: ioBroker.State | null | undefined): void => {
@@ -135,17 +224,28 @@ export default class RemoteControl extends ConfigGeneric<ConfigGenericProps, Rem
         if (!state) {
             return;
         }
-        const key = id.split('.').pop();
+        // relative to the instance: `states.input` and `tv.input` must not be mixed up
+        const key = id.substring(this.instanceId.length + 1);
         switch (key) {
-            case 'on':
+            case 'states.on':
+                if (state.val && this.state.on === false) {
+                    // switched on while the dialog is open: the instance reads apps and inputs again
+                    if (this.reloadTimer) {
+                        clearTimeout(this.reloadTimer);
+                    }
+                    this.reloadTimer = setTimeout(() => {
+                        this.reloadTimer = null;
+                        void this.loadChoices();
+                    }, CHOICES_RELOAD_MS);
+                }
                 this.setState({ on: !!state.val });
                 break;
 
-            case 'powerState':
+            case 'states.powerState':
                 this.setState({ powerState: state.val ? String(state.val) : null });
                 break;
 
-            case 'volume': {
+            case 'states.volume': {
                 const volume = state.val == null ? null : Number(state.val);
                 // Ignore the echo of our own write while the slider is still being dragged.
                 if (this.state.volumeDraft === null) {
@@ -154,16 +254,24 @@ export default class RemoteControl extends ConfigGeneric<ConfigGenericProps, Rem
                 break;
             }
 
-            case 'mute':
+            case 'states.mute':
                 this.setState({ muted: !!state.val });
                 break;
 
-            case 'currentApp':
+            case 'states.currentApp':
                 this.setState({ currentApp: state.val ? String(state.val) : '' });
                 break;
 
-            case 'input':
+            case 'states.input':
                 this.setState({ input: state.val ? String(state.val) : '' });
+                break;
+
+            case 'tv.app':
+                this.setState({ tvApp: state.val ? String(state.val) : '' });
+                break;
+
+            case 'tv.input':
+                this.setState({ tvInput: state.val ? String(state.val) : '' });
                 break;
 
             default:
@@ -184,6 +292,21 @@ export default class RemoteControl extends ConfigGeneric<ConfigGenericProps, Rem
             this.setState({ pressed: null });
         }, 180);
     }
+
+    /** Write an app / input of the type-detector list to tv.app / tv.input (ack=false - a command) */
+    private choose(state: 'app' | 'input', id: string): void {
+        void this.props.oContext.socket.setState(`${this.instanceId}.tv.${state}`, id, false);
+    }
+
+    private onKeyDown = (e: React.KeyboardEvent): void => {
+        const key = KEYBOARD[e.key];
+        if (!key || !this.props.alive || e.ctrlKey || e.metaKey || e.altKey) {
+            return;
+        }
+        // arrows and space would scroll the dialog, Backspace would navigate back in some browsers
+        e.preventDefault();
+        this.press(key);
+    };
 
     private setVolume(value: number): void {
         void this.props.oContext.socket.setState(`${this.instanceId}.states.volume`, value, false);
@@ -281,7 +404,21 @@ export default class RemoteControl extends ConfigGeneric<ConfigGenericProps, Rem
 
     private renderRemote(): React.JSX.Element {
         return (
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.75, width: '100%', maxWidth: 320 }}>
+            <Box
+                tabIndex={0}
+                onKeyDown={this.onKeyDown}
+                title={this.getText('lgtvadmin_keyboard')}
+                sx={theme => ({
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 0.75,
+                    width: '100%',
+                    maxWidth: 320,
+                    borderRadius: '8px',
+                    outline: 'none',
+                    '&:focus-visible': { boxShadow: `0 0 0 2px ${theme.palette.primary.main}` },
+                })}
+            >
                 {RemoteControl.renderGrid(4, [
                     this.renderPowerKey(),
                     this.renderKey('list', '≡', { title: this.getText('lgtvadmin_list') }),
@@ -331,6 +468,93 @@ export default class RemoteControl extends ConfigGeneric<ConfigGenericProps, Rem
                     NUMPAD_KEYS.map(k => this.renderKey(k, NUMPAD_LABELS[k] ?? k, { title: k })),
                 )}
             </Box>
+        );
+    }
+
+    /** Text buttons for tv.app / tv.input; the current value is outlined */
+    private renderChoices(state: 'app' | 'input', choices: Choice[], current: string): React.JSX.Element {
+        const disabled = !this.props.alive;
+        return (
+            <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: 0.75 }}>
+                {choices.map(choice => {
+                    const color = state === 'app' ? APP_COLORS[choice.id] : undefined;
+                    const active = choice.id === current;
+                    return (
+                        <Box
+                            key={choice.id}
+                            component="button"
+                            disabled={disabled}
+                            title={choice.label}
+                            onClick={() => this.choose(state, choice.id)}
+                            sx={theme => ({
+                                all: 'unset',
+                                boxSizing: 'border-box',
+                                cursor: disabled ? 'not-allowed' : 'pointer',
+                                height: 32,
+                                px: 1,
+                                borderRadius: '16px',
+                                border: active
+                                    ? `2px solid ${theme.palette.primary.main}`
+                                    : `1px solid ${theme.palette.divider}`,
+                                bgcolor: color || theme.palette.action.hover,
+                                color: color ? '#fff' : theme.palette.text.primary,
+                                opacity: disabled ? 0.45 : 1,
+                                fontSize: '0.75rem',
+                                fontWeight: 700,
+                                textAlign: 'center',
+                                lineHeight: active ? '28px' : '30px',
+                                whiteSpace: 'nowrap',
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis',
+                                userSelect: 'none',
+                                transition: 'filter 0.12s ease',
+                                '&:hover': disabled ? {} : { filter: 'brightness(1.15)' },
+                            })}
+                        >
+                            {choice.label}
+                        </Box>
+                    );
+                })}
+            </Box>
+        );
+    }
+
+    /** Apps and inputs of the channel tv - only shown once the instance created them */
+    private renderShortcuts(): React.JSX.Element | null {
+        const { apps, inputs, tvApp, tvInput } = this.state;
+        if (!apps.length && !inputs.length) {
+            return null;
+        }
+        return (
+            <Paper
+                variant="outlined"
+                sx={{ p: 2, minWidth: 240, flex: '1 1 240px', maxWidth: 400, alignSelf: 'flex-start' }}
+            >
+                {apps.length ? (
+                    <>
+                        <Typography
+                            variant="subtitle2"
+                            sx={{ mb: 1 }}
+                        >
+                            {this.getText('lgtvadmin_apps')}
+                        </Typography>
+                        <Divider sx={{ mb: 1 }} />
+                        {this.renderChoices('app', apps, tvApp)}
+                    </>
+                ) : null}
+                {inputs.length ? (
+                    <>
+                        <Typography
+                            variant="subtitle2"
+                            sx={{ mb: 1, mt: apps.length ? 2 : 0 }}
+                        >
+                            {this.getText('lgtvadmin_inputs')}
+                        </Typography>
+                        <Divider sx={{ mb: 1 }} />
+                        {this.renderChoices('input', inputs, tvInput)}
+                    </>
+                ) : null}
+            </Paper>
         );
     }
 
@@ -442,6 +666,7 @@ export default class RemoteControl extends ConfigGeneric<ConfigGenericProps, Rem
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 3, alignItems: 'flex-start' }}>
                     {this.renderRemote()}
                     {this.renderStatus()}
+                    {this.renderShortcuts()}
                 </Box>
             </Box>
         );

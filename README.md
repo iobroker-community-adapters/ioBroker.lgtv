@@ -24,7 +24,8 @@ Remote controlling an LG WebOS SmartTV (2013 models and higher) from [ioBroker](
 ## Usage: 
 
 Install the adapter through the ioBroker admin interface.
-In the adapter config input the ip address of your LG WebOS TV.
+In the adapter config input the ip address of your LG WebOS TV. While the instance is running, the IP field
+offers the TVs it finds in the network for selection.
 At first connection you will receive a pairing prompt on your TV screen where you should allow the connection.
 
 ### Polling
@@ -214,7 +215,33 @@ running app, the current input and the volume, which can also be dragged. The ke
 immediately — they are state writes, not settings, so the dialog's *Save* button has nothing to
 do with them.
 
+Next to it the apps and inputs of the channel `tv` (see below) can be started with one click. Once the
+remote has been clicked it can also be operated with the keyboard: arrows, Enter, Backspace (back),
+Esc (exit), Home, `+` / `-` (volume), `M` (mute), space (play) and `0`-`9`.
+
 The instance has to be running: while it is stopped the keys are disabled and the tab says so.
+
+## Channel `tv` (type-detector)
+
+In addition to the existing objects the adapter creates the channel `lgtv.0.tv`, which the ioBroker
+type-detector (>= 6.2.0) recognizes as device type `tv`. Visualizations and the devices adapter can control the TV
+with it:
+
+| State            | Role                            | Description                                                          |
+|------------------|---------------------------------|----------------------------------------------------------------------|
+| `tv.power`       | `switch.power`                  | on (Wake-on-LAN) / off                                               |
+| `tv.key`         | `media.key`                     | a key: `UP`, `DOWN`, `SELECT`, `BACK`, `HOME`, `NUMBER_1`, `RED`, ...    |
+| `tv.volume`      | `level.volume`                  | volume 0-100, same as `states.volume`                                |
+| `tv.muted`       | `media.mute`                    | mute                                                                 |
+| `tv.volumeUp`    | `button.volume.up`              | volume up                                                            |
+| `tv.volumeDown`  | `button.volume.down`            | volume down                                                          |
+| `tv.input`       | `media.input`                   | `TV`, `HDMI1` ... `HDMI4`, `AV`, `COMPONENT`, `SCART`                  |
+| `tv.app`         | `media.app`                     | start an app: `YOUTUBE`, `NETFLIX`, `PRIME_VIDEO`, `DISNEY_PLUS`, ...  |
+| `tv.unreach`     | `indicator.maintenance.unreach` | the adapter has no connection to the TV                              |
+
+`tv.input` and `tv.app` start with TV, HDMI 1-4 and YouTube, Netflix, Prime Video and Browser. As soon as the
+TV is connected, the adapter offers the inputs and the installed apps of the TV that the type-detector knows.
+Both also follow the TV: they show the input or app that is in the foreground, and are empty for anything else.
 
 
 ## Changelog
@@ -224,6 +251,9 @@ The instance has to be running: while it is stopped the keys are disabled and th
     ### **WORK IN PROGRESS**
 -->
 ### **WORK IN PROGRESS**
+- (GermanBluefox) The IP field of the settings offers the TVs found in the network
+- (GermanBluefox) Added the channel `tv`, so visualizations and the devices adapter can control the TV
+- (GermanBluefox) The remote control in the settings has buttons for apps and inputs and can be operated with the keyboard
 - (AlanSRU) Added an option to set the volume immediately instead of raising it step by step
 - (mcm57) Fixed invalid state roles and read/write flags in object definitions
 

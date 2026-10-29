@@ -153,7 +153,7 @@ export class RemoteControlComponent extends WidgetGeneric<RemoteControlState, Re
             },
         };
 
-        return { name: 'LgTvRemote', schema: schema as unknown as ConfigItemPanel };
+        return { name: 'LgTvRemote', schema: schema };
     }
 
     private get instance(): string {

@@ -1,5 +1,6 @@
 {
     "ip": "IP address of the LG WebOS TV",
+    "ip_help": "TVs found in the network are offered for selection (the instance must be running)",
     "mac": "MAC address of the LG WebOS TV",
     "invalid_mac": "Invalid MAC address. Expected format: AA:BB:CC:DD:EE:FF",
     "power": "Turn off the TV as a remote control button",

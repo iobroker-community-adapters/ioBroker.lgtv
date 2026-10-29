@@ -11,7 +11,7 @@ TypeScript (CommonJS output). Sources live in `src/`, the published/runnable cod
 ## Commands
 
 ```bash
-npm run build                             # tsc -p tsconfig.build.json  -> build/
+npm run build                             # tsc -> build/, then build-devices and build-admin
 npm run watch                             # same in watch mode
 npm run check                             # type check only (tsconfig.json, noEmit)
 npm run lint                              # eslint (@iobroker/eslint-config, flat config)
@@ -19,7 +19,7 @@ npx eslint -c eslint.config.mjs --fix .   # autofix + prettier formatting
 
 npm run test:js                           # unit tests for src/lib and src/lgtv2 (needs a build first)
 npm run test:package                      # validates package.json / io-package.json / admin JSON (fast)
-npm run test:integration                  # starts a real js-controller + adapter instance
+npm run test:integration                  # real js-controller + adapter: type-detector + discover
 npm run translate                         # translate-adapter -b admin/i18n/en.json
 npm run release-patch                     # moves the README changelog into io-package news
 ```
@@ -37,13 +37,18 @@ There is deliberately **no `prepare` script** — `npm ci`/`npm install` does no
 | `src/lgtv2/pairing.json` | the pairing manifest sent to the TV, imported by `index.ts` |
 | `src/lib/types.ts` | shapes of the SSAP responses that are actually consumed |
 | `src/lib/probe.ts` | `probeTcpReachable` — TCP liveness probe used by the reconnect watchdog |
+| `src/lib/discovery.ts` | `discover` — SSDP search for webOS TVs, behind the `autocompleteSendTo` of the IP field |
+| `src/lib/tv.ts` | the channel `tv` for the type-detector: objects and the key / input / app maps |
 | `src/lib/adapter-config.d.ts` | augments `ioBroker.AdapterConfig` |
 | `admin/jsonConfig.json` | the configuration dialog — a `tabs` root: settings plus the remote-control tab |
 | `admin/i18n/<lang>.json` | flat translation files, keyed by the `label`s in `jsonConfig.json` |
 
 `src/lib/adapter-config.d.ts` is hand-maintained and must be kept in sync with `native` in `io-package.json` **and** with `admin/jsonConfig.json` — nothing generates it.
 
-The adapter has no `onMessage` handler, so `common.messagebox` is not set and there is no documented `sendTo` API.
+`onMessage` (`common.messagebox: true`) knows one command, `discover` → `[{ value: ip, label }]`, used by the
+`autocompleteSendTo` of the IP field. It searches for `urn:lge-com:service:webos-second-screen:1` and reads
+`friendlyName` / `modelName` from the description at `LOCATION`. The remote controls (admin tab, devices widget)
+write states and do not use `sendTo`.
 
 ### Transport: the vendored lgtv2 (`src/lgtv2/`)
 
@@ -105,6 +110,25 @@ Two things this is built around:
   `com.webos.service.tv.time/getCurrentTime`, which does not exist on webOS 6 and later; lgtv2 1.x
   hid that 404 (every answer came back with `err = null`), the vendored 2.x reports it, and the
   poll switched a running TV off every interval.
+
+### Channel `tv` (type-detector)
+
+`src/lib/tv.ts` defines the channel `tv` for the device type `tv` of `@iobroker/type-detector` (>= 6.2.0, a
+devDependency used only by the integration test), parallel to `states.*` / `remote.*`: `power`, `key`, `volume`,
+`muted`, `volumeUp` / `volumeDown`, `input`, `app`, `unreach`. It is created in code (`createTvObjects()`), not in
+`instanceObjects`, because `common.states` comes from the maps.
+
+- Keys of `common.states` of `key` / `input` / `app` must be a subset of `TV_KEYS` / `TV_INPUTS` / `TV_APPS` of the
+  type-detector — the integration test checks that.
+- `createTvObjects()` is awaited at the start of `onReady`, before the IP check and the connect: a state with `def`
+  created later would overwrite the value the TV reported.
+- `tv.input` / `tv.app` start with `DEFAULT_TV_INPUTS` / `DEFAULT_TV_APPS` and are replaced on every connect by
+  what `getExternalInputList` / `listLaunchPoints` report (`matchTvInputs` by input id, `matchTvApps` by title).
+  `replaceStates()` uses `setObject`, because `extendObject` would merge the old `states` map into the new one.
+  `TV` is not an external input: it launches `com.webos.app.livetv`.
+- `checkCurApp()` keeps `tv.power`, `tv.input` and `tv.app` in sync with the foreground app; `updateVolume` /
+  `updateMute` write `states.*` and `tv.*` together. `tv.unreach` follows `info.connection`.
+- `tv.volume` goes through `setVolume()`, so the volume ramp applies to it too.
 
 ### Health poll tri-state
 
@@ -170,7 +194,9 @@ by `tasks.ts --admin`.
   `onChange`, so nothing is written to the configuration.
 - It writes `lgtv.<n>.remote.<key>` with ack=false and reads `states.on`, `states.powerState`,
   `states.volume`, `states.mute`, `states.currentApp` and `states.input` over
-  `oContext.socket`. Key presses take effect immediately and have nothing to do with the
+  `oContext.socket`. The app and input buttons come from `common.states` of `tv.app` / `tv.input`
+  (read on mount and 5 s after the TV came on) and write those states. While the remote has the
+  focus, the keyboard presses `remote.*` keys (`KEYBOARD` map). Key presses take effect immediately and have nothing to do with the
   dialog's Save button. Everything is derived from `oContext.adapterName`/`instance`, so the
   adapter needs **no `sendTo` handler**.
 - Buttons are disabled while `props.alive` is false; a running instance is required.

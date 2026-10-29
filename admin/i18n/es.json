@@ -1,5 +1,6 @@
 {
     "ip": "Dirección IP del televisor LG WebOS",
+    "ip_help": "Los televisores encontrados en la red se ofrecen para su selección (la instancia debe estar en ejecución)",
     "mac": "Dirección MAC del televisor LG WebOS",
     "invalid_mac": "Dirección MAC no válida. Formato esperado: AA:BB:CC:DD:EE:FF",
     "power": "Apagar el televisor mediante el botón del mando a distancia",

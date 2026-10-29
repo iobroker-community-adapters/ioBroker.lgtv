@@ -1,5 +1,6 @@
 {
     "ip": "IP-Adresse des LG WebOS TVs",
+    "ip_help": "Im Netzwerk gefundene Fernseher werden zur Auswahl angeboten (die Instanz muss laufen)",
     "mac": "MAC-Adresse des LG WebOS TVs",
     "invalid_mac": "Ungültige MAC-Adresse. Erwartetes Format: AA:BB:CC:DD:EE:FF",
     "power": "Abschalten des Fernsehers mittels Fernbedienungstaste",

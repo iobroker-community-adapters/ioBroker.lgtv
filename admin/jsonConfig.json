@@ -7,9 +7,12 @@
       "label": "tab_settings",
       "items": {
         "ip": {
-          "type": "text",
+          "type": "autocompleteSendTo",
           "label": "ip",
-          "trim": true,
+          "command": "discover",
+          "freeSolo": true,
+          "maxLength": 15,
+          "help": "ip_help",
           "xs": 12,
           "sm": 6,
           "md": 4,

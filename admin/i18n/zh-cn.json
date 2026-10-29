@@ -1,5 +1,6 @@
 {
     "ip": "LG WebOS 电视的 IP 地址",
+    "ip_help": "网络中找到的电视会供选择（实例必须正在运行）",
     "mac": "LG WebOS 电视的 MAC 地址",
     "invalid_mac": "MAC 地址无效。预期格式：AA:BB:CC:DD:EE:FF",
     "power": "作为遥控器按钮关闭电视",

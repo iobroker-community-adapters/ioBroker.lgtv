@@ -1,5 +1,6 @@
 {
     "ip": "IP-adres van de LG WebOS-tv",
+    "ip_help": "In het netwerk gevonden tv's worden ter selectie aangeboden (de instantie moet actief zijn)",
     "mac": "MAC-adres van de LG WebOS-tv",
     "invalid_mac": "Ongeldig MAC-adres. Verwacht formaat: AA:BB:CC:DD:EE:FF",
     "power": "De tv uitschakelen via de toets van de afstandsbediening",

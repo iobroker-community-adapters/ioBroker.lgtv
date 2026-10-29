@@ -1,5 +1,6 @@
 {
     "ip": "Adres IP telewizora LG WebOS",
+    "ip_help": "Telewizory znalezione w sieci są proponowane do wyboru (instancja musi być uruchomiona)",
     "mac": "Adres MAC telewizora LG WebOS",
     "invalid_mac": "Nieprawidłowy adres MAC. Oczekiwany format: AA:BB:CC:DD:EE:FF",
     "power": "Wyłącz telewizor jako przycisk pilota",

@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@iobroker/adapter-core": "^3.4.3",
+    "node-ssdp": "^4.0.1",
     "wol": "^1.0.7",
     "ws": "^8.22.0"
   },
@@ -37,9 +38,11 @@
     "@iobroker/dev-server": "^0.8.0",
     "@iobroker/eslint-config": "^2.3.4",
     "@iobroker/testing": "^6.3.1",
+    "@iobroker/type-detector": "^6.2.0",
     "@iobroker/types": "^7.2.5",
     "@tsconfig/node22": "^22.0.6",
     "@types/node": "^22.20.5",
+    "@types/node-ssdp": "^4.0.5",
     "@types/wol": "^1.0.4",
     "@types/ws": "^8.18.2",
     "tsx": "^4.23.15",

@@ -1,5 +1,6 @@
 {
     "ip": "Indirizzo IP del televisore LG WebOS",
+    "ip_help": "I televisori trovati nella rete vengono proposti per la selezione (l'istanza deve essere in esecuzione)",
     "mac": "Indirizzo MAC del televisore LG WebOS",
     "invalid_mac": "Indirizzo MAC non valido. Formato previsto: AA:BB:CC:DD:EE:FF",
     "power": "Spegnere il televisore con il tasto del telecomando",

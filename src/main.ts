@@ -11,7 +11,20 @@ import { existsSync, mkdirSync, readFile, writeFile } from 'node:fs';
 import { join } from 'node:path';
 import { wake } from 'wol';
 
+import { discover } from './lib/discovery';
 import { probeTcpReachable } from './lib/probe';
+import {
+    DEFAULT_TV_APPS,
+    DEFAULT_TV_INPUTS,
+    inputForApp,
+    labels,
+    LIVE_TV_APP,
+    LIVE_TV_INPUT,
+    matchTvApps,
+    matchTvInputs,
+    TV_KEY_BUTTONS,
+    TV_OBJECTS,
+} from './lib/tv';
 import type {
     CommandCallback,
     CommandPayload,
@@ -211,13 +224,46 @@ class LgTv extends utils.Adapter {
     private watchdogProbeInFlight = false;
     /** set in onUnload: the `close` event of the final disconnect must not start a new timer */
     private unloading = false;
+    /** Apps of `tv.app`: key of `TV_APPS` → label and app id. The defaults until the TV sent its launch points */
+    private tvApps: Record<string, { label: string; id: string }> = { ...DEFAULT_TV_APPS };
+    /** Inputs of `tv.input`: key of `TV_INPUTS` → label and input id. The defaults until the TV sent its list */
+    private tvInputs: Record<string, { label: string; id: string }> = { ...DEFAULT_TV_INPUTS };
 
     public constructor(options: Partial<utils.AdapterOptions> = {}) {
         super({ ...options, systemConfig: true, name: 'lgtv' });
 
-        this.on('ready', () => this.onReady());
+        this.on('ready', () => void this.onReady());
         this.on('stateChange', (id, state) => this.onStateChange(id, state));
+        this.on('message', obj => this.onMessage(obj));
         this.on('unload', callback => this.onUnload(callback));
+    }
+
+    /**
+     * Commands of the settings:
+     * - `discover` → `[{ value: ip, label }]`: TVs found via SSDP (`autocompleteSendTo` of the IP field)
+     *
+     * Every command answers with its result or `{ error }`.
+     */
+    private onMessage(obj: ioBroker.Message): void {
+        if (!obj?.callback) {
+            return;
+        }
+        if (obj.command !== 'discover') {
+            this.sendTo(obj.from, obj.command, { error: `Unknown command ${obj.command}` }, obj.callback);
+            return;
+        }
+        discover(this)
+            .then(tvs => {
+                this.log.debug(`Discovery: ${JSON.stringify(tvs)}`);
+                const response = tvs.map(tv => ({
+                    value: tv.ip,
+                    label: `${tv.friendlyName || tv.modelName || tv.modelNumber} (${tv.ip})`,
+                }));
+                this.sendTo(obj.from, obj.command, response, obj.callback);
+            })
+            .catch(err =>
+                this.sendTo(obj.from, obj.command, { error: (err as Error).message || String(err) }, obj.callback),
+            );
     }
 
     private onStateChange(id: string, state: ioBroker.State | null | undefined): void {
@@ -238,6 +284,11 @@ class LgTv extends utils.Adapter {
             dy = parseInt(vals[1]);
         }
         this.log.debug(`State change "${id}" - VALUE: ${state.val as string}`);
+
+        if (id.startsWith('tv.')) {
+            this.handleTvCommand(id.substring('tv.'.length), state.val);
+            return;
+        }
 
         if (id.startsWith('states.picture.')) {
             const key = id.substring('states.picture.'.length);
@@ -275,7 +326,7 @@ class LgTv extends utils.Adapter {
                 this.log.debug(`Sending mute ${state.val as string} command to WebOS TV: ${this.config.ip}`);
                 this.sendCommand('ssap://audio/setMute', { mute: state.val }, err => {
                     if (!err) {
-                        void this.setState('states.mute', state.val, true);
+                        this.updateMute(!!state.val);
                     }
                 });
                 break;
@@ -541,6 +592,7 @@ class LgTv extends utils.Adapter {
                 if (!offErr && res?.returnValue === true) {
                     void this.setState(ackId, val, true);
                     void this.setState('states.on', false, true);
+                    void this.setState('tv.power', false, true);
                 }
             });
         });
@@ -611,6 +663,122 @@ class LgTv extends utils.Adapter {
         });
     }
 
+    /** A write to the channel `tv` (device type `tv` of the type-detector); `state` is relative to it, e.g. `power` */
+    private handleTvCommand(state: string, val: ioBroker.StateValue): void {
+        switch (state) {
+            case 'power':
+                if (val) {
+                    // acknowledged by checkCurApp() once the TV reports that it runs
+                    this.wakeTv();
+                } else {
+                    this.switchOff('tv.power', val);
+                }
+                break;
+
+            case 'key': {
+                const entry = TV_KEY_BUTTONS[String(val)];
+                if (!entry) {
+                    this.log.warn(`tv.key: unknown key "${val as string}"`);
+                    return;
+                }
+                this.sendCommand('button', { name: entry.button }, err => {
+                    if (!err) {
+                        void this.setState('tv.key', val, true);
+                    }
+                });
+                break;
+            }
+
+            case 'input': {
+                const entry = this.tvInputs[String(val)];
+                if (!entry) {
+                    this.log.warn(`tv.input: unknown input "${val as string}"`);
+                    return;
+                }
+                // TV is not an external input, it is the live TV app
+                const [uri, payload] =
+                    entry.id === LIVE_TV_INPUT
+                        ? ['ssap://system.launcher/launch', { id: LIVE_TV_APP }]
+                        : ['ssap://tv/switchInput', { inputId: entry.id }];
+                this.sendCommand(uri, payload, err => {
+                    if (!err) {
+                        void this.setState('tv.input', val, true);
+                    }
+                });
+                break;
+            }
+
+            case 'app': {
+                const entry = this.tvApps[String(val)];
+                if (!entry) {
+                    this.log.warn(`tv.app: unknown app "${val as string}"`);
+                    return;
+                }
+                this.sendCommand('ssap://system.launcher/launch', { id: entry.id }, err => {
+                    if (!err) {
+                        void this.setState('tv.app', val, true);
+                    }
+                });
+                break;
+            }
+
+            case 'volume':
+                // acknowledged by the volume subscription
+                this.oldVolume = this.volume;
+                this.setVolume(Number(val));
+                break;
+
+            case 'muted':
+                this.sendCommand('ssap://audio/setMute', { mute: !!val }, err => {
+                    if (!err) {
+                        this.updateMute(!!val);
+                    }
+                });
+                break;
+
+            case 'volumeUp':
+            case 'volumeDown':
+                this.sendCommand(`ssap://audio/${state}`, null, err => {
+                    if (!err) {
+                        void this.setState(`tv.${state}`, !!val, true);
+                    }
+                });
+                break;
+
+            default:
+                this.log.warn(`tv.${state} is read-only`);
+                break;
+        }
+    }
+
+    /** Creates or updates the channel `tv` (device type `tv` of the type-detector) */
+    private async createTvObjects(): Promise<void> {
+        for (const [id, obj] of Object.entries(TV_OBJECTS)) {
+            await this.extendObjectAsync(id, obj);
+        }
+    }
+
+    /** Replaces `common.states` of `id` - extendObject would merge the old map into the new one */
+    private async replaceStates(id: string, states: Record<string, string>): Promise<void> {
+        const obj = await this.getObjectAsync(id);
+        if (!obj || JSON.stringify(obj.common.states) === JSON.stringify(states)) {
+            return;
+        }
+        obj.common.states = states;
+        await this.setObjectAsync(id, obj);
+    }
+
+    private updateVolume(volume: number): void {
+        this.volume = volume;
+        void this.setState('states.volume', volume, true);
+        void this.setState('tv.volume', volume, true);
+    }
+
+    private updateMute(muted: boolean): void {
+        void this.setState('states.mute', muted, true);
+        void this.setState('tv.muted', muted, true);
+    }
+
     private connect(cb?: () => void): void {
         this.hostUrl = `wss://${this.config.ip}:3001`;
         // `reconnect` and `timeout` are declared as numbers, but instances configured with an
@@ -678,6 +846,7 @@ class LgTv extends utils.Adapter {
             this.log.debug('WebOS TV Connected');
             this.isConnect = true;
             void this.setStateChanged('info.connection', true, true);
+            void this.setStateChanged('tv.unreach', false, true);
             this.subscribeTv(lgtv);
             cb?.();
         });
@@ -703,24 +872,22 @@ class LgTv extends utils.Adapter {
                 if (res.changed.includes('volume') && res.volume != null) {
                     const volume = parseInt(String(res.volume));
                     if (Number.isFinite(volume)) {
-                        this.volume = volume;
-                        void this.setState('states.volume', volume, true);
+                        this.updateVolume(volume);
                     }
                 }
                 if (res.changed.includes('muted') && res.muted != null) {
-                    void this.setState('states.mute', !!res.muted, true);
+                    this.updateMute(!!res.muted);
                 }
             } else if (res.volumeStatus) {
                 const status = res.volumeStatus;
                 if (status.volume != null) {
                     const volume = parseInt(String(status.volume));
                     if (Number.isFinite(volume)) {
-                        this.volume = volume;
-                        void this.setState('states.volume', volume, true);
+                        this.updateVolume(volume);
                     }
                 }
                 if (status.muteStatus != null) {
-                    void this.setState('states.mute', !!status.muteStatus, true);
+                    this.updateMute(!!status.muteStatus);
                 }
                 if (status.soundOutput != null) {
                     void this.setState('states.soundOutput', status.soundOutput || '', true);
@@ -736,6 +903,8 @@ class LgTv extends utils.Adapter {
                 this.extendObject('states.input', { common: { states: null } }, () => {
                     void this.extendObject('states.input', { common: { states: inputList(devices) } });
                 });
+                this.tvInputs = matchTvInputs(devices);
+                void this.replaceStates('tv.input', labels(this.tvInputs));
             }
         });
 
@@ -745,6 +914,12 @@ class LgTv extends utils.Adapter {
                 this.extendObject('states.launch', { common: { states: null } }, () => {
                     void this.extendObject('states.launch', { common: { states: launchList(points) } });
                 });
+                // a TV without any of the known apps keeps the defaults rather than an empty list
+                const apps = matchTvApps(points);
+                if (Object.keys(apps).length) {
+                    this.tvApps = apps;
+                    void this.replaceStates('tv.app', labels(apps));
+                }
             }
         });
 
@@ -958,6 +1133,7 @@ class LgTv extends utils.Adapter {
         if (secondCheck) {
             if (!this.isConnect) {
                 void this.setStateChanged('info.connection', false, true);
+                void this.setStateChanged('tv.unreach', true, true);
                 if (this.healthInterval) {
                     this.clearInterval(this.healthInterval);
                     // forget the handle as well - `false` (never poll again) must survive, but a
@@ -1065,7 +1241,14 @@ class LgTv extends utils.Adapter {
             void this.setStateChanged('states.input', '', true);
             void this.setStateChanged('states.launch', inp || '', true);
         }
+        void this.setStateChanged('tv.input', inputForApp(this.curApp, this.tvInputs), true);
+        void this.setStateChanged(
+            'tv.app',
+            Object.keys(this.tvApps).find(key => this.tvApps[key].id === this.curApp) ?? '',
+            true,
+        );
         void this.setStateChanged('states.power', isTVon, true);
+        void this.setStateChanged('tv.power', isTVon, true);
         this.setStateChanged('states.on', isTVon, true, (_err, _stateId, notChanged) => {
             if (notChanged) {
                 return;
@@ -1217,11 +1400,20 @@ class LgTv extends utils.Adapter {
         }
     }
 
-    private onReady(): void {
+    private async onReady(): Promise<void> {
+        // Before anything is polled: a state with `def` that is created later would overwrite
+        // the value the TV reported.
+        try {
+            await this.createTvObjects();
+        } catch (e) {
+            this.log.error(`Cannot create the channel tv: ${e as string}`);
+        }
+
         // Nothing is connected yet, and a previous run that was killed rather than unloaded left
         // its own `true` behind - the host does not reset it (its reset reads
         // <ns>.info.connection but writes to the namespace root). Start from the truth.
         void this.setStateChanged('info.connection', false, true);
+        void this.setStateChanged('tv.unreach', true, true);
 
         if (!this.config.ip) {
             this.log.error('No configure IP address');
