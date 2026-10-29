@@ -202,7 +202,8 @@ Wake-on-LAN packet while it is off.
 | ![Compact layout](docs/widget-compact.png) | ![Wide layout](docs/widget-wide.png) | ![Full remote layout](docs/widget-full.png) |
 
 The channel keys, media keys, colour keys and the number pad can each be switched off in the
-widget settings.
+widget settings. Below the keys the full remote has buttons for the apps of the channel `tv`
+(see below) and, if switched on in the widget settings, for its inputs.
 
 ## Remote control in the admin
 
@@ -254,6 +255,7 @@ Both also follow the TV: they show the input or app that is in the foreground, a
 - (GermanBluefox) The IP field of the settings offers the TVs found in the network
 - (GermanBluefox) Added the channel `tv`, so visualizations and the devices adapter can control the TV
 - (GermanBluefox) The remote control in the settings has buttons for apps and inputs and can be operated with the keyboard
+- (GermanBluefox) The remote control widget of the devices adapter has buttons for apps and inputs
 - (AlanSRU) Added an option to set the volume immediately instead of raising it step by step
 - (mcm57) Fixed invalid state roles and read/write flags in object definitions
 

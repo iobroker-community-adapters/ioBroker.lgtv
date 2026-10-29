@@ -7,6 +7,11 @@
 //     lgtv.<instance>.states.volume       (number)
 //     lgtv.<instance>.states.mute         (boolean)
 //     lgtv.<instance>.states.currentApp   (string — e.g. "com.webos.app.livetv")
+//     lgtv.<instance>.tv.app              (string — an app of the type-detector list, e.g. "YOUTUBE")
+//     lgtv.<instance>.tv.input            (string — an input of the type-detector list, e.g. "HDMI1")
+//
+// The app and input buttons of the full remote come from `common.states` of tv.app / tv.input,
+// which the adapter fills with what the TV reported; pressing one writes its key to that state.
 //
 // Pressing a key writes `true` to `remote.<key>` with ack=false; the adapter forwards it to
 // the TV over the pointer-input socket. `remote.power` is special: the adapter sends the POWER
@@ -50,6 +55,25 @@ const COLOR_KEYS: { key: string; color: string }[] = [
     { key: 'blue', color: '#2f6fd0' },
 ];
 
+/** Brand-like colors of the app buttons - text only, no logos */
+const APP_COLORS: Record<string, string> = {
+    YOUTUBE: '#ff0000',
+    YOUTUBE_MUSIC: '#ff0000',
+    NETFLIX: '#e50914',
+    DISNEY_PLUS: '#113ccf',
+    PRIME_VIDEO: '#00a8e1',
+    APPLE_TV: '#000000',
+    SPOTIFY: '#1db954',
+    TWITCH: '#9146ff',
+    PLEX: '#e5a00d',
+};
+
+/** How long after the TV came on its apps and inputs are read again - the adapter learns them on connect */
+const CHOICES_RELOAD_MS = 5000;
+
+/** One entry of `common.states` of tv.app / tv.input */
+type Choice = { id: string; label: string };
+
 interface RemoteControlSettings extends CustomWidgetPlugin {
     /** lgtv adapter instance, e.g. "lgtv.0". */
     instance?: string;
@@ -63,6 +87,10 @@ interface RemoteControlSettings extends CustomWidgetPlugin {
     showChannel?: boolean;
     /** Show volume value and mute state under the header. */
     showStatus?: boolean;
+    /** Show the app buttons of tv.app in the full remote. */
+    showApps?: boolean;
+    /** Show the input buttons of tv.input in the full remote. */
+    showInputs?: boolean;
 }
 
 interface RemoteControlState extends WidgetGenericState {
@@ -76,6 +104,12 @@ interface RemoteControlState extends WidgetGenericState {
     currentApp: string | null;
     /** Key that was pressed last, used for the short press highlight. */
     pressed: string | null;
+    /** `common.states` of tv.app / tv.input */
+    apps: Choice[];
+    inputs: Choice[];
+    /** Current values of tv.app / tv.input */
+    tvApp: string;
+    tvInput: string;
 }
 
 export class RemoteControlComponent extends WidgetGeneric<RemoteControlState, RemoteControlSettings> {
@@ -86,6 +120,8 @@ export class RemoteControlComponent extends WidgetGeneric<RemoteControlState, Re
 
     private pressTimer: ReturnType<typeof setTimeout> | null = null;
 
+    private reloadTimer: ReturnType<typeof setTimeout> | null = null;
+
     constructor(props: WidgetGenericProps<RemoteControlSettings>) {
         super(props);
         this.state = {
@@ -95,6 +131,10 @@ export class RemoteControlComponent extends WidgetGeneric<RemoteControlState, Re
             muted: null,
             currentApp: null,
             pressed: null,
+            apps: [],
+            inputs: [],
+            tvApp: '',
+            tvInput: '',
         };
     }
 
@@ -139,6 +179,18 @@ export class RemoteControlComponent extends WidgetGeneric<RemoteControlState, Re
                     default: false,
                     sm: 6,
                 },
+                showApps: {
+                    type: 'checkbox',
+                    label: 'lgtvremote_showApps',
+                    default: true,
+                    sm: 6,
+                },
+                showInputs: {
+                    type: 'checkbox',
+                    label: 'lgtvremote_showInputs',
+                    default: false,
+                    sm: 6,
+                },
                 icon: {
                     type: 'component',
                     subType: 'iconSelect',
@@ -169,7 +221,16 @@ export class RemoteControlComponent extends WidgetGeneric<RemoteControlState, Re
         super.componentDidUpdate?.(prevProps, this.state);
         if (prevProps.settings.instance !== this.props.settings.instance) {
             this.unsubscribeStates();
-            this.setState({ on: null, volume: null, muted: null, currentApp: null });
+            this.setState({
+                on: null,
+                volume: null,
+                muted: null,
+                currentApp: null,
+                apps: [],
+                inputs: [],
+                tvApp: '',
+                tvInput: '',
+            });
             this.subscribeStates();
         }
     }
@@ -180,6 +241,35 @@ export class RemoteControlComponent extends WidgetGeneric<RemoteControlState, Re
         if (this.pressTimer) {
             clearTimeout(this.pressTimer);
             this.pressTimer = null;
+        }
+        if (this.reloadTimer) {
+            clearTimeout(this.reloadTimer);
+            this.reloadTimer = null;
+        }
+    }
+
+    /** The apps and inputs the adapter offers in tv.app / tv.input */
+    private async loadChoices(): Promise<void> {
+        const instance = this.instance;
+        const read = async (id: string): Promise<Choice[]> => {
+            try {
+                const obj = await this.props.stateContext.getObject<ioBroker.StateObject>(`${instance}.${id}`);
+                const states = obj?.common?.states;
+                if (states && typeof states === 'object' && !Array.isArray(states)) {
+                    return Object.entries(states).map(([key, label]) => ({
+                        id: key,
+                        label,
+                    }));
+                }
+            } catch {
+                // an adapter version without the channel tv - no buttons
+            }
+            return [];
+        };
+        const [apps, inputs] = await Promise.all([read('tv.app'), read('tv.input')]);
+        // the instance may have been changed in the meantime
+        if (instance === this.instance) {
+            this.setState({ apps, inputs });
         }
     }
 
@@ -195,10 +285,26 @@ export class RemoteControlComponent extends WidgetGeneric<RemoteControlState, Re
             this.subscribedIds.push({ id, handler });
         };
 
-        sub(`${this.instance}.states.on`, s => this.setState({ on: !!s.val }));
+        void this.loadChoices();
+
+        sub(`${this.instance}.states.on`, s => {
+            if (s.val && this.state.on === false) {
+                // switched on while the widget is shown: the adapter reads apps and inputs again
+                if (this.reloadTimer) {
+                    clearTimeout(this.reloadTimer);
+                }
+                this.reloadTimer = setTimeout(() => {
+                    this.reloadTimer = null;
+                    void this.loadChoices();
+                }, CHOICES_RELOAD_MS);
+            }
+            this.setState({ on: !!s.val });
+        });
         sub(`${this.instance}.states.volume`, s => this.setState({ volume: s.val == null ? null : Number(s.val) }));
         sub(`${this.instance}.states.mute`, s => this.setState({ muted: !!s.val }));
         sub(`${this.instance}.states.currentApp`, s => this.setState({ currentApp: s.val ? String(s.val) : '' }));
+        sub(`${this.instance}.tv.app`, s => this.setState({ tvApp: s.val ? String(s.val) : '' }));
+        sub(`${this.instance}.tv.input`, s => this.setState({ tvInput: s.val ? String(s.val) : '' }));
     }
 
     private unsubscribeStates(): void {
@@ -222,6 +328,11 @@ export class RemoteControlComponent extends WidgetGeneric<RemoteControlState, Re
             this.pressTimer = null;
             this.setState({ pressed: null });
         }, 180);
+    }
+
+    /** Write an app / input of the type-detector list to tv.app / tv.input (ack=false - a command). */
+    private choose(state: 'app' | 'input', id: string): void {
+        void this.props.stateContext.getSocket().setState(`${this.instance}.tv.${state}`, id, false);
     }
 
     /** Active = the TV is currently on (drives the host's "active" tile styling). */
@@ -386,6 +497,54 @@ export class RemoteControlComponent extends WidgetGeneric<RemoteControlState, Re
         );
     }
 
+    /** Text buttons for tv.app / tv.input; the current value is outlined. */
+    private renderChoices(state: 'app' | 'input', choices: Choice[], current: string): React.JSX.Element {
+        return (
+            <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: 0.5, width: '100%' }}>
+                {choices.map(choice => {
+                    const color = state === 'app' ? APP_COLORS[choice.id] : undefined;
+                    const active = choice.id === current;
+                    return (
+                        <Box
+                            key={choice.id}
+                            component="button"
+                            title={choice.label}
+                            onClick={(e: React.MouseEvent) => {
+                                e.stopPropagation();
+                                this.choose(state, choice.id);
+                            }}
+                            sx={{
+                                all: 'unset',
+                                boxSizing: 'border-box',
+                                cursor: 'pointer',
+                                height: 28,
+                                px: 1,
+                                borderRadius: '14px',
+                                border: active
+                                    ? '2px solid rgba(255,255,255,0.85)'
+                                    : '1px solid rgba(255,255,255,0.16)',
+                                bgcolor: color || 'rgba(255,255,255,0.08)',
+                                color: color ? '#fff' : 'inherit',
+                                fontSize: '0.72rem',
+                                fontWeight: 700,
+                                textAlign: 'center',
+                                lineHeight: active ? '24px' : '26px',
+                                whiteSpace: 'nowrap',
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis',
+                                userSelect: 'none',
+                                transition: 'filter 0.12s ease',
+                                '&:hover': { filter: 'brightness(1.2)' },
+                            }}
+                        >
+                            {choice.label}
+                        </Box>
+                    );
+                })}
+            </Box>
+        );
+    }
+
     /** Header line: icon, name, and the current volume / mute / app status. */
     private renderHeader(compact: boolean): React.JSX.Element {
         const { on, volume, muted, currentApp } = this.state;
@@ -512,6 +671,12 @@ export class RemoteControlComponent extends WidgetGeneric<RemoteControlState, Re
                 {s.showMedia !== false ? this.renderMediaRow() : null}
                 {s.showColorKeys !== false ? this.renderColorRow() : null}
                 {s.showNumpad === true ? this.renderNumpad() : null}
+                {s.showApps !== false && this.state.apps.length
+                    ? this.renderChoices('app', this.state.apps, this.state.tvApp)
+                    : null}
+                {s.showInputs === true && this.state.inputs.length
+                    ? this.renderChoices('input', this.state.inputs, this.state.tvInput)
+                    : null}
             </Box>
         );
     }

@@ -167,6 +167,10 @@ cd src-admin && npm start     # standalone dev harness on :4173
 - Keys write `true` to `lgtv.<n>.remote.<key>` with ack=false; status comes from
   `states.on`, `states.volume`, `states.mute` and `states.currentApp`. Everything is derived
   from the configured instance, so the widget needs **no `sendTo` handler** in the adapter.
+- The full remote (2x1 / 2x2) has app / input buttons from `common.states` of `tv.app` /
+  `tv.input` (via `stateContext.getObject`, again 5 s after the TV came on); they write those
+  states. Settings `showApps` (default on) and `showInputs` (default off). The preview's mock
+  `getObject` returns nothing, so the screenshots in `docs/` show the remote without them.
 - Widget translations live in `src-devices/src/i18n/<lang>.json` (keys prefixed
   `lgtvremote_`) and are separate from the admin translations in `admin/i18n/`.
 - The README screenshots in `docs/` are produced from `src-devices/preview.html`, which renders
