@@ -210,6 +210,26 @@ do with them.
 
 The instance has to be running: while it is stopped the keys are disabled and the tab says so.
 
+## Web component for Aura and other hosts
+
+The remote is also available as the web component `<iob-lgtv-remote>` (`common.webComponents`), so every host
+that shows ioBroker web components - Aura, and vis-2, `devices` and the admin where they support them - can place
+it. It carries the same name as the widget above (**Control TV**), so `devices` keeps offering its own widget.
+
+It writes the same `remote.*` states and shows the same header: the name, the volume, the mute state, the running
+app and the dot of `states.on`. How much of the remote it shows depends on the size of its box:
+
+| Box                                       | Keys                                                            |
+|-------------------------------------------|-----------------------------------------------------------------|
+| from 340 px high and 180 px wide          | the whole remote, with the rows the settings switch on          |
+| a flat bar (up to 110 px high)            | power, volume down, mute, volume up, home                       |
+| anything else                             | power, volume up and down, home, OK, mute                       |
+
+In the two small layouts the `⋯` button beside the name opens the whole remote in a dialog.
+
+Settings, as in the widget above: the lgtv instance, the status line, the channel keys, the media keys, the colour
+keys, the number pad and a name of its own.
+
 ---
 ---
 ## Installation
@@ -225,6 +245,9 @@ Install this adapter using ioBroker repositories.
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+- (GermanBluefox) The TV remote is also available as a web component, so it can be used in Aura and other visualizations; the name of the devices widget is translated
+
 ### 3.0.5 (2026-09-10)
 - (GermanBluefox) The instance settings have a second tab with a remote control, so the TV can be operated directly from the admin
 - (krobipd) `states.scroll` and `states.drag` no longer ignore a movement whose horizontal or vertical part is zero, so plain vertical scrolling (`0,5`) works

@@ -167,7 +167,19 @@
       "components": [
         {
           "name": "RemoteControlComponent",
-          "label": "Control TV",
+          "label": {
+            "en": "Control TV",
+            "de": "TV steuern",
+            "ru": "Управление ТВ",
+            "pt": "Controlar a TV",
+            "nl": "Tv bedienen",
+            "fr": "Contrôler la TV",
+            "it": "Controlla la TV",
+            "es": "Controlar la TV",
+            "pl": "Sterowanie TV",
+            "uk": "Керування ТВ",
+            "zh-cn": "控制电视"
+          },
           "description": {
             "en": "Remote control for the LG WebOS TV",
             "de": "Fernbedienung für den LG WebOS TV",
@@ -184,7 +196,10 @@
           "icon": "remote.png"
         }
       ]
-    }
+    },
+    "webComponents": [
+      "webcomponents/lgtv-remote.json"
+    ]
   },
   "native": {
     "ip": "",

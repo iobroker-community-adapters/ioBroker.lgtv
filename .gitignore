@@ -33,3 +33,7 @@ src-devices/.__mf__temp/
 src-admin/build
 src-admin/node_modules
 src-admin/.__mf__temp/
+
+# web component (sources build into admin/webcomponents, which IS committed)
+src-webcomponents/build
+src-webcomponents/node_modules

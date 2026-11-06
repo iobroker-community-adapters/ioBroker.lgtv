@@ -187,6 +187,33 @@ by `tasks.ts --admin`.
 - Only `src-admin/build` is excluded from eslint, not the sources — unlike `src-devices`,
   which is ignored wholesale.
 
+## Web component (`src-webcomponents/`)
+
+`common.webComponents` in `io-package.json` lists `webcomponents/lgtv-remote.json`: the devices widget
+again as the web component `<iob-lgtv-remote>` (`@iobroker/web-components`), for Aura and every other
+host of web components. One ES module plus its manifest, built with Vite from `src-webcomponents/` and
+copied to `admin/webcomponents/` by `tasks.ts --wc`.
+
+```bash
+npm run build-wc          # npm install + vite build (writes and checks the manifest) + copy
+npm run check-wc          # tsc for the component and its vite.config.ts
+npm run lint-wc           # eslint (own config, like src-admin)
+```
+
+- **`admin/webcomponents/` is committed**, like `admin/dm-widgets/`. Re-run `npm run build-wc` whenever
+  something under `src-webcomponents/` changes, or the devices widget's label/description in
+  `io-package.json` or its words in `src-devices/src/i18n/` - the build reads them.
+- The manifest `name` is the `label` of the devices widget, per language. devices hides a web component
+  whose name equals one of its native widgets, so the two must stay identical - that is why the label is
+  a translated object and the build takes it from `io-package.json` instead of repeating it.
+- No MUI, no `@iobroker/*` GUI packages: plain React + CSS in the shadow root. React is not bundled -
+  the four React imports point at `../../../lib/esm/react-19.js`, which web and admin serve beside
+  `adapter/`. The module must stay one file (`codeSplitting: false`).
+- It writes `lgtv.<n>.remote.<key>` (ack=false) and reads `states.on`, `states.volume`, `states.mute`,
+  `states.currentApp`, like the devices widget - no `sendTo`. The layout (whole remote, six keys, one
+  row) is chosen by container queries, never by measuring; the small layouts open the whole remote in
+  an element dialog of the host.
+
 ## Conventions
 
 - Timers always via `this.setTimeout` / `this.setInterval` (adapter-core cleans them up on unload), never the globals.

@@ -53,7 +53,7 @@
     "LICENSE"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.build.json && npm run build-devices && npm run build-admin",
+    "build": "tsc -p tsconfig.build.json && npm run build-devices && npm run build-admin && npm run build-wc",
     "watch": "tsc -p tsconfig.build.json --watch",
     "build-devices": "tsx tasks.ts",
     "devices-0-clean": "tsx tasks.ts --0-clean",
@@ -65,12 +65,19 @@
     "admin-1-npm": "tsx tasks.ts --admin --1-npm",
     "admin-2-build": "tsx tasks.ts --admin --2-build",
     "admin-3-copy": "tsx tasks.ts --admin --3-copy",
+    "build-wc": "tsx tasks.ts --wc",
+    "wc-0-clean": "tsx tasks.ts --wc --0-clean",
+    "wc-1-npm": "tsx tasks.ts --wc --1-npm",
+    "wc-2-build": "tsx tasks.ts --wc --2-build",
+    "wc-3-copy": "tsx tasks.ts --wc --3-copy",
     "check": "tsc -p tsconfig.json --noEmit",
     "check-devices": "tsc --noEmit -p src-devices/tsconfig.json",
     "check-admin": "tsc --noEmit -p src-admin/tsconfig.json",
-    "lint": "eslint -c eslint.config.mjs && cd src-devices && npm run lint && cd ../src-admin && npm run lint",
+    "check-wc": "cd src-webcomponents && npm run check-ts",
+    "lint": "eslint -c eslint.config.mjs && cd src-devices && npm run lint && cd ../src-admin && npm run lint && cd ../src-webcomponents && npm run lint",
     "lint-devices": "cd src-devices && npm run lint",
     "lint-admin": "cd src-admin && npm run lint",
+    "lint-wc": "cd src-webcomponents && npm run lint",
     "test:js": "mocha test/probe test/lgtv2 test/lgtv2Helpers --exit",
     "test:package": "mocha test/packageFiles --exit",
     "test:integration": "mocha test/integrationAdapter --exit",
@@ -80,8 +87,8 @@
     "release-patch": "release-script patch --yes",
     "release-minor": "release-script minor --yes",
     "release-major": "release-script major --yes",
-    "update-packages": "npx -y npm-check-updates --upgrade && cd src-devices && npx -y npm-check-updates --upgrade && cd ../src-admin && npx -y npm-check-updates --upgrade",
-    "npm": "npm i && cd src-devices && npm i && cd ../src-admin && npm i"
+    "update-packages": "npx -y npm-check-updates --upgrade && cd src-devices && npx -y npm-check-updates --upgrade && cd ../src-admin && npx -y npm-check-updates --upgrade && cd ../src-webcomponents && npx -y npm-check-updates --upgrade",
+    "npm": "npm i && cd src-devices && npm i && cd ../src-admin && npm i && cd ../src-webcomponents && npm i"
   },
   "bugs": {
     "url": "https://github.com/SebastianSchultz/iobroker.lgtv/issues"
