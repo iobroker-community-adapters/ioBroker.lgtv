@@ -5,6 +5,7 @@ import type { Plugin } from 'vite';
 
 // with the extension: Vite may load its config natively, without a bundler that would add it
 import {
+    ADMIN_WORDS,
     buildManifest,
     DEVICE_WORDS,
     DEVICES_WIDGET,
@@ -22,22 +23,23 @@ import {
  * beside `adapter/`. The path is relative to the module, so a path prefix of a reverse proxy stays.
  *
  * The words come from the devices widget: the name and the description of the manifest from `io-package.json`, the
- * labels of the settings and the words the element shows from `src-devices/src/i18n/`. A word that is missing in
- * one of the languages fails the build.
+ * labels of the settings and the words the element shows from `src-devices/src/i18n/`. The words of the status panel
+ * come from the remote tab of the admin, `src-admin/src/i18n/`. A word that is missing in one of the languages fails
+ * the build.
  */
 
 const LANGUAGES: ioBroker.Languages[] = ['en', 'de', 'ru', 'pt', 'nl', 'fr', 'it', 'es', 'pl', 'uk', 'zh-cn'];
-
-/** The prefix of the words of the devices widget */
-const PREFIX = 'lgtvremote_';
 
 function readJson<T>(path: string): T {
     return JSON.parse(readFileSync(new URL(path, import.meta.url), 'utf8')) as T;
 }
 
-/** A word of the devices widget (`src-devices/src/i18n/<lang>.json`) in every language */
-function dictionary(): (key: string) => WebComponentText {
-    const folder = '../src-devices/src/i18n';
+/**
+ * A word of a translation folder (`<folder>/<lang>.json`) in every language
+ *
+ * @param folder the folder, relative to this file
+ */
+function dictionary(folder: string): (key: string) => WebComponentText {
     const words = Object.fromEntries(
         LANGUAGES.map(lang => [lang, readJson<Record<string, string>>(`${folder}/${lang}.json`)]),
     );
@@ -68,17 +70,28 @@ function translated(text: ioBroker.StringOrTranslated | undefined, what: string)
     return text as WebComponentText;
 }
 
-const devices = dictionary();
+/** The words of the devices widget, with the prefix `lgtvremote_` */
+const devices = dictionary('../src-devices/src/i18n');
+
+/** The words of the remote tab of the admin, with the prefix `lgtvadmin_` */
+const admin = dictionary('../src-admin/src/i18n');
 
 /** The words the element shows (`getWord()` in `src/i18n.ts`), by language: `{ en: { power: 'Power', ... } }` */
 function elementWords(): Record<string, Record<string, string>> {
     const result: Record<string, Record<string, string>> = Object.fromEntries(LANGUAGES.map(lang => [lang, {}]));
-    for (const key of DEVICE_WORDS) {
-        const text = devices(`${PREFIX}${key}`) as Record<string, string>;
-        for (const lang of LANGUAGES) {
-            result[lang][key] = text[lang];
+    const add = (keys: readonly string[], words: (key: string) => WebComponentText, prefix: string): void => {
+        for (const key of keys) {
+            if (key in result.en) {
+                throw new Error(`The word "${key}" is there twice`);
+            }
+            const text = words(`${prefix}${key}`) as Record<string, string>;
+            for (const lang of LANGUAGES) {
+                result[lang][key] = text[lang];
+            }
         }
-    }
+    };
+    add(DEVICE_WORDS, devices, 'lgtvremote_');
+    add(ADMIN_WORDS, admin, 'lgtvadmin_');
     return result;
 }
 

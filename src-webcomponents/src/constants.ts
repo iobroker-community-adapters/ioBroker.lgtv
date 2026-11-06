@@ -13,8 +13,14 @@ export const MODULE_PATH = `webcomponents/${MODULE_FILE}`;
 /** The devices widget whose name, description and words the component takes over (`common.deviceWidgets`) */
 export const DEVICES_WIDGET = 'RemoteControlComponent';
 
-/** The states of `lgtv.<n>.states.` the remote shows - the same as the devices widget */
-export const STATUS_STATES = ['on', 'volume', 'mute', 'currentApp'] as const;
+/**
+ * The states of `lgtv.<n>.states.` the remote shows: those of the devices widget, plus `powerState` and `input` for
+ * the status panel of the whole remote, as the remote tab of the admin (`src-admin/src/RemoteControl.tsx`) shows them
+ */
+export const STATUS_STATES = ['on', 'powerState', 'volume', 'mute', 'currentApp', 'input'] as const;
+
+/** `states.powerState` values that mean the panel may be dark but the TV is running - as in the admin remote */
+export const POWER_ON_STATES: readonly string[] = ['on', 'screen_off', 'screen_saver'];
 
 /**
  * The words of the devices widget (`src-devices/src/i18n/`, without the prefix `lgtvremote_`) the element shows.
@@ -54,13 +60,36 @@ export const DEVICE_WORDS = [
 
 export type DeviceWordKey = (typeof DEVICE_WORDS)[number];
 
+/**
+ * The words of the remote tab of the admin (`src-admin/src/i18n/`, without the prefix `lgtvadmin_`) the status panel
+ * shows. The build picks them out like the words of the devices widget.
+ */
+export const ADMIN_WORDS = [
+    'status',
+    'tv',
+    'powerState',
+    'currentApp',
+    'input',
+    'volume',
+    'ps_on',
+    'ps_screen_off',
+    'ps_screen_saver',
+    'ps_standby',
+    'ps_off',
+] as const;
+
+export type AdminWordKey = (typeof ADMIN_WORDS)[number];
+
 /** The values of the settings of the manifest; a setting without a value is missing */
 export type RemoteSettings = {
     /** Instance of the lgtv adapter: `lgtv.0` (JSON-Config), also `system.adapter.lgtv.0` */
     instance?: string;
     /** Shown in the header instead of "LG TV" */
     name?: string;
-    /** Volume, mute and the running app below the name */
+    /**
+     * The status: volume, mute and the running app below the name; in the whole remote, where there is room, the
+     * status panel instead - power state, app, input and a volume slider
+     */
     showStatus?: boolean;
     /** Channel up/down and info next to the volume keys */
     showChannel?: boolean;

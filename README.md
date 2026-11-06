@@ -227,8 +227,12 @@ app and the dot of `states.on`. How much of the remote it shows depends on the s
 
 In the two small layouts the `⋯` button beside the name opens the whole remote in a dialog.
 
-Settings, as in the widget above: the lgtv instance, the status line, the channel keys, the media keys, the colour
-keys, the number pad and a name of its own.
+The whole remote, in a large box and in the dialog, also has the status panel of the remote tab in the admin: whether
+the TV runs, its power state, the running app, the input, and the volume with a slider and the mute state. In a wide
+box it stands beside the keys, in a tall one above them; where neither fits, the status line below the name stays.
+
+Settings, as in the widget above: the lgtv instance, the status (line or panel), the channel keys, the media keys, the
+colour keys, the number pad and a name of its own.
 
 ---
 ---
@@ -246,7 +250,7 @@ Install this adapter using ioBroker repositories.
     ### **WORK IN PROGRESS**
 -->
 ### **WORK IN PROGRESS**
-- (GermanBluefox) The TV remote is also available as a web component, so it can be used in Aura and other visualizations; the name of the devices widget is translated
+- (GermanBluefox) The TV remote is also available as a web component for Aura and other visualizations, in large boxes with power state, input and a volume slider; the name of the devices widget is translated
 
 ### 3.0.5 (2026-09-10)
 - (GermanBluefox) The instance settings have a second tab with a remote control, so the TV can be operated directly from the admin

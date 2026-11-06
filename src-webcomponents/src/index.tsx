@@ -10,6 +10,10 @@
  * `lgtv.<n>.remote.<key>` (ack = false) and the adapter sends it to the TV; `remote.power` sends Wake-on-LAN while
  * the TV is off. The header shows `states.on`, `states.volume`, `states.mute` and `states.currentApp`. No `sendTo`.
  *
+ * The whole remote has the status panel of the remote tab of the admin (`src-admin/src/RemoteControl.tsx`) as well:
+ * `states.powerState`, the app, `states.input`, and a slider that writes `states.volume` (ack = false) when it is let
+ * go. While it is dragged it shows its own value, so the echo of the TV does not pull it back.
+ *
  * In a small box the element shows a few keys; the button beside the name opens the whole remote in a dialog.
  *
  * React is not in the module: it comes from `lib/esm/react-19.js` beside `adapter/`, see `vite.config.ts`.
@@ -18,7 +22,7 @@ import { createRoot, type Root } from 'react-dom/client';
 
 import { defineWebComponent, getThemeCssVariables, IobWebComponent } from '@iobroker/web-components/element';
 
-import { getInstance, STATUS_STATES, TAG, type RemoteSettings } from './constants';
+import { getInstance, POWER_ON_STATES, STATUS_STATES, TAG, type RemoteSettings } from './constants';
 import { getWord, type WordKey } from './i18n';
 import { FullView, Hint, RemoteView, type RemoteOptions, type RemoteValues } from './RemoteView';
 import { DIALOG_STYLES, STYLES } from './styles';
@@ -28,6 +32,16 @@ const PRESSED_MS = 180;
 
 /** The height of a row of keys in the dialog */
 const DIALOG_ROW_HEIGHT = 46;
+
+/** The width of the dialog: the remote alone, or the remote and the status panel beside it */
+const DIALOG_WIDTH = 360;
+const DIALOG_WIDTH_STATUS = 640;
+
+/**
+ * How long the slider keeps the value it was let go at if no new `states.volume` arrives - a write the socket
+ * refused, or a TV that is off
+ */
+const VOLUME_HOLD_MS = 3000;
 
 class LgTvRemote extends IobWebComponent<RemoteSettings> {
     readonly #root: Root;
@@ -39,6 +53,17 @@ class LgTvRemote extends IobWebComponent<RemoteSettings> {
 
     /** Draws the open dialog again; null while none is open */
     #drawDialog: (() => void) | null = null;
+
+    /** The value of the volume slider while it is dragged, and after it was let go until the next value comes */
+    #volumeDraft: number | null = null;
+
+    /**
+     * Set when the slider was let go: `states.volume` as it was then. The draft is shown until another one comes - the
+     * echo of the write - so the slider does not jump back for a moment
+     */
+    #volumeSent: { state: ioBroker.State | null } | null = null;
+
+    #volumeTimer: ReturnType<typeof setTimeout> | null = null;
 
     constructor() {
         super();
@@ -58,6 +83,7 @@ class LgTvRemote extends IobWebComponent<RemoteSettings> {
             this.#pressedTimer = null;
         }
         this.#pressed = null;
+        this.#endVolumeDraft();
     }
 
     protected override getStateIds(settings: RemoteSettings): string[] {
@@ -84,6 +110,38 @@ class LgTvRemote extends IobWebComponent<RemoteSettings> {
         this.render();
     };
 
+    /** The slider shows `states.volume` again */
+    #endVolumeDraft(): void {
+        if (this.#volumeTimer) {
+            clearTimeout(this.#volumeTimer);
+            this.#volumeTimer = null;
+        }
+        this.#volumeDraft = null;
+        this.#volumeSent = null;
+    }
+
+    /** The volume slider moved, or was let go: then `states.volume` is written. Nothing in edit mode */
+    #onVolume = (value: number, done: boolean): void => {
+        const instance = getInstance(this.settings.instance);
+        if (this.editMode || !instance || !Number.isFinite(value)) {
+            // a controlled slider: drawn again, it jumps back to the value of the state
+            this.render();
+            return;
+        }
+        this.#endVolumeDraft();
+        this.#volumeDraft = value;
+        if (done) {
+            const id = `${instance}.states.volume`;
+            this.#volumeSent = { state: this.states[id] ?? null };
+            void this.setState(id, value);
+            this.#volumeTimer = setTimeout(() => {
+                this.#endVolumeDraft();
+                this.render();
+            }, VOLUME_HOLD_MS);
+        }
+        this.render();
+    };
+
     #getOptions(): RemoteOptions {
         const settings = this.settings;
         return {
@@ -99,16 +157,24 @@ class LgTvRemote extends IobWebComponent<RemoteSettings> {
         const val = (name: (typeof STATUS_STATES)[number]): ioBroker.StateValue | undefined =>
             this.states[`${instance}.states.${name}`]?.val;
         const on = val('on');
+        const powerState = val('powerState');
         const volume = val('volume');
         const muted = val('mute');
         const app = val('currentApp');
+        const input = val('input');
+        const isOn = on === null || on === undefined ? null : !!on;
+        const state = volume === null || volume === undefined || volume === '' ? null : Number(volume);
         return {
             name: this.settings.name || word('title'),
-            on: on === null || on === undefined ? null : !!on,
-            volume: volume === null || volume === undefined || volume === '' ? null : Number(volume),
+            on: isOn,
+            powerState: powerState ? String(powerState) : null,
+            // as the admin remote: screen off and screen saver are a running TV with a dark panel
+            running: powerState ? POWER_ON_STATES.includes(String(powerState)) : isOn,
+            volume: this.#volumeDraft ?? (state !== null && Number.isFinite(state) ? state : null),
             muted: muted === null || muted === undefined ? null : !!muted,
             // "com.webos.app.livetv" -> "livetv": the whole reverse-domain ID is noise on a tile
             app: app ? String(app).split('.').pop() || '' : '',
+            input: input ? String(input) : '',
         };
     }
 
@@ -130,7 +196,9 @@ class LgTvRemote extends IobWebComponent<RemoteSettings> {
         const style = document.createElement('style');
         style.textContent = DIALOG_STYLES;
         const mount = document.createElement('div');
-        mount.className = 'dialog';
+        // with the status panel the dialog is wider: the panel goes beside the keys where there is room
+        const withStatus = this.#getOptions().showStatus;
+        mount.className = withStatus ? 'dialog status' : 'dialog';
         shadow.append(style, mount);
         const root = createRoot(mount);
         this.#drawDialog = () => {
@@ -144,6 +212,7 @@ class LgTvRemote extends IobWebComponent<RemoteSettings> {
                             pressed={this.#pressed}
                             word={word}
                             onPress={this.#press}
+                            onVolume={this.#onVolume}
                             rowHeight={DIALOG_ROW_HEIGHT}
                         />
                     </div>,
@@ -152,7 +221,11 @@ class LgTvRemote extends IobWebComponent<RemoteSettings> {
         };
         this.#drawDialog();
         try {
-            await this.openDialog({ title: word('fullRemote'), element, width: 360 });
+            await this.openDialog({
+                title: word('fullRemote'),
+                element,
+                width: withStatus ? DIALOG_WIDTH_STATUS : DIALOG_WIDTH,
+            });
         } finally {
             this.#drawDialog = null;
             root.unmount();
@@ -163,6 +236,12 @@ class LgTvRemote extends IobWebComponent<RemoteSettings> {
         const settings = this.settings;
         const word = (key: WordKey): string => getWord(this.systemLang, key);
         const instance = getInstance(settings.instance);
+
+        // the slider was let go and a new value of the volume came: show it
+        const volumeState = instance ? (this.states[`${instance}.states.volume`] ?? null) : null;
+        if (this.#volumeSent && (!instance || volumeState !== this.#volumeSent.state)) {
+            this.#endVolumeDraft();
+        }
 
         if (!instance) {
             this.#root.render(
@@ -188,6 +267,7 @@ class LgTvRemote extends IobWebComponent<RemoteSettings> {
                     editMode={this.editMode}
                     word={word}
                     onPress={this.#press}
+                    onVolume={this.#onVolume}
                     onMore={this.#onMore}
                 />,
             );

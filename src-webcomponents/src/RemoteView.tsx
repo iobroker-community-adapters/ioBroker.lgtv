@@ -1,10 +1,12 @@
 /**
  * The views of the remote, drawn with plain React into the shadow root - the keys and their glyphs are those of the
- * devices widget (`src-devices/src/RemoteControlComponent.tsx`). Which view is shown is decided by container queries,
- * see `styles.ts`.
+ * devices widget (`src-devices/src/RemoteControlComponent.tsx`), the status panel of the whole remote is the one of
+ * the remote tab of the admin (`src-admin/src/RemoteControl.tsx`). Which view is shown, and where the panel goes, is
+ * decided by container queries, see `styles.ts`.
  */
-import type { CSSProperties, JSX, ReactNode } from 'react';
+import { useEffect, useRef, type CSSProperties, type JSX, type ReactNode } from 'react';
 
+import { ADMIN_WORDS, type AdminWordKey } from './constants';
 import type { WordKey } from './i18n';
 
 /** What the remote shows, read from `lgtv.<n>.states.` */
@@ -13,12 +15,18 @@ export interface RemoteValues {
     name: string;
     /** `states.on`; null until it has a value */
     on: boolean | null;
-    /** `states.volume`; null until it has a value */
+    /** `states.powerState`: `on`, `screen_off`, `screen_saver`, `standby` or `off`; null until it has a value */
+    powerState: string | null;
+    /** Whether the TV runs: by `powerState` if the TV reports one, else by `states.on`; null if neither has a value */
+    running: boolean | null;
+    /** `states.volume`, or the value of the slider while it is dragged; null until it has a value */
     volume: number | null;
     /** `states.mute`; null until it has a value */
     muted: boolean | null;
     /** The last part of `states.currentApp` - `livetv` of `com.webos.app.livetv`; empty for none */
     app: string;
+    /** `states.input` - `HDMI_1`; empty for none */
+    input: string;
 }
 
 /** Which rows of the whole remote and what of the header are shown - the settings of the devices widget */
@@ -38,6 +46,8 @@ interface CommonProps {
     word: (key: WordKey) => string;
     /** Writes `true` to `remote.<key>` */
     onPress: (key: string) => void;
+    /** The volume slider moves (`done` false) or is let go (`done` true): only then `states.volume` is written */
+    onVolume: (value: number, done: boolean) => void;
 }
 
 export interface RemoteProps extends CommonProps {
@@ -151,6 +161,98 @@ function Header({ values, options, word, onMore }: CommonProps & { onMore?: () =
     );
 }
 
+/**
+ * The volume slider: shows `volume` and reports every move; it is let go when the browser fires `change` - React's
+ * `onChange` is the `input` event of the DOM and fires on every move
+ */
+function VolumeSlider({
+    volume,
+    label,
+    onVolume,
+}: {
+    volume: number | null;
+    label: string;
+    onVolume: (value: number, done: boolean) => void;
+}): JSX.Element {
+    const ref = useRef<HTMLInputElement>(null);
+    // the handler of the element is the same function on every render, so the listener is added once
+    useEffect(() => {
+        const input = ref.current;
+        if (!input) {
+            return undefined;
+        }
+        const onDone = (): void => onVolume(Number(input.value), true);
+        input.addEventListener('change', onDone);
+        return () => input.removeEventListener('change', onDone);
+    }, [onVolume]);
+    return (
+        <input
+            ref={ref}
+            className="slider"
+            type="range"
+            min={0}
+            max={100}
+            step={1}
+            value={volume ?? 0}
+            disabled={volume === null}
+            aria-label={label}
+            title={label}
+            onChange={e => onVolume(Number(e.currentTarget.value), false)}
+        />
+    );
+}
+
+/** One line of the status panel: a label and its value */
+function Fact({ label, children }: { label: string; children: ReactNode }): JSX.Element {
+    return (
+        <div className="fact">
+            <span className="label">{label}</span>
+            <span className="value">{children}</span>
+        </div>
+    );
+}
+
+/** The power state in words: `screen_off` -> "Screen off" */
+function getPowerState(powerState: string, word: (key: WordKey) => string): string {
+    const key = `ps_${powerState}`;
+    return (ADMIN_WORDS as readonly string[]).includes(key) ? word(key as AdminWordKey) : powerState;
+}
+
+/**
+ * The status panel of the whole remote, as the remote tab of the admin shows it: whether the TV runs, its power
+ * state, the running app, the input, and the volume with a slider and the mute state. Above the keys in a tall box,
+ * beside them in a wide one (`styles.ts`)
+ */
+function StatusPanel({ values, word, onVolume }: CommonProps): JSX.Element {
+    const { running, powerState, app, input, volume, muted } = values;
+    return (
+        <div className="panel">
+            <div className="panel-title">{word('status')}</div>
+            <div className="facts">
+                <Fact label={word('tv')}>
+                    <span className={`chip${running ? ' on' : ''}`}>
+                        {word(running === null ? 'unknown' : running ? 'online' : 'offline')}
+                    </span>
+                </Fact>
+                {powerState ? <Fact label={word('powerState')}>{getPowerState(powerState, word)}</Fact> : null}
+                {app ? <Fact label={word('currentApp')}>{app}</Fact> : null}
+                {input ? <Fact label={word('input')}>{input}</Fact> : null}
+            </div>
+            <div className="volume">
+                <Fact label={word('volume')}>
+                    {volume === null ? '' : volume}
+                    {muted ? <span className="chip muted">{word('muted')}</span> : null}
+                </Fact>
+                <VolumeSlider
+                    volume={volume}
+                    label={word('volume')}
+                    onVolume={onVolume}
+                />
+            </div>
+        </div>
+    );
+}
+
 /** The power key: green to switch on, red to switch off - `remote.power` sends Wake-on-LAN while the TV is off */
 function PowerKey({ values, pressed, word, onPress }: CommonProps): JSX.Element {
     return (
@@ -190,6 +292,12 @@ export function getFullRows(options: RemoteOptions): number {
 export function FullView(props: CommonProps & { rowHeight?: number }): JSX.Element {
     const { options, pressed, word, onPress, rowHeight } = props;
     const rows = getFullRows(options);
+    // `status`: the panel is there, the container queries decide whether it is shown; with more rows of keys it
+    // needs a taller box (`rows-l`) than with the default ones (`rows-s`)
+    const classes = ['view', 'full'];
+    if (options.showStatus) {
+        classes.push('status', rows > 8 ? 'rows-l' : 'rows-s');
+    }
     const key = (id: string, label: string, title: WordKey, className?: string): JSX.Element => (
         <Key
             key={id}
@@ -205,10 +313,11 @@ export function FullView(props: CommonProps & { rowHeight?: number }): JSX.Eleme
 
     return (
         <div
-            className="view full"
-            style={{ gridTemplateRows: `auto repeat(${rows}, ${track})` }}
+            className={classes.join(' ')}
+            style={{ '--rows': rows, '--track': track } as CSSProperties}
         >
             <Header {...props} />
+            {options.showStatus ? <StatusPanel {...props} /> : null}
             <Row cols={4}>
                 <PowerKey {...props} />
                 {key('list', '≡', 'list')}

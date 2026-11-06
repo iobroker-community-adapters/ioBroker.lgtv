@@ -1,14 +1,17 @@
 /**
  * The words the element shows, in the languages of ioBroker.
  *
- * Most of them are the words of the devices widget (`DEVICE_WORDS`): the build picks them out of
- * `src-devices/src/i18n/` and puts them in as `__LGTV_WORDS__` (`vite.config.ts`). Only the words the devices widget
- * does not show live here.
+ * Most of them are the words of the devices widget (`DEVICE_WORDS`) and, for the status panel, of the remote tab of
+ * the admin (`ADMIN_WORDS`): the build picks them out of `src-devices/src/i18n/` and `src-admin/src/i18n/` and puts
+ * them in as `__LGTV_WORDS__` (`vite.config.ts`). Only the words neither of them shows live here.
  */
-import type { DeviceWordKey } from './constants';
+import type { AdminWordKey, DeviceWordKey } from './constants';
 
-/** The words of the devices widget, by language - filled in by the build */
-declare const __LGTV_WORDS__: Record<string, Record<DeviceWordKey, string>>;
+/** A word the build puts in */
+type BuildWordKey = DeviceWordKey | AdminWordKey;
+
+/** The words of the devices widget and of the admin remote, by language - filled in by the build */
+declare const __LGTV_WORDS__: Record<string, Record<BuildWordKey, string>>;
 
 const EN = {
     chooseInstance: 'Choose an LG TV instance in the settings',
@@ -24,7 +27,7 @@ const EN = {
 
 type OwnWordKey = keyof typeof EN;
 
-export type WordKey = OwnWordKey | DeviceWordKey;
+export type WordKey = OwnWordKey | BuildWordKey;
 
 const WORDS: Record<string, Record<OwnWordKey, string>> = {
     en: EN,
@@ -151,6 +154,6 @@ export function getWord(lang: string, key: WordKey): string {
         const own = key as OwnWordKey;
         return WORDS[lang]?.[own] || EN[own];
     }
-    const device = key as DeviceWordKey;
-    return __LGTV_WORDS__[lang]?.[device] || __LGTV_WORDS__.en[device];
+    const built = key as BuildWordKey;
+    return __LGTV_WORDS__[lang]?.[built] || __LGTV_WORDS__.en[built];
 }
