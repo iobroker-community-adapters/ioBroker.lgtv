@@ -1,1 +1,0 @@
-import{t as e}from"./RemoteControlComponent-DlWixfvm.js";var t={RemoteControlComponent:e};export{t as default};

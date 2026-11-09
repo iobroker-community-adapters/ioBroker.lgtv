@@ -11,16 +11,21 @@
 
 **Tests:** ![Test and Release](https://github.com/SebastianSchultz/ioBroker.lgtv/workflows/Test%20and%20Release/badge.svg)
 
+> [!IMPORTANT]
+> This adapter cannot be installed from github
+
+
 LG WebOS SmartTV adapter for ioBroker
 
 Remote controlling an LG WebOS SmartTV (2013 models and higher) from [ioBroker](https://www.iobroker.net).
 
 ---
 
-## Usage:
+## Usage: 
 
 Install the adapter through the ioBroker admin interface.
-In the adapter config input the ip address of your LG WebOS TV.
+In the adapter config input the ip address of your LG WebOS TV. While the instance is running, the IP field
+offers the TVs it finds in the network for selection.
 At first connection you will receive a pairing prompt on your TV screen where you should allow the connection.
 
 ### Polling
@@ -163,7 +168,9 @@ holds the current channel
 
 `volume`
 
-holds the current volume level and can change the volume
+holds the current volume level and can change the volume. By default an increase of 5 or more is
+ramped up in steps of 2 every 500 ms, to spare the speakers; switch off *Ramp volume increases*
+in the instance settings to set every level at once
 
 `on`
 
@@ -195,7 +202,8 @@ Wake-on-LAN packet while it is off.
 | ![Compact layout](docs/widget-compact.png) | ![Wide layout](docs/widget-wide.png) | ![Full remote layout](docs/widget-full.png) |
 
 The channel keys, media keys, colour keys and the number pad can each be switched off in the
-widget settings.
+widget settings. Below the keys the full remote has buttons for the apps of the channel `tv`
+(see below) and, if switched on in the widget settings, for its inputs.
 
 ## Remote control in the admin
 
@@ -207,6 +215,10 @@ It writes the same `remote.*` states as the widget above and shows the TV's powe
 running app, the current input and the volume, which can also be dragged. The keys act
 immediately — they are state writes, not settings, so the dialog's *Save* button has nothing to
 do with them.
+
+Next to it the apps and inputs of the channel `tv` (see below) can be started with one click. Once the
+remote has been clicked it can also be operated with the keyboard: arrows, Enter, Backspace (back),
+Esc (exit), Home, `+` / `-` (volume), `M` (mute), space (play) and `0`-`9`.
 
 The instance has to be running: while it is stopped the keys are disabled and the tab says so.
 
@@ -234,14 +246,28 @@ box it stands beside the keys, in a tall one above them; where neither fits, the
 Settings, as in the widget above: the lgtv instance, the status (line or panel), the channel keys, the media keys, the
 colour keys, the number pad and a name of its own.
 
----
----
-## Installation
+## Channel `tv` (type-detector)
 
-Install this adapter using ioBroker repositories.
+In addition to the existing objects the adapter creates the channel `lgtv.0.tv`, which the ioBroker
+type-detector (>= 6.2.0) recognizes as device type `tv`. Visualizations and the devices adapter can control the TV
+with it:
 
->[!NOTE]
-> This adapter does not support installation from GitHub.
+| State            | Role                            | Description                                                          |
+|------------------|---------------------------------|----------------------------------------------------------------------|
+| `tv.power`       | `switch.power`                  | on (Wake-on-LAN) / off                                               |
+| `tv.key`         | `media.key`                     | a key: `UP`, `DOWN`, `SELECT`, `BACK`, `HOME`, `NUMBER_1`, `RED`, ...    |
+| `tv.volume`      | `level.volume`                  | volume 0-100, same as `states.volume`                                |
+| `tv.muted`       | `media.mute`                    | mute                                                                 |
+| `tv.volumeUp`    | `button.volume.up`              | volume up                                                            |
+| `tv.volumeDown`  | `button.volume.down`            | volume down                                                          |
+| `tv.input`       | `media.input`                   | `TV`, `HDMI1` ... `HDMI4`, `AV`, `COMPONENT`, `SCART`                  |
+| `tv.app`         | `media.app`                     | start an app: `YOUTUBE`, `NETFLIX`, `PRIME_VIDEO`, `DISNEY_PLUS`, ...  |
+| `tv.unreach`     | `indicator.maintenance.unreach` | the adapter has no connection to the TV                              |
+
+`tv.input` and `tv.app` start with TV, HDMI 1-4 and YouTube, Netflix, Prime Video and Browser. As soon as the
+TV is connected, the adapter offers the inputs and the installed apps of the TV that the type-detector knows.
+Both also follow the TV: they show the input or app that is in the foreground, and are empty for anything else.
+
 
 ## Changelog
 
@@ -251,6 +277,14 @@ Install this adapter using ioBroker repositories.
 -->
 ### **WORK IN PROGRESS**
 - (GermanBluefox) The TV remote is also available as a web component for Aura and other visualizations, in large boxes with power state, input and a volume slider; the name of the devices widget is translated
+
+### 3.1.0 (2026-10-29)
+- (GermanBluefox) The IP field of the settings offers the TVs found in the network
+- (GermanBluefox) Added the channel `tv`, so visualizations and the devices adapter can control the TV
+- (GermanBluefox) The remote control in the settings has buttons for apps and inputs and can be operated with the keyboard
+- (GermanBluefox) The remote control widget of the devices adapter has buttons for apps and inputs
+- (AlanSRU) Added an option to set the volume immediately instead of raising it step by step
+- (mcm57) Fixed invalid state roles and read/write flags in object definitions
 
 ### 3.0.5 (2026-09-10)
 - (GermanBluefox) The instance settings have a second tab with a remote control, so the TV can be operated directly from the admin
@@ -274,21 +308,6 @@ Install this adapter using ioBroker repositories.
 
 ### 3.0.1 (2026-09-04)
 - (GermanBluefox) Removed a prepare script
-
-### 3.0.0 (2026-09-04)
-- (Voodoo2man) Add WebOS 26 compatibility.
-- (Voodoo2man) Use the configured MAC address as a fallback for Wake-on-LAN.
-- (GermanBluefox) A malformed MAC address or a Wake-on-LAN socket error does not terminate the adapter anymore
-- (GermanBluefox) The MAC address is validated in the admin configuration
-- (GermanBluefox) Added the missing default value for the `wolwithip` setting
-- (GermanBluefox) `remote.power` switches the TV off again instead of only sending Wake-on-LAN
-- (GermanBluefox) Migrated the connection options from the deprecated `wsconfig` block to the lgtv2 v2 option names
-- (GermanBluefox) Removed the process wide TLS bypass, the certificate check is now relaxed per connection only
-- (GermanBluefox) Removed the unused `websocket` dependency
-- (GermanBluefox) The adapter was refactored to TypeScript. The sources moved to `src/`, the published code is the compiled `build/`
-- (GermanBluefox) The admin translations moved from `admin/i18n/<lang>/translations.json` to the flat `admin/i18n/<lang>.json`
-- (GermanBluefox) The unit tests use `node:assert` instead of `chai`
-- (GermanBluefox) Added a "Control TV" remote-control widget for the `ioBroker.devices` adapter
 
 [Older changelogs can be found there](CHANGELOG_OLD.md)
 

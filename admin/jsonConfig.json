@@ -7,9 +7,12 @@
       "label": "tab_settings",
       "items": {
         "ip": {
-          "type": "text",
+          "type": "autocompleteSendTo",
           "label": "ip",
-          "trim": true,
+          "command": "discover",
+          "freeSolo": true,
+          "maxLength": 15,
+          "help": "ip_help",
           "xs": 12,
           "sm": 6,
           "md": 4,
@@ -74,6 +77,16 @@
         "wolwithip": {
           "type": "checkbox",
           "label": "wolwithip",
+          "xs": 12,
+          "sm": 12,
+          "md": 12,
+          "lg": 5,
+          "xl": 5,
+          "newLine": true
+        },
+        "volumeRamp": {
+          "type": "checkbox",
+          "label": "volumeRamp",
           "xs": 12,
           "sm": 12,
           "md": 12,
