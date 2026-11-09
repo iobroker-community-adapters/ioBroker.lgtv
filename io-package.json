@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "lgtv",
-    "version": "3.1.0",
+    "version": "3.2.0",
     "news": {
+      "3.2.0": {
+        "en": "The TV remote is also available as a web component for Aura and other visualizations, in large boxes with power state, input and a volume slider; the name of the devices widget is translated",
+        "de": "Die TV-Fernbedienung ist auch als Webkomponente für Aura und andere Visualisierungen verfügbar, in großen Boxen mit Ladezustand, Eingang und Lautstärkeregler; der Gerätename ist übersetzt",
+        "ru": "Пульт дистанционного управления телевизором также доступен в виде веб-компонента для Aura и других визуализаций в больших коробках с состоянием питания, входом и ползунком громкости; название виджета устройства переведено",
+        "pt": "O controle remoto da TV também está disponível como componente web para Aura e outras visualizações, em caixas grandes com entrada e controle de volume; o nome do widget é",
+        "nl": "De afstandsbediening van de tv is ook beschikbaar als webcomponent voor Aura en andere visualisaties, in grote dozen met voedingsstatus, invoer en een volumeregelaar; de naam van de apparaatwidget is vertaald",
+        "fr": "La télécommande du téléviseur est également disponible en tant que composant Web pour Aura et d'autres visualisations, dans de grands boîtiers avec alimentation, entrée et volume ; le nom du widget est traduit",
+        "it": "Il telecomando TV è disponibile anche come componente web per Aura e altre visualizzazioni, in ampi riquadri con alimentazione, input e cursore del volume",
+        "es": "El mando del televisor también está disponible como componente web para Aura y otras visualizaciones, en cajas grandes con estado de alimentación, entrada y control de volumen; el nombre del widget del dispositivo está traducido",
+        "pl": "Pilot telewizora jest również dostępny jako komponent internetowy dla Aura i innych wizualizacji, w dużych pudełkach ze stanem zasilania, wejściem i suwakiem głośności; nazwa widżetu urządzeń jest tłumaczona",
+        "uk": "Пульт дистанційного керування телевізора також доступний як веб-компонент для Aura та інших візуалізацій, у великих коробках зі станом живлення, входом та повзунком гучності; назва віджета пристроїв перекладається",
+        "zh-cn": "电视遥控器还可用作 Aura 和其他可视化的 Web 组件，装在带有电源状态、输入和音量滑块的大盒子中；设备小部件的名称已翻译"
+      },
       "3.1.0": {
         "en": "The IP field of the settings offers the TVs found in the network\nAdded the channel `tv`, so visualizations and the devices adapter can control the TV\nThe remote control in the settings has buttons for apps and inputs and can be operated with the keyboard\nThe remote control widget of the devices adapter has buttons for apps and inputs\nAdded an option to set the volume immediately instead of raising it step by step\nFixed invalid state roles and read/write flags in object definitions",
         "de": "Das IP-Feld der Einstellungen bietet die im Netzwerk gefundenen Fernseher zur Auswahl an\nKanal `tv` hinzugefügt, damit Visualisierungen und der devices-Adapter den Fernseher steuern können\nDie Fernbedienung in den Einstellungen hat Tasten für Apps und Eingänge und lässt sich per Tastatur bedienen\nDas Fernbedienungs-Widget des devices-Adapters hat Tasten für Apps und Eingänge\nOption hinzugefügt, um die Lautstärke sofort statt schrittweise zu setzen\nUngültige State-Rollen und Lese-/Schreib-Flags in Objektdefinitionen behoben",
@@ -80,19 +93,6 @@
         "pl": "Dodaj zgodność z WebOS 26.\nUżyj skonfigurowanego adresu MAC jako zapasowego programu Wake-on-LAN.\nNieprawidłowy adres MAC lub błąd gniazda Wake-on-LAN nie kończy już działania adaptera\nAdres MAC jest sprawdzany w konfiguracji administratora\nDodano brakującą wartość domyślną dla ustawienia `wolwithip`\n`remote.power` ponownie wyłącza telewizor zamiast wysyłać tylko Wake-on-LAN\nMigrowano opcje połączenia z przestarzałego bloku `wsconfig` do nazw opcji lgtv2 v2\nUsunięto obejście TLS o szerokim procesie, kontrola certyfikatu jest teraz rozluźniona tylko dla każdego połączenia\nUsunięto nieużywaną zależność `websocket`\nAdapter został zmieniony do TypeScript. Źródła przeniesione do `src/`, opublikowanym kodem jest skompilowany `build/`\n<lang>Tłumaczenia administratora zostały przeniesione z `admin/i18n/ /translations.json `do płaskiego `admin/i18n/ .j <lang>son`\nTesty jednostkowe używają „node:assert” zamiast „chai”\nDodano widżet zdalnego sterowania „Control TV” dla adaptera iOBroker.Devices",
         "uk": "Додайте сумісність WebOS 26.\nВикористовуйте налаштовану MAC-адресу як резервну копію для Wake-on-LAN.\nНеправильно сформована MAC-адреса або помилка розетки Wake-on-LAN більше не припиняє роботу адаптера\nMAC-адреса підтверджена в конфігурації адміністратора\nДодано відсутнє значення за замовчуванням для параметра `wolwithip`\n`remote.power` знову вимикає телевізор замість того, щоб надсилати лише Wake-on-LAN\nПеренесено параметри підключення з застарілого блоку `wsconfig` до імен параметрів lgtv2 v2\nВилучено обхід TLS у всьому процесі, перевірка сертифікатів тепер послаблюється лише для кожного з'єднання\nВилучено невикористану залежність `websocket`\nАдаптер був перероблений на TypeScript. Джерела переміщені в `src/`, опублікований код - це скомпільований `build/`\n<lang><lang>Переклади адміністратора переміщені з `admin/i18n/ /translations.json `до квартири `admin/i18n/ .json`\nОдиничні тести використовують `node:assert` замість `chai`\nДодано віджет дистанційного керування «Управління телевізором» для адаптера IObroker.Devices",
         "zh-cn": "添加 webOS 26 兼容性。\n使用配置的 MAC 地址作为 LAN 唤醒的备用地址。\n格式错误的 MAC 地址或 Wake-on-LAN 套接字错误不会再终止适配器\nMAC 地址在管理员配置中经过验证\n为 “wolwithip” 设置添加了缺失的默认值\n`remote.power`再次关闭电视，而不仅仅是发送局域网唤醒\n将连接选项从已弃用的 `wsconfig` 块迁移到 lgtv2 v2 选项名称\n移除了全进程 TLS 绕过，现在仅放宽了每个连接的证书检查\n移除了未使用的 websocket 依赖关系\n该适配器已重构为 TypeScript。源代码移至 `src/`，发布的代码是编译后的 `build/`\n<lang>管理员翻译从 “admin/i18n/ /translations.json” 移到了平面的 “admin/i18n/ .js <lang>on”\n单元测试使用 node: assert 而不是 chai\n为 iobroker.devices 适配器添加了 “控制电视” 远程控制小部件"
-      },
-      "2.7.4": {
-        "en": "Compact mode has been disabled due to usage of process.env\nDependencies have been updated",
-        "de": "Der Kompaktmodus wurde aufgrund der Verwendung von process.env deaktiviert.\nDie Abhängigkeiten wurden aktualisiert.",
-        "ru": "Компактный режим отключен из-за использования process.env.\nЗависимости обновлены.",
-        "pt": "O modo compacto foi desativado devido ao uso do arquivo process.env.\nAs dependências foram atualizadas.",
-        "nl": "De compacte modus is uitgeschakeld vanwege het gebruik van process.env.\nAfhankelijkheden zijn bijgewerkt.",
-        "fr": "Le mode compact a été désactivé en raison de l'utilisation de process.env\nLes dépendances ont été mises à jour",
-        "it": "La modalità compatta è stata disabilitata a causa dell'utilizzo di process.env\nLe dipendenze sono state aggiornate",
-        "es": "El modo compacto se ha desactivado debido al uso de process.env.\nSe han actualizado las dependencias.",
-        "pl": "Tryb kompaktowy został wyłączony ze względu na użycie process.env\nZaktualizowano zależności",
-        "uk": "Компактний режим вимкнено через використання process.env\nЗалежності оновлено",
-        "zh-cn": "由于使用了 process.env，紧凑模式已被禁用。\n依赖项已更新"
       }
     },
     "titleLang": {

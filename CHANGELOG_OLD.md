@@ -1,4 +1,7 @@
 # Older changes
+## 3.0.1 (2026-09-04)
+- (GermanBluefox) Removed a prepare script
+
 ## 3.0.0 (2026-09-04)
 - (Voodoo2man) Add WebOS 26 compatibility.
 - (Voodoo2man) Use the configured MAC address as a fallback for Wake-on-LAN.

@@ -275,7 +275,7 @@ Both also follow the TV: they show the input or app that is in the foreground, a
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 3.2.0 (2026-11-09)
 - (GermanBluefox) The TV remote is also available as a web component for Aura and other visualizations, in large boxes with power state, input and a volume slider; the name of the devices widget is translated
 
 ### 3.1.0 (2026-10-29)
@@ -305,9 +305,6 @@ Both also follow the TV: they show the input or app that is in the foreground, a
 
 ### 3.0.2 (2026-09-05)
 - (GermanBluefox) The `lgtv2` library was ported to TypeScript and is now built into the adapter, so the ESM-only npm package is no longer required
-
-### 3.0.1 (2026-09-04)
-- (GermanBluefox) Removed a prepare script
 
 [Older changelogs can be found there](CHANGELOG_OLD.md)
 
