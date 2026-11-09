@@ -1,4 +1,7 @@
 # Older changes
+## 3.0.2 (2026-09-05)
+- (GermanBluefox) The `lgtv2` library was ported to TypeScript and is now built into the adapter, so the ESM-only npm package is no longer required
+
 ## 3.0.1 (2026-09-04)
 - (GermanBluefox) Removed a prepare script
 
