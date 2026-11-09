@@ -328,15 +328,15 @@ export function FullView(props: CommonProps & { rowHeight?: number }): JSX.Eleme
                 <span />
                 {key('up', '▲', 'up')}
                 <span />
-                {key('left', '◀', 'left')}
+                {key('left', '◀\uFE0E', 'left')}
                 {key('enter', 'OK', 'ok', 'text')}
-                {key('right', '▶', 'right')}
+                {key('right', '▶\uFE0E', 'right')}
                 <span />
                 {key('down', '▼', 'down')}
                 <span />
             </div>
             <Row cols={4}>
-                {key('back', '↩', 'back')}
+                {key('back', '↩\uFE0E', 'back')}
                 {key('home', '⌂', 'home')}
                 {key('menu', '☰', 'menu')}
                 {key('exit', '✕', 'exit')}
@@ -348,7 +348,7 @@ export function FullView(props: CommonProps & { rowHeight?: number }): JSX.Eleme
                 {options.showChannel
                     ? [
                           key('channelUp', 'CH+', 'channelUp', 'text'),
-                          key('info', 'ℹ', 'info'),
+                          key('info', 'ℹ\uFE0E', 'info'),
                           key('channelDown', 'CH−', 'channelDown', 'text'),
                       ]
                     : null}
@@ -356,8 +356,8 @@ export function FullView(props: CommonProps & { rowHeight?: number }): JSX.Eleme
             {options.showMedia ? (
                 <Row cols={5}>
                     {key('rewind', '«', 'rewind')}
-                    {key('play', '▶', 'play')}
-                    {key('pause', '⏸', 'pause')}
+                    {key('play', '▶\uFE0E', 'play')}
+                    {key('pause', '⏸\uFE0E', 'pause')}
                     {key('stop', '■', 'stop')}
                     {key('fastForward', '»', 'fastForward')}
                 </Row>
