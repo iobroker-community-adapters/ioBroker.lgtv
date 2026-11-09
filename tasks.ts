@@ -1,11 +1,14 @@
 // Build steps that go beyond `tsc`. The backend build is plain TypeScript (`npm run build`);
-// this file builds the two React bundles and copies them into `admin/`:
+// this file builds the three React bundles and copies them into `admin/`:
 //
-//   src-devices/ -> admin/dm-widgets/  the ioBroker.devices widget (Control TV remote)
-//   src-admin/   -> admin/custom/      the jsonConfig custom component (Remote control tab)
+//   src-devices/       -> admin/dm-widgets/     the ioBroker.devices widget (Control TV remote)
+//   src-admin/         -> admin/custom/         the jsonConfig custom component (Remote control tab)
+//   src-webcomponents/ -> admin/webcomponents/  the web component <iob-lgtv-remote> for Aura, vis-2,
+//                                               devices and admin (`common.webComponents`)
 //
-// Both results are committed, so neither CI nor `npm pack` has to run a Vite build — run
-// `npm run build-devices` / `npm run build-admin` yourself whenever the sources changed.
+// All results are committed, so neither CI nor `npm pack` has to run a Vite build — run
+// `npm run build-devices` / `npm run build-admin` / `npm run build-wc` yourself whenever the
+// sources changed.
 import { deleteFoldersRecursive, copyFiles, npmInstall, buildReact } from '@iobroker/build-tools';
 
 // tsx appends its loader bootstrap to process.execArgv; child_process.fork() inherits it, and the
@@ -21,7 +24,7 @@ interface Target {
     copy: () => void;
 }
 
-const TARGETS: Record<'devices' | 'admin', Target> = {
+const TARGETS: Record<'devices' | 'admin' | 'wc', Target> = {
     devices: {
         src: `${__dirname}/src-devices/`,
         clean: (): void => {
@@ -49,9 +52,26 @@ const TARGETS: Record<'devices' | 'admin', Target> = {
             copyFiles(['src-admin/src/i18n/*.json'], 'admin/custom/i18n');
         },
     },
+    wc: {
+        src: `${__dirname}/src-webcomponents/`,
+        // the destination is emptied first, so no module of an earlier build is published
+        clean: (): void => {
+            deleteFoldersRecursive(`${__dirname}/admin/webcomponents`);
+            deleteFoldersRecursive(`${__dirname}/src-webcomponents/build`);
+        },
+        // one ES module and its manifest, `lgtv-remote.js` and `lgtv-remote.json`; the manifest is
+        // written and checked by the Vite build (`src-webcomponents/vite.config.ts`)
+        copy: (): void => {
+            copyFiles(['src-webcomponents/build/*.js', 'src-webcomponents/build/*.json'], 'admin/webcomponents/');
+        },
+    },
 };
 
-const target: Target = process.argv.includes('--admin') ? TARGETS.admin : TARGETS.devices;
+const target: Target = process.argv.includes('--wc')
+    ? TARGETS.wc
+    : process.argv.includes('--admin')
+      ? TARGETS.admin
+      : TARGETS.devices;
 
 function build(): Promise<void> {
     return buildReact(target.src, { rootDir: target.src, vite: true });

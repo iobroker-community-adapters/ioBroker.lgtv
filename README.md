@@ -222,6 +222,30 @@ Esc (exit), Home, `+` / `-` (volume), `M` (mute), space (play) and `0`-`9`.
 
 The instance has to be running: while it is stopped the keys are disabled and the tab says so.
 
+## Web component for Aura and other hosts
+
+The remote is also available as the web component `<iob-lgtv-remote>` (`common.webComponents`), so every host
+that shows ioBroker web components - Aura, and vis-2, `devices` and the admin where they support them - can place
+it. It carries the same name as the widget above (**Control TV**), so `devices` keeps offering its own widget.
+
+It writes the same `remote.*` states and shows the same header: the name, the volume, the mute state, the running
+app and the dot of `states.on`. How much of the remote it shows depends on the size of its box:
+
+| Box                                       | Keys                                                            |
+|-------------------------------------------|-----------------------------------------------------------------|
+| from 340 px high and 180 px wide          | the whole remote, with the rows the settings switch on          |
+| a flat bar (up to 110 px high)            | power, volume down, mute, volume up, home                       |
+| anything else                             | power, volume up and down, home, OK, mute                       |
+
+In the two small layouts the `⋯` button beside the name opens the whole remote in a dialog.
+
+The whole remote, in a large box and in the dialog, also has the status panel of the remote tab in the admin: whether
+the TV runs, its power state, the running app, the input, and the volume with a slider and the mute state. In a wide
+box it stands beside the keys, in a tall one above them; where neither fits, the status line below the name stays.
+
+Settings, as in the widget above: the lgtv instance, the status (line or panel), the channel keys, the media keys, the
+colour keys, the number pad and a name of its own.
+
 ## Channel `tv` (type-detector)
 
 In addition to the existing objects the adapter creates the channel `lgtv.0.tv`, which the ioBroker
@@ -251,6 +275,9 @@ Both also follow the TV: they show the input or app that is in the foreground, a
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+### **WORK IN PROGRESS**
+- (GermanBluefox) The TV remote is also available as a web component for Aura and other visualizations, in large boxes with power state, input and a volume slider; the name of the devices widget is translated
+
 ### 3.1.0 (2026-10-29)
 - (GermanBluefox) The IP field of the settings offers the TVs found in the network
 - (GermanBluefox) Added the channel `tv`, so visualizations and the devices adapter can control the TV

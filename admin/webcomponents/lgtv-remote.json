@@ -1,0 +1,174 @@
+{
+    "$schema": "https://raw.githubusercontent.com/ioBroker/web-components/main/schemas/manifest.json",
+    "manifestVersion": 1,
+    "tag": "iob-lgtv-remote",
+    "name": {
+        "en": "Control TV",
+        "de": "TV steuern",
+        "ru": "Управление ТВ",
+        "pt": "Controlar a TV",
+        "nl": "Tv bedienen",
+        "fr": "Contrôler la TV",
+        "it": "Controlla la TV",
+        "es": "Controlar la TV",
+        "pl": "Sterowanie TV",
+        "uk": "Керування ТВ",
+        "zh-cn": "控制电视"
+    },
+    "description": {
+        "en": "Remote control for the LG WebOS TV",
+        "de": "Fernbedienung für den LG WebOS TV",
+        "ru": "Пульт дистанционного управления для LG WebOS TV",
+        "pt": "Controlo remoto para a TV LG WebOS",
+        "nl": "Afstandsbediening voor de LG WebOS TV",
+        "fr": "Télécommande pour le téléviseur LG WebOS",
+        "it": "Telecomando per la TV LG WebOS",
+        "es": "Mando a distancia para el televisor LG WebOS",
+        "pl": "Pilot do telewizora LG WebOS",
+        "uk": "Пульт дистанційного керування для LG WebOS TV",
+        "zh-cn": "LG WebOS 电视遥控器"
+    },
+    "icon": "../dm-widgets/remote.png",
+    "module": "lgtv-remote.js",
+    "size": {
+        "width": 280,
+        "height": 480
+    },
+    "settings": {
+        "type": "panel",
+        "items": {
+            "instance": {
+                "type": "instance",
+                "adapter": "lgtv",
+                "default": "lgtv.0",
+                "label": {
+                    "en": "LG TV instance",
+                    "de": "LG TV Instanz",
+                    "ru": "Экземпляр LG TV",
+                    "pt": "Instância LG TV",
+                    "nl": "LG TV instantie",
+                    "fr": "Instance LG TV",
+                    "it": "Istanza LG TV",
+                    "es": "Instancia LG TV",
+                    "pl": "Instancja LG TV",
+                    "uk": "Екземпляр LG TV",
+                    "zh-cn": "LG TV 实例"
+                }
+            },
+            "showStatus": {
+                "type": "checkbox",
+                "default": true,
+                "label": {
+                    "en": "Show status",
+                    "de": "Status anzeigen",
+                    "ru": "Показывать состояние",
+                    "pt": "Mostrar estado",
+                    "nl": "Status tonen",
+                    "fr": "Afficher l'état",
+                    "it": "Mostra stato",
+                    "es": "Mostrar estado",
+                    "pl": "Pokaż stan",
+                    "uk": "Показувати стан",
+                    "zh-cn": "显示状态"
+                },
+                "help": {
+                    "en": "A status line in small boxes, a status panel with a volume slider in large ones",
+                    "de": "In kleinen Boxen eine Statuszeile, in großen ein Statusfeld mit Lautstärkeregler",
+                    "ru": "В маленьких блоках — строка состояния, в больших — панель состояния с регулятором громкости",
+                    "pt": "Em caixas pequenas uma linha de estado, nas grandes um painel de estado com controlo de volume",
+                    "nl": "In kleine vakken een statusregel, in grote een statuspaneel met volumeschuifregelaar",
+                    "fr": "Dans les petites zones une ligne d'état, dans les grandes un panneau d'état avec un curseur de volume",
+                    "it": "Nei riquadri piccoli una riga di stato, in quelli grandi un pannello di stato con cursore del volume",
+                    "es": "En cuadros pequeños una línea de estado, en los grandes un panel de estado con control de volumen",
+                    "pl": "W małych polach wiersz stanu, w dużych panel stanu z suwakiem głośności",
+                    "uk": "У малих блоках — рядок стану, у великих — панель стану з регулятором гучності",
+                    "zh-cn": "小框中显示状态行，大框中显示带音量滑块的状态面板"
+                }
+            },
+            "showChannel": {
+                "type": "checkbox",
+                "default": true,
+                "label": {
+                    "en": "Show channel keys",
+                    "de": "Kanaltasten anzeigen",
+                    "ru": "Показывать кнопки каналов",
+                    "pt": "Mostrar teclas de canal",
+                    "nl": "Kanaaltoetsen tonen",
+                    "fr": "Afficher les touches de chaîne",
+                    "it": "Mostra tasti canale",
+                    "es": "Mostrar teclas de canal",
+                    "pl": "Pokaż przyciski kanałów",
+                    "uk": "Показувати кнопки каналів",
+                    "zh-cn": "显示频道键"
+                }
+            },
+            "showMedia": {
+                "type": "checkbox",
+                "default": true,
+                "label": {
+                    "en": "Show media keys",
+                    "de": "Medientasten anzeigen",
+                    "ru": "Показывать кнопки медиа",
+                    "pt": "Mostrar teclas de media",
+                    "nl": "Mediatoetsen tonen",
+                    "fr": "Afficher les touches média",
+                    "it": "Mostra tasti multimediali",
+                    "es": "Mostrar teclas multimedia",
+                    "pl": "Pokaż przyciski multimediów",
+                    "uk": "Показувати кнопки медіа",
+                    "zh-cn": "显示媒体键"
+                }
+            },
+            "showColorKeys": {
+                "type": "checkbox",
+                "default": true,
+                "label": {
+                    "en": "Show colour keys",
+                    "de": "Farbtasten anzeigen",
+                    "ru": "Показывать цветные кнопки",
+                    "pt": "Mostrar teclas coloridas",
+                    "nl": "Kleurtoetsen tonen",
+                    "fr": "Afficher les touches de couleur",
+                    "it": "Mostra tasti colorati",
+                    "es": "Mostrar teclas de color",
+                    "pl": "Pokaż przyciski kolorowe",
+                    "uk": "Показувати кольорові кнопки",
+                    "zh-cn": "显示彩色键"
+                }
+            },
+            "showNumpad": {
+                "type": "checkbox",
+                "default": false,
+                "label": {
+                    "en": "Show number pad",
+                    "de": "Zifferntasten anzeigen",
+                    "ru": "Показывать цифровые кнопки",
+                    "pt": "Mostrar teclado numérico",
+                    "nl": "Cijfertoetsen tonen",
+                    "fr": "Afficher le pavé numérique",
+                    "it": "Mostra tastierino numerico",
+                    "es": "Mostrar teclado numérico",
+                    "pl": "Pokaż klawiaturę numeryczną",
+                    "uk": "Показувати цифрові кнопки",
+                    "zh-cn": "显示数字键盘"
+                }
+            },
+            "name": {
+                "type": "text",
+                "label": {
+                    "en": "Name",
+                    "de": "Name",
+                    "ru": "Имя",
+                    "pt": "Nome",
+                    "nl": "Naam",
+                    "fr": "Nom",
+                    "it": "Nome",
+                    "es": "Nombre",
+                    "pl": "Nazwa",
+                    "uk": "Назва",
+                    "zh-cn": "名称"
+                }
+            }
+        }
+    }
+}

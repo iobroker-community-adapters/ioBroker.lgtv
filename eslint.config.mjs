@@ -21,11 +21,12 @@ export default [
             'tmp/**/*',
             'www/**/*',
             '.**/*',
-            // own tsconfig, not part of the adapter's type-aware project. src-admin brings its
-            // own eslint config and is linted by `npm run lint-admin`; src-devices has none and
-            // is not linted at all.
+            // own tsconfig, not part of the adapter's type-aware project. src-admin and
+            // src-webcomponents bring their own eslint config and are linted by
+            // `npm run lint-admin` / `npm run lint-wc`; src-devices has none and is not linted at all.
             'src-devices/**/*',
             'src-admin/**/*',
+            'src-webcomponents/**/*',
             'tasks.ts',
         ],
     },

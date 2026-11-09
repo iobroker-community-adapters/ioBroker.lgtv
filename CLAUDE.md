@@ -217,6 +217,52 @@ by `tasks.ts --admin`.
 - Only `src-admin/build` is excluded from eslint, not the sources — unlike `src-devices`,
   which is ignored wholesale.
 
+## Web component (`src-webcomponents/`)
+
+`common.webComponents` in `io-package.json` lists `webcomponents/lgtv-remote.json`: the devices widget
+again as the web component `<iob-lgtv-remote>` (`@iobroker/web-components`), for Aura and every other
+host of web components. One ES module plus its manifest, built with Vite from `src-webcomponents/` and
+copied to `admin/webcomponents/` by `tasks.ts --wc`.
+
+```bash
+npm run build-wc          # npm install + vite build (writes and checks the manifest) + copy
+npm run check-wc          # tsc for the component and its vite.config.ts
+npm run lint-wc           # eslint (own config, like src-admin)
+```
+
+- **`admin/webcomponents/` is committed**, like `admin/dm-widgets/`. Re-run `npm run build-wc` whenever
+  something under `src-webcomponents/` changes, or the devices widget's label/description in
+  `io-package.json`, its words in `src-devices/src/i18n/` or the words of the admin remote in
+  `src-admin/src/i18n/` - the build reads them.
+- Words: the build picks `DEVICE_WORDS` (`lgtvremote_*`) and `ADMIN_WORDS` (`lgtvadmin_*`, the status
+  panel) out of those two folders and puts them in as `__LGTV_WORDS__`; a word missing in one of the 11
+  languages fails the build. Only what neither has is in `src/i18n.ts`, and the label/help of `showStatus`
+  is in `src/manifest.ts` (it switches the panel too, so "Show status line" of the devices widget no longer
+  fits).
+- The manifest `name` is the `label` of the devices widget, per language. devices hides a web component
+  whose name equals one of its native widgets, so the two must stay identical - that is why the label is
+  a translated object and the build takes it from `io-package.json` instead of repeating it.
+- No MUI, no `@iobroker/*` GUI packages: plain React + CSS in the shadow root. React is not bundled -
+  the four React imports point at `../../../lib/esm/react-19.js`, which web and admin serve beside
+  `adapter/`. The module must stay one file (`codeSplitting: false`).
+- It writes `lgtv.<n>.remote.<key>` (ack=false) and reads `states.on`, `states.volume`, `states.mute`,
+  `states.currentApp`, like the devices widget - no `sendTo`. The layout (whole remote, six keys, one
+  row) is chosen by container queries, never by measuring; the small layouts open the whole remote in
+  an element dialog of the host.
+- The whole remote (box and dialog) carries the status panel of the admin remote tab: running (by
+  `states.powerState` via `POWER_ON_STATES`, else `states.on`), the translated power state, the app,
+  `states.input`, and a volume slider with the mute indicator. `powerState` and `input` are subscribed
+  always, though only the panel shows them. Where it goes is a container query too: beside the keys from 460 px
+  wide (unless clearly portrait, `aspect-ratio >= 3/4`), above them from 460 px high - 600 px with more than
+  eight rows of keys (class `rows-l`, number pad) - else the header keeps its status line. With the panel
+  the dialog asks for 640 px and puts it beside the keys from 540 px of content width (`lgtv-dialog`
+  inline-size container), above them on a phone. The row count and height are CSS variables
+  (`--rows`, `--track`) so the same grid serves both placements.
+- The slider writes `states.volume` (ack=false) only when it is let go - the DOM `change` event, added by
+  hand in `VolumeSlider`, because React's `onChange` is the `input` event and fires on every move. While
+  dragged it shows a draft, so the TV's echo (and the adapter's +2 volume ramp) do not pull it back; after
+  the write the draft is held until another `states.volume` arrives, at most 3 s.
+
 ## Conventions
 
 - Timers always via `this.setTimeout` / `this.setInterval` (adapter-core cleans them up on unload), never the globals.
