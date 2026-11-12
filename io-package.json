@@ -199,7 +199,28 @@
       ]
     },
     "webComponents": [
-      "webcomponents/lgtv-remote.json"
+      {
+        "manifest": "webcomponents/lgtv-remote.json",
+        "tag": "iob-lgtv-remote",
+        "name": {
+          "en": "Control TV",
+          "de": "TV steuern",
+          "ru": "Управление ТВ",
+          "pt": "Controlar a TV",
+          "nl": "Tv bedienen",
+          "fr": "Contrôler la TV",
+          "it": "Controlla la TV",
+          "es": "Controlar la TV",
+          "pl": "Sterowanie TV",
+          "uk": "Керування ТВ",
+          "zh-cn": "控制电视"
+        },
+        "icon": "../dm-widgets/remote.png",
+        "size": {
+          "width": 280,
+          "height": 480
+        }
+      }
     ]
   },
   "native": {
